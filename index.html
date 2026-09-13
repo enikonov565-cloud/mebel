@@ -82,10 +82,19 @@
   /* Header — persistent burger menu at every width */
   header{
     position:sticky;top:0;z-index:100;
-    background:rgba(24,15,1,.82);backdrop-filter:blur(10px);
+    background:rgba(24,15,1,.72);backdrop-filter:blur(10px);
   }
-  .nav{display:flex;align-items:center;min-height:72px;padding:10px 0}
-  .nav-cta{margin-left:auto;padding:10px 22px;font-size:.95rem;white-space:nowrap}
+  .nav{display:flex;align-items:center;min-height:72px;padding:10px 20px}
+  .nav-cta{
+    margin-left:auto;flex:none;
+    width:497px;max-width:100%;height:50px;
+    background:#2F1F02;border:1pt solid #CDCBC7;border-radius:15pt;
+    color:#CDCBC7;font-family:'Inter',sans-serif;font-size:28px;font-style:normal;
+    font-weight:700;line-height:normal;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+    display:flex;align-items:center;justify-content:center;
+    cursor:pointer;transition:transform .15s ease,background .2s ease;
+  }
+  .nav-cta:hover{background:#432c03;transform:translateY(-2px)}
 
   /* Logo lockup — exact spec from Figma node 188:262 */
   .logo{
@@ -465,13 +474,18 @@
     #about{padding:72px 0}
     section{padding:64px 0}
     .footer-cta{width:340px;font-size:20px;height:54px}
+    .nav-cta{width:280px;height:46px;font-size:18px}
   }
   /* Mobile */
   @media (max-width:640px){
-    .logo{margin-left:20pt}
+    .logo{margin-left:14pt}
     .logo .word{font-size:1.35rem}
     .logo .sub{font-size:.34rem}
-    .nav-cta{padding:9px 14px;font-size:.85rem}
+    .nav-cta{
+      width:auto;height:auto;min-height:38px;max-width:132px;
+      padding:8px 12px;font-size:10.5px;line-height:1.25;
+      white-space:normal;text-align:center;border-radius:10pt;
+    }
     .about-head{margin-bottom:44px}
     .about-cols .prod-video{aspect-ratio:4/5}
     .pstat-rail{grid-template-columns:1fr}
@@ -500,7 +514,7 @@
       <span class="word"><span class="edge">А</span>НТУРА<span class="edge">Ж</span></span>
       <span class="sub">ИНТЕРЬЕР</span>
     </a>
-    <a href="#contact" class="btn nav-cta">Заказать</a>
+    <button type="button" class="nav-cta" id="headerManagerBtn">связаться с менеджером</button>
   </div>
   <nav class="nav-links" id="navLinks">
     <a href="#about">О компании</a>
@@ -933,10 +947,12 @@
 
   const managerModal = document.getElementById('managerModal');
   const managerBtn = document.getElementById('managerBtn');
+  const headerManagerBtn = document.getElementById('headerManagerBtn');
   const managerClose = document.getElementById('managerClose');
   const openManagerModal = () => { managerModal.classList.add('open'); managerModal.setAttribute('aria-hidden', 'false'); };
   const closeManagerModal = () => { managerModal.classList.remove('open'); managerModal.setAttribute('aria-hidden', 'true'); };
   managerBtn.addEventListener('click', openManagerModal);
+  headerManagerBtn.addEventListener('click', openManagerModal);
   managerClose.addEventListener('click', closeManagerModal);
   managerModal.addEventListener('click', (e) => { if (e.target === managerModal) closeManagerModal(); });
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeManagerModal(); });

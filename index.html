@@ -82,14 +82,16 @@
   /* Header — persistent burger menu at every width */
   header{
     position:sticky;top:0;z-index:100;
-    background:rgba(24,15,1,.72);backdrop-filter:blur(10px);
+    background:linear-gradient(180deg,#120C00 0%,rgba(18,12,0,.6) 85.76%);
+    backdrop-filter:blur(10px);
   }
-  .nav{display:flex;align-items:center;min-height:72px;padding:10px 60pt}
+  .nav{display:flex;align-items:center;justify-content:space-between;min-height:72px;padding:10px 60pt}
+  .nav-left{display:flex;align-items:center;gap:40px;flex:none}
   .nav-cta{
-    margin-left:auto;margin-right:60pt;flex:none;
-    width:248px;max-width:100%;height:50px;
-    background:#2F1F02;border:1pt solid #CDCBC7;border-radius:7.5pt;
-    color:#CDCBC7;font-family:'Inter',sans-serif;font-size:14px;font-style:normal;
+    flex:none;
+    width:497px;max-width:100%;height:50px;
+    background:#2F1F02;border:1pt solid #CDCBC7;border-radius:15pt;
+    color:#CDCBC7;font-family:'Inter',sans-serif;font-size:28px;font-style:normal;
     font-weight:700;line-height:normal;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
     display:flex;align-items:center;justify-content:center;
     cursor:pointer;transition:transform .15s ease,background .2s ease;
@@ -98,7 +100,6 @@
 
   /* Logo lockup — exact spec from Figma node 188:262 */
   .logo{
-    margin-left:40pt;
     display:inline-flex;flex-direction:column;align-items:flex-start;
   }
   .logo .word{
@@ -116,7 +117,6 @@
   .burger{
     display:flex;flex-direction:column;justify-content:center;gap:5px;
     width:40px;height:40px;background:none;border:none;cursor:pointer;padding:8px;flex:none;
-    margin-left:60pt;
   }
   .burger span{display:block;width:24px;height:2px;background:#CDCBC7;transition:transform .25s ease,opacity .2s ease}
   .burger.active span:nth-child(1){transform:translateY(7px) rotate(45deg)}
@@ -475,21 +475,19 @@
     #about{padding:72px 0}
     section{padding:64px 0}
     .footer-cta{width:340px;font-size:20px;height:54px}
-    .burger{margin-left:20pt}
-    .nav-cta{width:180px;height:40px;font-size:12px;margin-right:20pt}
+    .nav-cta{width:300px;height:44px;font-size:20px}
   }
   /* Mobile */
   @media (max-width:640px){
     .container{padding:0 20pt}
     .nav{padding:10px 20pt}
-    .burger{margin-left:0}
-    .logo{margin-left:14pt}
+    .nav-left{gap:16px}
     .logo .word{font-size:1.35rem}
     .logo .sub{font-size:.34rem}
     .nav-cta{
-      width:auto;height:auto;min-height:24px;max-width:96px;margin-right:0;
-      padding:5px 8px;font-size:8px;line-height:1.2;
-      white-space:normal;text-align:center;border-radius:6pt;
+      width:auto;height:auto;min-height:34px;max-width:150px;
+      padding:6px 12px;font-size:11px;line-height:1.2;
+      white-space:normal;text-align:center;border-radius:8pt;
     }
     .about-head{margin-bottom:44px}
     .about-cols .prod-video{aspect-ratio:4/5}
@@ -512,13 +510,15 @@
 
 <header>
   <div class="container nav">
-    <button class="burger" id="burger" aria-label="Меню" aria-expanded="false" aria-controls="navLinks">
-      <span></span><span></span><span></span>
-    </button>
-    <a href="#hero" class="logo">
-      <span class="word"><span class="edge">А</span>НТУРА<span class="edge">Ж</span></span>
-      <span class="sub">ИНТЕРЬЕР</span>
-    </a>
+    <div class="nav-left">
+      <button class="burger" id="burger" aria-label="Меню" aria-expanded="false" aria-controls="navLinks">
+        <span></span><span></span><span></span>
+      </button>
+      <a href="#hero" class="logo">
+        <span class="word"><span class="edge">А</span>НТУРА<span class="edge">Ж</span></span>
+        <span class="sub">ИНТЕРЬЕР</span>
+      </a>
+    </div>
     <button type="button" class="nav-cta" id="headerManagerBtn">связаться с менеджером</button>
   </div>
   <nav class="nav-links" id="navLinks">

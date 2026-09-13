@@ -64,7 +64,7 @@
   }
   img,video{max-width:100%;display:block}
   a{color:inherit;text-decoration:none}
-  .container{max-width:var(--max);margin:0 auto;padding:0 60px}
+  .container{max-width:var(--max);margin:0 auto;padding:0 60pt}
   section{padding:80px 0}
   h1,h2,h3{
     line-height:1.15;font-weight:700;letter-spacing:-.01em;text-wrap:balance;
@@ -86,7 +86,7 @@
     background:linear-gradient(180deg,#180F01 0%,rgba(24,15,1,.6) 85.76%);
     backdrop-filter:blur(10px);
   }
-  .nav{display:flex;align-items:center;justify-content:space-between;min-height:72px;padding:10px 60px}
+  .nav{display:flex;align-items:center;justify-content:space-between;min-height:72px;padding:10px 60pt}
   .nav-left{display:flex;align-items:center;gap:40px;flex:none}
   .nav-cta{
     flex:none;
@@ -164,17 +164,17 @@
   .about-inner{display:flex;flex-direction:column;gap:100px}
   .about-top{display:flex;flex-direction:column;gap:60px}
   .about-headline{
-    display:flex;justify-content:flex-end;align-items:center;
+    display:flex;justify-content:space-between;align-items:center;
     gap:clamp(20px,4vw,180px);flex-wrap:nowrap;
   }
   .about-headline h2{
     font-family:'Inter',sans-serif;font-weight:500;
-    font-size:clamp(2rem,6vw,76px);line-height:0.9;letter-spacing:1.52px;
+    font-size:clamp(1.9rem,6vw,69px);line-height:0.9;letter-spacing:1.52px;
     color:#CDCBC7;white-space:normal;
   }
   .about-headline p{
     font-family:'Inter',sans-serif;font-weight:500;
-    font-size:20px;line-height:normal;text-transform:uppercase;
+    font-size:13px;line-height:normal;text-transform:uppercase;
     color:#CDCBC7;max-width:539px;
   }
 
@@ -184,11 +184,11 @@
   .about-stat{display:flex;flex-direction:column;align-items:center;gap:10px;width:100%;text-align:center}
   .about-stat b{
     font-family:'Inter',sans-serif;font-weight:500;
-    font-size:clamp(2.2rem,7vw,76px);line-height:0.9;letter-spacing:1.52px;color:#CDCBC7;
+    font-size:clamp(2rem,7vw,69px);line-height:0.9;letter-spacing:1.52px;color:#CDCBC7;
   }
   .about-stat span{
     font-family:'Inter',sans-serif;font-weight:500;
-    font-size:20px;line-height:normal;text-transform:uppercase;color:#CDCBC7;
+    font-size:13px;line-height:normal;text-transform:uppercase;color:#CDCBC7;
   }
   .about-divider{
     width:170px;max-width:100%;height:4px;border:none;
@@ -203,13 +203,13 @@
   .about-why{display:flex;flex-direction:column;gap:101px;width:611px;max-width:100%;flex:none}
   .about-why h3{
     font-family:'Inter',sans-serif;font-weight:500;
-    font-size:50px;line-height:1.3;letter-spacing:1px;color:#CDCBC7;
+    font-size:43px;line-height:1.3;letter-spacing:1px;color:#CDCBC7;
   }
-  .why-list{display:flex;flex-direction:column;gap:40px;align-items:center;width:100%}
+  .why-list{display:flex;flex-direction:column;gap:40px;align-items:stretch;width:100%}
   .why-list p{
-    padding:10px;width:100%;
+    padding:10px 0;width:100%;text-align:left;
     font-family:'Inter',sans-serif;font-weight:300;
-    font-size:32px;line-height:1.2;letter-spacing:0.64px;color:#CDCBC7;
+    font-size:25px;line-height:1.2;letter-spacing:0.64px;color:#CDCBC7;
   }
 
   /* Services */
@@ -466,8 +466,8 @@
     .directions{grid-template-columns:1fr;gap:28px}
     .map-card{order:-1;aspect-ratio:16/10}
     .about-photo{max-width:560px}
-    .about-why h3{font-size:36px}
-    .why-list p{font-size:24px}
+    .about-why h3{font-size:34px}
+    .why-list p{font-size:20px}
     #about{padding:72px 0}
     section{padding:64px 0}
     .footer-cta{width:340px;font-size:20px;height:54px}
@@ -485,10 +485,10 @@
       padding:6px 12px;font-size:11px;line-height:1.2;
       white-space:normal;text-align:center;border-radius:15pt;
     }
-    .about-headline p{font-size:15px}
-    .about-stat span{font-size:15px}
-    .about-why h3{font-size:28px}
-    .why-list p{font-size:19px;padding:0}
+    .about-headline p{font-size:11px}
+    .about-stat span{font-size:11px}
+    .about-why h3{font-size:24px}
+    .why-list p{font-size:17px;padding:0}
     .cards,.scards,.gallery,.reviews-grid{grid-template-columns:1fr}
     .materials-grid{grid-template-columns:repeat(2,1fr)}
     .steps{grid-template-columns:1fr}
@@ -561,11 +561,11 @@
     <div class="about-row">
       <div class="about-stats">
         <div class="about-stat"><b>12+</b><span>лет на рынке</span></div>
-        <hr class="about-divider">
+        <div class="about-divider"></div>
         <div class="about-stat"><b>800+</b><span>выполненных проектов</span></div>
-        <hr class="about-divider">
+        <div class="about-divider"></div>
         <div class="about-stat"><b>3 года</b><span>гарантии на изделия</span></div>
-        <hr class="about-divider">
+        <div class="about-divider"></div>
         <div class="about-stat"><b>15–25</b><span>дней средний срок изготовления</span></div>
       </div>
 
@@ -576,11 +576,11 @@
         <h3>Почему выбирают нас</h3>
         <div class="why-list">
           <p>Собственное высокотехнологичное современное производство</p>
-          <hr class="about-divider">
+          <div class="about-divider"></div>
           <p>Фабричное качество производимой мебели</p>
-          <hr class="about-divider">
+          <div class="about-divider"></div>
           <p>Быстрая доставка и сборка мебели на дому</p>
-          <hr class="about-divider">
+          <div class="about-divider"></div>
           <p>Гарантия по договору на мебель 3 года</p>
         </div>
       </div>

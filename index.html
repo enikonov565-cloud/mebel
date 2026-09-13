@@ -86,8 +86,8 @@
   }
   .nav{display:flex;align-items:center;min-height:72px;padding:10px 60pt}
   .nav-cta{
-    margin-left:auto;flex:none;
-    width:248px;max-width:100%;height:25px;
+    margin-left:auto;margin-right:60pt;flex:none;
+    width:248px;max-width:100%;height:50px;
     background:#2F1F02;border:1pt solid #CDCBC7;border-radius:7.5pt;
     color:#CDCBC7;font-family:'Inter',sans-serif;font-size:14px;font-style:normal;
     font-weight:700;line-height:normal;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
@@ -116,6 +116,7 @@
   .burger{
     display:flex;flex-direction:column;justify-content:center;gap:5px;
     width:40px;height:40px;background:none;border:none;cursor:pointer;padding:8px;flex:none;
+    margin-left:60pt;
   }
   .burger span{display:block;width:24px;height:2px;background:#CDCBC7;transition:transform .25s ease,opacity .2s ease}
   .burger.active span:nth-child(1){transform:translateY(7px) rotate(45deg)}
@@ -474,17 +475,19 @@
     #about{padding:72px 0}
     section{padding:64px 0}
     .footer-cta{width:340px;font-size:20px;height:54px}
-    .nav-cta{width:180px;height:32px;font-size:12px}
+    .burger{margin-left:20pt}
+    .nav-cta{width:180px;height:40px;font-size:12px;margin-right:20pt}
   }
   /* Mobile */
   @media (max-width:640px){
     .container{padding:0 20pt}
     .nav{padding:10px 20pt}
+    .burger{margin-left:0}
     .logo{margin-left:14pt}
     .logo .word{font-size:1.35rem}
     .logo .sub{font-size:.34rem}
     .nav-cta{
-      width:auto;height:auto;min-height:24px;max-width:96px;
+      width:auto;height:auto;min-height:24px;max-width:96px;margin-right:0;
       padding:5px 8px;font-size:8px;line-height:1.2;
       white-space:normal;text-align:center;border-radius:6pt;
     }

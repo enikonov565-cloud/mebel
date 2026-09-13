@@ -159,68 +159,57 @@
   .hero-stats b{display:block;font-size:2rem;color:#f4d9b8}
   .hero-stats span{font-size:.9rem;opacity:.85}
 
-  /* About — premium */
-  #about{background:var(--text);color:#CDCBC7;padding:110px 0}
-  .kicker{
-    font-size:.78rem;letter-spacing:.22em;text-transform:uppercase;
-    color:var(--accent);font-weight:600;margin-bottom:22px;
+  /* About — exact spec from Figma node 42:450 */
+  #about{background:#180F01;padding:58px 0 80px}
+  .about-inner{display:flex;flex-direction:column;gap:100px;max-width:1920px;padding-left:60px;padding-right:60px}
+  .about-top{display:flex;flex-direction:column;gap:60px}
+  .about-headline{
+    display:flex;justify-content:flex-end;align-items:center;
+    gap:clamp(24px,6vw,276px);flex-wrap:nowrap;
   }
-  .about-head{
-    display:flex;justify-content:space-between;align-items:flex-end;
-    gap:40px;flex-wrap:wrap;margin-bottom:64px;
+  .about-headline h2{
+    font-family:'Inter',sans-serif;font-weight:500;
+    font-size:clamp(2rem,6vw,76px);line-height:0.9;letter-spacing:1.52px;
+    color:#CDCBC7;white-space:normal;
   }
-  .about-head h2{
-    font-size:clamp(1.9rem,4.4vw,3.1rem);max-width:20ch;font-weight:600;
-    line-height:1.1;color:#fff;
+  .about-headline p{
+    font-family:'Inter',sans-serif;font-weight:500;
+    font-size:20px;line-height:normal;text-transform:uppercase;
+    color:#CDCBC7;max-width:439px;
   }
-  .about-head p{color:#CDCBC7;max-width:34ch;font-size:1.02rem}
 
-  /* 3 columns: stats rail | video | why */
-  .about-cols{
-    display:grid;
-    grid-template-columns:minmax(170px,.9fr) minmax(300px,1.3fr) minmax(260px,1.1fr);
-    gap:52px;align-items:start;
-  }
-  .pstat-rail{border-bottom:1px solid rgba(255,255,255,.14)}
-  .pstat{padding:22px 0;border-top:1px solid rgba(255,255,255,.14)}
-  .pstat b{
-    display:block;font-size:clamp(1.7rem,3.2vw,2.5rem);font-weight:700;
-    color:#fff;letter-spacing:-.02em;line-height:1;
-  }
-  .pstat span{display:block;margin-top:9px;color:#CDCBC7;font-size:.9rem}
+  .about-row{display:flex;align-items:center;gap:72px;justify-content:center}
 
-  .prod-video{
-    position:relative;border-radius:14px;overflow:hidden;
-    aspect-ratio:4/5;
+  .about-stats{display:flex;flex-direction:column;gap:60px;align-items:center;width:330px;max-width:100%;flex:none}
+  .about-stat{display:flex;flex-direction:column;align-items:center;gap:10px;width:100%;text-align:center}
+  .about-stat b{
+    font-family:'Inter',sans-serif;font-weight:500;
+    font-size:clamp(2.2rem,7vw,76px);line-height:0.9;letter-spacing:1.52px;color:#CDCBC7;
+  }
+  .about-stat span{
+    font-family:'Inter',sans-serif;font-weight:500;
+    font-size:20px;line-height:normal;text-transform:uppercase;color:#CDCBC7;
+  }
+  .about-divider{
+    width:170px;max-width:100%;height:4px;border:none;
+    background:url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNzQuMDQxIiBoZWlnaHQ9IjQuMDQxNDUiIHZpZXdCb3g9IjAgMCAxNzQuMDQxIDQuMDQxNDUiIGZpbGw9Im5vbmUiPjxwYXRoIGQ9Ik0wIDIuMDIwNzNMMi4wMjA3MyA0LjA0MTQ1TDQuMDQxNDUgMi4wMjA3M0wyLjAyMDczIDBMMCAyLjAyMDczWk0xNzQuMDQxIDIuMDIwNzNMMTcyLjAyMSAwTDE3MCAyLjAyMDczTDE3Mi4wMjEgNC4wNDE0NUwxNzQuMDQxIDIuMDIwNzNaTTIuMDIwNzMgMi4wMjA3M1YyLjM3MDczSDE3Mi4wMjFWMi4wMjA3M1YxLjY3MDczSDIuMDIwNzNWMi4wMjA3M1oiIGZpbGw9IiNDRENCQzciLz48L3N2Zz4=) center/contain no-repeat;
+  }
+
+  .about-photo{
+    width:695px;height:790px;max-width:100%;border-radius:15px;flex:none;
     background:linear-gradient(150deg,#4a3116,#8a5a2b);
-    display:flex;align-items:center;justify-content:center;
-  }
-  .prod-video video,.prod-video img{
-    position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
-  }
-  .prod-video .play{
-    position:relative;z-index:1;
-    width:64px;height:64px;border-radius:50%;
-    background:rgba(255,255,255,.92);color:var(--accent-dark);
-    display:flex;align-items:center;justify-content:center;
-    font-size:1.2rem;padding-left:5px;
-  }
-  .prod-video figcaption{
-    position:absolute;left:18px;right:18px;bottom:16px;z-index:1;
-    color:#fff;font-weight:500;font-size:.9rem;
-    text-shadow:0 1px 10px rgba(0,0,0,.7);
   }
 
-  .why h3{font-size:1.15rem;font-weight:600;color:#fff;margin-bottom:6px}
-  .why ul{list-style:none}
-  .why li{
-    display:flex;gap:12px;align-items:flex-start;
-    padding:15px 0;border-top:1px solid rgba(255,255,255,.14);
-    color:#CDCBC7;font-size:.98rem;line-height:1.45;
+  .about-why{display:flex;flex-direction:column;gap:101px;width:611px;max-width:100%;flex:none}
+  .about-why h3{
+    font-family:'Inter',sans-serif;font-weight:500;
+    font-size:50px;line-height:1.3;letter-spacing:1px;color:#CDCBC7;
   }
-  .why li:last-child{border-bottom:1px solid rgba(255,255,255,.14)}
-  .why li::before{
-    content:"✓";color:var(--accent);font-weight:700;flex:none;font-size:.95rem;line-height:1.5;
+  .why-list{display:flex;flex-direction:column;gap:40px;align-items:center;width:100%}
+  .why-list p{
+    padding:10px;width:100%;
+    font-family:'Inter',sans-serif;font-weight:300;
+    font-size:32px;line-height:1.2;letter-spacing:0.64px;color:#CDCBC7;
   }
 
   /* Services */
@@ -457,6 +446,13 @@
   .modal-card h3{font-size:1.2rem;margin-bottom:20px;padding-right:24px}
   .modal-card form{display:grid;gap:14px}
 
+  /* About row needs ~1780px to stay in one line (exact Figma widths) */
+  @media (max-width:1900px){
+    .about-row{flex-direction:column;gap:56px}
+    .about-photo{order:-1;width:100%;height:auto;aspect-ratio:695/790;max-width:695px}
+    .about-headline{justify-content:flex-start;flex-wrap:wrap}
+  }
+
   /* Tablet */
   @media (max-width:960px){
     .cards,.scards,.gallery,.reviews-grid{grid-template-columns:repeat(2,1fr)}
@@ -469,10 +465,9 @@
     .benefits-photo{aspect-ratio:16/10;order:-1}
     .directions{grid-template-columns:1fr;gap:28px}
     .map-card{order:-1;aspect-ratio:16/10}
-    .about-cols{grid-template-columns:1fr;gap:40px}
-    .about-cols .prod-video{order:-1;aspect-ratio:16/10;max-width:560px}
-    .pstat-rail{display:grid;grid-template-columns:repeat(2,1fr);column-gap:36px;border-bottom:none}
-    .pstat{border-bottom:1px solid rgba(255,255,255,.14)}
+    .about-photo{max-width:560px}
+    .about-why h3{font-size:36px}
+    .why-list p{font-size:24px}
     #about{padding:72px 0}
     section{padding:64px 0}
     .footer-cta{width:340px;font-size:20px;height:54px}
@@ -490,9 +485,10 @@
       padding:6px 12px;font-size:11px;line-height:1.2;
       white-space:normal;text-align:center;border-radius:15pt;
     }
-    .about-head{margin-bottom:44px}
-    .about-cols .prod-video{aspect-ratio:4/5}
-    .pstat-rail{grid-template-columns:1fr}
+    .about-headline p{font-size:15px}
+    .about-stat span{font-size:15px}
+    .about-why h3{font-size:28px}
+    .why-list p{font-size:19px;padding:0}
     .cards,.scards,.gallery,.reviews-grid{grid-template-columns:1fr}
     .materials-grid{grid-template-columns:repeat(2,1fr)}
     .steps{grid-template-columns:1fr}
@@ -552,38 +548,41 @@
   </div>
 </section>
 
-<!-- 2. О компании -->
+<!-- 2. О компании — точный макет Figma (node 42:450) -->
 <section id="about">
-  <div class="container">
-    <p class="kicker">О компании</p>
-    <div class="about-head">
-      <h2>Собственное производство полного цикла</h2>
-      <p>Проектируем, изготавливаем и монтируем мебель из массива с 2014 года.</p>
+  <div class="container about-inner">
+    <div class="about-top">
+      <div class="about-headline">
+        <h2>Собственное производство<br>полного цикла</h2>
+        <p>Проектируем, изготавливаем и монтируем мебель из массива с 2014 года.</p>
+      </div>
     </div>
 
-    <div class="about-cols">
-      <div class="pstat-rail">
-        <div class="pstat"><b>12 лет</b><span>на рынке</span></div>
-        <div class="pstat"><b>800+</b><span>выполненных проектов</span></div>
-        <div class="pstat"><b>5 лет</b><span>гарантия на изделия по договору</span></div>
-        <div class="pstat"><b>15–25</b><span>дней средний срок изготовления</span></div>
+    <div class="about-row">
+      <div class="about-stats">
+        <div class="about-stat"><b>12+</b><span>лет на рынке</span></div>
+        <hr class="about-divider">
+        <div class="about-stat"><b>800+</b><span>выполненных проектов</span></div>
+        <hr class="about-divider">
+        <div class="about-stat"><b>3 года</b><span>гарантии на изделия</span></div>
+        <hr class="about-divider">
+        <div class="about-stat"><b>15–25</b><span>дней средний срок изготовления</span></div>
       </div>
 
-      <!-- Вставьте ролик с производства: <video src="prod.mp4" poster="prod.jpg" muted loop playsinline autoplay></video> -->
-      <figure class="prod-video">
-        <span class="play">▶</span>
-        <figcaption>Видео с производства</figcaption>
-      </figure>
+      <!-- Вставьте фото/видео цеха -->
+      <figure class="about-photo"></figure>
 
-      <div class="why">
+      <div class="about-why">
         <h3>Почему выбирают нас</h3>
-        <ul>
-          <li>Бесплатный выезд замерщика по Москве и области</li>
-          <li>Бесплатная разработка дизайн-проекта будущей мебели</li>
-          <li>Фиксированная смета — цена не меняется в процессе</li>
-          <li>Собственное производство полного цикла</li>
-          <li>Доставка и монтаж силами своей бригады</li>
-        </ul>
+        <div class="why-list">
+          <p>Собственное высокотехнологичное современное производство</p>
+          <hr class="about-divider">
+          <p>Фабричное качество производимой мебели</p>
+          <hr class="about-divider">
+          <p>Быстрая доставка и сборка мебели на дому</p>
+          <hr class="about-divider">
+          <p>Гарантия по договору на мебель 3 года</p>
+        </div>
       </div>
     </div>
   </div>

@@ -579,7 +579,7 @@
     font-size:20px;line-height:1.2;letter-spacing:0.4px;text-transform:lowercase;
     color:#CDCBC7;max-width:502px;text-align:right;
   }
-  .contact-cta{display:flex;justify-content:flex-start;margin-top:40px}
+  .contact-cta{display:flex;justify-content:flex-start;gap:24px;flex-wrap:wrap;margin-top:40px}
   .contact-cta button{
     display:flex;align-items:center;justify-content:center;
     width:497px;max-width:100%;height:64px;
@@ -656,6 +656,16 @@
   .modal-close:hover{color:var(--accent)}
   .modal-card h3{font-size:1.2rem;margin-bottom:20px;padding-right:24px}
   .modal-card form{display:grid;gap:14px}
+  .modal-card.wide{width:560px}
+  .directions-content{display:flex;flex-direction:column;gap:20px}
+  .directions-content .dway b{display:block;font-size:1rem;margin-bottom:6px;color:var(--text)}
+  .directions-content .dway p{color:var(--muted);font-size:.92rem;line-height:1.5;margin:0}
+  .directions-link{
+    display:flex;align-items:center;justify-content:center;height:52px;margin-top:4px;
+    background:transparent;border:1.5px solid var(--accent);border-radius:12px;
+    color:var(--accent);font-weight:600;font-size:.95rem;text-align:center;
+    --reveal-bg:var(--accent);--reveal-text:#fff;
+  }
 
   /* About / Why-us rows need ~1900px to stay in one line (exact Figma widths) */
   @media (max-width:1900px){
@@ -1229,6 +1239,10 @@
         <span class="reveal-label">оставить заявку</span>
         <span class="reveal-fill" aria-hidden="true"><span class="reveal-label">оставить заявку</span></span>
       </button>
+      <button type="button" id="directionsBtn" class="reveal-btn">
+        <span class="reveal-label">как добраться</span>
+        <span class="reveal-fill" aria-hidden="true"><span class="reveal-label">как добраться</span></span>
+      </button>
     </div>
   </div>
 </section>
@@ -1280,6 +1294,27 @@
   </div>
 </div>
 
+<div class="modal-backdrop" id="directionsModal" aria-hidden="true">
+  <div class="modal-card wide" role="dialog" aria-modal="true" aria-labelledby="directionsModalTitle">
+    <button type="button" class="modal-close" id="directionsClose" aria-label="Закрыть">×</button>
+    <h3 id="directionsModalTitle">Как нас найти</h3>
+    <div class="directions-content">
+      <div class="dway">
+        <b>На машине</b>
+        <p>Посёлок Удельная — 13 км к юго-востоку от Москвы. Вдоль южной границы посёлка проходит Быковское шоссе (А-102) с выездом на М-5 «Урал» и А-107.</p>
+      </div>
+      <div class="dway">
+        <b>На электричке / МЦД-3</b>
+        <p>С Казанского вокзала до платформы «Удельная» — около 45 минут в пути. От платформы до мастерской 10–15 минут пешком.</p>
+      </div>
+      <a href="https://yandex.ru/maps/?text=Московская%20область%2C%20Раменский%20округ%2C%20посёлок%20Удельная%2C%20улица%20Салтыкова-Щедрина%2C%2010" target="_blank" rel="noopener" class="reveal-btn directions-link">
+        <span class="reveal-label">Открыть в Яндекс Картах</span>
+        <span class="reveal-fill" aria-hidden="true"><span class="reveal-label">Открыть в Яндекс Картах</span></span>
+      </a>
+    </div>
+  </div>
+</div>
+
 <script>
   const burger = document.getElementById('burger');
   const navLinks = document.getElementById('navLinks');
@@ -1306,7 +1341,17 @@
   headerManagerBtn.addEventListener('click', openManagerModal);
   managerClose.addEventListener('click', closeManagerModal);
   managerModal.addEventListener('click', (e) => { if (e.target === managerModal) closeManagerModal(); });
-  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeManagerModal(); });
+
+  const directionsModal = document.getElementById('directionsModal');
+  const directionsBtn = document.getElementById('directionsBtn');
+  const directionsClose = document.getElementById('directionsClose');
+  const openDirectionsModal = () => { directionsModal.classList.add('open'); directionsModal.setAttribute('aria-hidden', 'false'); };
+  const closeDirectionsModal = () => { directionsModal.classList.remove('open'); directionsModal.setAttribute('aria-hidden', 'true'); };
+  directionsBtn.addEventListener('click', openDirectionsModal);
+  directionsClose.addEventListener('click', closeDirectionsModal);
+  directionsModal.addEventListener('click', (e) => { if (e.target === directionsModal) closeDirectionsModal(); });
+
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { closeManagerModal(); closeDirectionsModal(); } });
 
   const worksTrack = document.getElementById('worksTrack');
   if (worksTrack) {

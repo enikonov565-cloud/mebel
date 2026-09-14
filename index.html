@@ -373,8 +373,11 @@
     color:#180F01;max-width:460px;text-align:right;
   }
 
-  .benefits-wrap{display:flex;justify-content:space-between;align-items:flex-start;gap:47px;flex-wrap:wrap}
-  .benefits-list{list-style:none;flex:none;width:843px;max-width:100%}
+  .benefits-wrap{display:flex;justify-content:space-between;align-items:stretch;gap:47px;flex-wrap:wrap}
+  .benefits-list{
+    list-style:none;flex:none;width:843px;max-width:100%;
+    display:flex;flex-direction:column;justify-content:space-between;
+  }
   .benefits-list li{padding:15px 10px;border-bottom:1px solid rgba(24,15,1,.25)}
   .benefits-list li:last-child{border-bottom:none}
   .benefits-list h3{font-family:'Inter',sans-serif;font-weight:500;font-size:30px;color:#180F01;margin-bottom:8px}
@@ -534,7 +537,7 @@
     .svc-head,.benefits-head{justify-content:flex-start;flex-wrap:wrap}
     .svc-head p,.benefits-head p{text-align:left}
     .benefits-wrap{flex-direction:column}
-    .benefits-list{width:100%}
+    .benefits-list{width:100%;height:auto}
     .benefits-photo{width:100%;height:auto;aspect-ratio:910/730}
   }
 

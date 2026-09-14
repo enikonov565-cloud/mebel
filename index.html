@@ -234,46 +234,41 @@
     font-size:32px;line-height:1.2;letter-spacing:0.64px;color:#CDCBC7;max-width:370px;
   }
 
-  /* Services */
-  #services{background:var(--white)}
-  .scards{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
-  .scard{
-    display:flex;flex-direction:column;overflow:hidden;
-    background:var(--bg);border:1px solid var(--line);border-radius:var(--radius);
-    transition:transform .2s ease,box-shadow .2s ease;
+  /* Что мы изготавливаем — Figma node 65:181 */
+  #services{background:#110B00;padding:58px 0}
+  .svc-head{
+    display:flex;justify-content:space-between;align-items:center;
+    gap:clamp(20px,4vw,180px);flex-wrap:nowrap;margin-bottom:60px;
   }
-  .scard:hover{transform:translateY(-6px);box-shadow:var(--shadow)}
-  .scard-media{
-    position:relative;aspect-ratio:4/3;
-    background:linear-gradient(135deg,#6b4420,#a17646);
+  .svc-head h2{
+    font-family:'Inter',sans-serif;font-weight:500;
+    font-size:clamp(1.9rem,6vw,76px);line-height:0.9;letter-spacing:1.52px;color:#CDCBC7;
   }
-  .scard:nth-child(2) .scard-media{background:linear-gradient(135deg,#5e3d1f,#8a5a2b)}
-  .scard:nth-child(3) .scard-media{background:linear-gradient(135deg,#7a5230,#a17646)}
-  .scard:nth-child(4) .scard-media{background:linear-gradient(135deg,#4a3116,#7c5230)}
-  .scard:nth-child(5) .scard-media{background:linear-gradient(135deg,#6b4420,#93683c)}
-  .scard:nth-child(6) .scard-media{background:linear-gradient(135deg,#5e3d1f,#a17646)}
-  .scard-media img{width:100%;height:100%;object-fit:cover}
-  .scard-media figcaption{
-    position:absolute;left:16px;bottom:12px;color:#fff;font-weight:500;font-size:.84rem;
-    text-shadow:0 1px 8px rgba(0,0,0,.6);
+  .svc-head p{
+    font-family:'Inter',sans-serif;font-weight:300;
+    font-size:20px;line-height:1.2;letter-spacing:0.4px;text-transform:lowercase;
+    color:#CDCBC7;max-width:560px;text-align:right;
   }
-  .scard-body{padding:22px 22px 24px;display:flex;flex-direction:column;flex:1}
-  .scard-body h3{font-size:1.2rem;margin-bottom:8px}
-  .scard-body p{color:var(--muted);font-size:.94rem;margin-bottom:16px}
-  .subcats{list-style:none;display:flex;flex-wrap:wrap;gap:8px;margin-top:auto}
-  .subcats li{
-    font-size:.8rem;color:var(--accent-dark);
-    background:var(--bg-alt);border:1px solid var(--line);
-    padding:5px 11px;border-radius:20px;
+
+  .svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:27px 25px}
+  .svc-card{display:flex;align-items:center;gap:26px;background:#CDCBC7;border-radius:15px;overflow:hidden;height:440px;min-width:0}
+  .svc-card-photo{flex:none;width:254px;height:100%;object-fit:cover}
+  .svc-card-body{display:flex;flex-direction:column;gap:20px;justify-content:center;padding:20px 24px 20px 0;color:#180F01;min-width:0}
+  .svc-card-body h3{font-family:'Inter',sans-serif;font-weight:500;font-size:36px;line-height:1.05;letter-spacing:0.72px}
+  .svc-subcats{list-style:none;font-family:'Inter',sans-serif;font-weight:300;font-size:28px;line-height:1.2;letter-spacing:0.64px}
+  .svc-card-body>p{font-family:'Inter',sans-serif;font-weight:300;font-size:19px;line-height:1.25}
+
+  .svc-cta{display:flex;flex-direction:column;gap:40px;justify-content:center;height:440px;background:transparent}
+  .svc-cta p{font-family:'Inter',sans-serif;font-weight:700;font-size:26px;color:#CDCBC7;line-height:1.35}
+  .svc-cta-actions{display:flex;flex-direction:column;gap:16px}
+  .svc-btn{
+    height:88px;border-radius:15px;font-family:'Inter',sans-serif;font-weight:700;font-size:26px;
+    display:flex;align-items:center;justify-content:center;text-align:center;padding:0 20px;
+    cursor:pointer;transition:transform .15s ease;
   }
-  .services-cta{
-    margin-top:30px;display:flex;align-items:center;justify-content:space-between;
-    gap:22px;flex-wrap:wrap;
-    background:var(--bg-alt);border:1px solid var(--line);border-radius:var(--radius);
-    padding:24px 30px;
-  }
-  .services-cta p{font-weight:600;font-size:1.05rem;max-width:46ch}
-  .services-cta .cta-actions{display:flex;gap:14px;flex-wrap:wrap}
+  .svc-btn:hover{transform:translateY(-2px)}
+  .svc-btn.dark{background:#2F1F02;border:1pt solid #CDCBC7;color:#CDCBC7}
+  .svc-btn.light{background:#CDCBC7;border:1pt solid #2F1F02;color:#2F1F02}
 
   /* Materials */
   #materials{background:var(--white)}
@@ -305,30 +300,45 @@
   .step h3{font-size:1rem;margin-bottom:6px}
   .step p{color:var(--muted);font-size:.88rem}
 
-  /* Benefits — what you get */
-  #benefits{background:var(--bg)}
-  .benefits-wrap{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:stretch}
-  .benefits-list{list-style:none;margin-top:26px;border-top:1px solid var(--line)}
-  .benefits-list li{
-    display:grid;grid-template-columns:auto 1fr;gap:16px;
-    padding:19px 0;border-bottom:1px solid var(--line);
+  /* Что вы получаете — Figma node 61:80 */
+  #benefits{background:#CDCBC7;padding:58px 0}
+  .benefits-tags-wrap{
+    overflow:hidden;margin-bottom:40px;
+    -webkit-mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent);
+    mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent);
   }
-  .benefits-list .n{
-    font-size:.9rem;font-weight:700;color:var(--accent);
-    font-variant-numeric:tabular-nums;padding-top:3px;
+  .benefits-tags{display:flex;gap:16px;width:max-content;animation:tagScroll 26s linear infinite}
+  .benefits-tags-wrap:hover .benefits-tags{animation-play-state:paused}
+  @keyframes tagScroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+  @media (prefers-reduced-motion:reduce){.benefits-tags{animation:none}}
+  .benefits-tag{
+    flex:none;border:1px solid #2B2620;border-radius:10px;padding:10px 30px;
+    font-family:'Inter',sans-serif;font-weight:300;font-size:20px;letter-spacing:0.4px;
+    color:#2B2620;white-space:nowrap;
   }
-  .benefits-list h3{font-size:1.05rem;margin-bottom:4px}
-  .benefits-list p{color:var(--muted);font-size:.92rem;margin:0}
-  .benefits-photo{
-    position:relative;border-radius:var(--radius);overflow:hidden;
-    background:linear-gradient(135deg,#6b4420,#a17646);
+
+  .benefits-head{
+    display:flex;justify-content:space-between;align-items:center;
+    gap:clamp(20px,4vw,180px);flex-wrap:nowrap;margin-bottom:60px;
   }
-  .benefits-photo img{width:100%;height:100%;object-fit:cover}
-  .benefits-photo figcaption{
-    position:absolute;left:18px;right:18px;bottom:16px;
-    color:#fff;font-weight:500;font-size:.88rem;
-    text-shadow:0 1px 10px rgba(0,0,0,.6);
+  .benefits-head h2{
+    font-family:'Inter',sans-serif;font-weight:500;
+    font-size:clamp(1.9rem,6vw,76px);line-height:0.9;letter-spacing:1.52px;color:#180F01;
   }
+  .benefits-head p{
+    font-family:'Inter',sans-serif;font-weight:300;
+    font-size:20px;line-height:1.2;letter-spacing:0.4px;text-transform:lowercase;
+    color:#180F01;max-width:460px;text-align:right;
+  }
+
+  .benefits-wrap{display:flex;justify-content:space-between;align-items:flex-start;gap:47px;flex-wrap:wrap}
+  .benefits-list{list-style:none;flex:none;width:843px;max-width:100%}
+  .benefits-list li{padding:15px 10px;border-bottom:1px solid rgba(24,15,1,.25)}
+  .benefits-list li:last-child{border-bottom:none}
+  .benefits-list h3{font-family:'Inter',sans-serif;font-weight:500;font-size:30px;color:#180F01;margin-bottom:8px}
+  .benefits-list p{font-family:'Inter',sans-serif;font-weight:300;font-size:19px;color:#180F01}
+  .benefits-photo{flex:1;min-width:280px;width:910px;height:730px;border-radius:15px;overflow:hidden}
+  .benefits-photo img{width:100%;height:100%;object-fit:cover;display:block}
 
   /* Portfolio */
   #portfolio{background:var(--bg-alt)}
@@ -476,18 +486,26 @@
     .about-headline,.why-head{justify-content:flex-start;flex-wrap:wrap}
     .why-grid{grid-template-columns:repeat(2,1fr);grid-template-rows:repeat(4,minmax(280px,1fr))}
     .why-vline,.why-hline{display:none}
+    .svc-grid{grid-template-columns:repeat(2,1fr)}
+    .svc-cta{grid-column:1/-1;height:auto;padding:20px 0}
+    .svc-head,.benefits-head{justify-content:flex-start;flex-wrap:wrap}
+    .svc-head p,.benefits-head p{text-align:left}
+    .benefits-wrap{flex-direction:column}
+    .benefits-list{width:100%}
+    .benefits-photo{width:100%;height:auto;aspect-ratio:910/730}
   }
 
   /* Tablet */
   @media (max-width:960px){
-    .cards,.scards,.gallery,.reviews-grid{grid-template-columns:repeat(2,1fr)}
+    .cards,.gallery,.reviews-grid{grid-template-columns:repeat(2,1fr)}
     .materials-grid{grid-template-columns:repeat(3,1fr)}
     .steps{grid-template-columns:repeat(3,1fr);row-gap:36px}
     .steps::before{display:none}
     .contact-wrap{grid-template-columns:1fr;gap:34px}
-    .services-cta{justify-content:flex-start}
-    .benefits-wrap{grid-template-columns:1fr;gap:32px}
-    .benefits-photo{aspect-ratio:16/10;order:-1}
+    .svc-grid{grid-template-columns:1fr}
+    .svc-card{flex-direction:column;height:auto}
+    .svc-card-photo{width:100%;height:260px}
+    .svc-card-body{padding:20px}
     .directions{grid-template-columns:1fr;gap:28px}
     .map-card{order:-1;aspect-ratio:16/10}
     .about-photo-img{max-width:560px}
@@ -517,7 +535,16 @@
     .stat-box span{font-size:14px}
     .stats-grid{column-gap:24px;row-gap:28px}
     .why-cell.text p{font-size:18px}
-    .cards,.scards,.gallery,.reviews-grid{grid-template-columns:1fr}
+    .svc-head p,.benefits-head p{font-size:13px}
+    .svc-card-body h3{font-size:26px}
+    .svc-subcats{font-size:19px}
+    .svc-card-body>p{font-size:16px}
+    .svc-cta p{font-size:20px}
+    .svc-btn{font-size:18px;height:60px}
+    .benefits-tag{font-size:14px;padding:8px 18px}
+    .benefits-list h3{font-size:22px}
+    .benefits-list p{font-size:16px}
+    .cards,.gallery,.reviews-grid{grid-template-columns:1fr}
     .materials-grid{grid-template-columns:repeat(2,1fr)}
     .steps{grid-template-columns:1fr}
     .hero{padding:90px 0}
@@ -624,83 +651,81 @@
   </div>
 </section>
 
-<!-- 3. Услуги -->
+<!-- 3. Что мы изготавливаем — точный макет Figma (node 65:181) -->
 <section id="services">
   <div class="container">
-    <h2 class="section-title">Что мы изготавливаем</h2>
-    <p class="section-lead">Каждое изделие разрабатывается под ваше помещение, задачи и бюджет. Работаем с дубом, ясенем, буком, орехом и другими породами.</p>
-    <div class="scards">
-      <article class="scard">
-        <!-- <img src="s-korpus.jpg" alt="Корпусная мебель"> -->
-        <div class="scard-media"><figcaption>Кухня из массива дуба</figcaption></div>
-        <div class="scard-body">
-          <h3>Корпусная мебель</h3>
-          <p>Точная подгонка по размерам помещения, любые конфигурации и системы хранения.</p>
-          <ul class="subcats">
-            <li>Кухни</li><li>Шкафы-купе</li><li>Гардеробные</li><li>Прихожие</li>
-            <li>Стеллажи</li><li>Комоды и тумбы</li><li>ТВ-зоны</li>
-          </ul>
-        </div>
-      </article>
-
-      <article class="scard">
-        <!-- <img src="s-exclusive.jpg" alt="Эксклюзивная мебель"> -->
-        <div class="scard-media"><figcaption>Барный шкаф, орех, ручная резьба</figcaption></div>
-        <div class="scard-body">
-          <h3>Эксклюзивная мебель</h3>
-          <p>Изделия по индивидуальным чертежам: авторские формы, редкие породы, ручная работа.</p>
-          <ul class="subcats">
-            <li>Резные фасады</li><li>Гнутые элементы</li><li>Изделия из слэба</li>
-            <li>Инкрустация</li><li>Реставрация антиквариата</li>
-          </ul>
-        </div>
-      </article>
-
-      <article class="scard">
-        <!-- <img src="s-doors.jpg" alt="Двери и порталы"> -->
-        <div class="scard-media"><figcaption>Межкомнатная дверь из массива ясеня</figcaption></div>
-        <div class="scard-body">
-          <h3>Двери и порталы</h3>
-          <p>Точная подгонка по проёму, единый стиль с остальной мебелью в интерьере.</p>
-          <ul class="subcats">
-            <li>Межкомнатные</li><li>Входные</li><li>Скрытого монтажа</li>
-            <li>Арки</li><li>Каминные порталы</li><li>Стеновые панели (буазери)</li>
-          </ul>
-        </div>
-      </article>
-
-      <article class="scard">
-        <!-- <img src="s-office.jpg" alt="Офисная мебель"> -->
-        <div class="scard-media"><figcaption>Стойка ресепшн, шпон дуба</figcaption></div>
-        <div class="scard-body">
-          <h3>Офисная мебель</h3>
-          <p>Представительские зоны и рабочие места в едином корпоративном стиле.</p>
-          <ul class="subcats">
-            <li>Стойки ресепшн</li><li>Рабочие столы</li><li>Кабинеты руководителя</li>
-            <li>Переговорные столы</li><li>Стеллажи для документов</li>
-          </ul>
-        </div>
-      </article>
-
-      <article class="scard">
-        <!-- <img src="s-commerce.jpg" alt="Коммерческая мебель"> -->
-        <div class="scard-media"><figcaption>Барная стойка для кофейни</figcaption></div>
-        <div class="scard-body">
-          <h3>Коммерческая мебель</h3>
-          <p>Мебель для торговли и HoReCa: износостойкие материалы, серийное повторение.</p>
-          <ul class="subcats">
-            <li>Барные стойки</li><li>Торговые островки</li><li>Витрины и прилавки</li>
-            <li>Мебель для кафе и ресторанов</li><li>Оформление зон</li>
-          </ul>
-        </div>
-      </article>
+    <div class="svc-head">
+      <h2>Что мы изготавливаем</h2>
+      <p>Каждое изделие разрабатывается под&nbsp;ваше помещение.<br>Работаем с&nbsp;дубом, ясенем, буком, орехом и&nbsp;другими породами.</p>
     </div>
 
-    <div class="services-cta">
-      <p>Не нашли нужное? Изготовим по вашему эскизу или чертежу дизайнера.</p>
-      <div class="cta-actions">
-        <a href="#portfolio" class="btn outline">Перейти в каталог</a>
-        <a href="#contact" class="btn">Рассчитать стоимость проекта</a>
+    <div class="svc-grid">
+      <article class="svc-card">
+        <img class="svc-card-photo" src="cat-korpus.jpg" alt="Корпусная мебель">
+        <div class="svc-card-body">
+          <h3>Корпусная мебель</h3>
+          <ul class="svc-subcats">
+            <li>Кухни</li><li>Шкафы-купе</li><li>Гардеробные</li><li>Прихожие</li>
+            <li>Стеллажи</li><li>Комоды/Тумбы</li><li>ТВ-зоны</li>
+          </ul>
+          <p>Точная подгонка по&nbsp;размерам помещения.</p>
+        </div>
+      </article>
+
+      <article class="svc-card">
+        <img class="svc-card-photo" src="cat-exclusive.jpg" alt="Эксклюзивная мебель">
+        <div class="svc-card-body">
+          <h3>Эксклюзивная мебель</h3>
+          <ul class="svc-subcats">
+            <li>Резные фасады</li><li>Гнутые элементы</li><li>Изделия из&nbsp;слэба</li>
+            <li>Инкрустация</li><li>Авторские формы</li><li>Редкие породы</li><li>Ручная работа</li>
+          </ul>
+          <p>Изделия по&nbsp;индивидуальным чертежам и&nbsp;размерам.</p>
+        </div>
+      </article>
+
+      <article class="svc-card">
+        <img class="svc-card-photo" src="cat-doors.jpg" alt="Двери и порталы">
+        <div class="svc-card-body">
+          <h3>Двери и&nbsp;порталы</h3>
+          <ul class="svc-subcats">
+            <li>Межкомнатные</li><li>Входные</li><li>Арки</li>
+            <li>Каминные порталы</li><li>Стеновые панели (буазери)</li>
+          </ul>
+          <p>Точная подгонка по&nbsp;проёму, единый стиль с&nbsp;мебелью.</p>
+        </div>
+      </article>
+
+      <article class="svc-card">
+        <img class="svc-card-photo" src="cat-office.jpg" alt="Офисная мебель">
+        <div class="svc-card-body">
+          <h3>Офисная мебель</h3>
+          <ul class="svc-subcats">
+            <li>Стойки ресепшн</li><li>Рабочие столы</li><li>Кабинеты руководителя</li>
+            <li>Переговорные столы</li><li>Стеллажи</li>
+          </ul>
+          <p>Соблюдение единого стиля в&nbsp;офисном пространстве.</p>
+        </div>
+      </article>
+
+      <article class="svc-card">
+        <img class="svc-card-photo" src="cat-commerce.jpg" alt="Коммерческая мебель">
+        <div class="svc-card-body">
+          <h3>Коммерческая мебель</h3>
+          <ul class="svc-subcats">
+            <li>Барные стойки</li><li>Торговые островки</li><li>Витрины</li>
+            <li>Мебель в&nbsp;кафе и&nbsp;рестораны</li><li>Оформление зон</li>
+          </ul>
+          <p>Мебель из&nbsp;износостойких материалов.</p>
+        </div>
+      </article>
+
+      <div class="svc-cta">
+        <p>Не&nbsp;нашли нужное? Изготовим по&nbsp;вашему эскизу или&nbsp;чертежу дизайнера.</p>
+        <div class="svc-cta-actions">
+          <a href="#portfolio" class="svc-btn dark">перейти в каталог</a>
+          <a href="#contact" class="svc-btn light">рассчитать стоимость проекта</a>
+        </div>
       </div>
     </div>
   </div>
@@ -757,61 +782,58 @@
   </div>
 </section>
 
-<!-- 6. Что вы получаете -->
+<!-- 6. Что вы получаете — точный макет Figma (node 61:80) -->
 <section id="benefits">
   <div class="container">
-    <div class="benefits-wrap">
-      <div>
-        <h2 class="section-title">Что вы получаете</h2>
-        <p class="section-lead">Не список услуг, а конкретный результат — что именно вы получите, заказав мебель у нас.</p>
-        <ol class="benefits-list">
-          <li>
-            <span class="n">01</span>
-            <div>
-              <h3>Мебель по размерам с точностью до 1 мм</h3>
-              <p>Учитываем неровности стен, пола и потолка — изделие встаёт без щелей.</p>
-            </div>
-          </li>
-          <li>
-            <span class="n">02</span>
-            <div>
-              <h3>Результат как в проекте</h3>
-              <p>3D-визуализация до старта и контрольная сборка в цеху перед отгрузкой.</p>
-            </div>
-          </li>
-          <li>
-            <span class="n">03</span>
-            <div>
-              <h3>Массив, а не ЛДСП</h3>
-              <p>Дуб, ясень, орех; финишное покрытие маслами и воском Osmo и Borma.</p>
-            </div>
-          </li>
-          <li>
-            <span class="n">04</span>
-            <div>
-              <h3>Договор с фиксированной ценой и сроком</h3>
-              <p>Смета в договоре не меняется — без доплат по ходу работ.</p>
-            </div>
-          </li>
-          <li>
-            <span class="n">05</span>
-            <div>
-              <h3>Гарантия 5 лет</h3>
-              <p>Сервисный выезд и устранение недочётов по гарантии — бесплатно.</p>
-            </div>
-          </li>
-          <li>
-            <span class="n">06</span>
-            <div>
-              <h3>Условия для постоянных клиентов и дизайнеров</h3>
-              <p>Скидка до 15% на повторные заказы и партнёрская программа для студий.</p>
-            </div>
-          </li>
-        </ol>
+    <div class="benefits-tags-wrap">
+      <div class="benefits-tags">
+        <span class="benefits-tag">гарантии и обслуживание</span>
+        <span class="benefits-tag">производство полного цикла</span>
+        <span class="benefits-tag">эксклюзивные проекты</span>
+        <span class="benefits-tag">индивидуальный дизайн</span>
+        <span class="benefits-tag">строгий контроль качества</span>
+        <span class="benefits-tag" aria-hidden="true">гарантии и обслуживание</span>
+        <span class="benefits-tag" aria-hidden="true">производство полного цикла</span>
+        <span class="benefits-tag" aria-hidden="true">эксклюзивные проекты</span>
+        <span class="benefits-tag" aria-hidden="true">индивидуальный дизайн</span>
+        <span class="benefits-tag" aria-hidden="true">строгий контроль качества</span>
       </div>
-      <!-- Замените на: <img src="benefit.jpg" alt="Проект мастерской"> -->
+    </div>
+
+    <div class="benefits-head">
+      <h2>Что вы получаете</h2>
+      <p>Не&nbsp;список услуг, а&nbsp;конкретный результат&nbsp;—<br>что именно вы&nbsp;получите, заказав мебель у&nbsp;нас.</p>
+    </div>
+
+    <div class="benefits-wrap">
+      <ol class="benefits-list">
+        <li>
+          <h3>Изготовление нестандартной мебели под&nbsp;заказ</h3>
+          <p>Учитываем неровности стен, пола и&nbsp;потолка&nbsp;— изделие встаёт без&nbsp;щелей.</p>
+        </li>
+        <li>
+          <h3>Результат как&nbsp;в&nbsp;проекте</h3>
+          <p>Контрольная сборка в&nbsp;цеху перед отгрузкой.</p>
+        </li>
+        <li>
+          <h3>Массив, а&nbsp;не&nbsp;ЛДСП</h3>
+          <p>Дуб, ясень, орех; финишное покрытие маслами и&nbsp;воском.</p>
+        </li>
+        <li>
+          <h3>Договор с&nbsp;фиксированной ценой и&nbsp;сроком</h3>
+          <p>Смета в&nbsp;договоре не&nbsp;меняется&nbsp;— без&nbsp;доплат по&nbsp;ходу работ.</p>
+        </li>
+        <li>
+          <h3>Гарантия 3&nbsp;года</h3>
+          <p>Сервисный выезд и&nbsp;устранение недочётов по&nbsp;гарантии&nbsp;— бесплатно.</p>
+        </li>
+        <li>
+          <h3>Условия для&nbsp;постоянных клиентов и&nbsp;дизайнеров</h3>
+          <p>Скидка до&nbsp;15% на&nbsp;повторные заказы и&nbsp;партнёрская программа для&nbsp;студий.</p>
+        </li>
+      </ol>
       <figure class="benefits-photo">
-        <figcaption>Гардеробная из массива дуба, проект для квартиры в Москве</figcaption>
+        <img src="benefits-photo.jpg" alt="Проект мебели">
       </figure>
     </div>
   </div>

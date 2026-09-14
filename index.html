@@ -579,7 +579,7 @@
     font-size:20px;line-height:1.2;letter-spacing:0.4px;text-transform:lowercase;
     color:#CDCBC7;max-width:502px;text-align:right;
   }
-  .contact-cta{display:flex;justify-content:flex-start;gap:24px;flex-wrap:wrap;margin-top:40px}
+  .contact-cta{display:flex;justify-content:flex-end;gap:24px;flex-wrap:wrap;margin-top:40px}
   .contact-cta button{
     display:flex;align-items:center;justify-content:center;
     width:497px;max-width:100%;height:64px;
@@ -589,6 +589,22 @@
     --reveal-bg:#2B2620;--reveal-text:#CDCBC7;
   }
   .contact-cta button:hover{transform:translateY(-2px)}
+  .directions-trigger{
+    background:transparent!important;border:1pt solid rgba(205,203,199,.4)!important;
+    color:rgba(205,203,199,.75)!important;font-weight:500!important;
+    --reveal-bg:rgba(205,203,199,.15);--reveal-text:rgba(205,203,199,.9);
+  }
+  .directions-trigger:hover{border-color:rgba(205,203,199,.7)!important}
+
+  .footer-cta-btn{
+    display:flex;align-items:center;justify-content:center;
+    width:100%;max-width:340px;height:60px;margin-top:22px;
+    background:#CDCBC7;border:1pt solid #2B2620;border-radius:15px;
+    font-family:'Inter',sans-serif;font-weight:700;font-size:20px;color:#2B2620;
+    text-align:center;cursor:pointer;transition:transform .15s ease;
+    --reveal-bg:#2B2620;--reveal-text:#CDCBC7;
+  }
+  .footer-cta-btn:hover{transform:translateY(-2px)}
 
   .map-card{
     display:block;position:relative;overflow:hidden;
@@ -1235,11 +1251,7 @@
     </a>
 
     <div class="contact-cta">
-      <button type="button" id="contactManagerBtn" class="reveal-btn">
-        <span class="reveal-label">оставить заявку</span>
-        <span class="reveal-fill" aria-hidden="true"><span class="reveal-label">оставить заявку</span></span>
-      </button>
-      <button type="button" id="directionsBtn" class="reveal-btn">
+      <button type="button" id="directionsBtn" class="reveal-btn directions-trigger">
         <span class="reveal-label">как добраться</span>
         <span class="reveal-fill" aria-hidden="true"><span class="reveal-label">как добраться</span></span>
       </button>
@@ -1255,6 +1267,10 @@
         <span class="sub">ИНТЕРЬЕР</span>
       </div>
       <p>Оставьте заявку — перезвоним в течение рабочего дня, обсудим задачу и запишем на бесплатный замер.</p>
+      <button type="button" id="contactManagerBtn" class="reveal-btn footer-cta-btn">
+        <span class="reveal-label">оставить заявку</span>
+        <span class="reveal-fill" aria-hidden="true"><span class="reveal-label">оставить заявку</span></span>
+      </button>
     </div>
 
     <ul class="footer-nav">

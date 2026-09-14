@@ -159,57 +159,78 @@
   .hero-stats b{display:block;font-size:2rem;color:#f4d9b8}
   .hero-stats span{font-size:.9rem;opacity:.85}
 
-  /* About — exact spec from Figma node 42:450 */
-  #about{background:#180F01;padding:58px 0 124px}
-  .about-inner{display:flex;flex-direction:column;gap:100px}
-  .about-top{display:flex;flex-direction:column;gap:60px}
+  /* Собственное производство полного цикла — Figma node 270:439 */
+  #about{background:#110B00;padding:58px 0 92px}
+  .about-inner{display:flex;flex-direction:column;gap:60px}
   .about-headline{
     display:flex;justify-content:space-between;align-items:center;
     gap:clamp(20px,4vw,180px);flex-wrap:nowrap;
   }
   .about-headline h2{
     font-family:'Inter',sans-serif;font-weight:500;
-    font-size:clamp(1.9rem,6vw,69px);line-height:0.9;letter-spacing:1.52px;
+    font-size:clamp(1.9rem,6vw,76px);line-height:0.9;letter-spacing:1.52px;
     color:#CDCBC7;white-space:normal;
   }
   .about-headline p{
-    font-family:'Inter',sans-serif;font-weight:500;
-    font-size:13px;line-height:normal;text-transform:uppercase;
+    font-family:'Inter',sans-serif;font-weight:300;
+    font-size:20px;line-height:1.2;letter-spacing:0.4px;text-transform:lowercase;
     color:#CDCBC7;max-width:539px;
   }
 
-  .about-row{display:grid;grid-template-columns:330px 695px 611px;gap:72px;justify-content:center;align-items:stretch}
+  .about-row2{display:flex;align-items:center;gap:93px;flex-wrap:wrap}
 
-  .about-stats{display:flex;flex-direction:column;gap:60px;align-items:center;justify-content:space-between;width:330px;max-width:100%;height:100%}
-  .about-stat{display:flex;flex-direction:column;align-items:center;gap:10px;width:100%;text-align:center}
-  .about-stat b{
+  .stats-grid{
+    position:relative;display:grid;grid-template-columns:1fr 1fr;
+    column-gap:155px;row-gap:348px;width:832px;max-width:100%;
+    margin-left:54px;flex:none;
+  }
+  .stats-grid::before{content:'';position:absolute;left:0;right:0;top:50%;height:1px;background:#CDCBC7;opacity:.35}
+  .stats-grid::after{content:'';position:absolute;top:0;bottom:0;left:50%;width:1px;background:#CDCBC7;opacity:.35}
+  .stat-box{display:flex;flex-direction:column;gap:10px;text-align:left}
+  .stat-box b{
     font-family:'Inter',sans-serif;font-weight:500;
-    font-size:clamp(2rem,7vw,69px);line-height:0.9;letter-spacing:1.52px;color:#CDCBC7;
+    font-size:clamp(2rem,7vw,76px);line-height:0.9;letter-spacing:1.52px;color:#CDCBC7;
   }
-  .about-stat span{
-    font-family:'Inter',sans-serif;font-weight:500;
-    font-size:13px;line-height:normal;text-transform:uppercase;color:#CDCBC7;
-  }
-  .about-divider{
-    width:170px;max-width:100%;height:4px;border:none;
-    background:url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNzQuMDQxIiBoZWlnaHQ9IjQuMDQxNDUiIHZpZXdCb3g9IjAgMCAxNzQuMDQxIDQuMDQxNDUiIGZpbGw9Im5vbmUiPjxwYXRoIGQ9Ik0wIDIuMDIwNzNMMi4wMjA3MyA0LjA0MTQ1TDQuMDQxNDUgMi4wMjA3M0wyLjAyMDczIDBMMCAyLjAyMDczWk0xNzQuMDQxIDIuMDIwNzNMMTcyLjAyMSAwTDE3MCAyLjAyMDczTDE3Mi4wMjEgNC4wNDE0NUwxNzQuMDQxIDIuMDIwNzNaTTIuMDIwNzMgMi4wMjA3M1YyLjM3MDczSDE3Mi4wMjFWMi4wMjA3M1YxLjY3MDczSDIuMDIwNzNWMi4wMjA3M1oiIGZpbGw9IiNDRENCQzciLz48L3N2Zz4=) center/contain no-repeat;
-  }
-
-  .about-photo{
-    width:100%;height:100%;min-height:790px;border-radius:15px;
-    background:linear-gradient(150deg,#4a3116,#8a5a2b);
-  }
-
-  .about-why{display:flex;flex-direction:column;gap:60px;width:611px;max-width:100%;height:100%}
-  .about-why h3{
-    font-family:'Inter',sans-serif;font-weight:500;
-    font-size:43px;line-height:1.3;letter-spacing:1px;color:#CDCBC7;flex:none;
-  }
-  .why-list{display:flex;flex-direction:column;justify-content:space-between;flex:1;align-items:stretch;width:100%}
-  .why-list p{
-    padding:10px 0;width:100%;text-align:left;
+  .stat-box span{
     font-family:'Inter',sans-serif;font-weight:300;
-    font-size:25px;line-height:1.2;letter-spacing:0.64px;color:#CDCBC7;
+    font-size:20px;line-height:1.2;letter-spacing:0.4px;text-transform:lowercase;color:#CDCBC7;
+  }
+
+  .about-photo-img{
+    flex:none;width:817px;max-width:100%;height:862px;
+    border-radius:15px;object-fit:cover;
+  }
+
+  /* Почему выбирают нас — Figma node 272:547 */
+  #why-us{background:#110B00;padding:58px 0 75px}
+  .why-inner{display:flex;flex-direction:column;gap:100px}
+  .why-head{
+    display:flex;justify-content:space-between;align-items:center;
+    gap:clamp(20px,4vw,358px);flex-wrap:nowrap;
+  }
+  .why-head h2{
+    font-family:'Inter',sans-serif;font-weight:500;
+    font-size:clamp(1.9rem,6vw,76px);line-height:0.9;letter-spacing:1.52px;
+    color:#CDCBC7;white-space:normal;
+  }
+  .why-head p{
+    font-family:'Inter',sans-serif;font-weight:300;
+    font-size:20px;line-height:1.2;letter-spacing:0.4px;text-transform:lowercase;
+    color:#CDCBC7;max-width:575px;
+  }
+
+  .why-grid{
+    position:relative;display:grid;grid-template-columns:repeat(4,1fr);
+    grid-template-rows:repeat(2,420px);gap:55px 43px;
+  }
+  .why-vline{position:absolute;top:0;bottom:0;width:1px;background:#CDCBC7;opacity:.3}
+  .why-hline{position:absolute;left:0;right:0;height:1px;background:#CDCBC7;opacity:.3}
+  .why-cell{border-radius:15px;overflow:hidden;min-width:0;min-height:0}
+  .why-cell img{width:100%;height:100%;object-fit:cover;display:block}
+  .why-cell.text{display:flex;align-items:center;justify-content:center;padding:10px;text-align:left}
+  .why-cell.text p{
+    font-family:'Inter',sans-serif;font-weight:300;
+    font-size:32px;line-height:1.2;letter-spacing:0.64px;color:#CDCBC7;max-width:370px;
   }
 
   /* Services */
@@ -446,13 +467,14 @@
   .modal-card h3{font-size:1.2rem;margin-bottom:20px;padding-right:24px}
   .modal-card form{display:grid;gap:14px}
 
-  /* About row needs ~1780px to stay in one line (exact Figma widths) */
+  /* About / Why-us rows need ~1900px to stay in one line (exact Figma widths) */
   @media (max-width:1900px){
-    .about-row{grid-template-columns:1fr;gap:56px}
-    .about-stats{width:100%;height:auto}
-    .about-photo{order:-1;width:100%;height:auto;min-height:0;aspect-ratio:695/790;max-width:695px}
-    .about-why{width:100%;height:auto}
-    .about-headline{justify-content:flex-start;flex-wrap:wrap}
+    .about-row2{flex-direction:column;gap:56px}
+    .stats-grid{margin-left:0;width:100%}
+    .about-photo-img{order:-1;width:100%;height:auto;aspect-ratio:817/862;max-width:817px}
+    .about-headline,.why-head{justify-content:flex-start;flex-wrap:wrap}
+    .why-grid{grid-template-columns:repeat(2,1fr);grid-template-rows:repeat(4,minmax(280px,1fr))}
+    .why-vline,.why-hline{display:none}
   }
 
   /* Tablet */
@@ -467,10 +489,13 @@
     .benefits-photo{aspect-ratio:16/10;order:-1}
     .directions{grid-template-columns:1fr;gap:28px}
     .map-card{order:-1;aspect-ratio:16/10}
-    .about-photo{max-width:560px}
-    .about-why h3{font-size:34px}
-    .why-list p{font-size:20px}
+    .about-photo-img{max-width:560px}
+    .stats-grid{column-gap:40px;row-gap:36px}
+    .why-grid{grid-template-columns:1fr;grid-template-rows:none;gap:24px}
+    .why-cell{aspect-ratio:1/1}
+    .why-cell.text p{font-size:24px;max-width:100%}
     #about{padding:72px 0}
+    #why-us{padding:72px 0}
     section{padding:64px 0}
     .footer-cta{width:340px;font-size:20px;height:54px}
     .nav-cta{width:150px;height:24px;font-size:11px;border-radius:15pt}
@@ -487,10 +512,10 @@
       padding:6px 12px;font-size:11px;line-height:1.2;
       white-space:normal;text-align:center;border-radius:15pt;
     }
-    .about-headline p{font-size:11px}
-    .about-stat span{font-size:11px}
-    .about-why h3{font-size:24px}
-    .why-list p{font-size:17px;padding:0}
+    .about-headline p,.why-head p{font-size:13px}
+    .stat-box span{font-size:14px}
+    .stats-grid{column-gap:24px;row-gap:28px}
+    .why-cell.text p{font-size:18px}
     .cards,.scards,.gallery,.reviews-grid{grid-template-columns:1fr}
     .materials-grid{grid-template-columns:repeat(2,1fr)}
     .steps{grid-template-columns:1fr}
@@ -550,42 +575,50 @@
   </div>
 </section>
 
-<!-- 2. О компании — точный макет Figma (node 42:450) -->
+<!-- 2. Собственное производство полного цикла — точный макет Figma (node 270:439) -->
 <section id="about">
   <div class="container about-inner">
-    <div class="about-top">
-      <div class="about-headline">
-        <h2>Собственное производство<br>полного цикла</h2>
-        <p>Проектируем, изготавливаем<br>и монтируем мебель из массива с 2014 года.</p>
-      </div>
+    <div class="about-headline">
+      <h2>Собственное производство<br>полного цикла</h2>
+      <p>Проектируем, изготавливаем<br>и монтируем мебель из массива с 2014 года.</p>
     </div>
 
-    <div class="about-row">
-      <div class="about-stats">
-        <div class="about-stat"><b>12+</b><span>лет на рынке</span></div>
-        <div class="about-divider"></div>
-        <div class="about-stat"><b>800+</b><span>выполненных проектов</span></div>
-        <div class="about-divider"></div>
-        <div class="about-stat"><b>3 года</b><span>гарантии на изделия</span></div>
-        <div class="about-divider"></div>
-        <div class="about-stat"><b>15–25</b><span>дней средний срок изготовления</span></div>
+    <div class="about-row2">
+      <div class="stats-grid">
+        <div class="stat-box"><b>12+</b><span>лет на рынке</span></div>
+        <div class="stat-box"><b>3 года</b><span>гарантии на изделия</span></div>
+        <div class="stat-box"><b>800+</b><span>выполненных проектов</span></div>
+        <div class="stat-box"><b>15–25</b><span>дней средний срок изготовления</span></div>
       </div>
 
-      <!-- Вставьте фото/видео цеха -->
-      <figure class="about-photo"></figure>
+      <img class="about-photo-img" src="about-photo-main.jpg" alt="Производство мебели">
+    </div>
+  </div>
+</section>
 
-      <div class="about-why">
-        <h3>Почему выбирают нас</h3>
-        <div class="why-list">
-          <p style="max-width:480px">Собственное высокотехнологичное современное производство</p>
-          <div class="about-divider"></div>
-          <p style="max-width:330px">Фабричное качество производимой мебели</p>
-          <div class="about-divider"></div>
-          <p style="max-width:345px">Быстрая доставка и сборка мебели на дому</p>
-          <div class="about-divider"></div>
-          <p style="max-width:340px">Гарантия по договору на мебель 3 года</p>
-        </div>
-      </div>
+<!-- 2.1. Почему выбирают нас — точный макет Figma (node 272:547) -->
+<section id="why-us">
+  <div class="container why-inner">
+    <div class="why-head">
+      <h2>Почему выбирают нас</h2>
+      <p>Показываем не только рекламный ракурс, но и рабочую сторону, внутреннее наполнение и этапы изготовления.</p>
+    </div>
+
+    <div class="why-grid">
+      <div class="why-vline" style="left:24.3%"></div>
+      <div class="why-vline" style="left:49.7%"></div>
+      <div class="why-vline" style="left:75.6%"></div>
+      <div class="why-hline" style="top:49.7%"></div>
+
+      <div class="why-cell"><img src="why-photo-1.jpg" alt="Производство мебели"></div>
+      <div class="why-cell text"><p>Собственное высокотехнологичное современное производство</p></div>
+      <div class="why-cell"><img src="why-photo-2.jpg" alt="Материалы для мебели"></div>
+      <div class="why-cell text"><p>Фабричное качество производимой мебели</p></div>
+
+      <div class="why-cell text"><p>Быстрая доставка и сборка мебели на дому</p></div>
+      <div class="why-cell"><img src="why-photo-3.jpg" alt="Изготовление мебели"></div>
+      <div class="why-cell text"><p>Гарантия по договору на мебель 3 года</p></div>
+      <div class="why-cell"><img src="why-photo-4.jpg" alt="Мастер мебельного производства"></div>
     </div>
   </div>
 </section>

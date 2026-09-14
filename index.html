@@ -486,104 +486,153 @@
   }
   .works-cta a:hover{transform:translateY(-2px)}
 
-  /* Reviews */
-  #reviews{background:var(--bg)}
-  .reviews-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
-  .review{
-    background:var(--white);border:1px solid var(--line);border-radius:var(--radius);
-    padding:30px 26px;display:flex;flex-direction:column;
+  /* Отзывы наших клиентов — Figma node 202:77 */
+  #reviews{background:#180F01;padding:58px 0}
+  .reviews-head{
+    display:flex;justify-content:space-between;align-items:center;
+    gap:clamp(20px,4vw,180px);flex-wrap:nowrap;margin-bottom:60px;
   }
-  .review .stars{color:#d9a441;letter-spacing:2px;margin-bottom:14px;font-size:1rem}
-  .review p{color:var(--text);font-size:1rem;margin-bottom:20px;flex:1}
-  .review .who{display:flex;align-items:center;gap:12px}
-  .review .ava{
-    width:44px;height:44px;border-radius:50%;flex:none;
-    background:var(--accent);color:#fff;font-weight:700;
+  .reviews-head h2{
+    font-family:'Inter',sans-serif;font-weight:500;
+    font-size:clamp(1.9rem,6vw,76px);line-height:0.9;letter-spacing:1.52px;color:#CDCBC7;
+  }
+  .reviews-head p{
+    font-family:'Inter',sans-serif;font-weight:300;
+    font-size:20px;line-height:1.2;letter-spacing:0.4px;text-transform:lowercase;
+    color:#CDCBC7;max-width:664px;text-align:right;
+  }
+  .reviews-gallery{position:relative}
+  .reviews-track{
+    display:flex;gap:24px;overflow-x:auto;scroll-snap-type:x mandatory;
+    scrollbar-width:none;-ms-overflow-style:none;
+  }
+  .reviews-track::-webkit-scrollbar{display:none}
+  .review-card{
+    flex:none;width:455px;max-width:85vw;scroll-snap-align:start;
+    background:#fff;border-radius:15px;overflow:hidden;display:flex;flex-direction:column;
+  }
+  .review-card img{width:100%;aspect-ratio:455/548;height:auto;object-fit:cover;display:block;flex:none}
+  .review-body{padding:24px 26px;display:flex;flex-direction:column;gap:12px}
+  .review-body .stars{color:#d9a441;letter-spacing:2px;font-size:1rem}
+  .review-body .who{display:flex;justify-content:space-between;align-items:baseline;gap:10px;font-family:'Inter',sans-serif}
+  .review-body .who b{font-size:1rem;color:#180F01}
+  .review-body .who span{font-size:.82rem;color:#7a7062}
+  .review-body p{font-size:.86rem;line-height:1.45;color:#2B2620;margin:0}
+  .reviews-cta{display:flex;justify-content:center;margin-top:60px}
+  .reviews-cta a{
     display:flex;align-items:center;justify-content:center;
+    width:505px;max-width:100%;height:78px;
+    background:#2F1F02;border:1pt solid #CDCBC7;border-radius:15px;
+    font-family:'Inter',sans-serif;font-weight:700;font-size:26px;color:#CDCBC7;
+    text-align:center;transition:transform .15s ease;
+    --reveal-bg:#CDCBC7;--reveal-text:#2F1F02;
   }
-  .review .who b{display:block;font-size:.95rem}
-  .review .who span{color:var(--muted);font-size:.85rem}
+  .reviews-cta a:hover{transform:translateY(-2px)}
 
-  /* FAQ */
-  #faq{background:var(--white)}
-  .faq-list{max-width:820px}
-  .faq-list details{
-    border-bottom:1px solid var(--line);padding:22px 0;
+  /* Спрашиваете - отвечаем — Figma node 160:79 */
+  #faq{background:#CDCBC7;padding:58px 0}
+  .faq-head{
+    display:flex;justify-content:space-between;align-items:center;
+    gap:clamp(20px,4vw,180px);flex-wrap:nowrap;margin-bottom:60px;
   }
+  .faq-head h2{
+    font-family:'Inter',sans-serif;font-weight:500;
+    font-size:clamp(1.9rem,6vw,76px);line-height:0.9;letter-spacing:1.52px;color:#1E1E1E;
+  }
+  .faq-head p{
+    font-family:'Inter',sans-serif;font-weight:300;
+    font-size:20px;line-height:1.2;letter-spacing:0.4px;text-transform:lowercase;
+    color:#2B2620;max-width:571px;text-align:right;
+  }
+  .faq-list{max-width:1405px;margin:0 auto}
+  .faq-list details{border-bottom:1px solid rgba(43,38,32,.3);padding:20px 0}
+  .faq-list details:last-child{border-bottom:none}
   .faq-list summary{
     display:flex;justify-content:space-between;align-items:center;gap:20px;
-    cursor:pointer;font-weight:600;font-size:1.08rem;list-style:none;
+    cursor:pointer;list-style:none;
+    font-family:'Inter',sans-serif;font-weight:300;font-size:32px;letter-spacing:0.64px;color:#000;
   }
   .faq-list summary::-webkit-details-marker{display:none}
   .faq-list summary::after{
-    content:"+";font-size:1.5rem;color:var(--accent);flex:none;transition:transform .2s;
+    content:"+";flex:none;width:40px;height:40px;border-radius:50%;border:1.5px solid #2B2620;
+    display:flex;align-items:center;justify-content:center;
+    font-size:20px;color:#2B2620;transition:transform .2s;
   }
   .faq-list details[open] summary::after{transform:rotate(45deg)}
-  .faq-list details p{color:var(--muted);margin-top:14px;font-size:1rem}
-
-  /* Contact */
-  #contact{background:var(--bg-alt)}
-  .contact-wrap{display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:start}
-  .contact-info li{list-style:none;margin-bottom:18px;color:var(--muted)}
-  .contact-info b{display:block;color:var(--text);font-size:.85rem;text-transform:uppercase;letter-spacing:.05em}
-  form{display:grid;gap:16px}
-  input,textarea{
-    width:100%;padding:14px 16px;border:1px solid var(--line);border-radius:10px;
-    font-size:1rem;font-family:inherit;background:var(--bg);color:var(--text);
+  .faq-list details p{
+    margin-top:16px;font-family:'Inter',sans-serif;font-weight:300;
+    font-size:20px;line-height:1.4;color:#2B2620;max-width:1250px;
   }
-  input:focus,textarea:focus{outline:none;border-color:var(--accent)}
-  textarea{min-height:120px;resize:vertical}
-  .form-note{font-size:.82rem;color:var(--muted)}
 
-  .directions{
-    margin-top:56px;padding-top:48px;border-top:1px solid var(--line);
-    display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:center;
+  /* Как нас найти + футер — Figma node 176:183 */
+  #contact{background:#180F01;padding:58px 0}
+  .contact-head{
+    display:flex;justify-content:space-between;align-items:center;
+    gap:clamp(20px,4vw,180px);flex-wrap:nowrap;margin-bottom:60px;
   }
-  .directions h3{font-size:1.3rem;margin-bottom:20px}
-  .dway{margin-bottom:20px}
-  .dway b{display:block;font-size:.95rem;margin-bottom:4px}
-  .dway p{color:var(--muted);font-size:.94rem}
-  .directions .btn{margin-top:4px}
+  .contact-head h2{
+    font-family:'Inter',sans-serif;font-weight:500;
+    font-size:clamp(1.9rem,6vw,76px);line-height:0.9;letter-spacing:1.52px;color:#CDCBC7;
+  }
+  .contact-head p{
+    font-family:'Inter',sans-serif;font-weight:300;
+    font-size:20px;line-height:1.2;letter-spacing:0.4px;text-transform:lowercase;
+    color:#CDCBC7;max-width:502px;text-align:right;
+  }
+  .contact-cta{display:flex;justify-content:flex-start;margin-top:40px}
+  .contact-cta button{
+    display:flex;align-items:center;justify-content:center;
+    width:497px;max-width:100%;height:64px;
+    background:#CDCBC7;border:1pt solid #2B2620;border-radius:15px;
+    font-family:'Inter',sans-serif;font-weight:700;font-size:26px;color:#2B2620;
+    text-align:center;cursor:pointer;transition:transform .15s ease;
+    --reveal-bg:#2B2620;--reveal-text:#CDCBC7;
+  }
+  .contact-cta button:hover{transform:translateY(-2px)}
 
   .map-card{
     display:block;position:relative;overflow:hidden;
-    aspect-ratio:4/3;border-radius:var(--radius);border:1px solid var(--line);
-    background-color:var(--bg-alt);
+    height:530px;border-radius:15px;
+    background-color:#2B2620;
     background-image:
-      linear-gradient(0deg, transparent 24%, rgba(138,90,43,.16) 25%, rgba(138,90,43,.16) 26%, transparent 27%, transparent 74%, rgba(138,90,43,.16) 75%, rgba(138,90,43,.16) 76%, transparent 77%),
-      linear-gradient(90deg, transparent 24%, rgba(138,90,43,.16) 25%, rgba(138,90,43,.16) 26%, transparent 27%, transparent 74%, rgba(138,90,43,.16) 75%, rgba(138,90,43,.16) 76%, transparent 77%);
+      linear-gradient(0deg, transparent 24%, rgba(205,203,199,.12) 25%, rgba(205,203,199,.12) 26%, transparent 27%, transparent 74%, rgba(205,203,199,.12) 75%, rgba(205,203,199,.12) 76%, transparent 77%),
+      linear-gradient(90deg, transparent 24%, rgba(205,203,199,.12) 25%, rgba(205,203,199,.12) 26%, transparent 27%, transparent 74%, rgba(205,203,199,.12) 75%, rgba(205,203,199,.12) 76%, transparent 77%);
     background-size:56px 56px;
     transition:transform .2s ease, box-shadow .2s ease;
   }
-  .map-card:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+  .map-card:hover{transform:translateY(-4px)}
   .map-card .pin{
     position:absolute;left:50%;top:44%;transform:translate(-50%,-60%);
     font-size:2.6rem;line-height:1;
-    filter:drop-shadow(0 6px 8px rgba(30,20,10,.35));
+    filter:drop-shadow(0 6px 8px rgba(0,0,0,.4));
   }
   .map-card .tag{
-    position:absolute;left:16px;right:16px;bottom:16px;
-    background:var(--white);border:1px solid var(--line);border-radius:10px;
-    padding:12px 14px;font-size:.85rem;color:var(--text);font-weight:600;
-    box-shadow:var(--shadow);
+    position:absolute;left:20px;right:20px;bottom:20px;
+    background:#CDCBC7;border-radius:10px;
+    padding:14px 18px;font-size:.9rem;color:#180F01;font-weight:600;
   }
-  .map-card .tag span{display:block;font-weight:400;color:var(--muted);margin-top:3px;font-size:.78rem}
+  .map-card .tag span{display:block;font-weight:400;color:#4a4238;margin-top:3px;font-size:.8rem}
 
-  /* Footer — light and translucent */
-  footer{background:rgba(24,15,1,.78);backdrop-filter:blur(6px);color:#CDCBC7;padding:36px 0;font-size:.9rem}
-  .footer-wrap{display:flex;align-items:center;justify-content:space-between;gap:28px;flex-wrap:wrap}
-  .footer-brand{text-align:left}
-  .footer-logo{color:#fff;margin-bottom:8px;font-size:1.2rem;font-weight:600}
-  .footer-brand p{margin:0}
-  .footer-cta{
-    width:585px;max-width:100%;height:78px;flex:none;
-    background:#CDCBC7;border:1pt solid #2F1F02;border-radius:15pt;
-    color:#2F1F02;font-family:'Inter',sans-serif;font-size:26px;font-style:normal;
-    font-weight:700;line-height:normal;
-    display:flex;align-items:center;justify-content:center;
-    cursor:pointer;transition:transform .15s ease,background .2s ease;
+  /* Footer — same frame as «Как нас найти» */
+  footer{background:#180F01;color:#CDCBC7;padding:70px 0 40px;font-size:.9rem}
+  .footer-grid{display:flex;justify-content:space-between;gap:40px;flex-wrap:wrap}
+  .footer-brand{text-align:left;max-width:487px}
+  .footer-logo2{display:inline-flex;flex-direction:column;align-items:flex-start;margin-bottom:18px}
+  .footer-logo2 .word{
+    font-family:'GOST','Inter',sans-serif;font-weight:400;
+    font-size:4.5rem;letter-spacing:-.09em;white-space:nowrap;line-height:normal;
+    color:#CDCBC7;margin-bottom:-.3em;
   }
-  .footer-cta:hover{background:#e2e0da;transform:translateY(-2px)}
+  .footer-logo2 .word .edge{font-size:1.5625em}
+  .footer-logo2 .sub{
+    display:block;font-family:'Inter',sans-serif;font-weight:400;font-size:1.15rem;
+    text-transform:uppercase;color:#fff;line-height:normal;
+  }
+  .footer-brand p{margin:0;font-family:'Inter',sans-serif;font-weight:500;font-size:20px;line-height:1.3;color:#CDCBC7}
+  .footer-nav{list-style:none;display:flex;flex-direction:column;gap:10px;font-family:'Inter',sans-serif;font-weight:300;font-size:20px;text-transform:lowercase;letter-spacing:0.4px;color:#CDCBC7}
+  .footer-nav a{transition:opacity .2s}
+  .footer-nav a:hover{opacity:.7}
+  .footer-contacts{list-style:disc;padding-left:22px;display:flex;flex-direction:column;gap:24px;font-family:'Inter',sans-serif;font-weight:300;font-size:20px;text-transform:lowercase;letter-spacing:0.4px;color:#CDCBC7;max-width:659px}
 
   /* Contact modal */
   .modal-backdrop{
@@ -637,13 +686,14 @@
     .mat-head p{text-align:left}
     .steps{grid-template-columns:repeat(3,1fr);row-gap:36px}
     .steps::before{display:none}
-    .contact-wrap{grid-template-columns:1fr;gap:34px}
     .svc-grid{grid-template-columns:1fr}
     .svc-card{flex-direction:column;height:auto}
     .svc-card-photo{width:100%;height:260px}
     .svc-card-body{padding:20px}
-    .directions{grid-template-columns:1fr;gap:28px}
-    .map-card{order:-1;aspect-ratio:16/10}
+    .contact-head{justify-content:flex-start;flex-wrap:wrap}
+    .contact-head p{text-align:left}
+    .map-card{height:auto;aspect-ratio:16/9}
+    .footer-grid{flex-direction:column;gap:40px}
     .about-photo-img{max-width:560px}
     .stats-grid{grid-template-columns:1fr;column-gap:40px;row-gap:24px}
     .stats-grid::after{display:none}
@@ -709,9 +759,8 @@
     .hero-cta a{font-size:16px;height:50px}
     .about-cta a{width:100%;height:56px;padding:14px 20px;font-size:16px}
     section{padding:52px 0}
-    .footer-wrap{flex-direction:column;align-items:stretch;text-align:center}
-    .footer-brand{text-align:center}
-    .footer-cta{font-size:16px;height:48px}
+    .footer-logo2 .word{font-size:3rem}
+    .contact-cta button{width:100%;height:56px;font-size:18px}
     .modal-card{padding:28px 20px 22px}
   }
 </style>
@@ -1072,33 +1121,53 @@
 <!-- 8. Отзывы -->
 <section id="reviews">
   <div class="container">
-    <h2 class="section-title">Отзывы клиентов</h2>
-    <p class="section-lead">Более 800 проектов и средняя оценка 4,9 на профильных площадках. Несколько отзывов наших заказчиков.</p>
-    <div class="reviews-grid">
-      <div class="review">
-        <div class="stars">★★★★★</div>
-        <p>Заказывали кухню из дуба и гардеробную в дом. Замер, 3D-проект, сроки — всё точно по договору. Монтаж аккуратный, стыки идеальные. Через год — ничего не повело.</p>
-        <div class="who">
-          <div class="ava">АК</div>
-          <div><b>Андрей Козлов</b><span>частный дом, Одинцово</span></div>
-        </div>
+    <div class="reviews-head">
+      <h2>Отзывы наших клиентов</h2>
+      <p>Более 800 проектов и&nbsp;средняя оценка 4,9 на&nbsp;профильных площадках. Несколько отзывов наших заказчиков.</p>
+    </div>
+    <div class="reviews-gallery">
+      <button type="button" class="works-arrow prev" aria-label="Предыдущий отзыв" onclick="document.getElementById('reviewsTrack').scrollBy({left:-479,behavior:'smooth'})">&#8592;</button>
+      <div class="reviews-track" id="reviewsTrack">
+        <figure class="review-card">
+          <img src="review1.jpg" alt="Шкаф-купе с зеркальными дверями">
+          <div class="review-body">
+            <div class="stars">★★★★★</div>
+            <div class="who"><b>Гена Грудинин</b><span>23 августа</span></div>
+            <p>Заказывали шкаф. Качество выполненных работ выше всех похвал, мебель сделана в срок. Менеджер всегда на связи. Очень порадовали сборщики. У них возник вопрос по плинтусам, посоветовали как лучше сделать и сами же сделали. Очень рекомендую фирму Антураж.</p>
+          </div>
+        </figure>
+        <figure class="review-card">
+          <img src="review2.jpg" alt="Кухня из массива дуба">
+          <div class="review-body">
+            <div class="stars">★★★★★</div>
+            <div class="who"><b>Ирина Титкова</b><span>25 декабря</span></div>
+            <p>Выражаю глубокую признательность мебельной фирме Антураж за профессионализм, внимательное отношение к клиентам и индивидуальный подход. Благодаря вам наша семья стала обладателями кухни высшего качества. Все элементы выполнены безупречно. Сборка аккуратная и оперативная. Обязательно порекомендую вас всем знакомым! Спасибо вам за вашу работу!</p>
+          </div>
+        </figure>
+        <figure class="review-card">
+          <img src="review4.jpg" alt="Кухня со шкафом-купе">
+          <div class="review-body">
+            <div class="stars">★★★★★</div>
+            <div class="who"><b>Ириска</b><span>21 ноября</span></div>
+            <p>Если мебель на заказ — то только к Вам! Моим первым заказом была кухня, а когда встал вопрос о шкафе-купе для частного дома — я сразу обратилась в фирму Антураж. Прекрасная работа, качественные материалы, всё на высшем уровне! Выражаю огромную благодарность фирме и мастерам по сборке! Однозначно рекомендую!</p>
+          </div>
+        </figure>
+        <figure class="review-card">
+          <img src="review2.jpg" alt="Кухня из массива дуба">
+          <div class="review-body">
+            <div class="stars">★★★★★</div>
+            <div class="who"><b>Кристинка Д.</b><span>8 июня</span></div>
+            <p>Очень и очень благодарны сотрудникам фирмы Антураж за качественную кухню. Менеджер учла все проблемные моменты для максимально полезного использования пространства. С учётом сложности замеров идеально всё вписали — до миллиметра. Ни одного замечания. Профессионалы! Всей семьёй любуемся.</p>
+          </div>
+        </figure>
       </div>
-      <div class="review">
-        <div class="stars">★★★★★</div>
-        <p>Как дизайнер интерьера сотрудничаю с мастерской постоянно. Берут сложные авторские чертежи и делают именно так, как нарисовано. Клиенты всегда довольны.</p>
-        <div class="who">
-          <div class="ava">МС</div>
-          <div><b>Мария Соколова</b><span>дизайн-студия «Форма»</span></div>
-        </div>
-      </div>
-      <div class="review">
-        <div class="stars">★★★★★</div>
-        <p>Заказывали барную стойку и стеллажи для кофейни — сомневались, что впишется в интерьер. Инженер приехал, всё просчитал. Собрали за день, выглядит дорого. Рекомендую.</p>
-        <div class="who">
-          <div class="ava">ДВ</div>
-          <div><b>Дмитрий Волков</b><span>кофейня, Москва</span></div>
-        </div>
-      </div>
+      <button type="button" class="works-arrow next" aria-label="Следующий отзыв" onclick="document.getElementById('reviewsTrack').scrollBy({left:479,behavior:'smooth'})">&#8594;</button>
+    </div>
+    <div class="reviews-cta">
+      <a href="#portfolio" class="reveal-btn">
+        <span class="reveal-label">перейти в каталог</span>
+        <span class="reveal-fill" aria-hidden="true"><span class="reveal-label">перейти в каталог</span></span>
+      </a>
     </div>
   </div>
 </section>
@@ -1106,99 +1175,92 @@
 <!-- 9. Вопросы и ответы -->
 <section id="faq">
   <div class="container">
-    <h2 class="section-title">Вопросы и ответы</h2>
-    <p class="section-lead">Собрали то, что чаще всего спрашивают перед заказом. Не нашли ответ — задайте вопрос в форме ниже.</p>
+    <div class="faq-head">
+      <h2>Спрашиваете - отвечаем</h2>
+      <p>Собрали то, что чаще всего спрашивают перед&nbsp;заказом.<br>Не&nbsp;нашли ответ&nbsp;— задайте вопрос в&nbsp;форме ниже.</p>
+    </div>
     <div class="faq-list">
       <details open>
-        <summary>Сколько стоит изготовление на заказ?</summary>
-        <p>Стоимость зависит от породы дерева, сложности конструкции и объёма работ. После бесплатного замера и согласования эскиза вы получаете фиксированную смету, которая не меняется в процессе производства.</p>
+        <summary>Что нужно отправить для предварительного расчёта?</summary>
+        <p>Пришлите эскиз или референс, примерные размеры и фото помещения — этого достаточно, чтобы дать предварительную оценку стоимости ещё до выезда замерщика.</p>
       </details>
       <details>
-        <summary>Какие сроки изготовления?</summary>
-        <p>В среднем 30–45 рабочих дней с момента подписания договора и внесения аванса. Небольшие изделия — от 2 недель, крупные комплексные проекты — до 2 месяцев. Точный срок фиксируется в договоре.</p>
+        <summary>Выезд замерщика платный?</summary>
+        <p>Нет, бесплатно по Москве и области. Инженер приезжает, снимает размеры и консультирует по конструкции и материалам.</p>
       </details>
       <details>
-        <summary>Выезжаете ли вы на замер?</summary>
-        <p>Да. Замер по Москве и области — бесплатно. Инженер приезжает, снимает размеры, консультирует по конструкции и материалам, при необходимости делает фотофиксацию помещения.</p>
+        <summary>Какая минимальная стоимость заказа?</summary>
+        <p>Минимальной суммы заказа нет — работаем и с небольшими изделиями, и с комплексными проектами под ключ.</p>
       </details>
       <details>
-        <summary>С какими породами дерева вы работаете?</summary>
-        <p>Дуб, ясень, бук, орех, лиственница, сосна. Также работаем с редкими породами и слэбами под индивидуальный проект. Вся древесина проходит сушку в собственных камерах до влажности 8–10%.</p>
+        <summary>Можно ли внести изменения в изделие после утверждения дизайн проекта?</summary>
+        <p>До запуска в производство — да, вносим правки бесплатно. После старта работ изменения согласовываются отдельно и могут повлиять на срок и стоимость.</p>
       </details>
       <details>
-        <summary>Какая гарантия и что она покрывает?</summary>
-        <p>Гарантия 5 лет на конструкцию и покрытие. Покрывает расхождение соединений, деформацию древесины, дефекты фурнитуры и покраски. Сервисный выезд по гарантии — бесплатно.</p>
+        <summary>Можно заказать доставку в другой город?</summary>
+        <p>Да, доставляем по всей России транспортной компанией и надёжно упаковываем изделия для дальней перевозки.</p>
       </details>
       <details>
-        <summary>Как происходит оплата?</summary>
-        <p>По договору: аванс 50% для запуска в производство, остаток — после доставки и приёмки изделия. Работаем с физлицами и юрлицами, безналичный и наличный расчёт.</p>
+        <summary>Что входит в проект?</summary>
+        <p>3D-визуализация, чертежи с размерами, спецификация материалов и фурнитуры, смета с фиксированной ценой.</p>
       </details>
     </div>
   </div>
 </section>
 
-<!-- 10. Контакты -->
+<!-- 10. Как нас найти — точный макет Figma (node 176:183) -->
 <section id="contact">
   <div class="container">
-    <h2 class="section-title">Связаться с нами</h2>
-    <p class="section-lead">Оставьте заявку — перезвоним в течение рабочего дня, обсудим задачу и запишем на бесплатный замер.</p>
-    <div class="contact-wrap">
-      <ul class="contact-info">
-        <li><b>Телефон</b>+7 (900) 000-00-00</li>
-        <li><b>E-mail</b>info@anturage-interior.ru</li>
-        <li><b>Мастерская</b>Московская обл., Раменский г.о., пгт Удельная, ул. Салтыкова-Щедрина, 10</li>
-        <li><b>Режим работы</b>Пн–Сб, 9:00–19:00</li>
-      </ul>
-      <form onsubmit="event.preventDefault(); this.reset(); alert('Спасибо! Заявка отправлена, мы свяжемся с вами.');">
-        <input type="text" name="name" placeholder="Ваше имя" required>
-        <input type="tel" name="phone" placeholder="Телефон" required>
-        <textarea name="message" placeholder="Опишите ваш заказ: что нужно изготовить, размеры, сроки"></textarea>
-        <button type="submit" class="btn reveal-btn">
-          <span class="reveal-label">Отправить заявку</span>
-          <span class="reveal-fill" aria-hidden="true"><span class="reveal-label">Отправить заявку</span></span>
-        </button>
-        <p class="form-note">Нажимая кнопку, вы соглашаетесь с обработкой персональных данных.</p>
-      </form>
+    <div class="contact-head">
+      <h2>Как нас найти</h2>
+      <p>Поможем подготовить дизайн-проект, покажем примеры наших работ, обсудим Ваши пожелания.</p>
     </div>
 
-    <div class="directions">
-      <div class="directions-info">
-        <h3>Как нас найти</h3>
-        <div class="dway">
-          <b>На машине</b>
-          <p>Посёлок Удельная — 13 км к юго-востоку от Москвы. Вдоль южной границы посёлка проходит Быковское шоссе (А-102) с выездом на М-5 «Урал» и А-107.</p>
-        </div>
-        <div class="dway">
-          <b>На электричке / МЦД-3</b>
-          <p>С Казанского вокзала до платформы «Удельная» — около 45 минут в пути. От платформы до мастерской 10–15 минут пешком.</p>
-        </div>
-        <a href="https://yandex.ru/maps/?text=Московская%20область%2C%20Раменский%20округ%2C%20посёлок%20Удельная%2C%20улица%20Салтыкова-Щедрина%2C%2010" target="_blank" rel="noopener" class="btn outline reveal-btn">
-          <span class="reveal-label">Открыть в Яндекс Картах</span>
-          <span class="reveal-fill" aria-hidden="true"><span class="reveal-label">Открыть в Яндекс Картах</span></span>
-        </a>
-      </div>
+    <a class="map-card" href="https://yandex.ru/maps/?text=Московская%20область%2C%20Раменский%20округ%2C%20посёлок%20Удельная%2C%20улица%20Салтыкова-Щедрина%2C%2010" target="_blank" rel="noopener" aria-label="Открыть адрес мастерской на Яндекс Картах">
+      <span class="pin">📍</span>
+      <span class="tag">
+        Московская обл., пгт Удельная
+        <span>ул. Салтыкова-Щедрина, 10 — открыть на Яндекс Картах</span>
+      </span>
+    </a>
 
-      <a class="map-card" href="https://yandex.ru/maps/?text=Московская%20область%2C%20Раменский%20округ%2C%20посёлок%20Удельная%2C%20улица%20Салтыкова-Щедрина%2C%2010" target="_blank" rel="noopener" aria-label="Открыть адрес мастерской на Яндекс Картах">
-        <span class="pin">📍</span>
-        <span class="tag">
-          Московская обл., пгт Удельная
-          <span>ул. Салтыкова-Щедрина, 10 — открыть на Яндекс Картах</span>
-        </span>
-      </a>
+    <div class="contact-cta">
+      <button type="button" id="contactManagerBtn" class="reveal-btn">
+        <span class="reveal-label">оставить заявку</span>
+        <span class="reveal-fill" aria-hidden="true"><span class="reveal-label">оставить заявку</span></span>
+      </button>
     </div>
   </div>
 </section>
 
 <footer>
-  <div class="container footer-wrap">
+  <div class="container footer-grid">
     <div class="footer-brand">
-      <div class="footer-logo">Антураж интерьер</div>
-      <p>© 2026 Антураж интерьер. Изготовление мебели на заказ.</p>
+      <div class="footer-logo2">
+        <span class="word"><span class="edge">А</span>НТУРА<span class="edge">Ж</span></span>
+        <span class="sub">ИНТЕРЬЕР</span>
+      </div>
+      <p>Оставьте заявку — перезвоним в течение рабочего дня, обсудим задачу и запишем на бесплатный замер.</p>
     </div>
-    <button type="button" class="footer-cta reveal-btn" id="managerBtn">
-      <span class="reveal-label">связаться с менеджером</span>
-      <span class="reveal-fill" aria-hidden="true"><span class="reveal-label">связаться с менеджером</span></span>
-    </button>
+
+    <ul class="footer-nav">
+      <li><a href="#about">о компании</a></li>
+      <li><a href="#services">услуги</a></li>
+      <li><a href="#materials">материалы</a></li>
+      <li><a href="#process">как мы работаем</a></li>
+      <li><a href="#benefits">преимущества</a></li>
+      <li><a href="#portfolio">работы</a></li>
+      <li><a href="#reviews">отзывы</a></li>
+      <li><a href="#faq">вопросы</a></li>
+      <li><a href="#contact">контакты</a></li>
+    </ul>
+
+    <ul class="footer-contacts">
+      <li>телефон: +7 (900) 000-00-00</li>
+      <li>e-mail: info@anturage-interior.ru</li>
+      <li>мастерская: московская обл., раменский г.о., пгт удельная, ул. салтыкова-щедрина, 10</li>
+      <li>режим работы: пн–сб, 9:00–19:00</li>
+    </ul>
   </div>
 </footer>
 
@@ -1235,12 +1297,12 @@
   });
 
   const managerModal = document.getElementById('managerModal');
-  const managerBtn = document.getElementById('managerBtn');
+  const contactManagerBtn = document.getElementById('contactManagerBtn');
   const headerManagerBtn = document.getElementById('headerManagerBtn');
   const managerClose = document.getElementById('managerClose');
   const openManagerModal = () => { managerModal.classList.add('open'); managerModal.setAttribute('aria-hidden', 'false'); };
   const closeManagerModal = () => { managerModal.classList.remove('open'); managerModal.setAttribute('aria-hidden', 'true'); };
-  managerBtn.addEventListener('click', openManagerModal);
+  contactManagerBtn.addEventListener('click', openManagerModal);
   headerManagerBtn.addEventListener('click', openManagerModal);
   managerClose.addEventListener('click', closeManagerModal);
   managerModal.addEventListener('click', (e) => { if (e.target === managerModal) closeManagerModal(); });

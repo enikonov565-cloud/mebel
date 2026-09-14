@@ -437,21 +437,54 @@
   .benefits-photo{flex:1;min-width:280px;width:910px;height:730px;border-radius:15px;overflow:hidden}
   .benefits-photo img{width:100%;height:100%;object-fit:cover;display:block}
 
-  /* Portfolio */
-  #portfolio{background:var(--bg-alt)}
-  .gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-  .gallery figure{
-    border-radius:var(--radius);overflow:hidden;position:relative;background:var(--accent-dark);
-    aspect-ratio:4/3;
+  /* Примеры наших работ — Figma node 155:5 */
+  #portfolio{background:#CDCBC7;padding:58px 0}
+  .works-head{
+    display:flex;justify-content:space-between;align-items:center;
+    gap:clamp(20px,4vw,180px);flex-wrap:nowrap;margin-bottom:60px;
   }
-  .gallery figure div{
-    width:100%;height:100%;display:flex;align-items:flex-end;
-    padding:18px;color:#fff;font-weight:600;
-    background:linear-gradient(transparent 40%,rgba(20,12,6,.75));
-    background-size:cover;background-position:center;
+  .works-head h2{
+    font-family:'Inter',sans-serif;font-weight:500;
+    font-size:clamp(1.9rem,6vw,76px);line-height:0.9;letter-spacing:1.52px;color:#2B2620;
   }
-  .g1{background-color:#7a5230}.g2{background-color:#8a5a2b}.g3{background-color:#6b4420}
-  .g4{background-color:#93683c}.g5{background-color:#5e3d1f}.g6{background-color:#a17646}
+  .works-head p{
+    font-family:'Inter',sans-serif;font-weight:300;
+    font-size:20px;line-height:1.2;letter-spacing:0.4px;text-transform:lowercase;
+    color:#2B2620;max-width:480px;text-align:right;
+  }
+
+  .works-gallery{position:relative}
+  .works-track{
+    display:flex;gap:20px;overflow-x:auto;scroll-snap-type:x mandatory;
+    scrollbar-width:none;-ms-overflow-style:none;
+  }
+  .works-track::-webkit-scrollbar{display:none}
+  .works-item{
+    flex:none;width:587px;max-width:85vw;aspect-ratio:587/780;height:auto;
+    scroll-snap-align:start;overflow:hidden;
+    background:linear-gradient(150deg,#8a7358,#4a3116);
+  }
+  .works-item img{width:100%;height:100%;object-fit:cover;display:block}
+  .works-arrow{
+    position:absolute;top:50%;transform:translateY(-50%);z-index:3;
+    width:50px;height:52px;border:none;background:#2F1F02;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;cursor:pointer;
+    color:#CDCBC7;font-size:20px;line-height:1;transition:transform .15s ease,background .2s ease;
+  }
+  .works-arrow:hover{background:#432c03;transform:translateY(-50%) scale(1.06)}
+  .works-arrow.prev{left:-25px}
+  .works-arrow.next{right:-25px}
+
+  .works-cta{display:flex;justify-content:flex-end;margin-top:60px}
+  .works-cta a{
+    display:flex;align-items:center;justify-content:center;
+    width:505px;max-width:100%;height:78px;
+    background:#CDCBC7;border:1pt solid #2F1F02;border-radius:15px;
+    font-family:'Inter',sans-serif;font-weight:700;font-size:26px;color:#2F1F02;
+    text-align:center;box-shadow:0 4px 2.5px rgba(0,0,0,.2);transition:transform .15s ease;
+    --reveal-bg:#2F1F02;--reveal-text:#CDCBC7;
+  }
+  .works-cta a:hover{transform:translateY(-2px)}
 
   /* Reviews */
   #reviews{background:var(--bg)}
@@ -595,7 +628,10 @@
 
   /* Tablet */
   @media (max-width:960px){
-    .cards,.gallery,.reviews-grid{grid-template-columns:repeat(2,1fr)}
+    .cards,.reviews-grid{grid-template-columns:repeat(2,1fr)}
+    .works-head{justify-content:flex-start;flex-wrap:wrap}
+    .works-head p{text-align:left}
+    .works-cta{justify-content:flex-start}
     .material{flex:1 1 200px}
     .mat-head{justify-content:flex-start;flex-wrap:wrap}
     .mat-head p{text-align:left}
@@ -654,7 +690,10 @@
     .benefits-tag{font-size:14px;padding:8px 18px}
     .benefits-list h3{font-size:22px}
     .benefits-list p{font-size:16px}
-    .cards,.gallery,.reviews-grid{grid-template-columns:1fr}
+    .cards,.reviews-grid{grid-template-columns:1fr}
+    .works-arrow{width:38px;height:40px;font-size:16px}
+    .works-arrow.prev{left:8px}
+    .works-arrow.next{right:8px}
     .material{flex:1 1 140px}
     .material img{height:200px}
     .material h3{font-size:32px}
@@ -998,18 +1037,29 @@
   </div>
 </section>
 
-<!-- 7. Работы -->
+<!-- 7. Примеры наших работ — точный макет Figma (node 155:5) -->
 <section id="portfolio">
   <div class="container">
-    <h2 class="section-title">Наши работы</h2>
-    <p class="section-lead">Небольшая подборка реализованных проектов для квартир, загородных домов и коммерческих помещений.</p>
-    <div class="gallery">
-      <figure><div class="g1">Кухня из дуба, Москва</div></figure>
-      <figure><div class="g2">Стойка ресепшн, офис</div></figure>
-      <figure><div class="g3">Обеденный стол, ясень</div></figure>
-      <figure><div class="g4">Гардеробная под потолок</div></figure>
-      <figure><div class="g5">Барная стойка, кофейня</div></figure>
-      <figure><div class="g6">Библиотека из массива</div></figure>
+    <div class="works-head">
+      <h2>Примеры наших работ</h2>
+      <p>Интерьер не&nbsp;должен быть шаблонным, и&nbsp;мебель&nbsp;— его основа.</p>
+    </div>
+    <div class="works-gallery">
+      <button type="button" class="works-arrow prev" aria-label="Предыдущее фото">&#8592;</button>
+      <div class="works-track" id="worksTrack">
+        <figure class="works-item"><img src="work1.jpg" alt="Кухня из массива дуба"></figure>
+        <figure class="works-item"><img src="work2.jpg" alt="Винный шкаф из массива"></figure>
+        <figure class="works-item"><img src="work3.jpg" alt="Мебель для ресторана"></figure>
+        <figure class="works-item"><img src="work4.jpg" alt="Винный стеллаж на производстве"></figure>
+        <figure class="works-item"><img src="work5.jpg" alt="Дверь и панели из массива"></figure>
+      </div>
+      <button type="button" class="works-arrow next" aria-label="Следующее фото">&#8594;</button>
+    </div>
+    <div class="works-cta">
+      <a href="#contact" class="reveal-btn">
+        <span class="reveal-label">рассчитать стоимость проекта</span>
+        <span class="reveal-fill" aria-hidden="true"><span class="reveal-label">рассчитать стоимость проекта</span></span>
+      </a>
     </div>
   </div>
 </section>
@@ -1190,6 +1240,18 @@
   managerClose.addEventListener('click', closeManagerModal);
   managerModal.addEventListener('click', (e) => { if (e.target === managerModal) closeManagerModal(); });
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeManagerModal(); });
+
+  const worksTrack = document.getElementById('worksTrack');
+  if (worksTrack) {
+    document.querySelectorAll('.works-arrow').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const dir = btn.classList.contains('prev') ? -1 : 1;
+        const item = worksTrack.querySelector('.works-item');
+        const step = item ? item.getBoundingClientRect().width + 20 : 607;
+        worksTrack.scrollBy({ left: dir * step, behavior: 'smooth' });
+      });
+    });
+  }
 
   document.querySelectorAll('.reveal-btn').forEach(btn => {
     const setPoint = (e) => {

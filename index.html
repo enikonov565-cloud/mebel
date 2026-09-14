@@ -312,15 +312,44 @@
   .svc-btn.dark{background:#2F1F02;border:1pt solid #CDCBC7;color:#CDCBC7}
   .svc-btn.light{background:#CDCBC7;border:1pt solid #2F1F02;color:#2F1F02}
 
-  /* Materials */
-  #materials{background:var(--white)}
-  .materials-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:20px}
-  .material .swatch{
-    aspect-ratio:1/1;border-radius:12px;margin-bottom:14px;
-    box-shadow:inset 0 0 0 1px rgba(0,0,0,.08);
+  /* Материалы — Figma node 208:166 */
+  #materials{background:#110B00;padding:58px 0}
+  .mat-head{
+    display:flex;justify-content:space-between;align-items:center;
+    gap:clamp(20px,4vw,180px);flex-wrap:nowrap;margin-bottom:60px;
   }
-  .material h3{font-size:1.05rem;margin-bottom:6px}
-  .material p{color:var(--muted);font-size:.88rem}
+  .mat-head h2{
+    font-family:'Inter',sans-serif;font-weight:500;
+    font-size:clamp(1.9rem,6vw,76px);line-height:0.9;letter-spacing:1.52px;color:#CDCBC7;
+  }
+  .mat-head p{
+    font-family:'Inter',sans-serif;font-weight:300;
+    font-size:20px;line-height:1.2;letter-spacing:0.4px;text-transform:lowercase;
+    color:#CDCBC7;max-width:460px;text-align:right;
+  }
+
+  .materials-grid{display:flex;gap:13px;flex-wrap:wrap}
+  .material{display:flex;flex-direction:column;flex:1 1 260px;min-width:0}
+  .material img{width:100%;height:375px;object-fit:cover;display:block}
+  .material-body{display:flex;flex-direction:column;gap:20px;justify-content:center;min-height:249px;padding-top:20px}
+  .material h3{
+    font-family:'Inter',sans-serif;font-weight:500;
+    font-size:50px;line-height:1.3;letter-spacing:1px;color:#CDCBC7;
+  }
+  .material p{
+    font-family:'Inter',sans-serif;font-weight:300;
+    font-size:20px;line-height:1.2;letter-spacing:0.4px;text-transform:lowercase;color:#CDCBC7;
+  }
+
+  .mat-cta{display:flex;justify-content:center;margin-top:49px}
+  .mat-cta a{
+    display:flex;align-items:center;justify-content:center;
+    width:505px;max-width:100%;height:78px;
+    background:#450A03;border:1pt solid #CDCBC7;border-radius:15px;
+    font-family:'Inter',sans-serif;font-weight:700;font-size:26px;color:#CDCBC7;
+    text-align:center;box-shadow:0 4px 2.5px rgba(0,0,0,.2);transition:transform .15s ease;
+  }
+  .mat-cta a:hover{transform:translateY(-2px)}
 
   /* Process */
   #process{background:var(--bg-alt)}
@@ -544,7 +573,9 @@
   /* Tablet */
   @media (max-width:960px){
     .cards,.gallery,.reviews-grid{grid-template-columns:repeat(2,1fr)}
-    .materials-grid{grid-template-columns:repeat(3,1fr)}
+    .material{flex:1 1 200px}
+    .mat-head{justify-content:flex-start;flex-wrap:wrap}
+    .mat-head p{text-align:left}
     .steps{grid-template-columns:repeat(3,1fr);row-gap:36px}
     .steps::before{display:none}
     .contact-wrap{grid-template-columns:1fr;gap:34px}
@@ -601,7 +632,10 @@
     .benefits-list h3{font-size:22px}
     .benefits-list p{font-size:16px}
     .cards,.gallery,.reviews-grid{grid-template-columns:1fr}
-    .materials-grid{grid-template-columns:repeat(2,1fr)}
+    .material{flex:1 1 140px}
+    .material img{height:200px}
+    .material h3{font-size:32px}
+    .material p{font-size:15px}
     .steps{grid-template-columns:1fr}
     .hero{padding:110px 20px 32px}
     .hero-eyebrow{font-size:13px}
@@ -800,37 +834,52 @@
   </div>
 </section>
 
-<!-- 4. Материалы -->
+<!-- 4. Материалы — точный макет Figma (node 208:166) -->
 <section id="materials">
   <div class="container">
-    <h2 class="section-title">Материалы</h2>
-    <p class="section-lead">Работаем только с массивом — никакого ЛДСП и МДФ в несущих элементах. Порода подбирается под задачу и бюджет.</p>
+    <div class="mat-head">
+      <h2>Материалы</h2>
+      <p>Работаем только с&nbsp;массивом.<br>Порода подбирается под&nbsp;задачу и&nbsp;бюджет.</p>
+    </div>
     <div class="materials-grid">
       <div class="material">
-        <div class="swatch" style="background:linear-gradient(150deg,#c9a06a,#8a6a3f)"></div>
-        <h3>Дуб</h3>
-        <p>Твёрдый, с выразительной текстурой. Кухни, столешницы, барные стойки.</p>
+        <img src="mat-oak.jpg" alt="Дуб">
+        <div class="material-body">
+          <h3>Дуб</h3>
+          <p>Твёрдый, с&nbsp;выразительной текстурой. столешницы, кухни, барные стойки.</p>
+        </div>
       </div>
       <div class="material">
-        <div class="swatch" style="background:linear-gradient(150deg,#d8c39c,#b89a68)"></div>
-        <h3>Ясень</h3>
-        <p>Светлый и упругий, хорошо гнётся. Двери, фасады, изогнутые элементы.</p>
+        <img src="mat-beech.jpg" alt="Бук">
+        <div class="material-body">
+          <h3>Бук</h3>
+          <p>Плотный, ровный тон. корпусная мебель, стулья, лестничные ступени.</p>
+        </div>
       </div>
       <div class="material">
-        <div class="swatch" style="background:linear-gradient(150deg,#d3ab84,#a97a4c)"></div>
-        <h3>Бук</h3>
-        <p>Плотный, ровный тон. Корпусная мебель, стулья, лестничные ступени.</p>
+        <img src="mat-walnut.jpg" alt="Орех">
+        <div class="material-body">
+          <h3>Орех</h3>
+          <p>Глубокий тёмный оттенок. эксклюзивные изделия, кабинеты, барные зоны.</p>
+        </div>
       </div>
       <div class="material">
-        <div class="swatch" style="background:linear-gradient(150deg,#6b4423,#3e2a17)"></div>
-        <h3>Орех</h3>
-        <p>Глубокий тёмный оттенок. Эксклюзивные изделия, кабинеты, барные зоны.</p>
+        <img src="mat-ash.jpg" alt="Ясень">
+        <div class="material-body">
+          <h3>Ясень</h3>
+          <p>Светлый и&nbsp;упругий, хорошо гнётся. двери, фасады, изогнутые элементы.</p>
+        </div>
       </div>
       <div class="material">
-        <div class="swatch" style="background:linear-gradient(150deg,#b97a41,#7c4a1f)"></div>
-        <h3>Лиственница</h3>
-        <p>Устойчива к влаге. Входные двери, изделия для кухонь и санузлов.</p>
+        <img src="mat-larch.jpg" alt="Лиственница">
+        <div class="material-body">
+          <h3>Лиственница</h3>
+          <p>Устойчива к&nbsp;влаге. входные двери, изделия для&nbsp;кухонь<br>и&nbsp;санузлов.</p>
+        </div>
       </div>
+    </div>
+    <div class="mat-cta">
+      <a href="#contact">получить консультацию</a>
     </div>
   </div>
 </section>

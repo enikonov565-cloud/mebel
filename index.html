@@ -227,6 +227,7 @@
     font-family:'Inter',sans-serif;font-weight:300;
     font-size:20px;line-height:1.2;letter-spacing:0.4px;text-transform:lowercase;color:#CDCBC7;
   }
+  .nowrap-line{white-space:nowrap}
 
   .about-photo-img{
     flex:none;width:817px;max-width:100%;height:862px;
@@ -550,7 +551,9 @@
     .directions{grid-template-columns:1fr;gap:28px}
     .map-card{order:-1;aspect-ratio:16/10}
     .about-photo-img{max-width:560px}
-    .stats-grid{column-gap:40px;row-gap:36px}
+    .stats-grid{grid-template-columns:1fr;column-gap:40px;row-gap:24px}
+    .stats-grid::after{display:none}
+    .stats-grid::before{display:none}
     .why-grid{grid-template-columns:1fr;grid-template-rows:none;gap:24px}
     .why-cell{aspect-ratio:1/1}
     .why-cell.text p{font-size:24px;max-width:100%}
@@ -674,7 +677,7 @@
         <div class="stat-box"><b>12+</b><span>лет на&nbsp;рынке</span></div>
         <div class="stat-box"><b>3 года</b><span>гарантии на&nbsp;изделия</span></div>
         <div class="stat-box"><b>800+</b><span>выполненных проектов</span></div>
-        <div class="stat-box"><b>15–25</b><span>дней средний срок&nbsp;изготовления</span></div>
+        <div class="stat-box"><b>15–25</b><span class="nowrap-line">дней средний срок изготовления</span></div>
       </div>
 
       <img class="about-photo-img" src="about-photo-main.jpg" alt="Производство мебели">

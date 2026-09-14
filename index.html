@@ -177,12 +177,12 @@
     color:#CDCBC7;max-width:539px;
   }
 
-  .about-row2{display:flex;align-items:center;gap:93px;flex-wrap:wrap}
+  .about-row2{display:flex;align-items:center;justify-content:space-between;gap:56px;flex-wrap:wrap}
 
   .stats-grid{
     position:relative;display:grid;grid-template-columns:1fr 1fr;
     column-gap:155px;row-gap:348px;width:832px;max-width:100%;
-    margin-left:54px;flex:none;
+    flex:none;
   }
   .stats-grid::before{content:'';position:absolute;left:0;right:0;top:50%;height:1px;background:#CDCBC7;opacity:.35}
   .stats-grid::after{content:'';position:absolute;top:0;bottom:0;left:50%;width:1px;background:#CDCBC7;opacity:.35}
@@ -226,7 +226,8 @@
   .why-vline{position:absolute;top:0;bottom:0;width:1px;background:#CDCBC7;opacity:.3}
   .why-hline{position:absolute;left:0;right:0;height:1px;background:#CDCBC7;opacity:.3}
   .why-cell{border-radius:15px;overflow:hidden;min-width:0;min-height:0}
-  .why-cell img{width:100%;height:100%;object-fit:cover;display:block}
+  .why-cell img{width:100%;height:100%;object-fit:cover;display:block;object-position:center 25%}
+  .why-cell img.portrait{object-position:top}
   .why-cell.text{display:flex;align-items:center;justify-content:center;padding:10px;text-align:left}
   .why-cell.text p{
     font-family:'Inter',sans-serif;font-weight:300;
@@ -580,15 +581,15 @@
   <div class="container about-inner">
     <div class="about-headline">
       <h2>Собственное производство<br>полного цикла</h2>
-      <p>Проектируем, изготавливаем<br>и монтируем мебель из массива с 2014 года.</p>
+      <p>Проектируем, изготавливаем<br>и&nbsp;монтируем мебель из&nbsp;массива с&nbsp;2014 года.</p>
     </div>
 
     <div class="about-row2">
       <div class="stats-grid">
-        <div class="stat-box"><b>12+</b><span>лет на рынке</span></div>
-        <div class="stat-box"><b>3 года</b><span>гарантии на изделия</span></div>
+        <div class="stat-box"><b>12+</b><span>лет на&nbsp;рынке</span></div>
+        <div class="stat-box"><b>3 года</b><span>гарантии на&nbsp;изделия</span></div>
         <div class="stat-box"><b>800+</b><span>выполненных проектов</span></div>
-        <div class="stat-box"><b>15–25</b><span>дней средний срок изготовления</span></div>
+        <div class="stat-box"><b>15–25</b><span>дней средний срок&nbsp;изготовления</span></div>
       </div>
 
       <img class="about-photo-img" src="about-photo-main.jpg" alt="Производство мебели">
@@ -601,7 +602,7 @@
   <div class="container why-inner">
     <div class="why-head">
       <h2>Почему выбирают нас</h2>
-      <p>Показываем не только рекламный ракурс, но и рабочую сторону, внутреннее наполнение и этапы изготовления.</p>
+      <p>Показываем не&nbsp;только рекламный ракурс, но&nbsp;и&nbsp;рабочую сторону, внутреннее наполнение и&nbsp;этапы изготовления.</p>
     </div>
 
     <div class="why-grid">
@@ -610,15 +611,15 @@
       <div class="why-vline" style="left:75.6%"></div>
       <div class="why-hline" style="top:49.7%"></div>
 
-      <div class="why-cell"><img src="why-photo-1.jpg" alt="Производство мебели"></div>
+      <div class="why-cell"><img class="portrait" src="why-photo-1.jpg" alt="Производство мебели"></div>
       <div class="why-cell text"><p>Собственное высокотехнологичное современное производство</p></div>
       <div class="why-cell"><img src="why-photo-2.jpg" alt="Материалы для мебели"></div>
       <div class="why-cell text"><p>Фабричное качество производимой мебели</p></div>
 
-      <div class="why-cell text"><p>Быстрая доставка и сборка мебели на дому</p></div>
+      <div class="why-cell text"><p>Быстрая доставка и&nbsp;сборка мебели на&nbsp;дому</p></div>
       <div class="why-cell"><img src="why-photo-3.jpg" alt="Изготовление мебели"></div>
-      <div class="why-cell text"><p>Гарантия по договору на мебель 3 года</p></div>
-      <div class="why-cell"><img src="why-photo-4.jpg" alt="Мастер мебельного производства"></div>
+      <div class="why-cell text"><p>Гарантия по&nbsp;договору на&nbsp;мебель 3&nbsp;года</p></div>
+      <div class="why-cell"><img class="portrait" src="why-photo-4.jpg" alt="Мастер мебельного производства"></div>
     </div>
   </div>
 </section>

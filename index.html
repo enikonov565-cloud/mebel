@@ -74,11 +74,34 @@
   .btn{
     display:inline-block;background:var(--accent);color:var(--white);
     padding:14px 28px;border-radius:15pt;font-weight:600;font-size:1rem;
-    border:none;cursor:pointer;transition:transform .15s ease,background .2s ease;
+    border:none;cursor:pointer;transition:transform .15s ease;
   }
-  .btn:hover{background:var(--accent-dark);transform:translateY(-2px)}
+  .btn:hover{transform:translateY(-2px)}
   .btn.outline{background:transparent;border:1.5px solid var(--accent);color:var(--accent)}
-  .btn.outline:hover{background:var(--accent);color:var(--white)}
+
+  /* Radial reveal hover — fill expands from the pointer in the button's own brand colors */
+  .reveal-btn{position:relative;overflow:hidden}
+  .reveal-btn .reveal-label{position:relative;z-index:1;pointer-events:none}
+  .reveal-fill{
+    position:absolute;inset:0;z-index:2;
+    display:flex;align-items:center;justify-content:center;
+    background:var(--reveal-bg,#CDCBC7);color:var(--reveal-text,#2F1F02);
+    clip-path:circle(0% at var(--rx,50%) var(--ry,50%));
+    -webkit-clip-path:circle(0% at var(--rx,50%) var(--ry,50%));
+    transition:clip-path .45s ease;
+    pointer-events:none;white-space:nowrap;font:inherit;letter-spacing:inherit;
+  }
+  .reveal-btn.is-hover .reveal-fill{
+    clip-path:circle(150% at var(--rx,50%) var(--ry,50%));
+    -webkit-clip-path:circle(150% at var(--rx,50%) var(--ry,50%));
+  }
+  @media (prefers-reduced-motion:reduce){.reveal-fill{transition:none}}
+
+  .nav-cta,.about-cta a,.svc-btn.dark{--reveal-bg:#CDCBC7;--reveal-text:#2F1F02}
+  .hero-cta a,.footer-cta,.svc-btn.light{--reveal-bg:#2F1F02;--reveal-text:#CDCBC7}
+  .mat-cta a{--reveal-bg:#CDCBC7;--reveal-text:#450A03}
+  .btn.reveal-btn:not(.outline){--reveal-bg:var(--accent-dark);--reveal-text:#fff}
+  .btn.outline.reveal-btn{--reveal-bg:var(--accent);--reveal-text:#fff}
 
   /* Header — floats over every section so pages scroll under it (Figma node 20:353) */
   header{
@@ -667,7 +690,10 @@
         <span class="sub">ИНТЕРЬЕР</span>
       </a>
     </div>
-    <button type="button" class="nav-cta" id="headerManagerBtn">связаться с менеджером</button>
+    <button type="button" class="nav-cta reveal-btn" id="headerManagerBtn">
+      <span class="reveal-label">связаться с менеджером</span>
+      <span class="reveal-fill" aria-hidden="true"><span class="reveal-label">связаться с менеджером</span></span>
+    </button>
   </div>
   <nav class="nav-links" id="navLinks">
     <a href="#about">О компании</a>
@@ -698,7 +724,10 @@
     <div class="hero-stat2"><b>10%</b><span>предоплата по&nbsp;договору</span></div>
   </div>
   <div class="hero-cta">
-    <a href="#contact">рассчитать стоимость проекта</a>
+    <a href="#contact" class="reveal-btn">
+      <span class="reveal-label">рассчитать стоимость проекта</span>
+      <span class="reveal-fill" aria-hidden="true"><span class="reveal-label">рассчитать стоимость проекта</span></span>
+    </a>
   </div>
 </section>
 
@@ -720,7 +749,10 @@
         </div>
 
         <div class="about-cta">
-          <a href="#portfolio">перейти в каталог</a>
+          <a href="#portfolio" class="reveal-btn">
+            <span class="reveal-label">перейти в каталог</span>
+            <span class="reveal-fill" aria-hidden="true"><span class="reveal-label">перейти в каталог</span></span>
+          </a>
         </div>
       </div>
 
@@ -827,8 +859,14 @@
 
       <div class="svc-cta">
         <p>Не&nbsp;нашли нужное?<br>Изготовим по&nbsp;вашему<br>эскизу или&nbsp;чертежу дизайнера.</p>
-        <a href="#portfolio" class="svc-btn dark">перейти в каталог</a>
-        <a href="#contact" class="svc-btn light">рассчитать стоимость проекта</a>
+        <a href="#portfolio" class="svc-btn dark reveal-btn">
+          <span class="reveal-label">перейти в каталог</span>
+          <span class="reveal-fill" aria-hidden="true"><span class="reveal-label">перейти в каталог</span></span>
+        </a>
+        <a href="#contact" class="svc-btn light reveal-btn">
+          <span class="reveal-label">рассчитать стоимость проекта</span>
+          <span class="reveal-fill" aria-hidden="true"><span class="reveal-label">рассчитать стоимость проекта</span></span>
+        </a>
       </div>
     </div>
   </div>
@@ -879,7 +917,10 @@
       </div>
     </div>
     <div class="mat-cta">
-      <a href="#contact">получить консультацию</a>
+      <a href="#contact" class="reveal-btn">
+        <span class="reveal-label">получить консультацию</span>
+        <span class="reveal-fill" aria-hidden="true"><span class="reveal-label">получить консультацию</span></span>
+      </a>
     </div>
   </div>
 </section>
@@ -1057,7 +1098,10 @@
         <input type="text" name="name" placeholder="Ваше имя" required>
         <input type="tel" name="phone" placeholder="Телефон" required>
         <textarea name="message" placeholder="Опишите ваш заказ: что нужно изготовить, размеры, сроки"></textarea>
-        <button type="submit" class="btn">Отправить заявку</button>
+        <button type="submit" class="btn reveal-btn">
+          <span class="reveal-label">Отправить заявку</span>
+          <span class="reveal-fill" aria-hidden="true"><span class="reveal-label">Отправить заявку</span></span>
+        </button>
         <p class="form-note">Нажимая кнопку, вы соглашаетесь с обработкой персональных данных.</p>
       </form>
     </div>
@@ -1073,7 +1117,10 @@
           <b>На электричке / МЦД-3</b>
           <p>С Казанского вокзала до платформы «Удельная» — около 45 минут в пути. От платформы до мастерской 10–15 минут пешком.</p>
         </div>
-        <a href="https://yandex.ru/maps/?text=Московская%20область%2C%20Раменский%20округ%2C%20посёлок%20Удельная%2C%20улица%20Салтыкова-Щедрина%2C%2010" target="_blank" rel="noopener" class="btn outline">Открыть в Яндекс Картах</a>
+        <a href="https://yandex.ru/maps/?text=Московская%20область%2C%20Раменский%20округ%2C%20посёлок%20Удельная%2C%20улица%20Салтыкова-Щедрина%2C%2010" target="_blank" rel="noopener" class="btn outline reveal-btn">
+          <span class="reveal-label">Открыть в Яндекс Картах</span>
+          <span class="reveal-fill" aria-hidden="true"><span class="reveal-label">Открыть в Яндекс Картах</span></span>
+        </a>
       </div>
 
       <a class="map-card" href="https://yandex.ru/maps/?text=Московская%20область%2C%20Раменский%20округ%2C%20посёлок%20Удельная%2C%20улица%20Салтыкова-Щедрина%2C%2010" target="_blank" rel="noopener" aria-label="Открыть адрес мастерской на Яндекс Картах">
@@ -1093,7 +1140,10 @@
       <div class="footer-logo">Антураж интерьер</div>
       <p>© 2026 Антураж интерьер. Изготовление мебели на заказ.</p>
     </div>
-    <button type="button" class="footer-cta" id="managerBtn">связаться с менеджером</button>
+    <button type="button" class="footer-cta reveal-btn" id="managerBtn">
+      <span class="reveal-label">связаться с менеджером</span>
+      <span class="reveal-fill" aria-hidden="true"><span class="reveal-label">связаться с менеджером</span></span>
+    </button>
   </div>
 </footer>
 
@@ -1104,7 +1154,10 @@
     <form id="managerForm" onsubmit="event.preventDefault(); this.reset(); document.getElementById('managerModal').classList.remove('open'); alert('Спасибо! Мы свяжемся с вами в ближайшее время.');">
       <input type="text" name="name" placeholder="Ваше имя" required>
       <input type="tel" name="phone" placeholder="Ваш телефон" required>
-      <button type="submit" class="btn">Отправить</button>
+      <button type="submit" class="btn reveal-btn">
+        <span class="reveal-label">Отправить</span>
+        <span class="reveal-fill" aria-hidden="true"><span class="reveal-label">Отправить</span></span>
+      </button>
       <p class="form-note">Нажимая кнопку, Вы даёте согласие на обработку персональных данных</p>
     </form>
   </div>
@@ -1137,6 +1190,25 @@
   managerClose.addEventListener('click', closeManagerModal);
   managerModal.addEventListener('click', (e) => { if (e.target === managerModal) closeManagerModal(); });
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeManagerModal(); });
+
+  document.querySelectorAll('.reveal-btn').forEach(btn => {
+    const setPoint = (e) => {
+      const r = btn.getBoundingClientRect();
+      if (!r.width || !r.height) return;
+      const x = ((e.clientX - r.left) / r.width) * 100;
+      const y = ((e.clientY - r.top) / r.height) * 100;
+      btn.style.setProperty('--rx', x + '%');
+      btn.style.setProperty('--ry', y + '%');
+    };
+    btn.addEventListener('pointerenter', (e) => {
+      setPoint(e);
+      btn.classList.add('is-hover');
+    });
+    btn.addEventListener('pointerleave', (e) => {
+      setPoint(e);
+      btn.classList.remove('is-hover');
+    });
+  });
 </script>
 
 </body>

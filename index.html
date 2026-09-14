@@ -233,6 +233,15 @@
     border-radius:15px;object-fit:cover;
   }
 
+  .about-cta a{
+    display:inline-flex;align-items:center;justify-content:center;
+    background:#CDCBC7;border:1pt solid #2F1F02;border-radius:15px;
+    padding:20px 44px;height:78px;
+    font-family:'Inter',sans-serif;font-weight:700;font-size:clamp(16px,1.6vw,28px);color:#2F1F02;
+    text-align:center;transition:transform .15s ease;
+  }
+  .about-cta a:hover{transform:translateY(-2px)}
+
   /* Почему выбирают нас — Figma node 272:547 */
   #why-us{background:#110B00;padding:58px 0 75px}
   .why-inner{display:flex;flex-direction:column;gap:100px}
@@ -595,6 +604,7 @@
     .hero-stat2 b{font-size:1.8rem}
     .hero-stat2 span{font-size:11px;white-space:normal}
     .hero-cta a{font-size:16px;height:50px}
+    .about-cta a{width:100%;height:56px;padding:14px 20px;font-size:16px}
     section{padding:52px 0}
     .footer-wrap{flex-direction:column;align-items:stretch;text-align:center}
     .footer-brand{text-align:center}
@@ -668,6 +678,10 @@
       </div>
 
       <img class="about-photo-img" src="about-photo-main.jpg" alt="Производство мебели">
+    </div>
+
+    <div class="about-cta">
+      <a href="#portfolio">смотреть работы</a>
     </div>
   </div>
 </section>

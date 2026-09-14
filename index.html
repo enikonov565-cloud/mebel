@@ -53,7 +53,7 @@
     --max:1920px;
   }
   *{box-sizing:border-box;margin:0;padding:0}
-  html{scroll-behavior:smooth;overflow-x:hidden;width:100%;scroll-padding-top:92px}
+  html{scroll-behavior:smooth;overflow-x:hidden;width:100%}
   body{
     font-family:'Inter',-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
     color:var(--text);
@@ -80,9 +80,9 @@
   .btn.outline{background:transparent;border:1.5px solid var(--accent);color:var(--accent)}
   .btn.outline:hover{background:var(--accent);color:var(--white)}
 
-  /* Header — persistent burger menu at every width */
+  /* Header — floats over every section so pages scroll under it (Figma node 20:353) */
   header{
-    position:sticky;top:0;z-index:100;
+    position:fixed;top:0;left:0;right:0;z-index:100;
     background:linear-gradient(180deg,#180F01 0%,rgba(24,15,1,.6) 85.76%);
     backdrop-filter:blur(10px);
   }
@@ -143,21 +143,53 @@
   }
   .nav-links a:hover{color:var(--accent)}
 
-  /* Hero */
+  /* Hero — exact spec from Figma node 20:353 */
   .hero{
-    background:linear-gradient(rgba(30,20,10,.55),rgba(30,20,10,.55)),
-      url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800"><rect width="1200" height="800" fill="%236b4420"/><g fill="%237c5230" opacity="0.6"><rect x="0" y="0" width="1200" height="90"/><rect x="0" y="180" width="1200" height="90"/><rect x="0" y="360" width="1200" height="90"/><rect x="0" y="540" width="1200" height="90"/><rect x="0" y="720" width="1200" height="90"/></g></svg>');
-    background-size:cover;background-position:center;
-    color:var(--white);text-align:center;
-    padding:130px 0;
+    position:relative;overflow:hidden;aspect-ratio:1920/1091;min-height:520px;
+    background:#110B00;color:#CDCBC7;text-align:left;padding:0;
   }
-  .hero h1{font-size:clamp(2rem,5.5vw,3.6rem);margin-bottom:20px}
-  .hero p{font-size:clamp(1rem,2.2vw,1.25rem);max-width:640px;margin:0 auto 36px;opacity:.92}
-  .hero-actions{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
-  .hero-stats{display:flex;gap:48px;justify-content:center;flex-wrap:wrap;margin-top:60px}
-  .hero-stats div{text-align:center}
-  .hero-stats b{display:block;font-size:2rem;color:#f4d9b8}
-  .hero-stats span{font-size:.9rem;opacity:.85}
+  .hero-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
+  .hero::before{
+    content:'';position:absolute;inset:0;z-index:1;
+    background:
+      linear-gradient(90deg, rgba(17,11,0,.55) 0%, rgba(47,31,2,0) 34%),
+      linear-gradient(90deg, rgba(47,31,2,0) 50%, #110B00 100%),
+      linear-gradient(180deg, rgba(47,31,2,0) 62%, #110B00 100%);
+  }
+  .hero-eyebrow{
+    position:absolute;z-index:2;left:3.18%;top:47.5%;max-width:34%;min-width:220px;
+    font-family:'Inter',sans-serif;font-weight:300;font-size:clamp(12px,1.1vw,20px);
+    line-height:1.2;letter-spacing:0.4px;text-transform:lowercase;color:#CDCBC7;
+  }
+  .hero-headline{position:absolute;z-index:2;left:3.13%;bottom:12%;width:38%;min-width:260px}
+  .hero-headline h1{
+    font-family:'Inter',sans-serif;font-weight:500;
+    font-size:clamp(1.6rem,4.2vw,76px);line-height:0.9;letter-spacing:-0.76px;
+    color:#CDCBC7;margin-bottom:8px;
+  }
+  .hero-headline .hero-sub{
+    font-family:'Inter',sans-serif;font-weight:300;
+    font-size:clamp(1rem,2.8vw,50px);line-height:1.3;letter-spacing:1px;color:#CDCBC7;
+  }
+  .hero-stats2{
+    position:absolute;z-index:2;left:81.15%;top:22%;width:15.7%;min-width:190px;
+    display:flex;flex-direction:column;align-items:center;gap:clamp(12px,1.6vw,27px);
+  }
+  .hero-stat2{display:flex;flex-direction:column;align-items:center;gap:2px;text-align:center}
+  .hero-stat2 b{font-family:'Inter',sans-serif;font-weight:500;font-size:clamp(1.4rem,3vw,64px);letter-spacing:-1.28px;color:#CDCBC7;line-height:1}
+  .hero-stat2 span{font-family:'Inter',sans-serif;font-weight:300;font-size:clamp(11px,1vw,20px);color:#CDCBC7;white-space:nowrap}
+  .hero-stat-divider{
+    width:170px;max-width:80%;height:4px;border:none;
+    background:url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNzQuMDQxIiBoZWlnaHQ9IjQuMDQxNDUiIHZpZXdCb3g9IjAgMCAxNzQuMDQxIDQuMDQxNDUiIGZpbGw9Im5vbmUiPjxwYXRoIGQ9Ik0wIDIuMDIwNzNMMi4wMjA3MyA0LjA0MTQ1TDQuMDQxNDUgMi4wMjA3M0wyLjAyMDczIDBMMCAyLjAyMDczWk0xNzQuMDQxIDIuMDIwNzNMMTcyLjAyMSAwTDE3MCAyLjAyMDczTDE3Mi4wMjEgNC4wNDE0NUwxNzQuMDQxIDIuMDIwNzNaTTIuMDIwNzMgMi4wMjA3M1YyLjM3MDczSDE3Mi4wMjFWMi4wMjA3M1YxLjY3MDczSDIuMDIwNzNWMi4wMjA3M1oiIGZpbGw9IiNDRENCQzciLz48L3N2Zz4=) center/contain no-repeat;
+  }
+  .hero-cta{position:absolute;z-index:2;left:70.6%;bottom:5%;width:26.3%;min-width:200px}
+  .hero-cta a{
+    display:flex;align-items:center;justify-content:center;width:100%;height:88px;
+    background:#CDCBC7;border:1pt solid #2F1F02;border-radius:15px;
+    font-family:'Inter',sans-serif;font-weight:700;font-size:clamp(14px,1.6vw,28px);color:#2F1F02;
+    text-align:center;padding:0 16px;transition:transform .15s ease;
+  }
+  .hero-cta a:hover{transform:translateY(-2px)}
 
   /* Собственное производство полного цикла — Figma node 270:439 */
   #about{background:#110B00;padding:58px 0 92px}
@@ -518,6 +550,14 @@
     section{padding:64px 0}
     .footer-cta{width:340px;font-size:20px;height:54px}
     .nav-cta{width:150px;height:24px;font-size:11px;border-radius:15pt}
+    .hero{aspect-ratio:auto;min-height:0;padding:140px 24px 40px}
+    .hero-eyebrow,.hero-headline,.hero-stats2,.hero-cta{
+      position:static;left:auto;top:auto;bottom:auto;width:100%;max-width:100%;min-width:0;
+    }
+    .hero-eyebrow{margin-bottom:28px}
+    .hero-headline{margin-bottom:40px}
+    .hero-stats2{flex-direction:row;flex-wrap:wrap;justify-content:center;gap:24px;margin-bottom:32px}
+    .hero-stat-divider{display:none}
   }
   /* Mobile */
   @media (max-width:640px){
@@ -547,9 +587,14 @@
     .cards,.gallery,.reviews-grid{grid-template-columns:1fr}
     .materials-grid{grid-template-columns:repeat(2,1fr)}
     .steps{grid-template-columns:1fr}
-    .hero{padding:90px 0}
-    .hero-stats{gap:28px;margin-top:44px}
-    .hero-stats b{font-size:1.6rem}
+    .hero{padding:110px 20px 32px}
+    .hero-eyebrow{font-size:13px}
+    .hero-headline h1{font-size:2rem}
+    .hero-headline .hero-sub{font-size:1.3rem}
+    .hero-stats2{gap:16px}
+    .hero-stat2 b{font-size:1.8rem}
+    .hero-stat2 span{font-size:11px;white-space:normal}
+    .hero-cta a{font-size:16px;height:60px}
     section{padding:52px 0}
     .footer-wrap{flex-direction:column;align-items:stretch;text-align:center}
     .footer-brand{text-align:center}
@@ -586,20 +631,23 @@
   </nav>
 </header>
 
-<!-- 1. Главная -->
+<!-- 1. Главная — точный макет Figma (node 20:353) -->
 <section class="hero" id="hero">
-  <div class="container">
-    <h1>Эксклюзивная мебель<br>из массива на заказ</h1>
-    <p>Кухни, шкафы, двери и мебель для офиса под ваши размеры. Дуб, ясень, бук, орех — собственный цех полного цикла: проектируем, изготавливаем, монтируем.</p>
-    <div class="hero-actions">
-      <a href="#contact" class="btn">Обсудить проект</a>
-      <a href="#portfolio" class="btn outline" style="color:#fff;border-color:#fff">Смотреть работы</a>
-    </div>
-    <div class="hero-stats">
-      <div><b>12+</b><span>лет на рынке</span></div>
-      <div><b>800+</b><span>выполненных проектов</span></div>
-      <div><b>5 лет</b><span>гарантии на изделия</span></div>
-    </div>
+  <img class="hero-bg" src="hero-bg.jpg" alt="Мебель из массива дерева">
+  <p class="hero-eyebrow">Собственное производство полного цикла:<br>проектируем, изготавливаем, монтируем</p>
+  <div class="hero-headline">
+    <h1>Уникальная мебель<br>из&nbsp;массива</h1>
+    <p class="hero-sub">по Вашим размерам</p>
+  </div>
+  <div class="hero-stats2">
+    <div class="hero-stat2"><b>0 ₽</b><span>замер и&nbsp;дизайн-проект</span></div>
+    <div class="hero-stat-divider"></div>
+    <div class="hero-stat2"><b>15–25</b><span>дней на&nbsp;изготовление</span></div>
+    <div class="hero-stat-divider"></div>
+    <div class="hero-stat2"><b>10%</b><span>предоплата по&nbsp;договору</span></div>
+  </div>
+  <div class="hero-cta">
+    <a href="#contact">рассчитать стоимость проекта</a>
   </div>
 </section>
 

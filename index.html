@@ -526,13 +526,13 @@
   .review-body .who b{font-size:1rem;color:#180F01}
   .review-body .who span{font-size:.82rem;color:#7a7062}
   .review-body p{font-size:.86rem;line-height:1.45;color:#2B2620;margin:0}
-  .reviews-cta{display:flex;justify-content:center;margin-top:60px}
-  .reviews-cta a{
+  .reviews-cta{display:flex;justify-content:center;gap:24px;flex-wrap:wrap;margin-top:60px}
+  .reviews-cta a,.reviews-cta button{
     display:flex;align-items:center;justify-content:center;
     width:430px;max-width:100%;height:68px;
     background:#2F1F02;border:2px solid #CDCBC7;border-radius:15px;
     font-family:'Inter',sans-serif;font-weight:700;font-size:26px;color:#CDCBC7;
-    text-align:center;
+    text-align:center;cursor:pointer;
     --reveal-bg:#CDCBC7;--reveal-text:#2F1F02;--dot-shadow:#2F1F02;
   }
 
@@ -716,6 +716,14 @@
   }
   .modal-card input:focus,.modal-card textarea:focus{outline:none;border-color:var(--accent)}
   .modal-card .form-note{font-size:.85rem}
+  .file-drop{
+    display:flex;align-items:center;justify-content:center;text-align:center;
+    border:2px dashed var(--line);border-radius:10px;padding:16px;
+    font-family:'Inter',sans-serif;font-size:.95rem;color:var(--muted);
+    cursor:pointer;transition:border-color .2s ease,color .2s ease;
+  }
+  .file-drop:hover{border-color:var(--accent);color:var(--accent)}
+  .file-drop input[type=file]{position:absolute;width:1px;height:1px;opacity:0;overflow:hidden;pointer-events:none}
   .directions-content{display:flex;flex-direction:column;gap:20px}
   .directions-content .dway b{display:block;font-size:1rem;margin-bottom:6px;color:var(--text)}
   .directions-content .dway p{color:var(--muted);font-size:.92rem;line-height:1.5;margin:0}
@@ -1225,6 +1233,9 @@
       <button type="button" class="works-arrow next" aria-label="Следующий отзыв" onclick="document.getElementById('reviewsTrack').scrollBy({left:479,behavior:'smooth'})">&#8594;</button>
     </div>
     <div class="reviews-cta">
+      <button type="button" id="leaveReviewBtn" class="dot-btn">
+        оставить отзыв
+      </button>
       <a href="#portfolio" class="dot-btn">
         перейти в каталог
       </a>
@@ -1340,6 +1351,25 @@
   </div>
 </div>
 
+<div class="modal-backdrop" id="reviewModal" aria-hidden="true">
+  <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="reviewModalTitle">
+    <button type="button" class="modal-close" id="reviewClose" aria-label="Закрыть">×</button>
+    <h3 id="reviewModalTitle">Поделитесь впечатлением о работе с нами</h3>
+    <form id="reviewForm" onsubmit="event.preventDefault(); this.reset(); document.getElementById('reviewPhotoLabel').textContent='Добавить фото (необязательно)'; document.getElementById('reviewModal').classList.remove('open'); alert('Спасибо за отзыв! Мы обязательно его опубликуем.');">
+      <input type="text" name="name" placeholder="Ваше имя" required>
+      <textarea name="review" rows="5" placeholder="Ваш отзыв" required></textarea>
+      <label class="file-drop">
+        <input type="file" name="photo" accept="image/*" onchange="document.getElementById('reviewPhotoLabel').textContent = this.files[0] ? this.files[0].name : 'Добавить фото (необязательно)';">
+        <span id="reviewPhotoLabel">Добавить фото (необязательно)</span>
+      </label>
+      <button type="submit" class="btn dot-btn">
+        Отправить отзыв
+      </button>
+      <p class="form-note">Нажимая кнопку, Вы даёте согласие на обработку персональных данных</p>
+    </form>
+  </div>
+</div>
+
 <div class="modal-backdrop" id="directionsModal" aria-hidden="true">
   <div class="modal-card wide" role="dialog" aria-modal="true" aria-labelledby="directionsModalTitle">
     <button type="button" class="modal-close" id="directionsClose" aria-label="Закрыть">×</button>
@@ -1390,6 +1420,15 @@
     btn.addEventListener('click', (e) => { e.preventDefault(); openManagerModal(); });
   });
 
+  const reviewModal = document.getElementById('reviewModal');
+  const leaveReviewBtn = document.getElementById('leaveReviewBtn');
+  const reviewClose = document.getElementById('reviewClose');
+  const openReviewModal = () => { reviewModal.classList.add('open'); reviewModal.setAttribute('aria-hidden', 'false'); };
+  const closeReviewModal = () => { reviewModal.classList.remove('open'); reviewModal.setAttribute('aria-hidden', 'true'); };
+  leaveReviewBtn.addEventListener('click', openReviewModal);
+  reviewClose.addEventListener('click', closeReviewModal);
+  reviewModal.addEventListener('click', (e) => { if (e.target === reviewModal) closeReviewModal(); });
+
   const directionsModal = document.getElementById('directionsModal');
   const directionsBtn = document.getElementById('directionsBtn');
   const directionsClose = document.getElementById('directionsClose');
@@ -1399,7 +1438,7 @@
   directionsClose.addEventListener('click', closeDirectionsModal);
   directionsModal.addEventListener('click', (e) => { if (e.target === directionsModal) closeDirectionsModal(); });
 
-  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { closeManagerModal(); closeDirectionsModal(); } });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { closeManagerModal(); closeReviewModal(); closeDirectionsModal(); } });
 
   const worksTrack = document.getElementById('worksTrack');
   if (worksTrack) {

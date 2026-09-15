@@ -560,6 +560,20 @@
     font-family:'Inter',sans-serif;font-weight:300;font-size:32px;letter-spacing:0.64px;color:#CDCBC7;
   }
   .faq-list summary::-webkit-details-marker{display:none}
+  @keyframes faqSway{0%,100%{transform:translateX(0)}50%{transform:translateX(6px)}}
+  .faq-q{
+    display:inline-block;
+    animation:faqSway 3.6s ease-in-out infinite;
+    transition:color .25s ease,letter-spacing .25s ease;
+  }
+  .faq-list details:nth-child(2) .faq-q{animation-delay:.5s}
+  .faq-list details:nth-child(3) .faq-q{animation-delay:1s}
+  .faq-list details:nth-child(4) .faq-q{animation-delay:1.5s}
+  .faq-list details:nth-child(5) .faq-q{animation-delay:2s}
+  .faq-list details:nth-child(6) .faq-q{animation-delay:2.5s}
+  .faq-list summary:hover .faq-q{animation-play-state:paused;letter-spacing:.6px;color:#fff}
+  @media (prefers-reduced-motion:reduce){.faq-q{animation:none}}
+
   @keyframes faqPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.12)}}
   .faq-toggle{
     --dot-off:6px;
@@ -1221,27 +1235,27 @@
     </div>
     <div class="faq-list">
       <details open>
-        <summary>Что нужно отправить для предварительного расчёта?<span class="faq-toggle" aria-hidden="true">+</span></summary>
+        <summary><span class="faq-q">Что нужно отправить для предварительного расчёта?</span><span class="faq-toggle" aria-hidden="true">+</span></summary>
         <p>Пришлите эскиз или референс, примерные размеры и фото помещения — этого достаточно, чтобы дать предварительную оценку стоимости ещё до выезда замерщика.</p>
       </details>
       <details>
-        <summary>Выезд замерщика платный?<span class="faq-toggle" aria-hidden="true">+</span></summary>
+        <summary><span class="faq-q">Выезд замерщика платный?</span><span class="faq-toggle" aria-hidden="true">+</span></summary>
         <p>Нет, бесплатно по Москве и области. Инженер приезжает, снимает размеры и консультирует по конструкции и материалам.</p>
       </details>
       <details>
-        <summary>Какая минимальная стоимость заказа?<span class="faq-toggle" aria-hidden="true">+</span></summary>
+        <summary><span class="faq-q">Какая минимальная стоимость заказа?</span><span class="faq-toggle" aria-hidden="true">+</span></summary>
         <p>Минимальной суммы заказа нет — работаем и с небольшими изделиями, и с комплексными проектами под ключ.</p>
       </details>
       <details>
-        <summary>Можно ли внести изменения в изделие после утверждения дизайн проекта?<span class="faq-toggle" aria-hidden="true">+</span></summary>
+        <summary><span class="faq-q">Можно ли внести изменения в изделие после утверждения дизайн проекта?</span><span class="faq-toggle" aria-hidden="true">+</span></summary>
         <p>До запуска в производство — да, вносим правки бесплатно. После старта работ изменения согласовываются отдельно и могут повлиять на срок и стоимость.</p>
       </details>
       <details>
-        <summary>Можно заказать доставку в другой город?<span class="faq-toggle" aria-hidden="true">+</span></summary>
+        <summary><span class="faq-q">Можно заказать доставку в другой город?</span><span class="faq-toggle" aria-hidden="true">+</span></summary>
         <p>Да, доставляем по всей России транспортной компанией и надёжно упаковываем изделия для дальней перевозки.</p>
       </details>
       <details>
-        <summary>Что входит в проект?<span class="faq-toggle" aria-hidden="true">+</span></summary>
+        <summary><span class="faq-q">Что входит в проект?</span><span class="faq-toggle" aria-hidden="true">+</span></summary>
         <p>3D-визуализация, чертежи с размерами, спецификация материалов и фурнитуры, смета с фиксированной ценой.</p>
       </details>
     </div>

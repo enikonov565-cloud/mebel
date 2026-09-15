@@ -436,8 +436,8 @@
 
   .benefits-wrap{display:flex;justify-content:space-between;align-items:stretch;gap:47px;flex-wrap:wrap}
   .benefits-left{
-    flex:1 1 0;width:auto;min-width:0;max-width:100%;height:730px;
-    display:flex;flex-direction:column;
+    flex:1 1 0;width:auto;min-width:0;max-width:100%;height:730px;min-height:0;
+    display:flex;flex-direction:column;overflow:hidden;
   }
   .benefits-list{
     list-style:none;flex:1 1 auto;min-height:0;
@@ -760,7 +760,7 @@
     .svc-head,.benefits-head{justify-content:flex-start;flex-wrap:wrap}
     .svc-head p,.benefits-head p{text-align:left}
     .benefits-wrap{flex-direction:column}
-    .benefits-left{width:100%;height:auto}
+    .benefits-left{flex:none;width:100%;height:auto}
     .benefits-photo{width:100%;height:auto;aspect-ratio:910/730}
   }
 

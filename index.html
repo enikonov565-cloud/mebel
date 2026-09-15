@@ -407,10 +407,12 @@
   @keyframes tagScroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
   @media (prefers-reduced-motion:reduce){.benefits-tags{animation:none}}
   .benefits-tag{
-    flex:none;border:1px solid #CDCBC7;border-radius:10px;padding:10px 30px;
+    flex:none;border:1px solid #2F1F02;border-radius:10px;padding:10px 30px;
     font-family:'Inter',sans-serif;font-weight:300;font-size:20px;letter-spacing:0.4px;
-    color:#CDCBC7;white-space:nowrap;
+    background:#CDCBC7;color:#2F1F02;white-space:nowrap;
+    transition:background-color .25s ease,color .25s ease,border-color .25s ease;
   }
+  .benefits-tag:hover{background:#2F1F02;color:#CDCBC7;border-color:#CDCBC7}
 
   .benefits-head{
     display:flex;justify-content:space-between;align-items:center;

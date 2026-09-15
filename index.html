@@ -696,20 +696,26 @@
   }
   .modal-backdrop.open{opacity:1;pointer-events:auto}
   .modal-card{
-    position:relative;width:420px;max-width:100%;
-    background:var(--bg);border-radius:var(--radius);padding:34px 30px 28px;
+    position:relative;width:560px;max-width:100%;
+    background:var(--bg);border-radius:var(--radius);padding:48px 44px 40px;
     box-shadow:0 20px 60px rgba(0,0,0,.35);
     transform:translateY(12px);transition:transform .25s ease;
   }
   .modal-backdrop.open .modal-card{transform:translateY(0)}
   .modal-close{
-    position:absolute;top:16px;right:16px;width:32px;height:32px;
-    background:none;border:none;cursor:pointer;color:var(--muted);font-size:1.4rem;line-height:1;
+    position:absolute;top:20px;right:20px;width:40px;height:40px;
+    background:none;border:none;cursor:pointer;color:var(--muted);font-size:1.8rem;line-height:1;
   }
   .modal-close:hover{color:var(--accent)}
-  .modal-card h3{font-size:1.2rem;margin-bottom:20px;padding-right:24px}
-  .modal-card form{display:grid;gap:14px}
-  .modal-card.wide{width:560px}
+  .modal-card h3{font-size:1.6rem;line-height:1.25;margin-bottom:28px;padding-right:32px}
+  .modal-card form{display:grid;gap:18px}
+  .modal-card.wide{width:720px}
+  .modal-card input,.modal-card textarea{
+    width:100%;padding:16px 18px;border-radius:10px;border:1.5px solid var(--line);
+    font-family:'Inter',sans-serif;font-size:1.05rem;color:var(--text);background:#fff;
+  }
+  .modal-card input:focus,.modal-card textarea:focus{outline:none;border-color:var(--accent)}
+  .modal-card .form-note{font-size:.85rem}
   .directions-content{display:flex;flex-direction:column;gap:20px}
   .directions-content .dway b{display:block;font-size:1rem;margin-bottom:6px;color:var(--text)}
   .directions-content .dway p{color:var(--muted);font-size:.92rem;line-height:1.5;margin:0}
@@ -873,7 +879,7 @@
     <div class="hero-stat2"><b>10%</b><span>предоплата по&nbsp;договору</span></div>
   </div>
   <div class="hero-cta">
-    <a href="#contact" class="dot-btn">
+    <a href="#contact" class="dot-btn calc-cta">
       рассчитать стоимость проекта
     </a>
   </div>
@@ -1009,7 +1015,7 @@
         <a href="#portfolio" class="svc-btn dark dot-btn">
           перейти в каталог
         </a>
-        <a href="#contact" class="svc-btn light dot-btn">
+        <a href="#contact" class="svc-btn light dot-btn calc-cta">
           рассчитать стоимость проекта
         </a>
       </div>
@@ -1166,7 +1172,7 @@
       <button type="button" class="works-arrow next" aria-label="Следующее фото">&#8594;</button>
     </div>
     <div class="works-cta">
-      <a href="#contact" class="dot-btn">
+      <a href="#contact" class="dot-btn calc-cta">
         рассчитать стоимость проекта
       </a>
     </div>
@@ -1380,6 +1386,9 @@
   headerManagerBtn.addEventListener('click', openManagerModal);
   managerClose.addEventListener('click', closeManagerModal);
   managerModal.addEventListener('click', (e) => { if (e.target === managerModal) closeManagerModal(); });
+  document.querySelectorAll('.calc-cta').forEach(btn => {
+    btn.addEventListener('click', (e) => { e.preventDefault(); openManagerModal(); });
+  });
 
   const directionsModal = document.getElementById('directionsModal');
   const directionsBtn = document.getElementById('directionsBtn');

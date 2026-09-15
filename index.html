@@ -577,7 +577,7 @@
   .contact-head p{
     font-family:'Inter',sans-serif;font-weight:300;
     font-size:20px;line-height:1.2;letter-spacing:0.4px;
-    color:#CDCBC7;max-width:620px;text-align:right;
+    color:#CDCBC7;max-width:620px;text-align:left;
   }
   .contact-cta{display:flex;justify-content:flex-end;gap:24px;flex-wrap:wrap;margin-top:40px}
   .contact-cta button{
@@ -624,19 +624,22 @@
   .footer-logo2{display:inline-flex;flex-direction:column;align-items:flex-start;margin-bottom:18px}
   .footer-logo2 .word{
     font-family:'GOST','Inter',sans-serif;font-weight:400;
-    font-size:4.5rem;letter-spacing:-.09em;white-space:nowrap;line-height:normal;
+    font-size:7.75rem;letter-spacing:-.09em;white-space:nowrap;line-height:normal;
     color:#CDCBC7;margin-bottom:-.3em;
   }
   .footer-logo2 .word .edge{font-size:1.5625em}
   .footer-logo2 .sub{
-    display:block;font-family:'Inter',sans-serif;font-weight:400;font-size:1.15rem;
+    display:block;font-family:'Inter',sans-serif;font-weight:400;font-size:2rem;
     text-transform:uppercase;color:#fff;line-height:normal;
   }
   .footer-brand p{margin:0;font-family:'Inter',sans-serif;font-weight:300;font-size:17px;line-height:1.4;color:#CDCBC7}
   .footer-nav{list-style:none;display:flex;flex-direction:column;gap:10px;font-family:'Inter',sans-serif;font-weight:300;font-size:20px;text-transform:lowercase;letter-spacing:0.4px;color:#CDCBC7}
   .footer-nav a{transition:opacity .2s}
   .footer-nav a:hover{opacity:.7}
-  .footer-contacts{list-style:disc;padding-left:22px;display:flex;flex-direction:column;justify-content:space-between;gap:24px;font-family:'Inter',sans-serif;font-weight:300;font-size:20px;letter-spacing:0.4px;color:#CDCBC7;max-width:659px}
+  .footer-contacts{list-style:none;padding-left:0;display:flex;flex-direction:column;justify-content:space-between;gap:20px;font-family:'Inter',sans-serif;color:#CDCBC7;max-width:659px}
+  .footer-contacts li{display:flex;flex-direction:column;gap:5px}
+  .footer-contacts .fc-label{font-weight:600;font-size:20px;letter-spacing:0.48px}
+  .footer-contacts .fc-value{font-weight:300;font-size:20px;letter-spacing:0.4px;line-height:1.2}
 
   /* Contact modal */
   .modal-backdrop{
@@ -1271,10 +1274,10 @@
     </ul>
 
     <ul class="footer-contacts">
-      <li>Телефон: +7 (900) 000-00-00</li>
-      <li>E-mail: info@anturage-interior.ru</li>
-      <li>Мастерская: Московская обл., Раменский г.о.,<br>пгт Удельная, ул. Салтыкова-Щедрина, 10</li>
-      <li>Режим работы: Пн–Сб, 9:00–19:00</li>
+      <li><p class="fc-label">Телефон:</p><p class="fc-value">+7 (900) 000-00-00</p></li>
+      <li><p class="fc-label">E-mail:</p><p class="fc-value">info@anturage-interior.ru</p></li>
+      <li><p class="fc-label">Мастерская:</p><p class="fc-value">Московская обл., Раменский г.о.,<br>пгт Удельная, ул. Салтыкова-Щедрина, 10</p></li>
+      <li><p class="fc-label">Режим работы:</p><p class="fc-value">Пн–Сб, 9:00–19:00</p></li>
     </ul>
   </div>
 </footer>

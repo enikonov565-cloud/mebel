@@ -535,7 +535,8 @@
     text-align:center;cursor:pointer;
     --reveal-bg:#CDCBC7;--reveal-text:#2F1F02;--dot-shadow:#2F1F02;
   }
-  #leaveReviewBtn{background:var(--accent-dark);--dot-shadow:var(--accent-dark)}
+  .dot-btn.leave-review-btn{background:var(--accent-dark);--dot-shadow:var(--accent-dark)}
+  .dot-btn.leave-review-btn:hover{background:var(--reveal-bg);color:var(--reveal-text)}
 
   /* Спрашиваете - отвечаем — Figma node 160:79 */
   #faq{background:#110B00;padding:120px 0}
@@ -1234,7 +1235,7 @@
       <button type="button" class="works-arrow next" aria-label="Следующий отзыв" onclick="document.getElementById('reviewsTrack').scrollBy({left:479,behavior:'smooth'})">&#8594;</button>
     </div>
     <div class="reviews-cta">
-      <button type="button" id="leaveReviewBtn" class="dot-btn">
+      <button type="button" id="leaveReviewBtn" class="dot-btn leave-review-btn">
         оставить отзыв
       </button>
       <a href="#portfolio" class="dot-btn">

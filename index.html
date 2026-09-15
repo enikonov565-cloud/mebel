@@ -104,7 +104,7 @@
 
   .nav-cta,.about-cta a,.svc-btn.dark{--reveal-bg:#CDCBC7;--reveal-text:#2F1F02;--dot-shadow:#2F1F02}
   .hero-cta a,.svc-btn.light{--reveal-bg:#2F1F02;--reveal-text:#CDCBC7;--dot-shadow:#CDCBC7}
-  .mat-cta a{--reveal-bg:#CDCBC7;--reveal-text:#450A03;--dot-shadow:#450A03}
+  .mat-cta a,.benefits-consult a{--reveal-bg:#CDCBC7;--reveal-text:#450A03;--dot-shadow:#450A03}
   .btn.dot-btn:not(.outline){--reveal-bg:var(--accent-dark);--reveal-text:#fff;--dot-shadow:var(--accent)}
   .btn.outline.dot-btn{--reveal-bg:var(--accent);--reveal-text:#fff;--dot-shadow:var(--accent-dark)}
   .nav-cta{--dot-off:6px}
@@ -373,8 +373,8 @@
   }
 
   .mat-cta{display:flex;justify-content:center;margin-top:49px}
-  .mat-cta a{
-    display:flex;align-items:center;justify-content:center;
+  .mat-cta a,.benefits-consult a{
+    display:flex;align-items:center;justify-content:center;flex:none;
     width:430px;max-width:100%;height:68px;
     background:#450A03;border:2px solid #CDCBC7;border-radius:15px;
     font-family:'Inter',sans-serif;font-weight:700;font-size:26px;color:#CDCBC7;
@@ -435,14 +435,23 @@
   }
 
   .benefits-wrap{display:flex;justify-content:space-between;align-items:stretch;gap:47px;flex-wrap:wrap}
+  .benefits-left{
+    flex:none;width:843px;max-width:100%;height:730px;
+    display:flex;flex-direction:column;
+  }
   .benefits-list{
-    list-style:none;flex:none;width:843px;max-width:100%;
+    list-style:none;flex:1 1 auto;min-height:0;
     display:flex;flex-direction:column;justify-content:space-between;
   }
   .benefits-list li{padding:15px 10px;border-bottom:1px solid rgba(205,203,199,.25)}
   .benefits-list li:last-child{border-bottom:none}
   .benefits-list h3{font-family:'Inter',sans-serif;font-weight:500;font-size:30px;color:#CDCBC7;margin-bottom:8px}
   .benefits-list p{font-family:'Inter',sans-serif;font-weight:300;font-size:19px;color:#CDCBC7}
+  .benefits-consult{
+    flex:none;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;
+    margin-top:24px;padding-top:24px;border-top:1px solid rgba(205,203,199,.25);
+  }
+  .benefits-consult p{font-family:'Inter',sans-serif;font-weight:300;font-size:22px;color:#CDCBC7;margin:0}
   .benefits-photo{flex:1;min-width:280px;width:910px;height:730px;border-radius:15px;overflow:hidden}
   .benefits-photo img{width:100%;height:100%;object-fit:cover;display:block}
 
@@ -751,7 +760,7 @@
     .svc-head,.benefits-head{justify-content:flex-start;flex-wrap:wrap}
     .svc-head p,.benefits-head p{text-align:left}
     .benefits-wrap{flex-direction:column}
-    .benefits-list{width:100%;height:auto}
+    .benefits-left{width:100%;height:auto}
     .benefits-photo{width:100%;height:auto;aspect-ratio:910/730}
   }
 
@@ -1125,6 +1134,7 @@
     </div>
 
     <div class="benefits-wrap">
+      <div class="benefits-left">
       <ol class="benefits-list">
         <li>
           <h3>Изготовление нестандартной мебели под&nbsp;заказ</h3>
@@ -1151,6 +1161,11 @@
           <p>Скидка до&nbsp;15% на&nbsp;повторные заказы и&nbsp;партнёрская программа для&nbsp;студий.</p>
         </li>
       </ol>
+      <div class="benefits-consult">
+        <p>Остались вопросы?</p>
+        <a href="#contact" class="dot-btn">получить консультацию</a>
+      </div>
+      </div>
       <figure class="benefits-photo">
         <img src="benefits-photo.jpg" alt="Проект мебели">
       </figure>

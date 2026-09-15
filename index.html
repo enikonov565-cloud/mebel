@@ -354,8 +354,14 @@
   }
 
   .materials-grid{display:flex;gap:13px;flex-wrap:wrap}
-  .material{display:flex;flex-direction:column;flex:1 1 260px;min-width:0}
-  .material img{width:100%;height:375px;object-fit:cover;display:block}
+  .material{
+    display:flex;flex-direction:column;flex:1 1 260px;min-width:0;overflow:hidden;
+    transition:transform .4s cubic-bezier(.22,1,.36,1);
+  }
+  .material:hover{transform:translateY(-8px)}
+  .material img{width:100%;height:375px;object-fit:cover;display:block;transition:transform .7s cubic-bezier(.22,1,.36,1)}
+  .material:hover img{transform:scale(1.08)}
+  @media (prefers-reduced-motion:reduce){.material,.material img{transition:none}}
   .material-body{display:flex;flex-direction:column;gap:20px;justify-content:center;min-height:249px;padding-top:20px}
   .material h3{
     font-family:'Inter',sans-serif;font-weight:500;
@@ -554,6 +560,7 @@
     font-family:'Inter',sans-serif;font-weight:300;font-size:32px;letter-spacing:0.64px;color:#CDCBC7;
   }
   .faq-list summary::-webkit-details-marker{display:none}
+  @keyframes faqPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.12)}}
   .faq-toggle{
     --dot-off:6px;
     flex:none;width:40px;height:40px;border-radius:50%;border:2px dashed #CDCBC7;
@@ -563,7 +570,10 @@
                background-color .25s ease,color .25s ease,
                box-shadow .35s cubic-bezier(.34,1.56,.64,1);
     box-shadow:0 0 0 0 #CDCBC7;
+    animation:faqPulse 2.2s ease-in-out infinite;
   }
+  .faq-list details[open] .faq-toggle,
+  .faq-list summary:hover .faq-toggle{animation:none}
   .faq-list details[open] .faq-toggle{transform:rotate(45deg)}
   .faq-list summary:hover .faq-toggle{
     background:#CDCBC7;color:#180F01;
@@ -574,7 +584,7 @@
     transform:rotate(45deg) translate(calc(var(--dot-off) * -1),calc(var(--dot-off) * -1));
   }
   @media (prefers-reduced-motion:reduce){
-    .faq-toggle{transition:background-color .2s ease,color .2s ease}
+    .faq-toggle{transition:background-color .2s ease,color .2s ease;animation:none}
     .faq-list summary:hover .faq-toggle{box-shadow:none}
     .faq-list summary:hover .faq-toggle,.faq-list details[open] summary:hover .faq-toggle{transform:none}
     .faq-list details[open] .faq-toggle{transform:rotate(45deg)}

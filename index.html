@@ -792,7 +792,10 @@
     .stats-grid{margin-left:0;width:100%}
     .about-photo-img{order:-1;width:100%;height:auto;aspect-ratio:817/862;max-width:817px}
     .about-headline,.why-head{justify-content:flex-start;flex-wrap:wrap}
-    .why-grid{grid-template-columns:repeat(2,1fr);grid-template-rows:repeat(4,minmax(280px,1fr))}
+    .why-grid{grid-template-columns:repeat(2,1fr);grid-template-rows:none;grid-auto-rows:auto}
+    .why-cell{position:relative;aspect-ratio:4/3}
+    .why-cell img,.why-cell video{position:absolute;inset:0}
+    .why-cell img.nightstand{object-position:center 48% !important}
     .why-vline,.why-hline{display:none}
     .svc-grid{grid-template-columns:repeat(2,1fr)}
     .svc-cta{grid-column:1/-1;height:auto;padding:20px 0}
@@ -835,6 +838,7 @@
     .stats-grid::before{display:none}
     .why-grid{grid-template-columns:1fr;grid-template-rows:none;gap:24px}
     .why-cell{aspect-ratio:1/1}
+    .why-cell img.nightstand{object-position:center 30% !important}
     .why-cell.text p{font-size:24px;max-width:100%}
     section{padding:120px 0}
     .footer-cta-btn{width:290px;font-size:20px;height:44px}
@@ -998,13 +1002,13 @@
 
       <div class="why-cell"><video class="portrait" src="why-cnc.mp4" autoplay muted loop playsinline></video></div>
       <div class="why-cell text"><p>Собственное высокотехнологичное современное производство</p></div>
-      <div class="why-cell"><img src="why-photo-2.jpg" alt="Материалы для мебели"></div>
+      <div class="why-cell"><img src="why-photo-2.jpg" alt="Обеденный стол с мягкими стульями" style="object-position:30% 30%"></div>
       <div class="why-cell text"><p>Фабричное качество производимой мебели</p></div>
 
       <div class="why-cell text"><p>Быстрая<br>доставка и&nbsp;сборка<br>мебели на&nbsp;дому</p></div>
-      <div class="why-cell"><img src="why-photo-3.jpg" alt="Изготовление мебели"></div>
+      <div class="why-cell"><img src="why-photo-3.jpg" alt="Сборка встроенного стеллажа" style="object-position:35% 40%"></div>
       <div class="why-cell text"><p>Гарантия по&nbsp;договору на&nbsp;мебель 3&nbsp;года</p></div>
-      <div class="why-cell"><img class="portrait" src="why-photo-4.jpg" alt="Мастер мебельного производства"></div>
+      <div class="why-cell"><img class="nightstand" src="why-photo-4.jpg" alt="Прикроватная тумба с лампой" style="object-position:center 30%"></div>
     </div>
   </div>
 </section>

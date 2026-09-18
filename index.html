@@ -293,8 +293,8 @@
   .why-vline{position:absolute;top:0;bottom:0;width:1px;background:#CDCBC7;opacity:.3}
   .why-hline{position:absolute;left:0;right:0;height:1px;background:#CDCBC7;opacity:.3}
   .why-cell{border-radius:15px;overflow:hidden;min-width:0;min-height:0}
-  .why-cell img{width:100%;height:100%;object-fit:cover;display:block;object-position:center 25%}
-  .why-cell img.portrait{object-position:top}
+  .why-cell img,.why-cell video{width:100%;height:100%;object-fit:cover;display:block;object-position:center 25%}
+  .why-cell img.portrait,.why-cell video.portrait{object-position:top}
   .why-cell.text{display:flex;align-items:center;justify-content:center;padding:10px;text-align:left}
   .why-cell.text p{
     font-family:'Inter',sans-serif;font-weight:300;
@@ -996,7 +996,7 @@
       <div class="why-vline" style="left:75.6%"></div>
       <div class="why-hline" style="top:49.7%"></div>
 
-      <div class="why-cell"><img class="portrait" src="why-photo-1.jpg" alt="Производство мебели"></div>
+      <div class="why-cell"><video class="portrait" src="why-cnc.mp4" autoplay muted loop playsinline></video></div>
       <div class="why-cell text"><p>Собственное высокотехнологичное современное производство</p></div>
       <div class="why-cell"><img src="why-photo-2.jpg" alt="Материалы для мебели"></div>
       <div class="why-cell text"><p>Фабричное качество производимой мебели</p></div>

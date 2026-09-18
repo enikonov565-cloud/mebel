@@ -74,8 +74,6 @@
   h1,h2,h3{
     line-height:1.15;font-weight:700;letter-spacing:-.01em;text-wrap:balance;
   }
-  h2.section-title{font-size:clamp(1.7rem,4vw,4.25rem);margin-bottom:14px}
-  .section-lead{color:var(--muted);max-width:640px;margin-bottom:44px;font-size:1.05rem}
   .btn{
     display:inline-block;background:var(--accent);color:var(--white);
     padding:9px 28px;border-radius:15pt;font-weight:600;font-size:1rem;
@@ -381,25 +379,39 @@
     text-align:center;
   }
 
-  /* Process */
-  #process{background:var(--bg-alt)}
-  .steps{
-    display:grid;grid-template-columns:repeat(6,1fr);gap:20px;
-    position:relative;margin-top:8px;
+  /* Как мы работаем — Figma node 217:17 */
+  #process{background:#110B00;padding:120px 0}
+  .process-head{
+    display:flex;justify-content:space-between;align-items:center;
+    gap:clamp(20px,4vw,180px);flex-wrap:nowrap;margin-bottom:60px;
   }
-  .steps::before{
-    content:"";position:absolute;top:27px;left:40px;right:40px;height:1px;
-    background:var(--line);z-index:0;
+  .process-head h2{
+    font-family:'Inter',sans-serif;font-weight:500;
+    font-size:clamp(1.9rem,6vw,68px);line-height:0.9;letter-spacing:1.52px;color:#CDCBC7;
   }
-  .step{position:relative;z-index:1}
-  .step .num{
-    width:40px;height:40px;border-radius:50%;
-    background:var(--white);border:2px solid var(--accent);color:var(--accent-dark);
-    display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.95rem;
-    margin-bottom:18px;
+  .process-head p{
+    font-family:'Inter',sans-serif;font-weight:300;
+    font-size:20px;line-height:1.2;letter-spacing:0.4px;
+    color:#CDCBC7;max-width:700px;text-align:right;
   }
-  .step h3{font-size:1rem;margin-bottom:6px}
-  .step p{color:var(--muted);font-size:.88rem}
+  .process-steps{display:flex;flex-direction:column;gap:60px}
+  .process-step{display:flex;align-items:center;gap:60px;flex-wrap:wrap}
+  .process-media{
+    flex:1 1 480px;min-width:280px;aspect-ratio:1198/621;border-radius:15px;
+    overflow:hidden;background:#2B2620;
+  }
+  .process-media video{width:100%;height:100%;object-fit:cover;display:block}
+  .process-text{flex:none;width:569px;max-width:100%;display:flex;flex-direction:column;gap:45px}
+  .process-text h3{
+    font-family:'Inter',sans-serif;font-weight:500;font-size:32px;
+    letter-spacing:0.64px;color:#CDCBC7;
+  }
+  .process-checklist{list-style:none;display:flex;flex-direction:column}
+  .process-checklist li{
+    display:flex;align-items:center;gap:10px;padding:10px;
+    font-family:'Inter',sans-serif;font-weight:500;font-size:20px;color:#CDCBC7;
+  }
+  .process-checklist svg{flex:none;width:24px;height:24px}
 
   /* Что вы получаете — Figma node 61:80 */
   #benefits{background:#110B00;padding:120px 0}
@@ -790,8 +802,10 @@
     .material{flex:1 1 200px}
     .mat-head{justify-content:flex-start;flex-wrap:wrap}
     .mat-head p{text-align:left}
-    .steps{grid-template-columns:repeat(3,1fr);row-gap:36px}
-    .steps::before{display:none}
+    .process-head{justify-content:flex-start;flex-wrap:wrap}
+    .process-head p{text-align:left}
+    .process-step{flex-direction:column;align-items:stretch;gap:30px}
+    .process-text{width:100%}
     .svc-grid{grid-template-columns:1fr}
     .svc-card{flex-direction:column;height:auto}
     .svc-card-photo{width:100%;height:260px}
@@ -852,7 +866,10 @@
     .material img{height:200px}
     .material h3{font-size:32px}
     .material p{font-size:15px}
-    .steps{grid-template-columns:1fr}
+    .process-steps{gap:36px}
+    .process-text{gap:28px}
+    .process-text h3{font-size:24px}
+    .process-checklist li{font-size:16px;padding:8px 4px}
     .hero{padding:110px 20px 32px}
     .hero-eyebrow{font-size:13px}
     .hero-headline h1{font-size:1.5rem}
@@ -1111,18 +1128,66 @@
   </div>
 </section>
 
-<!-- 5. Как мы работаем -->
+<!-- 5. Как мы работаем — точный макет Figma (node 217:17) -->
 <section id="process">
   <div class="container">
-    <h2 class="section-title">Как&nbsp;мы работаем</h2>
-    <p class="section-lead">От&nbsp;заявки до&nbsp;монтажа — шесть понятных шагов, на&nbsp;каждом из&nbsp;которых вы знаете, что происходит с&nbsp;заказом.</p>
-    <div class="steps">
-      <div class="step"><div class="num">1</div><h3>Заявка</h3><p>Оставляете заявку на&nbsp;сайте или&nbsp;по телефону — перезваниваем в&nbsp;течение рабочего дня.</p></div>
-      <div class="step"><div class="num">2</div><h3>Замер</h3><p>Бесплатный выезд замерщика по&nbsp;Москве и&nbsp;области, консультация по&nbsp;материалам.</p></div>
-      <div class="step"><div class="num">3</div><h3>Проект</h3><p>3D-визуализация и&nbsp;чертежи — согласовываем каждую деталь до&nbsp;запуска в&nbsp;цех.</p></div>
-      <div class="step"><div class="num">4</div><h3>Договор</h3><p>Фиксируем цену и&nbsp;сроки в&nbsp;договоре, вносите предоплату — смета дальше не&nbsp;меняется.</p></div>
-      <div class="step"><div class="num">5</div><h3>Производство</h3><p>Делаем контрольный образец, изготавливаем в&nbsp;своём цеху и&nbsp;присылаем фотоотчёты на&nbsp;каждом этапе.</p></div>
-      <div class="step"><div class="num">6</div><h3>Монтаж</h3><p>Собираем изделие на&nbsp;производстве, затем везём и&nbsp;устанавливаем силами своей бригады — с&nbsp;уборкой за&nbsp;собой.</p></div>
+    <div class="process-head">
+      <h2>Как&nbsp;мы работаем</h2>
+      <p>От&nbsp;заявки до&nbsp;монтажа — шесть понятных шагов, на&nbsp;каждом из&nbsp;которых вы знаете, что происходит с&nbsp;заказом.</p>
+    </div>
+    <div class="process-steps">
+      <div class="process-step">
+        <div class="process-media">
+          <video src="process-1.mp4" autoplay muted loop playsinline></video>
+        </div>
+        <div class="process-text">
+          <h3>1. Бесплатный проект</h3>
+          <ul class="process-checklist">
+            <li><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="11" stroke="#CDCBC7" stroke-width="1.5"/><path d="M7 12.5l3 3 7-7" stroke="#CDCBC7" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>Собираем ваши пожелания к&nbsp;дизайну и&nbsp;оснащению</li>
+            <li><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="11" stroke="#CDCBC7" stroke-width="1.5"/><path d="M7 12.5l3 3 7-7" stroke="#CDCBC7" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>Приезжаем на&nbsp;место и&nbsp;проводим все замеры</li>
+            <li><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="11" stroke="#CDCBC7" stroke-width="1.5"/><path d="M7 12.5l3 3 7-7" stroke="#CDCBC7" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>Разрабатываем бесплатный дизайн-проект</li>
+          </ul>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="process-media">
+          <video src="process-2.mp4" autoplay muted loop playsinline></video>
+        </div>
+        <div class="process-text">
+          <h3>2. Договор и&nbsp;предоплата</h3>
+          <ul class="process-checklist">
+            <li><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="11" stroke="#CDCBC7" stroke-width="1.5"/><path d="M7 12.5l3 3 7-7" stroke="#CDCBC7" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>Закрепляем все условия и&nbsp;сроки в&nbsp;договоре</li>
+            <li><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="11" stroke="#CDCBC7" stroke-width="1.5"/><path d="M7 12.5l3 3 7-7" stroke="#CDCBC7" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>Получаем предоплату и&nbsp;запускаем производство</li>
+          </ul>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="process-media">
+          <video src="process-3.mp4" autoplay muted loop playsinline></video>
+        </div>
+        <div class="process-text">
+          <h3>3. Производство</h3>
+          <ul class="process-checklist">
+            <li><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="11" stroke="#CDCBC7" stroke-width="1.5"/><path d="M7 12.5l3 3 7-7" stroke="#CDCBC7" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>Создаём образцы</li>
+            <li><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="11" stroke="#CDCBC7" stroke-width="1.5"/><path d="M7 12.5l3 3 7-7" stroke="#CDCBC7" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>Изготавливаем модули</li>
+            <li><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="11" stroke="#CDCBC7" stroke-width="1.5"/><path d="M7 12.5l3 3 7-7" stroke="#CDCBC7" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>При&nbsp;необходимости делаем повторные замеры</li>
+            <li><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="11" stroke="#CDCBC7" stroke-width="1.5"/><path d="M7 12.5l3 3 7-7" stroke="#CDCBC7" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>Присылаем фотоотчёты на&nbsp;каждом этапе производства</li>
+          </ul>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="process-media">
+          <video src="process-4.mp4" autoplay muted loop playsinline></video>
+        </div>
+        <div class="process-text">
+          <h3>4. Установка под&nbsp;ключ</h3>
+          <ul class="process-checklist">
+            <li><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="11" stroke="#CDCBC7" stroke-width="1.5"/><path d="M7 12.5l3 3 7-7" stroke="#CDCBC7" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>Предварительно полностью собираем изделие на&nbsp;производстве, чтобы исключить ошибки</li>
+            <li><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="11" stroke="#CDCBC7" stroke-width="1.5"/><path d="M7 12.5l3 3 7-7" stroke="#CDCBC7" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>Привозим и&nbsp;собираем изделие на&nbsp;месте</li>
+            <li><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="11" stroke="#CDCBC7" stroke-width="1.5"/><path d="M7 12.5l3 3 7-7" stroke="#CDCBC7" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>Получаем остаток суммы</li>
+          </ul>
+        </div>
+      </div>
     </div>
   </div>
 </section>

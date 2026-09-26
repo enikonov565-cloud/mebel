@@ -170,3 +170,10 @@ body{background:#110B00;color:#CDCBC7}
 .svc-btn.dark:hover{background:#CDCBC7;color:#2F1F02}
 .svc-btn.light:hover{background:#110B00;color:#CDCBC7}
 .cat-card-cta .cat-ask:hover{background:#2F1F02;color:#CDCBC7}
+
+/* Button labels: one font size and equal side padding so the longest label ("рассчитать стоимость проекта") fits a 430px button on one line */
+@media (min-width:961px){
+  .svc-btn{
+    font-size:22px!important;padding:0 32px!important;white-space:nowrap;letter-spacing:0;
+  }
+}

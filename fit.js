@@ -5,6 +5,7 @@
 (function () {
   var d = document.documentElement;
   var H = 1200; // tallest section in CSS px; refined after load
+  var SAFETY = 0.95; // keep ~5% of the window free so the last row never touches the edge
 
   function measure() {
     var z = parseFloat(d.style.zoom) || 1;
@@ -22,16 +23,20 @@
 
   function fit() {
     var iw = window.innerWidth, ih = window.innerHeight;
+    // visible height: the smallest of the available estimates (excludes bars/scrollbars some browsers leave in innerHeight)
+    var vv = window.visualViewport ? window.visualViewport.height : ih;
+    var vis = Math.min(ih, d.clientHeight || ih, vv || ih);
     var cw = d.clientWidth || iw;
     var z = 1;
     if (iw >= 1280) {
-      z = Math.min(1, cw / 1920, ih / H);
+      z = Math.min(1, cw / 1920, (vis * SAFETY) / H);
       z = Math.max(z, 0.5);
     }
     d.style.zoom = z === 1 ? '' : String(z);
     d.style.setProperty('--vw100', (cw / z) + 'px');
-    d.style.setProperty('--vh100', (ih / z) + 'px');
+    d.style.setProperty('--vh100', (vis / z) + 'px');
     if (z < 1) d.style.setProperty('--hero-u', '1px'); else d.style.removeProperty('--hero-u');
+    window.__fit = { z: z, H: H, innerW: iw, innerH: ih, clientH: d.clientHeight, visualH: vv, vis: vis, clientW: cw };
   }
 
   // Solid header once the hero has scrolled away (always solid on pages without a hero)

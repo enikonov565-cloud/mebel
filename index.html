@@ -175,7 +175,7 @@
     position:relative;overflow:hidden;aspect-ratio:1920/1091;min-height:520px;
     background:#110B00;color:#CDCBC7;text-align:left;padding:0;
   }
-  .hero-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
+  .hero-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;transform:translateZ(0);backface-visibility:hidden}
   .hero::before{
     content:'';position:absolute;inset:0;z-index:1;
     background:
@@ -1567,6 +1567,18 @@
 </div>
 
 <script>
+  // Play autoplay videos only while on screen: keeps the hero and other videos smooth
+  if ('IntersectionObserver' in window) {
+    const vio = new IntersectionObserver((entries) => {
+      entries.forEach(en => {
+        const v = en.target;
+        if (en.isIntersecting) { const p = v.play(); if (p && p.catch) p.catch(() => {}); }
+        else v.pause();
+      });
+    }, { threshold: 0.05 });
+    document.querySelectorAll('video[autoplay]').forEach(v => vio.observe(v));
+  }
+
   const burger = document.getElementById('burger');
   const navLinks = document.getElementById('navLinks');
   burger.addEventListener('click', () => {

@@ -16,14 +16,21 @@
 
   const managerModal = document.getElementById('managerModal');
   const managerClose = document.getElementById('managerClose');
-  const openManagerModal = () => { managerModal.classList.add('open'); managerModal.setAttribute('aria-hidden', 'false'); };
+  const TITLE_HELP = 'Оставьте свой номер, и\u00a0наши консультанты помогут Вам с\u00a0выбором!';
+  const TITLE_CALC = 'Оставьте свой номер, и\u00a0наши консультанты помогут Вам рассчитать стоимость\u00a0заказа';
+  const managerTitle = document.getElementById('managerModalTitle');
+  // calc = true for the «рассчитать стоимость» buttons: the window then talks about the price of the order
+  const openManagerModal = (calc) => {
+    if (managerTitle) managerTitle.textContent = calc === true ? TITLE_CALC : TITLE_HELP;
+    managerModal.classList.add('open'); managerModal.setAttribute('aria-hidden', 'false');
+  };
   const closeManagerModal = () => { managerModal.classList.remove('open'); managerModal.setAttribute('aria-hidden', 'true'); };
-  document.getElementById('contactManagerBtn').addEventListener('click', openManagerModal);
-  document.getElementById('headerManagerBtn').addEventListener('click', openManagerModal);
+  document.getElementById('contactManagerBtn').addEventListener('click', () => openManagerModal(false));
+  document.getElementById('headerManagerBtn').addEventListener('click', () => openManagerModal(false));
   managerClose.addEventListener('click', closeManagerModal);
   managerModal.addEventListener('click', (e) => { if (e.target === managerModal) closeManagerModal(); });
   document.querySelectorAll('.calc-cta').forEach(btn => {
-    btn.addEventListener('click', (e) => { e.preventDefault(); openManagerModal(); });
+    btn.addEventListener('click', (e) => { e.preventDefault(); openManagerModal(!btn.classList.contains('consult-cta')); });
   });
 
   const successModal = document.getElementById('successModal');

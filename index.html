@@ -1157,7 +1157,7 @@
       </a>
       <div class="svc-cta">
         <p>Не&nbsp;нашли нужное?<br>Изготовим по&nbsp;вашему<br>эскизу или&nbsp;чертежу дизайнера.</p>
-        <a href="#contact" class="svc-btn consult dot-btn calc-cta">
+        <a href="#contact" class="svc-btn consult dot-btn calc-cta consult-cta">
           получить консультацию
         </a>
         <a href="#contact" class="svc-btn light dot-btn calc-cta">
@@ -1985,14 +1985,21 @@
   const contactManagerBtn = document.getElementById('contactManagerBtn');
   const headerManagerBtn = document.getElementById('headerManagerBtn');
   const managerClose = document.getElementById('managerClose');
-  const openManagerModal = () => { managerModal.classList.add('open'); managerModal.setAttribute('aria-hidden', 'false'); };
+  const TITLE_HELP = 'Оставьте свой номер, и\u00a0наши консультанты помогут Вам с\u00a0выбором!';
+  const TITLE_CALC = 'Оставьте свой номер, и\u00a0наши консультанты помогут Вам рассчитать стоимость\u00a0заказа';
+  const managerTitle = document.getElementById('managerModalTitle');
+  // calc = true for the «рассчитать стоимость» buttons: the window then talks about the price of the order
+  const openManagerModal = (calc) => {
+    if (managerTitle) managerTitle.textContent = calc === true ? TITLE_CALC : TITLE_HELP;
+    managerModal.classList.add('open'); managerModal.setAttribute('aria-hidden', 'false');
+  };
   const closeManagerModal = () => { managerModal.classList.remove('open'); managerModal.setAttribute('aria-hidden', 'true'); };
-  contactManagerBtn.addEventListener('click', openManagerModal);
-  headerManagerBtn.addEventListener('click', openManagerModal);
+  contactManagerBtn.addEventListener('click', () => openManagerModal(false));
+  headerManagerBtn.addEventListener('click', () => openManagerModal(false));
   managerClose.addEventListener('click', closeManagerModal);
   managerModal.addEventListener('click', (e) => { if (e.target === managerModal) closeManagerModal(); });
   document.querySelectorAll('.calc-cta').forEach(btn => {
-    btn.addEventListener('click', (e) => { e.preventDefault(); openManagerModal(); });
+    btn.addEventListener('click', (e) => { e.preventDefault(); openManagerModal(!btn.classList.contains('consult-cta')); });
   });
 
   const reviewModal = document.getElementById('reviewModal');

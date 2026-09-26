@@ -717,7 +717,7 @@
   }
   .directions-trigger{
     --dot-off:8px;
-    width:430px!important;height:68px!important;font-size:26px!important;
+    width:240px!important;height:36px!important;font-size:16px!important;
     background:transparent!important;border:2px dashed rgba(205,203,199,.4)!important;
     color:rgba(205,203,199,.75)!important;font-weight:500!important;
     --reveal-bg:rgba(205,203,199,.15);--reveal-text:rgba(205,203,199,.9);--dot-shadow:rgba(205,203,199,.3);
@@ -958,15 +958,15 @@
 
 /* Button labels: one font size and equal side padding so the longest label ("рассчитать стоимость проекта") fits a 430px button on one line */
 @media (min-width:961px){
-  .about-cta a,.mat-cta a,.benefits-consult a,.svc-btn,.works-cta a,.reviews-cta a,.reviews-cta button,.contact-cta button,.directions-trigger{
+  .about-cta a,.mat-cta a,.benefits-consult a,.svc-btn,.works-cta a,.reviews-cta a,.reviews-cta button,.contact-cta button:not(.directions-trigger){
     font-size:22px!important;padding:0 32px!important;white-space:nowrap;letter-spacing:0;
   }
 }
 
 /* One font size for every button on the site (the header button is the only exception) */
-.about-cta a,.mat-cta a,.benefits-consult a,.svc-btn,.works-cta a,.reviews-cta a,.reviews-cta button,.contact-cta button,.directions-trigger,.hero-cta a,.footer-cta-btn,.btn,.success-ok-btn,.directions-link,.leave-review-btn{font-size:22px!important}
+.about-cta a,.mat-cta a,.benefits-consult a,.svc-btn,.works-cta a,.reviews-cta a,.reviews-cta button,.contact-cta button:not(.directions-trigger),.hero-cta a,.footer-cta-btn,.btn,.success-ok-btn,.directions-link,.leave-review-btn{font-size:22px!important}
 @media (max-width:960px){
-  .about-cta a,.mat-cta a,.benefits-consult a,.svc-btn,.works-cta a,.reviews-cta a,.reviews-cta button,.contact-cta button,.directions-trigger,.hero-cta a,.footer-cta-btn,.btn,.success-ok-btn,.directions-link,.leave-review-btn{font-size:16px!important;white-space:normal!important}
+  .about-cta a,.mat-cta a,.benefits-consult a,.svc-btn,.works-cta a,.reviews-cta a,.reviews-cta button,.contact-cta button:not(.directions-trigger),.hero-cta a,.footer-cta-btn,.btn,.success-ok-btn,.directions-link,.leave-review-btn{font-size:16px!important;white-space:normal!important}
 }
 </style>
 </head>

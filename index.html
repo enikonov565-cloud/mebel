@@ -1094,7 +1094,7 @@
 
       <div class="why-cell"><video class="portrait" src="why-cnc.mp4" autoplay muted loop playsinline></video></div>
       <div class="why-cell text"><p>Собственное высокотехнологичное современное производство</p></div>
-      <div class="why-cell"><img src="why-photo-2.jpg" alt="Обеденный стол с мягкими стульями" style="object-position:30% 30%"></div>
+      <div class="why-cell"><video autoplay muted loop playsinline preload="metadata" poster="why-photo-2.jpg" aria-label="Обеденный стол с мягкими стульями" style="object-position:50% 50%"><source src="why-table-mobile.mp4" media="(max-width:640px)"><source src="why-table.mp4"></video></div>
       <div class="why-cell text"><p>Фабричное качество производимой мебели</p></div>
 
       <div class="why-cell text"><p>Быстрая<br>доставка и&nbsp;сборка<br>мебели на&nbsp;дому</p></div>
@@ -1628,17 +1628,26 @@
 </div>
 
 <script>
-  // Play autoplay videos only while on screen: keeps the hero and other videos smooth
-  if ('IntersectionObserver' in window) {
-    const vio = new IntersectionObserver((entries) => {
-      entries.forEach(en => {
-        const v = en.target;
-        if (en.isIntersecting) { const p = v.play(); if (p && p.catch) p.catch(() => {}); }
-        else v.pause();
+  // Play autoplay videos only while they are on screen (keeps the page smooth); checked on scroll/resize
+  (function () {
+    const vids = [...document.querySelectorAll('video[autoplay]')];
+    let queued = false;
+    const update = () => {
+      queued = false;
+      const vh = window.innerHeight;
+      vids.forEach(v => {
+        const r = v.getBoundingClientRect();
+        const visible = r.bottom > -100 && r.top < vh + 100 && r.width > 0;
+        if (visible && v.paused) { const p = v.play(); if (p && p.catch) p.catch(() => {}); }
+        else if (!visible && !v.paused) v.pause();
       });
-    }, { threshold: 0.05 });
-    document.querySelectorAll('video[autoplay]').forEach(v => vio.observe(v));
-  }
+    };
+    const queue = () => { if (!queued) { queued = true; requestAnimationFrame(update); } };
+    window.addEventListener('scroll', queue, { passive: true });
+    window.addEventListener('resize', queue);
+    window.addEventListener('load', update);
+    update();
+  })();
 
   const burger = document.getElementById('burger');
   const navLinks = document.getElementById('navLinks');

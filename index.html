@@ -220,21 +220,25 @@
   /* Hero geometry from Figma 20:353 — 1u = 1px of the 1920 frame */
   @media (min-width:961px){
     /* u = 1px of the 1920x1091 frame; limited by both width and height so the whole hero fits one screen at 100% zoom */
-    .hero{--u:min(calc(calc(100*var(--vw100)/100)/1920),calc(calc(100*var(--vh100)/100)/1091));aspect-ratio:auto;height:calc(1091*var(--u));min-height:0}
+    .hero{
+      --u:var(--hero-u,min(calc(var(--vw100)/1920),calc(var(--vh100)/1091)));
+      --fx:max(0px,calc((var(--vw100) - 1920*var(--u))/2));
+      aspect-ratio:auto;height:max(calc(1091*var(--u)),var(--vh100));min-height:0;
+    }
     .hero-headline h1{font-size:max(1.5rem,calc(68*var(--u)))}
     .hero-headline .hero-sub{font-size:max(1rem,calc(47*var(--u)))}
-    .hero-headline{left:calc(60*var(--u));bottom:calc(91*var(--u));width:calc(735*var(--u));min-width:0}
+    .hero-headline{left:calc(var(--fx) + 60*var(--u));bottom:calc(91*var(--u));width:calc(735*var(--u));min-width:0}
     .hero-headline h1{white-space:nowrap}
     .hero-eyebrow{margin-top:calc(40*var(--u));font-size:max(12px,calc(20*var(--u)));line-height:1.2;white-space:nowrap}
     .hero-stats2{
-      right:calc(180.5*var(--u));left:auto;top:calc(499*var(--u));transform:translateX(50%);
+      right:calc(var(--fx) + 180.5*var(--u));left:auto;top:calc(499*var(--u));transform:translateX(50%);
       width:max-content;min-width:0;gap:calc(10*var(--u));
     }
     .hero-stat2{gap:0;padding:calc(7*var(--u)) 0}
     .hero-stat2 b{font-size:max(24px,calc(64*var(--u)));line-height:1.21;margin-bottom:calc(-10*var(--u))}
     .hero-stat2 span{font-size:max(11px,calc(20*var(--u)));line-height:1.21}
     .hero-stat-divider{width:calc(237*var(--u));max-width:none;height:calc(4*var(--u));margin:calc(-2*var(--u)) 0;background-size:100% 100%}
-    .hero-cta{right:calc(60*var(--u));bottom:calc(91*var(--u));width:calc(505*var(--u));min-width:200px;max-width:none}
+    .hero-cta{right:calc(var(--fx) + 60*var(--u));bottom:calc(91*var(--u));width:calc(505*var(--u));min-width:200px;max-width:none}
     .hero-cta a{height:max(44px,calc(68*var(--u)));font-size:max(12px,calc(25*var(--u)))}
   }
 
@@ -931,6 +935,12 @@
     .footer-logo2 .word{font-size:3rem}
     .contact-cta button{width:100%;height:46px;font-size:18px}
     .modal-card{padding:28px 20px 22px}
+  }
+
+  /* Every section is one "screen" of the 1920 frame: tighter vertical padding so a section fits the window (see fit.js) */
+  @media (min-width:1280px){
+    #about,#why-us,#services,#materials,#process,#benefits,#portfolio,#reviews,#faq,#contact{padding:80px 0 40px}
+    footer{padding:80px 0 60px}
   }
 </style>
 </head>

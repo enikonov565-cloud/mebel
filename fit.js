@@ -1,19 +1,43 @@
-/* Fit the 1920px desktop design to any laptop/desktop window at 100% browser zoom.
-   Between 1280 and 1919px the whole page is scaled proportionally (CSS zoom) so it keeps
-   the exact 1920 layout instead of stacking; below 1280px the tablet/mobile layouts apply. */
+/* Fit every "screen" of the 1920px design into the window at 100% browser zoom.
+   From 1280px wide the whole page is scaled proportionally (CSS zoom) by
+   min(width/1920, height/tallest-section), so no section is cut off by the window.
+   Below 1280px the tablet/mobile layouts apply unchanged. */
 (function () {
   var d = document.documentElement;
+  var H = 1200; // tallest section in CSS px; refined after load
+
+  function measure() {
+    var z = parseFloat(d.style.zoom) || 1;
+    var m = 0;
+    var list = document.querySelectorAll('body > section, body > main > section, body > footer');
+    for (var i = 0; i < list.length; i++) {
+      var s = list[i];
+      if (s.classList.contains('hero') || s.id === 'process') continue;
+      m = Math.max(m, s.getBoundingClientRect().height / z);
+    }
+    var st = document.querySelector('.process-step');
+    if (st) m = Math.max(m, st.getBoundingClientRect().height / z + 100);
+    if (m > 0) H = Math.min(Math.max(m, 1091), 1500);
+  }
+
   function fit() {
     var iw = window.innerWidth, ih = window.innerHeight;
     var cw = d.clientWidth || iw;
-    var z = (iw >= 1280 && iw < 1920) ? cw / 1920 : 1;
-    if (z > 1) z = 1;
+    var z = 1;
+    if (iw >= 1280) {
+      z = Math.min(1, cw / 1920, ih / H);
+      z = Math.max(z, 0.5);
+    }
     d.style.zoom = z === 1 ? '' : String(z);
     d.style.setProperty('--vw100', (cw / z) + 'px');
     d.style.setProperty('--vh100', (ih / z) + 'px');
+    if (z < 1) d.style.setProperty('--hero-u', '1px'); else d.style.removeProperty('--hero-u');
   }
+
   fit();
-  window.addEventListener('DOMContentLoaded', fit);
-  window.addEventListener('load', fit);
-  window.addEventListener('resize', fit);
+  function refit() { measure(); fit(); }
+  window.addEventListener('DOMContentLoaded', refit);
+  window.addEventListener('load', refit);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(refit);
+  window.addEventListener('resize', refit);
 })();

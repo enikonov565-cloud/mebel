@@ -158,3 +158,23 @@ body{background:#110B00;color:#CDCBC7}
   .modal-card{padding:28px 20px 22px}
   .cat-how,.cat-cta,.cat-items{padding-bottom:80px}
 }
+
+/* One screen per section: tighter paddings and denser grid on wide windows (see fit.js) */
+.cat-card-cta{background:transparent;border:2px dashed rgba(205,203,199,.35);color:#CDCBC7}
+.cat-card-cta .cat-num{color:#a1794c}
+.cat-card-cta .cat-ask{margin-top:auto;background:#CDCBC7;border-color:#CDCBC7;color:#2F1F02;--reveal-bg:#2F1F02;--reveal-text:#CDCBC7;--dot-shadow:#CDCBC7}
+.cat-card-cta:hover{transform:none;box-shadow:none}
+@media (min-width:1280px){
+  .cat-hero{padding:150px 0 30px}
+  .cat-head{margin-bottom:40px}
+  .cat-items{padding:30px 0 60px}
+  .cat-how{padding:20px 0 60px}
+  .cat-cta{padding:0 0 60px}
+  .cat-grid.cols-4{grid-template-columns:repeat(4,1fr)}
+  .cat-grid.cols-3{grid-template-columns:repeat(3,1fr)}
+  .cat-card{padding:28px 26px 26px;gap:16px}
+  .cat-num{font-size:52px}
+  .cat-card h2{font-size:30px}
+  .cat-desc{font-size:17px}
+  footer{padding:80px 0 60px}
+}

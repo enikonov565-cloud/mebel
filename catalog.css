@@ -164,25 +164,7 @@ body{background:#110B00;color:#CDCBC7}
 .cat-card-cta .cat-num{color:#a1794c}
 .cat-card-cta .cat-ask{margin-top:auto;background:#CDCBC7;border-color:#CDCBC7;color:#2F1F02;--reveal-bg:#2F1F02;--reveal-text:#CDCBC7;--dot-shadow:#CDCBC7}
 .cat-card-cta:hover{transform:none;box-shadow:none}
-@media (min-width:1280px){
-  .cat-hero{padding:150px 0 30px}
-  .cat-head{margin-bottom:40px}
-  .cat-items{padding:30px 0 60px}
-  .cat-how{padding:20px 0 60px}
-  .cat-cta{padding:0 0 60px}
-  .cat-grid.cols-4{grid-template-columns:repeat(4,1fr)}
-  .cat-grid.cols-3{grid-template-columns:repeat(3,1fr)}
-  .cat-card{padding:28px 26px 26px;gap:16px}
-  .cat-num{font-size:52px}
-  .cat-card h2{font-size:30px}
-  .cat-desc{font-size:17px}
-  footer{padding:80px 0 60px}
-}
-
-@media (min-width:1280px){
-  html{scroll-snap-type:y proximity}
-  .cat-hero,.cat-items,.cat-how,.cat-cta{scroll-snap-align:start}
-}
+/* CTA card fills the last grid cell */
 
 /* hover colours must beat the base colours of the same specificity */
 .svc-btn.dark:hover{background:#CDCBC7;color:#2F1F02}

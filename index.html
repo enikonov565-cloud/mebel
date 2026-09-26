@@ -1689,7 +1689,14 @@
       split(st.querySelector('span'), LABEL_STAGGER);
     });
     box.classList.add('sweep-ready');
-    let busy = false, due = true;
+    let busy = false, due = true, inView = false, timer = null, current = [];
+    const stop = () => {
+      clearTimeout(timer);
+      current.forEach(an => an.cancel());
+      current = [];
+      busy = false; due = true;
+      box.classList.remove('sweep-ready'); box.classList.add('sweep-done');
+    };
     const run = () => {
       busy = true; due = false;
       box.classList.remove('sweep-done'); box.classList.add('sweep-ready');
@@ -1707,17 +1714,23 @@
         });
         t += (it.chars.length - 1) * it.stagger + DURATION * 0.5;   // next line starts while this one settles
       });
-      Promise.all(anims.map(a => a.finished)).then(() => {
+      current = anims;
+      Promise.all(anims.map(an => an.finished)).then(() => {
+        if (current !== anims) return;            // superseded (block left the screen / restarted)
         box.classList.remove('sweep-ready'); box.classList.add('sweep-done');
-        anims.forEach(a => a.cancel());
-        busy = false;
-        setTimeout(() => { due = true; check(); }, REPEAT_DELAY);   // replay every 10 s while the block is on screen
-      }).catch(() => { busy = false; });
+        anims.forEach(an => an.cancel());
+        current = []; busy = false;
+        timer = setTimeout(() => { due = true; check(); }, REPEAT_DELAY);   // repeat every 10 s while on screen
+      }).catch(() => {});
     };
+    // Replays every time the block comes into view — scrolling down or back up
     const check = () => {
-      if (busy || !due) return;
       const r = box.getBoundingClientRect();
-      if (r.top < window.innerHeight * 0.85 && r.bottom > 0) run();
+      const vh = window.innerHeight;
+      const visible = inView ? (r.top < vh && r.bottom > 0) : (r.top < vh * 0.85 && r.bottom > 0);
+      if (visible && !inView) { inView = true; stop(); run(); return; }
+      if (!visible && inView) { inView = false; stop(); return; }
+      if (visible && due && !busy) run();
     };
     window.addEventListener('scroll', check, { passive: true });
     window.addEventListener('resize', check);

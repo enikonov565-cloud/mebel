@@ -563,6 +563,15 @@
     background:linear-gradient(150deg,#8a7358,#4a3116);
   }
   .works-item img{width:100%;height:100%;object-fit:cover;display:block}
+  /* Deck Carousel */
+  .works-gallery.deck-on .works-track{display:none}
+  .deck{position:relative;width:100%;overflow:hidden;touch-action:pan-y}
+  .deck-strip{position:absolute;left:50%;top:50%;width:0;height:0;transform-origin:center;will-change:transform}
+  .deck-card{
+    position:absolute;left:0;top:0;margin-left:-234.5px;margin-top:-291.5px;width:469px;height:583px;border-radius:13px;
+    overflow:hidden;transform-origin:center center;transform-style:preserve-3d;backface-visibility:visible;will-change:transform;
+  }
+  .deck-card img{width:100%;height:100%;object-fit:cover;display:block;user-select:none;-webkit-user-drag:none;backface-visibility:hidden}
   .works-arrow{
     position:absolute;top:50%;transform:translateY(-50%);z-index:3;
     width:50px;height:52px;border:none;background:#2F1F02;border-radius:50%;
@@ -1741,6 +1750,194 @@
     check();
   })();
 
+  // Deck Carousel (Originkit, ported to plain JS): cards are dealt out of a stack, then travel in an endless loop
+  // on wheel / horizontal swipe / arrows; cards near the pointer flip. Uses the photos already on the page.
+  (function () {
+    const track = document.getElementById('worksTrack');
+    const gallery = track && track.closest('.works-gallery');
+    if (!track || !gallery) return;
+    const slides = [...track.querySelectorAll('img')].map(i => ({ src: i.getAttribute('src'), alt: i.getAttribute('alt') || '' }));
+    if (!slides.length) return;
+
+    const CARD_W = 469, CARD_H = 583, SPACING = 27, REACH = 2.2, SMOOTHING = 5.3, SENSITIVITY = 5;
+    const DEAL_MS = 6800;                 // preset: tween 6.8 s, ease [0.44, 0, 0.56, 1]
+    const CARD_FILL = 0.9, PERSPECTIVE = 1000, HOVER_LERP = 0.15, STACK_SPREAD = 0.15, STACK_TILT = 9;
+    const STACK_HOLD = 550, DEAL_STAGGER = 4.8 * 24, DEAL_LIFT = 0.7, TOUCH_GAIN = 2.2, WHEEL_CLAMP = 400;
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const fine = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
+    const wrap = (v, s) => ((v % s) + s) % s;
+    const wrapCentred = (v, s) => wrap(v + s / 2, s) - s / 2;
+    const noise = (i, seed) => { const v = Math.sin(i * 12.9898 + seed * 78.233) * 43758.5453; return v - Math.floor(v); };
+    const bezier = (x1, y1, x2, y2) => t => {          // cubic-bezier easing
+      if (t <= 0) return 0;
+      if (t >= 1) return 1;
+      const cx = 3 * x1, bx = 3 * (x2 - x1) - cx, ax = 1 - cx - bx;
+      const cy = 3 * y1, by = 3 * (y2 - y1) - cy, ay = 1 - cy - by;
+      let s = t;
+      for (let i = 0; i < 8; i++) {
+        const x = ((ax * s + bx) * s + cx) * s - t;
+        const d = (3 * ax * s + 2 * bx) * s + cx;
+        if (Math.abs(x) < 1e-5 || Math.abs(d) < 1e-6) break;
+        s -= x / d;
+      }
+      return ((ay * s + by) * s + cy) * s;
+    };
+    const ease = bezier(0.44, 0, 0.56, 1);
+
+    const deck = document.createElement('div');
+    deck.className = 'deck';
+    deck.setAttribute('role', 'region');
+    deck.setAttribute('aria-label', 'Примеры наших работ — прокрутите колесом мыши или используйте стрелки');
+    const strip = document.createElement('div');
+    strip.className = 'deck-strip';
+    deck.appendChild(strip);
+    gallery.insertBefore(deck, track);
+    gallery.classList.add('deck-on');
+
+    const count = slides.length, step = CARD_W + SPACING;
+    let total = 0, period = 0, lapPx = 0, baseScale = 1, hoverRadius = 0, falloff = 1;
+    const scrollLerp = clamp(0.16 - clamp(SMOOTHING, 0, 10) * 0.012, 0.03, 0.16);
+    const scrollPerLap = (400 - clamp(SENSITIVITY, 0, 10) * 32) * count;
+    const stackSpread = STACK_SPREAD * Math.min(CARD_W, CARD_H), dealLift = DEAL_LIFT * CARD_H;
+    let cards = [], nodes = [];
+    const state = { target: 0, current: 0, dealt: false, ready: false, dirty: true, startAt: 0 };
+
+    const build = () => {
+      const w = deck.clientWidth || 1;
+      baseScale = Math.max(0.01, Math.min(1, CARD_FILL * w / CARD_W));
+      deck.style.height = Math.ceil(CARD_H * baseScale / CARD_FILL) + 'px';
+      const repeats = Math.max(1, Math.ceil((w / baseScale + CARD_W) / (count * step)) || 1);
+      const newTotal = count * repeats;
+      period = newTotal * step;
+      lapPx = count * step;
+      hoverRadius = (100 + clamp(REACH, 0, 10) * 80) * baseScale;
+      falloff = Math.max(1, hoverRadius / 2);
+      strip.style.transform = 'scale(' + baseScale + ')';
+      if (newTotal !== total) {
+        total = newTotal;
+        strip.textContent = '';
+        nodes = [];
+        const old = cards;
+        cards = [];
+        for (let i = 0; i < total; i++) {
+          const sl = slides[i % count];
+          const el = document.createElement('div');
+          el.className = 'deck-card';
+          el.style.zIndex = String(total - i);
+          const im = document.createElement('img');
+          im.src = sl.src;
+          im.alt = sl.alt;
+          im.draggable = false;
+          el.appendChild(im);
+          strip.appendChild(el);
+          nodes.push(el);
+          cards.push(old[i] || { deal: state.dealt ? 1 : 0, layoutX: 0, rot: 0, aim: 0,
+            jx: noise(i, 1) * 2 - 1, jy: noise(i, 2) * 2 - 1, jr: noise(i, 3) * 2 - 1 });
+        }
+      }
+      state.dirty = true;
+    };
+
+    const paint = () => {
+      const travel = state.current * lapPx, origin = (period - step) / 2;
+      for (let i = 0; i < cards.length; i++) {
+        const c = cards[i];
+        const slot = wrapCentred(i * step - origin - travel, period);
+        c.layoutX = slot;
+        const settle = clamp(c.deal, 0, 1);
+        const scatter = (1 - settle) * stackSpread;
+        const hop = dealLift * Math.sin(Math.PI * settle);
+        const x = slot * c.deal + c.jx * scatter;
+        const y = c.jy * scatter - hop;
+        const spin = c.jr * STACK_TILT * (1 - settle);
+        nodes[i].style.transform = 'perspective(' + PERSPECTIVE + 'px) translate3d(' + x + 'px,' + y + 'px,0) rotate(' + spin + 'deg) rotateY(' + c.rot + 'deg)';
+      }
+    };
+
+    let last = 0;
+    const tick = now => {
+      requestAnimationFrame(tick);
+      const dt = last ? Math.min(0.064, (now - last) / 1000) : 1 / 60;
+      last = now;
+      let moving = false;
+      if (state.dealt) {
+        const el = now - state.startAt;
+        cards.forEach((c, i) => { c.deal = reduce ? 1 : ease((el - STACK_HOLD - i * DEAL_STAGGER) / DEAL_MS); });
+        if (!state.ready && (reduce || el - STACK_HOLD - (cards.length - 1) * DEAL_STAGGER > 0)) state.ready = true;
+      }
+      const sk = 1 - Math.pow(1 - scrollLerp, dt * 60);
+      state.current += (state.target - state.current) * sk;
+      if (Math.abs(state.target - state.current) * lapPx > 0.02) moving = true;
+      else state.current = state.target;
+      if (state.current >= 1) { state.current -= 1; state.target -= 1; }
+      else if (state.current < 0) { state.current += 1; state.target += 1; }
+      const k = 1 - Math.pow(1 - HOVER_LERP, dt * 60);
+      cards.forEach(c => {
+        const aim = c.aim * clamp(c.deal, 0, 1);
+        if (Math.abs(aim - c.rot) > 0.01) { c.rot += (aim - c.rot) * k; moving = true; }
+        else c.rot = aim;
+        if (c.deal !== 1) moving = true;
+      });
+      if (moving || state.dirty) { state.dirty = false; paint(); }
+    };
+
+    const zoom = () => parseFloat(document.documentElement.style.zoom) || 1;
+    deck.addEventListener('wheel', e => {
+      if (!state.ready || e.ctrlKey) return;
+      let d = e.deltaY;
+      if (e.deltaMode === 1) d *= 16;
+      else if (e.deltaMode === 2) d *= deck.clientHeight || 800;
+      e.preventDefault();
+      state.target += clamp(d, -WHEEL_CLAMP, WHEEL_CLAMP) / scrollPerLap;
+    }, { passive: false });
+    let tx = null, ty = null;
+    deck.addEventListener('touchstart', e => {
+      const t = e.touches[0];
+      tx = state.ready && t ? t.clientX : null;
+      ty = t ? t.clientY : null;
+    }, { passive: true });
+    deck.addEventListener('touchmove', e => {
+      const t = e.touches[0];
+      if (!t || tx == null) return;
+      const dx = tx - t.clientX, dy = ty - t.clientY;
+      if (Math.abs(dx) <= Math.abs(dy)) return;          // vertical swipe scrolls the page as usual
+      tx = t.clientX;
+      ty = t.clientY;
+      if (e.cancelable) e.preventDefault();
+      state.target += clamp(dx * TOUCH_GAIN, -WHEEL_CLAMP, WHEEL_CLAMP) / scrollPerLap;
+    }, { passive: false });
+    deck.addEventListener('touchend', () => { tx = null; }, { passive: true });
+    deck.addEventListener('pointermove', e => {
+      if (!fine) return;
+      const r = deck.getBoundingClientRect(), z = zoom();
+      const px = (e.clientX - r.left) / z, py = (e.clientY - r.top) / z;
+      const cy = r.height / z / 2, cx = r.width / z / 2;
+      cards.forEach(c => {
+        const d = Math.hypot(px - (cx + baseScale * c.layoutX), py - cy);
+        c.aim = d < hoverRadius ? 180 * Math.max(0, 1 - d / falloff) : 0;
+      });
+    });
+    deck.addEventListener('pointerleave', () => cards.forEach(c => { c.aim = 0; }));
+
+    gallery.querySelectorAll('.works-arrow').forEach(btn => btn.addEventListener('click', () => {
+      state.target += (btn.classList.contains('prev') ? -1 : 1) / count;
+    }));
+
+    const check = () => {
+      if (state.dealt) return;
+      const r = deck.getBoundingClientRect();
+      if (r.top < window.innerHeight * 0.85 && r.bottom > 0) { state.dealt = true; state.startAt = performance.now(); }
+    };
+    window.addEventListener('scroll', check, { passive: true });
+    window.addEventListener('resize', () => { build(); check(); });
+    window.addEventListener('load', () => { build(); check(); });
+    build();
+    check();
+    requestAnimationFrame(tick);
+    window.__deck = { state };
+  })();
+
   const burger = document.getElementById('burger');
   const navLinks = document.getElementById('navLinks');
   burger.addEventListener('click', () => {
@@ -1807,8 +2004,8 @@
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { closeManagerModal(); closeReviewModal(); closeSuccessModal(); closeDirectionsModal(); } });
 
   const worksTrack = document.getElementById('worksTrack');
-  if (worksTrack) {
-    document.querySelectorAll('.works-arrow').forEach(btn => {
+  if (worksTrack && !document.querySelector('.works-gallery.deck-on')) {
+    document.querySelectorAll('.works-gallery .works-arrow').forEach(btn => {
       btn.addEventListener('click', () => {
         const dir = btn.classList.contains('prev') ? -1 : 1;
         const item = worksTrack.querySelector('.works-item');

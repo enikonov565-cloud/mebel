@@ -476,10 +476,11 @@
   }
   .process-checklist{list-style:none;display:flex;flex-direction:column}
   .process-checklist li{
-    display:flex;align-items:center;gap:10px;padding:10px;
+    display:flex;align-items:flex-start;gap:10px;padding:10px;
     font-family:'Inter',sans-serif;font-weight:500;font-size:20px;color:#CDCBC7;
   }
-  .process-checklist svg{flex:none;width:24px;height:24px}
+  /* the icon sits on the first line of the text (centred on that line), also when the item wraps to two lines */
+  .process-checklist svg{flex:none;width:24px;height:24px;margin-top:calc((1.6em - 24px) / 2)}
 
   /* Что вы получаете — Figma node 61:80 */
   #benefits{background:#110B00;padding:120px 0}

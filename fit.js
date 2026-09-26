@@ -34,8 +34,20 @@
     if (z < 1) d.style.setProperty('--hero-u', '1px'); else d.style.removeProperty('--hero-u');
   }
 
+  // Solid header once the hero has scrolled away (always solid on pages without a hero)
+  function headerState() {
+    var h = document.querySelector('header');
+    if (!h) return;
+    var hero = document.querySelector('.hero');
+    var solid = true;
+    if (hero) solid = hero.getBoundingClientRect().bottom <= h.getBoundingClientRect().bottom + 2;
+    h.classList.toggle('solid', solid);
+  }
+  window.addEventListener('scroll', headerState, { passive: true });
+  window.addEventListener('DOMContentLoaded', headerState);
+
   fit();
-  function refit() { measure(); fit(); }
+  function refit() { measure(); fit(); headerState(); }
   window.addEventListener('DOMContentLoaded', refit);
   window.addEventListener('load', refit);
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(refit);

@@ -68,7 +68,10 @@
   header{
     position:fixed;top:0;left:0;right:0;z-index:100;
     background:linear-gradient(180deg,rgba(17,11,0,.92) 0%,rgba(17,11,0,.55) 60%,rgba(17,11,0,0) 100%);
+    transition:background-color .25s ease;
   }
+  /* once the hero is scrolled away the header is a solid bar in the page colour: nothing shows through it, no seam */
+  header.solid{background:#110B00}
   .nav{display:flex;align-items:center;justify-content:space-between;min-height:72px;padding:10px 60px}
   .nav-left{display:flex;align-items:center;gap:40px;flex:none}
   .nav-cta{

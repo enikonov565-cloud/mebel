@@ -615,6 +615,9 @@
   .review-body .stars{color:#d9a441;letter-spacing:2px;font-size:.95rem;line-height:1}
   .review-body .date{font-size:.82rem;color:#7a7062}
   .review-body p{font-size:.86rem;line-height:1.45;color:#2B2620;margin:0}
+  .review-photo-empty{aspect-ratio:455/548;flex:none;padding:16px;background:#F4F1EC;display:flex}
+  .review-photo-empty>div{flex:1;border:2px dashed #b9b6b0;border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;color:#a89f92;text-align:center;padding:0 40px;font-family:'Inter',sans-serif;font-size:.95rem;line-height:1.35}
+  .stars.stars-empty{color:#d8d2c8}
   .review-invite{
     align-self:flex-start;margin-top:auto;background:none;border:none;padding:0;cursor:pointer;
     font-family:'Inter',sans-serif;font-weight:600;font-size:.9rem;color:#6b4420;text-decoration:underline;text-underline-offset:3px;
@@ -1439,6 +1442,18 @@
               <div class="who"><b>Ольга Н.</b><div class="meta"><span class="stars" aria-label="5 из 5">★★★★★</span></div></div>
             </div>
             <p>Заказывала прикроватную тумбу по&nbsp;эскизу — с&nbsp;серебристой отделкой и&nbsp;выдвижным ящиком. Получилось именно так, как&nbsp;я задумывала, ручная работа чувствуется. Очень довольна результатом и&nbsp;сервисом!</p>
+          </div>
+        </figure>
+        <!-- пустой шаблон: место для следующего отзыва -->
+        <figure class="review-card review-card-empty">
+          <div class="review-photo-empty"><div><svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l1.5-2h7L17 8h3a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="3.5"/></svg><span>Здесь может быть фото вашего проекта</span></div></div>
+          <div class="review-body">
+            <div class="review-head">
+              <span class="avatar empty" aria-hidden="true"><i>А</i></span>
+              <div class="who"><b>Здесь может быть ваш отзыв</b><div class="meta"><span class="stars stars-empty" aria-hidden="true">★★★★★</span></div></div>
+            </div>
+            <p>Вы&nbsp;наш клиент? Расскажите, как всё прошло — мы&nbsp;опубликуем ваш отзыв вместе с&nbsp;фото проекта.</p>
+            <button type="button" class="review-invite" onclick="document.getElementById('leaveReviewBtn').click()">оставить отзыв</button>
           </div>
         </figure>
       </div>

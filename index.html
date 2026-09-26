@@ -378,6 +378,9 @@
   /* same specificity as the base colours above, so hover must be spelled out (otherwise it never wins) */
   .svc-btn.dark:hover{background:#CDCBC7;color:#2F1F02}
   .svc-btn.light:hover{background:#2F1F02;color:#CDCBC7}
+  /* burgundy consultation button (same palette as the other «получить консультацию» buttons) */
+  .svc-btn.consult{background:#450A03;border:2px solid #CDCBC7;color:#CDCBC7;--reveal-bg:#CDCBC7;--reveal-text:#450A03;--dot-shadow:#450A03}
+  .svc-btn.consult:hover{background:#CDCBC7;color:#450A03}
 
   /* Category titles act as "go to catalog" buttons: dotted offset plate on hover, text stays where Figma puts it */
   .svc-card h3{
@@ -1141,8 +1144,8 @@
       </a>
       <div class="svc-cta">
         <p>Не&nbsp;нашли нужное?<br>Изготовим по&nbsp;вашему<br>эскизу или&nbsp;чертежу дизайнера.</p>
-        <a href="#services" class="svc-btn dark dot-btn">
-          перейти в&nbsp;каталог
+        <a href="#contact" class="svc-btn consult dot-btn calc-cta">
+          получить консультацию
         </a>
         <a href="#contact" class="svc-btn light dot-btn calc-cta">
           рассчитать стоимость проекта

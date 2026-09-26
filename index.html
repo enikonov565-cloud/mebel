@@ -600,13 +600,25 @@
     flex:none;width:455px;max-width:calc(85*var(--vw100)/100);scroll-snap-align:start;
     background:#fff;border-radius:15px;overflow:hidden;display:flex;flex-direction:column;
   }
-  .review-card img{width:100%;aspect-ratio:455/548;height:auto;object-fit:cover;display:block;flex:none}
-  .review-body{padding:24px 26px;display:flex;flex-direction:column;gap:12px}
-  .review-body .stars{color:#d9a441;letter-spacing:2px;font-size:1rem}
-  .review-body .who{display:flex;justify-content:space-between;align-items:baseline;gap:10px;font-family:'Inter',sans-serif}
-  .review-body .who b{font-size:1rem;color:#180F01}
-  .review-body .who span{font-size:.82rem;color:#7a7062}
+  .review-card>img.review-photo{width:100%;aspect-ratio:455/548;height:auto;object-fit:cover;display:block;flex:none}
+  .review-body{padding:22px 26px 24px;display:flex;flex-direction:column;gap:12px;flex:1}
+  .review-head{display:flex;align-items:center;gap:14px}
+  /* round window for the client's photo / logo */
+  .avatar{flex:none;width:48px;height:48px;border-radius:50%;overflow:hidden;background:#E9E5DE;display:flex;align-items:center;justify-content:center}
+  .avatar img{width:100%;height:100%;object-fit:cover;display:block}
+  .avatar.empty{border:2px dashed #b9b6b0;background:#F4F1EC}
+  .avatar.empty i{font-style:normal;font-family:'GOST','Inter',sans-serif;font-size:24px;line-height:1;color:#a1794c}
+  .review-body .who{display:flex;flex-direction:column;gap:4px;font-family:'Inter',sans-serif;min-width:0}
+  .review-body .who b{font-size:1rem;line-height:1.2;color:#180F01;font-weight:500}
+  .review-body .meta{display:flex;align-items:center;gap:10px}
+  .review-body .stars{color:#d9a441;letter-spacing:2px;font-size:.95rem;line-height:1}
+  .review-body .date{font-size:.82rem;color:#7a7062}
   .review-body p{font-size:.86rem;line-height:1.45;color:#2B2620;margin:0}
+  .review-invite{
+    align-self:flex-start;margin-top:auto;background:none;border:none;padding:0;cursor:pointer;
+    font-family:'Inter',sans-serif;font-weight:600;font-size:.9rem;color:#6b4420;text-decoration:underline;text-underline-offset:3px;
+  }
+  .review-invite:hover{color:#a1794c}
   .reviews-cta{display:flex;justify-content:center;gap:24px;flex-wrap:wrap;margin-top:60px}
   .reviews-cta a,.reviews-cta button{
     display:flex;align-items:center;justify-content:center;
@@ -1368,35 +1380,65 @@
       <button type="button" class="works-arrow prev" aria-label="Предыдущий отзыв" onclick="document.getElementById('reviewsTrack').scrollBy({left:-479,behavior:'smooth'})">&#8592;</button>
       <div class="reviews-track" id="reviewsTrack">
         <figure class="review-card">
-          <img src="review1.jpg" alt="Шкаф-купе с зеркальными дверями">
+          <img class="review-photo" src="review1.jpg" alt="Мебель для кафе на заказ">
           <div class="review-body">
-            <div class="stars">★★★★★</div>
-            <div class="who"><b>Гена Грудинин</b><span>23 августа</span></div>
+            <div class="review-head">
+              <span class="avatar"><img src="avatar-1.jpg" alt=""></span>
+              <div class="who"><b>Гена Грудинин</b><div class="meta"><span class="stars" aria-label="5 из 5">★★★★★</span><span class="date">23 августа</span></div></div>
+            </div>
             <p>Заказывали шкаф. Качество выполненных работ выше всех похвал, мебель сделана в&nbsp;срок. Менеджер всегда на&nbsp;связи. Очень порадовали сборщики. У&nbsp;них возник вопрос по&nbsp;плинтусам, посоветовали как&nbsp;лучше сделать и&nbsp;сами же&nbsp;сделали. Очень рекомендую фирму Антураж.</p>
           </div>
         </figure>
         <figure class="review-card">
-          <img src="review2.jpg" alt="Кухня из массива дуба">
+          <img class="review-photo" src="review2.jpg" alt="Кухня в светлых тонах">
           <div class="review-body">
-            <div class="stars">★★★★★</div>
-            <div class="who"><b>Ирина Титкова</b><span>25 декабря</span></div>
+            <div class="review-head">
+              <span class="avatar"><img src="avatar-2.jpg" alt=""></span>
+              <div class="who"><b>Ирина Титкова</b><div class="meta"><span class="stars" aria-label="5 из 5">★★★★★</span><span class="date">25 декабря</span></div></div>
+            </div>
             <p>Выражаю глубокую признательность мебельной фирме Антураж за&nbsp;профессионализм, внимательное отношение к&nbsp;клиентам и&nbsp;индивидуальный подход. Благодаря вам наша семья стала обладателями кухни высшего качества. Все элементы выполнены безупречно. Сборка аккуратная и&nbsp;оперативная. Обязательно порекомендую вас всем знакомым! Спасибо вам за&nbsp;вашу работу!</p>
           </div>
         </figure>
         <figure class="review-card">
-          <img src="review4.jpg" alt="Кухня со шкафом-купе">
+          <img class="review-photo" src="review4.jpg" alt="Тумба под раковину в ванной комнате">
           <div class="review-body">
-            <div class="stars">★★★★★</div>
-            <div class="who"><b>Ириска</b><span>21 ноября</span></div>
+            <div class="review-head">
+              <span class="avatar"><img src="avatar-3.jpg" alt=""></span>
+              <div class="who"><b>Ириска</b><div class="meta"><span class="stars" aria-label="5 из 5">★★★★★</span><span class="date">21 ноября</span></div></div>
+            </div>
             <p>Если мебель на&nbsp;заказ — то&nbsp;только к&nbsp;Вам! Моим первым заказом была кухня, а&nbsp;когда встал вопрос о&nbsp;шкафе-купе для&nbsp;частного дома — я сразу обратилась в&nbsp;фирму Антураж. Прекрасная работа, качественные материалы, всё на&nbsp;высшем уровне! Выражаю огромную благодарность фирме и&nbsp;мастерам по&nbsp;сборке! Однозначно рекомендую!</p>
           </div>
         </figure>
         <figure class="review-card">
-          <img src="review2.jpg" alt="Кухня из массива дуба">
+          <img class="review-photo" src="review5.jpg" alt="Рабочее место в интерьере">
           <div class="review-body">
-            <div class="stars">★★★★★</div>
-            <div class="who"><b>Кристинка Д.</b><span>8 июня</span></div>
+            <div class="review-head">
+              <span class="avatar"><img src="avatar-4.jpg" alt=""></span>
+              <div class="who"><b>Кристинка Д.</b><div class="meta"><span class="stars" aria-label="5 из 5">★★★★★</span><span class="date">8 июня</span></div></div>
+            </div>
             <p>Очень и&nbsp;очень благодарны сотрудникам фирмы Антураж за&nbsp;качественную кухню. Менеджер учла все проблемные моменты для&nbsp;максимально полезного использования пространства. С&nbsp;учётом сложности замеров идеально всё вписали — до&nbsp;миллиметра. Ни&nbsp;одного замечания. Профессионалы! Всей семьёй любуемся.</p>
+          </div>
+        </figure>
+        <figure class="review-card">
+          <img class="review-photo" src="review6.jpg" alt="Винный магазин с торговым оборудованием">
+          <div class="review-body">
+            <div class="review-head">
+              <span class="avatar empty" aria-hidden="true"><i>А</i></span>
+              <div class="who"><b>Здесь может быть ваш отзыв</b><div class="meta"><span class="date">о&nbsp;проекте на&nbsp;фото</span></div></div>
+            </div>
+            <p>Вы&nbsp;наш клиент? Расскажите, как всё прошло — мы&nbsp;опубликуем ваш отзыв рядом с&nbsp;фото.</p>
+            <button type="button" class="review-invite" onclick="document.getElementById('leaveReviewBtn').click()">оставить отзыв</button>
+          </div>
+        </figure>
+        <figure class="review-card">
+          <img class="review-photo" src="review7.jpg" alt="Прикроватная тумба с лампой">
+          <div class="review-body">
+            <div class="review-head">
+              <span class="avatar empty" aria-hidden="true"><i>А</i></span>
+              <div class="who"><b>Здесь может быть ваш отзыв</b><div class="meta"><span class="date">о&nbsp;проекте на&nbsp;фото</span></div></div>
+            </div>
+            <p>Вы&nbsp;наш клиент? Расскажите, как всё прошло — мы&nbsp;опубликуем ваш отзыв рядом с&nbsp;фото.</p>
+            <button type="button" class="review-invite" onclick="document.getElementById('leaveReviewBtn').click()">оставить отзыв</button>
           </div>
         </figure>
       </div>

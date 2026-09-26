@@ -945,7 +945,10 @@
 
 <!-- 1. Главная — точный макет Figma (node 20:353) -->
 <section class="hero" id="hero">
-  <img class="hero-bg" src="hero-bg.jpg" alt="Мебель из массива дерева">
+  <video class="hero-bg" autoplay muted loop playsinline preload="auto" poster="hero-bg.jpg" aria-label="Мебель из массива дерева">
+    <source src="hero-video-mobile.mp4" media="(max-width:640px)">
+    <source src="hero-video.mp4">
+  </video>
   <p class="hero-eyebrow">Собственное производство полного цикла:<br>проектируем, изготавливаем, монтируем</p>
   <div class="hero-headline">
     <h1>Уникальная мебель<br>из&nbsp;массива</h1>

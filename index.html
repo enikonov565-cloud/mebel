@@ -323,39 +323,43 @@
     font-size:32px;line-height:1.2;letter-spacing:0.64px;color:#CDCBC7;max-width:370px;
   }
 
-  /* Что мы изготавливаем — Figma node 65:181 */
+  .nav-links a.sub{padding-left:36px;font-size:.92rem;font-weight:400}
+
+  /* Что мы изготавливаем — Figma node 445:196 */
   #services{background:#110B00;padding:120px 0}
   .svc-head{
     display:flex;justify-content:space-between;align-items:center;
-    gap:clamp(20px,calc(4*var(--vw100)/100),180px);flex-wrap:nowrap;margin-bottom:60px;
+    gap:clamp(20px,calc(4*var(--vw100)/100),180px);flex-wrap:nowrap;margin-bottom:93px;
   }
   .svc-head h2{
-    font-family:'Inter',sans-serif;font-weight:500;
-    font-size:clamp(1.9rem,calc(6*var(--vw100)/100),68px);line-height:0.9;letter-spacing:1.52px;color:#CDCBC7;
+    font-family:'Inter',sans-serif;font-weight:500;white-space:nowrap;
+    font-size:clamp(1.9rem,calc(6*var(--vw100)/100),76px);line-height:0.9;letter-spacing:1.52px;color:#CDCBC7;
   }
   .svc-head p{
     font-family:'Inter',sans-serif;font-weight:300;
     font-size:20px;line-height:1.2;letter-spacing:0.4px;
-    color:#CDCBC7;max-width:680px;white-space:normal;text-align:right;
+    color:#CDCBC7;white-space:nowrap;text-align:left;
   }
 
+  /* 3 columns x 2 rows: photo 284x440 + title; last cell holds the CTA (Figma 1920 frame) */
   .svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:27px 25px}
-  .svc-card{display:flex;align-items:center;gap:26px;background:#CDCBC7;border-radius:15px;overflow:hidden;height:440px;min-width:0}
-  a.svc-card{color:inherit;transition:transform .35s cubic-bezier(.22,1,.36,1)}
-  a.svc-card:hover{transform:translateY(-6px)}
-  .nav-links a.sub{padding-left:36px;font-size:.92rem;font-weight:400}
-  .svc-card-photo{flex:none;width:254px;height:100%;object-fit:cover}
-  .svc-card-body{display:flex;flex-direction:column;gap:20px;justify-content:center;padding:20px 24px 20px 0;color:#180F01;min-width:0}
-  .svc-card-body h3{font-family:'Inter',sans-serif;font-weight:500;font-size:36px;line-height:1.05;letter-spacing:0.72px}
-  .svc-subcats{list-style:none;font-family:'Inter',sans-serif;font-weight:300;font-size:28px;line-height:1.2;letter-spacing:0.64px}
-  .svc-card-body>p{font-family:'Inter',sans-serif;font-weight:300;font-size:19px;line-height:1.25}
-
-  .svc-cta{display:flex;flex-direction:column;align-items:flex-start;gap:75px;justify-content:flex-end;height:440px;background:transparent}
-  .svc-cta p{font-family:'Inter',sans-serif;font-weight:700;font-size:26px;color:#CDCBC7;line-height:1.35}
+  .svc-card{display:flex;align-items:flex-end;gap:25px;height:440px;min-width:0;color:#CDCBC7}
+  a.svc-card{color:#CDCBC7}
+  .svc-card-photo{flex:none;width:284px;height:440px;object-fit:cover;border-radius:15px;transition:transform .5s cubic-bezier(.22,1,.36,1)}
+  a.svc-card:hover .svc-card-photo{transform:translateY(-6px)}
+  .svc-card h3{
+    font-family:'Inter',sans-serif;font-weight:500;font-size:36px;line-height:1;letter-spacing:0.72px;
+    color:#CDCBC7;white-space:nowrap;
+  }
+  .svc-cta{display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:40px;height:443px}
+  .svc-cta p{
+    font-family:'Inter',sans-serif;font-weight:300;font-size:20px;line-height:1.2;letter-spacing:0.4px;
+    color:#CDCBC7;width:505px;max-width:100%;
+  }
   .svc-btn{
-    width:460px;max-width:100%;height:68px;border-radius:15px;font-family:'Inter',sans-serif;font-weight:700;font-size:26px;
-    display:flex;align-items:center;justify-content:center;text-align:center;padding:0 20px;flex:none;
-    cursor:pointer;
+    width:505px;max-width:100%;height:78px;border-radius:15px;font-family:'Inter',sans-serif;font-weight:700;font-size:28px;
+    display:flex;align-items:center;justify-content:center;text-align:center;padding:5px 40px;flex:none;
+    cursor:pointer;white-space:nowrap;
   }
   .svc-btn.dark{background:#2F1F02;border:2px solid #CDCBC7;color:#CDCBC7}
   .svc-btn.light{background:#CDCBC7;border:2px solid #2F1F02;color:#2F1F02}
@@ -821,8 +825,14 @@
     .why-cell img,.why-cell video{position:absolute;inset:0}
     .why-cell img.nightstand{object-position:center 48% !important}
     .why-vline,.why-hline{display:none}
-    .svc-grid{grid-template-columns:repeat(2,1fr)}
-    .svc-cta{grid-column:1/-1;height:auto;padding:20px 0}
+    .svc-grid{grid-template-columns:repeat(2,1fr);gap:40px 25px}
+    .svc-card{flex-direction:column;align-items:flex-start;height:auto;gap:20px}
+    .svc-card-photo{width:100%;height:320px}
+    .svc-card h3{white-space:normal}
+    .svc-head p{white-space:normal}
+    .svc-head h2{white-space:normal}
+    .svc-cta{grid-column:1/-1;height:auto;padding:20px 0;align-items:flex-start}
+    .svc-btn{font-size:24px}
     .svc-head,.benefits-head{justify-content:flex-start;flex-wrap:wrap}
     .svc-head p,.benefits-head p{text-align:left}
     .benefits-wrap{flex-direction:column}
@@ -849,9 +859,7 @@
     }
     .process-text{width:100%}
     .svc-grid{grid-template-columns:1fr}
-    .svc-card{flex-direction:column;height:auto}
-    .svc-card-photo{width:100%;height:260px}
-    .svc-card-body{padding:20px}
+    .svc-card-photo{height:260px}
     .contact-head{justify-content:flex-start;flex-wrap:wrap}
     .contact-head p{text-align:left}
     .map-embed{height:auto;aspect-ratio:16/9}
@@ -893,11 +901,8 @@
     .stats-grid{column-gap:24px;row-gap:28px}
     .why-cell.text p{font-size:18px}
     .svc-head p,.benefits-head p{font-size:13px}
-    .svc-card-body h3{font-size:26px}
-    .svc-subcats{font-size:19px}
-    .svc-card-body>p{font-size:16px}
-    .svc-cta p{font-size:20px}
-    .svc-btn{font-size:18px;height:60px}
+    .svc-card h3{font-size:26px}
+    .svc-btn{font-size:18px;height:60px;padding:5px 20px}
     .benefits-tag{font-size:14px;padding:8px 18px}
     .benefits-list h3{font-size:22px}
     .benefits-list p{font-size:16px}
@@ -1056,64 +1061,24 @@
     <div class="svc-grid">
       <a class="svc-card" href="catalog-korpusnaya.html">
         <img class="svc-card-photo" src="cat-korpus.jpg" alt="Корпусная мебель">
-        <div class="svc-card-body">
-          <h3>Корпусная мебель</h3>
-          <ul class="svc-subcats">
-            <li>Кухни</li><li>Шкафы-купе</li><li>Гардеробные</li><li>Прихожие</li>
-            <li>Стеллажи</li><li>Комоды /Тумбы</li><li>ТВ-зоны</li>
-          </ul>
-          <p>Точная подгонка<br>по&nbsp;размерам помещения.</p>
-        </div>
+        <h3>Корпусная<br>мебель</h3>
       </a>
-
       <a class="svc-card" href="catalog-eksklyuzivnaya.html">
         <img class="svc-card-photo" src="cat-exclusive.jpg" alt="Эксклюзивная мебель">
-        <div class="svc-card-body">
-          <h3>Эксклюзивная мебель</h3>
-          <ul class="svc-subcats">
-            <li>Резные фасады</li><li>Гнутые элементы</li><li>Изделия из&nbsp;слэба</li>
-            <li>Инкрустация</li><li>Авторские формы</li><li>Редкие породы</li><li>Ручная работа</li>
-          </ul>
-          <p>Изделия по&nbsp;индивидуальным<br>чертежам и&nbsp;размерам.</p>
-        </div>
+        <h3>Эксклюзивная<br>мебель</h3>
       </a>
-
       <a class="svc-card" href="catalog-dveri.html">
         <img class="svc-card-photo" src="cat-doors.jpg" alt="Двери и порталы">
-        <div class="svc-card-body">
-          <h3>Двери и&nbsp;порталы</h3>
-          <ul class="svc-subcats">
-            <li>Межкомнатные</li><li>Входные</li><li>Арки</li>
-            <li>Каминные</li><li>порталы</li><li>Стеновые панели</li><li>(буазери)</li>
-          </ul>
-          <p>Точная подгонка по&nbsp;проёму,<br>единый стиль с&nbsp;мебелью</p>
-        </div>
+        <h3>Двери<br>и&nbsp;порталы</h3>
       </a>
-
       <a class="svc-card" href="catalog-ofisnaya.html">
         <img class="svc-card-photo" src="cat-office.jpg" alt="Офисная мебель">
-        <div class="svc-card-body">
-          <h3>Офисная мебель</h3>
-          <ul class="svc-subcats">
-            <li>Стойки ресепшн</li><li>Рабочие столы</li><li>Кабинеты</li>
-            <li>руководителя</li><li>Переговорные</li><li>столы</li><li>Стеллажи</li>
-          </ul>
-          <p>Соблюдение единого стиля<br>в&nbsp;офисном пространстве.</p>
-        </div>
+        <h3>Офисная<br>мебель</h3>
       </a>
-
       <a class="svc-card" href="catalog-kommercheskaya.html">
         <img class="svc-card-photo" src="cat-commerce.jpg" alt="Коммерческая мебель">
-        <div class="svc-card-body">
-          <h3>Коммерческая мебель</h3>
-          <ul class="svc-subcats">
-            <li>Барные стойки</li><li>Торговые</li><li>островки</li><li>Витрины</li>
-            <li>Мебель в&nbsp;кафе</li><li>и&nbsp;рестораны</li><li>Оформление зон</li>
-          </ul>
-          <p>Мебель из&nbsp;износостойких<br>материалов.</p>
-        </div>
+        <h3>Коммерческая<br>мебель</h3>
       </a>
-
       <div class="svc-cta">
         <p>Не&nbsp;нашли нужное?<br>Изготовим по&nbsp;вашему<br>эскизу или&nbsp;чертежу дизайнера.</p>
         <a href="catalog-korpusnaya.html" class="svc-btn dark dot-btn">

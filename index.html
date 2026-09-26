@@ -1762,7 +1762,8 @@
     const CARD_W = 469, CARD_H = 583, SPACING = 27, REACH = 2.2, SMOOTHING = 5.3, SENSITIVITY = 5;
     const DEAL_MS = 6800;                 // preset: tween 6.8 s, ease [0.44, 0, 0.56, 1]
     const CARD_FILL = 0.9, PERSPECTIVE = 1000, HOVER_LERP = 0.15, STACK_SPREAD = 0.15, STACK_TILT = 9;
-    const STACK_HOLD = 550, DEAL_STAGGER = 4.8 * 24, DEAL_LIFT = 0.7, TOUCH_GAIN = 2.2, WHEEL_CLAMP = 400;
+    const TOP_ROOM = 230, BOTTOM_ROOM = 80;   // px (card scale 1): space above / below the row inside the frame
+    const STACK_HOLD = 550, DEAL_STAGGER = 4.8 * 24, DEAL_LIFT = 0.30, TOUCH_GAIN = 2.2, WHEEL_CLAMP = 400;
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const fine = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
     const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
@@ -1801,15 +1802,17 @@
     const scrollPerLap = (400 - clamp(SENSITIVITY, 0, 10) * 32) * count;
     const stackSpread = STACK_SPREAD * Math.min(CARD_W, CARD_H), dealLift = DEAL_LIFT * CARD_H;
     let cards = [], nodes = [];
-    const state = { target: 0, current: 0, dealt: false, ready: false, dirty: true, startAt: 0, finished: false, nextAt: 0, inView: false };
+    const state = { target: 0, current: 0, dealt: false, ready: false, dirty: true, startAt: 0, finished: false, nextAt: 0, inView: false, gather: 0 };
+    const GATHER_MS = 2800, GATHER_STAGGER = 110;         // slow, smooth gathering of the cards into the stack before every repeat
     const REPEAT_MIN = 12000, REPEAT_MAX = 15000;        // pause between deals, ms
     const onScreen = () => { const r = deck.getBoundingClientRect(); return r.top < window.innerHeight * 0.85 && r.bottom > 0; };
-    const restart = now => { state.startAt = now; state.finished = false; };
+    const restart = now => { state.gather = now; state.finished = false; };   // gather into a stack first, then deal again
 
     const build = () => {
       const w = deck.clientWidth || 1;
       baseScale = Math.max(0.01, Math.min(1, CARD_FILL * w / CARD_W));
-      deck.style.height = Math.ceil(CARD_H * baseScale / CARD_FILL) + 'px';
+      deck.style.height = Math.ceil((TOP_ROOM + CARD_H + BOTTOM_ROOM) * baseScale) + 'px';
+      strip.style.top = ((TOP_ROOM + CARD_H / 2) * baseScale) + 'px';
       const repeats = Math.max(1, Math.ceil((w / baseScale + CARD_W) / (count * step)) || 1);
       const newTotal = count * repeats;
       period = newTotal * step;
@@ -1864,7 +1867,16 @@
       const dt = last ? Math.min(0.064, (now - last) / 1000) : 1 / 60;
       last = now;
       let moving = false;
-      if (state.dealt) {
+      if (state.gather) {
+        const g = now - state.gather;
+        let done = true;
+        cards.forEach((c, i) => {
+          const p = clamp((g - i * GATHER_STAGGER) / GATHER_MS, 0, 1);
+          c.deal = 1 - ease(p);
+          if (p < 1) done = false;
+        });
+        if (done) { state.gather = 0; state.startAt = now; }
+      } else if (state.dealt) {
         const el = now - state.startAt;
         cards.forEach((c, i) => { c.deal = reduce ? 1 : ease((el - STACK_HOLD - i * DEAL_STAGGER) / DEAL_MS); });
         if (!state.ready && (reduce || el - STACK_HOLD - (cards.length - 1) * DEAL_STAGGER > 0)) state.ready = true;
@@ -1919,7 +1931,7 @@
       if (!fine) return;
       const r = deck.getBoundingClientRect(), z = zoom();
       const px = (e.clientX - r.left) / z, py = (e.clientY - r.top) / z;
-      const cy = r.height / z / 2, cx = r.width / z / 2;
+      const cy = (TOP_ROOM + CARD_H / 2) * baseScale, cx = r.width / z / 2;
       cards.forEach(c => {
         const d = Math.hypot(px - (cx + baseScale * c.layoutX), py - cy);
         c.aim = d < hoverRadius ? 180 * Math.max(0, 1 - d / falloff) : 0;

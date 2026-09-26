@@ -183,7 +183,7 @@
       linear-gradient(180deg, rgba(47,31,2,0) 62%, #110B00 100%);
   }
   .hero-eyebrow{
-    position:absolute;z-index:2;left:3.18%;top:47.5%;max-width:34%;min-width:220px;
+    margin-top:40px;
     font-family:'Inter',sans-serif;font-weight:300;font-size:clamp(12px,1.1vw,20px);
     line-height:1.2;letter-spacing:0.4px;color:#CDCBC7;
   }
@@ -214,6 +214,24 @@
     background:#CDCBC7;border:2px solid #2F1F02;border-radius:15px;
     font-family:'Inter',sans-serif;font-weight:700;font-size:26px;color:#2F1F02;
     text-align:center;padding:0 20px;
+  }
+
+  /* Hero geometry from Figma 20:353 — 1u = 1px of the 1920 frame */
+  @media (min-width:961px){
+    .hero{container-type:inline-size;--u:.0520833cqw}
+    .hero-headline{left:calc(60*var(--u));bottom:calc(91*var(--u));width:calc(735*var(--u));min-width:0}
+    .hero-headline h1{white-space:nowrap}
+    .hero-eyebrow{margin-top:calc(40*var(--u));font-size:max(12px,calc(20*var(--u)));line-height:1.2;white-space:nowrap}
+    .hero-stats2{
+      left:calc(1739.5*var(--u));top:calc(499*var(--u));transform:translateX(-50%);
+      width:max-content;min-width:0;gap:calc(10*var(--u));
+    }
+    .hero-stat2{gap:0;padding:calc(7*var(--u)) 0}
+    .hero-stat2 b{font-size:max(24px,calc(64*var(--u)));line-height:1.21;margin-bottom:calc(-10*var(--u))}
+    .hero-stat2 span{font-size:max(11px,calc(20*var(--u)));line-height:1.21}
+    .hero-stat-divider{width:calc(237*var(--u));max-width:none;height:calc(4*var(--u));margin:calc(-2*var(--u)) 0;background-size:100% 100%}
+    .hero-cta{right:calc(60*var(--u));bottom:calc(91*var(--u));width:calc(505*var(--u));min-width:200px;max-width:none}
+    .hero-cta a{height:max(44px,calc(68*var(--u)));font-size:max(15px,calc(28*var(--u)))}
   }
 
   /* Собственное производство полного цикла — Figma node 270:439 */
@@ -850,7 +868,7 @@
     .hero-eyebrow,.hero-headline,.hero-stats2,.hero-cta{
       position:static;left:auto;right:auto;top:auto;bottom:auto;width:100%;max-width:100%;min-width:0;
     }
-    .hero-eyebrow{margin-bottom:28px}
+    .hero-eyebrow{margin-top:24px}
     .hero-headline{margin-bottom:40px}
     .hero-stats2{flex-direction:row;flex-wrap:wrap;justify-content:center;gap:24px;margin-bottom:32px}
     .hero-stat-divider{display:none}
@@ -949,10 +967,10 @@
     <source src="hero-video-mobile.mp4" media="(max-width:640px)">
     <source src="hero-video.mp4">
   </video>
-  <p class="hero-eyebrow">Собственное производство полного цикла:<br>проектируем, изготавливаем, монтируем</p>
   <div class="hero-headline">
     <h1>Уникальная мебель<br>из&nbsp;массива</h1>
     <p class="hero-sub">по&nbsp;Вашим размерам</p>
+    <p class="hero-eyebrow">Собственное производство полного цикла:<br>проектируем, изготавливаем, монтируем</p>
   </div>
   <div class="hero-stats2">
     <div class="hero-stat2"><b>0 ₽</b><span>замер и&nbsp;дизайн-проект</span></div>

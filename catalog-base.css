@@ -1,6 +1,7 @@
 /* Catalog pages — shared base copied from index.html */
 
   :root{
+    --vw100:100vw;--vh100:100vh;
     --bg:#CDCBC7;
     --bg-alt:#CDCBC7;
     --text:#180F01;
@@ -110,14 +111,14 @@
      stays clear of the logo by the same 40pt rhythm as the burger→logo gap. */
   .nav-links{
     position:absolute;top:calc(100% + 10px);left:20px;z-index:99;
-    width:264px;max-width:calc(100vw - 40px - 40pt);
+    width:264px;max-width:calc(calc(100*var(--vw100)/100) - 40px - 40pt);
     background:var(--bg);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);
     display:flex;flex-direction:column;
     max-height:0;opacity:0;overflow:hidden;
     transform:translateY(-6px);
     transition:max-height .3s ease,opacity .25s ease,transform .25s ease;
   }
-  .nav-links.open{max-height:80vh;opacity:1;transform:translateY(0);overflow-y:auto}
+  .nav-links.open{max-height:calc(80*var(--vh100)/100);opacity:1;transform:translateY(0);overflow-y:auto}
   .nav-links a:first-child{border-top:none}
   .nav-links a{
     padding:14px 20px;border-top:1px solid var(--line);

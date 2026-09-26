@@ -1891,6 +1891,8 @@
       });
     });
     let anyDark = false;
+    const PROBE = [[0.5, 0.5], [0.2, 0.25], [0.8, 0.25], [0.2, 0.75], [0.8, 0.75]];   // points inside a letter box
+    const photoAt = (x, y) => document.elementsFromPoint(x, y).some(e => e.closest && e.closest('.deck-card'));
     const contrast = () => {
       if (!headChars.length) return;
       const D = deck.getBoundingClientRect();
@@ -1904,7 +1906,12 @@
       let dark = false;
       headChars.forEach(c => {
         const q = c.getBoundingClientRect();
-        const hit = boxes.some(o => q.right > o.l && q.left < o.r && q.bottom > o.t && q.top < o.b);
+        let hit = boxes.some(o => q.right > o.l && q.left < o.r && q.bottom > o.t && q.top < o.b);   // cheap pre-check
+        if (hit) {   // exact check: a tilted card leaves empty corners in its bounding box, so ask what is really under the letter
+          let n = 0;
+          for (const [fx, fy] of PROBE) if (photoAt(q.left + q.width * fx, q.top + q.height * fy)) n++;
+          hit = n >= 3;   // majority of the probe points
+        }
         if (hit !== c.classList.contains('on-photo')) c.classList.toggle('on-photo', hit);
         if (hit) dark = true;
       });

@@ -569,6 +569,10 @@
   .works-gallery.deck-on{margin-top:-200px}   /* heading -> row of photos = 90px (frame keeps 230px of room above the row for the dealing hop) */
   .works-gallery.deck-on + .works-cta{margin-top:10px}   /* button sits right under the row of photos (the frame keeps 80px of room below the cards) */
   .works-head{position:relative;z-index:2}
+  /* heading letters turn dark while a photo passes behind them, so the text stays readable */
+  .hc-w{display:inline-block;white-space:nowrap}
+  .hc-c{transition:color .25s ease}
+  .hc-c.on-photo{color:#180F01}
   .works-gallery.deck-on .works-arrow{top:var(--row-y,50%)}
   .deck{position:relative;width:100%;overflow:hidden;touch-action:pan-y}
   .deck-strip{position:absolute;left:50%;top:50%;width:0;height:0;transform-origin:center;will-change:transform}
@@ -1867,6 +1871,46 @@
       }
     };
 
+    // Heading legibility: letters of «Примеры наших работ» and its subtitle turn dark while a card passes behind them
+    const headChars = [];
+    document.querySelectorAll('.works-head h2, .works-head p').forEach(el => {
+      el.setAttribute('aria-label', el.textContent.replace(/\s+/g, ' ').trim());
+      [...el.childNodes].forEach(n => {
+        if (n.nodeType !== 3) return;
+        const frag = document.createDocumentFragment();
+        n.textContent.split(/( +)/).forEach(part => {
+          if (!part) return;
+          if (/^ +$/.test(part)) { frag.appendChild(document.createTextNode(' ')); return; }
+          const w = document.createElement('span');
+          w.className = 'hc-w';
+          w.setAttribute('aria-hidden', 'true');
+          for (const ch of part) { const c = document.createElement('span'); c.className = 'hc-c'; c.textContent = ch; w.appendChild(c); headChars.push(c); }
+          frag.appendChild(w);
+        });
+        n.replaceWith(frag);
+      });
+    });
+    let anyDark = false;
+    const contrast = () => {
+      if (!headChars.length) return;
+      const D = deck.getBoundingClientRect();
+      const boxes = [];
+      nodes.forEach(n => {
+        const b = n.getBoundingClientRect();
+        const l = Math.max(b.left, D.left), r = Math.min(b.right, D.right), t = Math.max(b.top, D.top), bt = Math.min(b.bottom, D.bottom);   // only the visible part (the frame clips)
+        if (r > l && bt > t) boxes.push({ l, r, t, b: bt });
+      });
+      if (!boxes.length) { if (anyDark) { headChars.forEach(c => c.classList.remove('on-photo')); anyDark = false; } return; }
+      let dark = false;
+      headChars.forEach(c => {
+        const q = c.getBoundingClientRect();
+        const hit = boxes.some(o => q.right > o.l && q.left < o.r && q.bottom > o.t && q.top < o.b);
+        if (hit !== c.classList.contains('on-photo')) c.classList.toggle('on-photo', hit);
+        if (hit) dark = true;
+      });
+      anyDark = dark;
+    };
+
     let last = 0;
     const tick = now => {
       requestAnimationFrame(tick);
@@ -1904,7 +1948,7 @@
         else c.rot = aim;
         if (c.deal !== 1) moving = true;
       });
-      if (moving || state.dirty) { state.dirty = false; paint(); }
+      if (moving || state.dirty) { state.dirty = false; paint(); contrast(); }
     };
 
     const zoom = () => parseFloat(document.documentElement.style.zoom) || 1;

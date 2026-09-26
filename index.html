@@ -1658,7 +1658,8 @@
   (function () {
     const box = document.querySelector('.stats-grid');
     if (!box || !box.animate || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    const WAVE = '#a1794c';          // site accent
+    const WAVE = '#e2a04f';          // brighter amber, derived from the site accent
+    const REPEAT_DELAY = 10000;      // pause between cycles, ms
     const DURATION = 600, NUM_STAGGER = 40, LABEL_STAGGER = 18;
     const items = [];
     const split = (el, stagger) => {
@@ -1688,9 +1689,10 @@
       split(st.querySelector('span'), LABEL_STAGGER);
     });
     box.classList.add('sweep-ready');
-    let started = false;
+    let busy = false, due = true;
     const run = () => {
-      started = true;
+      busy = true; due = false;
+      box.classList.remove('sweep-done'); box.classList.add('sweep-ready');
       let t = 0;
       const anims = [];
       items.forEach(it => {
@@ -1708,10 +1710,12 @@
       Promise.all(anims.map(a => a.finished)).then(() => {
         box.classList.remove('sweep-ready'); box.classList.add('sweep-done');
         anims.forEach(a => a.cancel());
-      }).catch(() => {});
+        busy = false;
+        setTimeout(() => { due = true; check(); }, REPEAT_DELAY);   // replay every 10 s while the block is on screen
+      }).catch(() => { busy = false; });
     };
     const check = () => {
-      if (started) return;
+      if (busy || !due) return;
       const r = box.getBoundingClientRect();
       if (r.top < window.innerHeight * 0.85 && r.bottom > 0) run();
     };

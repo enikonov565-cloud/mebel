@@ -565,6 +565,9 @@
   .works-item img{width:100%;height:100%;object-fit:cover;display:block}
   /* Deck Carousel */
   .works-gallery.deck-on .works-track{display:none}
+  .works-gallery.deck-on{margin-top:-130px}
+  .works-head{position:relative;z-index:2}
+  .works-gallery.deck-on .works-arrow{top:var(--row-y,50%)}
   .deck{position:relative;width:100%;overflow:hidden;touch-action:pan-y}
   .deck-strip{position:absolute;left:50%;top:50%;width:0;height:0;transform-origin:center;will-change:transform}
   .deck-card{
@@ -1813,6 +1816,7 @@
       baseScale = Math.max(0.01, Math.min(1, CARD_FILL * w / CARD_W));
       deck.style.height = Math.ceil((TOP_ROOM + CARD_H + BOTTOM_ROOM) * baseScale) + 'px';
       strip.style.top = ((TOP_ROOM + CARD_H / 2) * baseScale) + 'px';
+      gallery.style.setProperty('--row-y', ((TOP_ROOM + CARD_H / 2) * baseScale) + 'px');   // arrows sit on the row
       const repeats = Math.max(1, Math.ceil((w / baseScale + CARD_W) / (count * step)) || 1);
       const newTotal = count * repeats;
       period = newTotal * step;

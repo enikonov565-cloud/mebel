@@ -67,8 +67,7 @@
   /* Header — floats over every section so pages scroll under it (Figma node 20:353) */
   header{
     position:fixed;top:0;left:0;right:0;z-index:100;
-    background:linear-gradient(180deg,#180F01 0%,rgba(24,15,1,.6) 85.76%);
-    backdrop-filter:blur(10px);
+    background:linear-gradient(180deg,rgba(17,11,0,.92) 0%,rgba(17,11,0,.55) 60%,rgba(17,11,0,0) 100%);
   }
   .nav{display:flex;align-items:center;justify-content:space-between;min-height:72px;padding:10px 60px}
   .nav-left{display:flex;align-items:center;gap:40px;flex:none}

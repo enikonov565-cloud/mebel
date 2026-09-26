@@ -183,3 +183,8 @@ body{background:#110B00;color:#CDCBC7}
   html{scroll-snap-type:y proximity}
   .cat-hero,.cat-items,.cat-how,.cat-cta{scroll-snap-align:start}
 }
+
+/* hover colours must beat the base colours of the same specificity */
+.svc-btn.dark:hover{background:#CDCBC7;color:#2F1F02}
+.svc-btn.light:hover{background:#110B00;color:#CDCBC7}
+.cat-card-cta .cat-ask:hover{background:#2F1F02;color:#CDCBC7}

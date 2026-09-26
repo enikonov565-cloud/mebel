@@ -370,6 +370,21 @@
   }
   .svc-btn.dark{background:#2F1F02;border:2px solid #CDCBC7;color:#CDCBC7}
   .svc-btn.light{background:#CDCBC7;border:2px solid #2F1F02;color:#2F1F02}
+  /* same specificity as the base colours above, so hover must be spelled out (otherwise it never wins) */
+  .svc-btn.dark:hover{background:#CDCBC7;color:#2F1F02}
+  .svc-btn.light:hover{background:#2F1F02;color:#CDCBC7}
+
+  /* Category titles act as "go to catalog" buttons: dotted offset plate on hover, text stays where Figma puts it */
+  .svc-card h3{
+    --dot-off:8px;
+    padding:10px 16px;margin:-12px -18px;border:2px dashed transparent;border-radius:15px;cursor:pointer;
+    transition:transform .35s cubic-bezier(.22,1,.36,1),background-color .25s ease,color .25s ease,border-color .25s ease,box-shadow .35s cubic-bezier(.22,1,.36,1);
+  }
+  a.svc-card:hover h3,a.svc-card:focus-visible h3{
+    transform:translate(calc(var(--dot-off) * -1),calc(var(--dot-off) * -1));
+    background:#CDCBC7;color:#2F1F02;border-color:#2F1F02;
+    box-shadow:var(--dot-off) var(--dot-off) 0 0 #2F1F02;
+  }
 
   /* Материалы — Figma node 208:166 */
   #materials{background:#110B00;padding:120px 0}

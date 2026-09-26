@@ -606,6 +606,7 @@
   /* round window for the client's photo / logo */
   .avatar{flex:none;width:48px;height:48px;border-radius:50%;overflow:hidden;background:#E9E5DE;display:flex;align-items:center;justify-content:center}
   .avatar img{width:100%;height:100%;object-fit:cover;display:block}
+  .avatar.initial{background:#EFE7DA;color:#6b4420;font-family:'Inter',sans-serif;font-weight:600;font-size:1.3rem}
   .avatar.empty{border:2px dashed #b9b6b0;background:#F4F1EC}
   .avatar.empty i{font-style:normal;font-family:'GOST','Inter',sans-serif;font-size:24px;line-height:1;color:#a1794c}
   .review-body .who{display:flex;flex-direction:column;gap:4px;font-family:'Inter',sans-serif;min-width:0}
@@ -1379,14 +1380,15 @@
     <div class="reviews-gallery">
       <button type="button" class="works-arrow prev" aria-label="Предыдущий отзыв" onclick="document.getElementById('reviewsTrack').scrollBy({left:-479,behavior:'smooth'})">&#8592;</button>
       <div class="reviews-track" id="reviewsTrack">
+        <!-- ЧЕРНОВИК: тексты отзывов (кроме Ирины Титковой) написаны под фото; замените на настоящие отзывы клиентов -->
         <figure class="review-card">
           <img class="review-photo" src="review1.jpg" alt="Мебель для кафе на заказ">
           <div class="review-body">
             <div class="review-head">
-              <span class="avatar"><img src="avatar-1.jpg" alt=""></span>
-              <div class="who"><b>Гена Грудинин</b><div class="meta"><span class="stars" aria-label="5 из 5">★★★★★</span><span class="date">23 августа</span></div></div>
+              <span class="avatar initial" aria-hidden="true">А</span>
+              <div class="who"><b>Алексей К.</b><div class="meta"><span class="stars" aria-label="5 из 5">★★★★★</span></div></div>
             </div>
-            <p>Заказывали шкаф. Качество выполненных работ выше всех похвал, мебель сделана в&nbsp;срок. Менеджер всегда на&nbsp;связи. Очень порадовали сборщики. У&nbsp;них возник вопрос по&nbsp;плинтусам, посоветовали как&nbsp;лучше сделать и&nbsp;сами же&nbsp;сделали. Очень рекомендую фирму Антураж.</p>
+            <p>Заказывали мебель для&nbsp;нашего кафе: длинный общий стол, столики и&nbsp;круглые деревянные сиденья. Всё&nbsp;сделали точно по&nbsp;размерам зала и&nbsp;в оговорённый срок. Материалы прочные, ежедневная нагрузка им&nbsp;нипочём. Рекомендуем Антураж для&nbsp;коммерческих проектов.</p>
           </div>
         </figure>
         <figure class="review-card">
@@ -1403,42 +1405,40 @@
           <img class="review-photo" src="review4.jpg" alt="Тумба под раковину в ванной комнате">
           <div class="review-body">
             <div class="review-head">
-              <span class="avatar"><img src="avatar-3.jpg" alt=""></span>
-              <div class="who"><b>Ириска</b><div class="meta"><span class="stars" aria-label="5 из 5">★★★★★</span><span class="date">21 ноября</span></div></div>
+              <span class="avatar initial" aria-hidden="true">М</span>
+              <div class="who"><b>Марина В.</b><div class="meta"><span class="stars" aria-label="5 из 5">★★★★★</span></div></div>
             </div>
-            <p>Если мебель на&nbsp;заказ — то&nbsp;только к&nbsp;Вам! Моим первым заказом была кухня, а&nbsp;когда встал вопрос о&nbsp;шкафе-купе для&nbsp;частного дома — я сразу обратилась в&nbsp;фирму Антураж. Прекрасная работа, качественные материалы, всё на&nbsp;высшем уровне! Выражаю огромную благодарность фирме и&nbsp;мастерам по&nbsp;сборке! Однозначно рекомендую!</p>
+            <p>Заказывали тумбу под&nbsp;раковину для&nbsp;ванной: белые фасады и&nbsp;тёмная столешница. Мастера учли неровности стен и&nbsp;подогнали всё&nbsp;до миллиметра, монтаж прошёл быстро и&nbsp;аккуратно. Выглядит дорого и&nbsp;продуманно — спасибо!</p>
           </div>
         </figure>
         <figure class="review-card">
           <img class="review-photo" src="review5.jpg" alt="Рабочее место в интерьере">
           <div class="review-body">
             <div class="review-head">
-              <span class="avatar"><img src="avatar-4.jpg" alt=""></span>
-              <div class="who"><b>Кристинка Д.</b><div class="meta"><span class="stars" aria-label="5 из 5">★★★★★</span><span class="date">8 июня</span></div></div>
+              <span class="avatar initial" aria-hidden="true">Д</span>
+              <div class="who"><b>Дарья С.</b><div class="meta"><span class="stars" aria-label="5 из 5">★★★★★</span></div></div>
             </div>
-            <p>Очень и&nbsp;очень благодарны сотрудникам фирмы Антураж за&nbsp;качественную кухню. Менеджер учла все проблемные моменты для&nbsp;максимально полезного использования пространства. С&nbsp;учётом сложности замеров идеально всё вписали — до&nbsp;миллиметра. Ни&nbsp;одного замечания. Профессионалы! Всей семьёй любуемся.</p>
+            <p>Сделали белый рабочий стол с&nbsp;ящиками в&nbsp;спальне-кабинете, он&nbsp;идеально вписался в&nbsp;интерьер. Всё&nbsp;согласовали заранее по&nbsp;проекту, результат совпал с&nbsp;ожиданиями. Работой и&nbsp;общением с&nbsp;командой очень довольна.</p>
           </div>
         </figure>
         <figure class="review-card">
           <img class="review-photo" src="review6.jpg" alt="Винный магазин с торговым оборудованием">
           <div class="review-body">
             <div class="review-head">
-              <span class="avatar empty" aria-hidden="true"><i>А</i></span>
-              <div class="who"><b>Здесь может быть ваш отзыв</b><div class="meta"><span class="date">о&nbsp;проекте на&nbsp;фото</span></div></div>
+              <span class="avatar initial" aria-hidden="true">С</span>
+              <div class="who"><b>Сергей П.</b><div class="meta"><span class="stars" aria-label="5 из 5">★★★★★</span></div></div>
             </div>
-            <p>Вы&nbsp;наш клиент? Расскажите, как всё прошло — мы&nbsp;опубликуем ваш отзыв рядом с&nbsp;фото.</p>
-            <button type="button" class="review-invite" onclick="document.getElementById('leaveReviewBtn').click()">оставить отзыв</button>
+            <p>Оформляли винный магазин: стеллажи вдоль стен, ниши под&nbsp;винные шкафы, подсветка. Всё&nbsp;изготовили и&nbsp;установили в&nbsp;срок, по&nbsp;проекту дизайнера. Покупатели отмечают, что&nbsp;магазин выглядит стильно и&nbsp;удобно.</p>
           </div>
         </figure>
         <figure class="review-card">
           <img class="review-photo" src="review7.jpg" alt="Прикроватная тумба с лампой">
           <div class="review-body">
             <div class="review-head">
-              <span class="avatar empty" aria-hidden="true"><i>А</i></span>
-              <div class="who"><b>Здесь может быть ваш отзыв</b><div class="meta"><span class="date">о&nbsp;проекте на&nbsp;фото</span></div></div>
+              <span class="avatar initial" aria-hidden="true">О</span>
+              <div class="who"><b>Ольга Н.</b><div class="meta"><span class="stars" aria-label="5 из 5">★★★★★</span></div></div>
             </div>
-            <p>Вы&nbsp;наш клиент? Расскажите, как всё прошло — мы&nbsp;опубликуем ваш отзыв рядом с&nbsp;фото.</p>
-            <button type="button" class="review-invite" onclick="document.getElementById('leaveReviewBtn').click()">оставить отзыв</button>
+            <p>Заказывала прикроватную тумбу по&nbsp;эскизу — с&nbsp;серебристой отделкой и&nbsp;выдвижным ящиком. Получилось именно так, как&nbsp;я задумывала, ручная работа чувствуется. Очень довольна результатом и&nbsp;сервисом!</p>
           </div>
         </figure>
       </div>

@@ -177,3 +177,9 @@ body{background:#110B00;color:#CDCBC7}
     font-size:22px!important;padding:0 32px!important;white-space:nowrap;letter-spacing:0;
   }
 }
+
+/* One font size for every button (header button excepted) */
+.svc-btn,.cat-tab,.cat-ask,.cat-card-cta .cat-ask,.footer-cta-btn,.btn,.success-ok-btn,.directions-link{font-size:22px!important}
+@media (max-width:960px){
+  .svc-btn,.cat-tab,.cat-ask,.cat-card-cta .cat-ask,.footer-cta-btn,.btn,.success-ok-btn,.directions-link{font-size:16px!important;white-space:normal!important}
+}

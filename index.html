@@ -241,7 +241,7 @@
     .hero-stat2 b{font-size:max(24px,calc(64*var(--u)));line-height:1.21;margin-bottom:calc(-10*var(--u))}
     .hero-stat2 span{font-size:max(11px,calc(20*var(--u)));line-height:1.21}
     .hero-stat-divider{width:calc(237*var(--u));max-width:none;height:calc(4*var(--u));margin:calc(-2*var(--u)) 0;background-size:100% 100%}
-    .hero-cta{right:calc(var(--fx) + 60px);bottom:calc(91*var(--u));width:calc(505*var(--u));min-width:200px;max-width:none}
+    .hero-cta{right:calc(var(--fx) + 60px);bottom:calc(91*var(--u));width:calc(505*var(--u));min-width:430px;max-width:none}
     .hero-cta a{height:max(44px,calc(68*var(--u)));font-size:max(12px,calc(25*var(--u)))}
   }
 
@@ -961,6 +961,12 @@
   .about-cta a,.mat-cta a,.benefits-consult a,.svc-btn,.works-cta a,.reviews-cta a,.reviews-cta button,.contact-cta button,.directions-trigger{
     font-size:22px!important;padding:0 32px!important;white-space:nowrap;letter-spacing:0;
   }
+}
+
+/* One font size for every button on the site (the header button is the only exception) */
+.about-cta a,.mat-cta a,.benefits-consult a,.svc-btn,.works-cta a,.reviews-cta a,.reviews-cta button,.contact-cta button,.directions-trigger,.hero-cta a,.footer-cta-btn,.btn,.success-ok-btn,.directions-link,.leave-review-btn{font-size:22px!important}
+@media (max-width:960px){
+  .about-cta a,.mat-cta a,.benefits-consult a,.svc-btn,.works-cta a,.reviews-cta a,.reviews-cta button,.contact-cta button,.directions-trigger,.hero-cta a,.footer-cta-btn,.btn,.success-ok-btn,.directions-link,.leave-review-btn{font-size:16px!important;white-space:normal!important}
 }
 </style>
 </head>

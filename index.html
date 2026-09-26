@@ -1801,7 +1801,10 @@
     const scrollPerLap = (400 - clamp(SENSITIVITY, 0, 10) * 32) * count;
     const stackSpread = STACK_SPREAD * Math.min(CARD_W, CARD_H), dealLift = DEAL_LIFT * CARD_H;
     let cards = [], nodes = [];
-    const state = { target: 0, current: 0, dealt: false, ready: false, dirty: true, startAt: 0 };
+    const state = { target: 0, current: 0, dealt: false, ready: false, dirty: true, startAt: 0, finished: false, nextAt: 0, inView: false };
+    const REPEAT_MIN = 12000, REPEAT_MAX = 15000;        // pause between deals, ms
+    const onScreen = () => { const r = deck.getBoundingClientRect(); return r.top < window.innerHeight * 0.85 && r.bottom > 0; };
+    const restart = now => { state.startAt = now; state.finished = false; };
 
     const build = () => {
       const w = deck.clientWidth || 1;
@@ -1865,6 +1868,10 @@
         const el = now - state.startAt;
         cards.forEach((c, i) => { c.deal = reduce ? 1 : ease((el - STACK_HOLD - i * DEAL_STAGGER) / DEAL_MS); });
         if (!state.ready && (reduce || el - STACK_HOLD - (cards.length - 1) * DEAL_STAGGER > 0)) state.ready = true;
+        if (!reduce) {
+          if (!state.finished && cards.every(c => c.deal >= 1)) { state.finished = true; state.nextAt = now + REPEAT_MIN + Math.random() * (REPEAT_MAX - REPEAT_MIN); }
+          else if (state.finished && now >= state.nextAt && onScreen()) restart(now);     // deal again every 12-15 s while on screen
+        }
       }
       const sk = 1 - Math.pow(1 - scrollLerp, dt * 60);
       state.current += (state.target - state.current) * sk;
@@ -1924,10 +1931,14 @@
       state.target += (btn.classList.contains('prev') ? -1 : 1) / count;
     }));
 
+    // First deal when the block comes into view; deal again every time it re-enters the screen
     const check = () => {
-      if (state.dealt) return;
-      const r = deck.getBoundingClientRect();
-      if (r.top < window.innerHeight * 0.85 && r.bottom > 0) { state.dealt = true; state.startAt = performance.now(); }
+      const v = onScreen();
+      if (v && !state.inView) {
+        state.inView = true;
+        if (!state.dealt) { state.dealt = true; state.startAt = performance.now(); }
+        else if (state.finished && !reduce) restart(performance.now());
+      } else if (!v && state.inView) state.inView = false;
     };
     window.addEventListener('scroll', check, { passive: true });
     window.addEventListener('resize', () => { build(); check(); });

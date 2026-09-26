@@ -1803,7 +1803,7 @@
     const stackSpread = STACK_SPREAD * Math.min(CARD_W, CARD_H), dealLift = DEAL_LIFT * CARD_H;
     let cards = [], nodes = [];
     const state = { target: 0, current: 0, dealt: false, ready: false, dirty: true, startAt: 0, finished: false, nextAt: 0, inView: false, gather: 0 };
-    const GATHER_MS = 2800, GATHER_STAGGER = 110;         // slow, smooth gathering of the cards into the stack before every repeat
+    const GATHER_MS = 5500, GATHER_STAGGER = 200;         // slow, smooth gathering of the cards into the stack before every repeat
     const REPEAT_MIN = 12000, REPEAT_MAX = 15000;        // pause between deals, ms
     const onScreen = () => { const r = deck.getBoundingClientRect(); return r.top < window.innerHeight * 0.85 && r.bottom > 0; };
     const restart = now => { state.gather = now; state.finished = false; };   // gather into a stack first, then deal again

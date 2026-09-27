@@ -599,6 +599,9 @@
   .works-arrow:hover{background:#432c03;transform:translateY(-50%) scale(1.06)}
   .works-arrow.prev{left:-25px}
   .works-arrow.next{right:-25px}
+  /* Dims once the row can't scroll further that way (reviews-track; works-track only when not deck-driven) */
+  .works-arrow:disabled{background:rgba(47,31,2,.45);color:rgba(205,203,199,.35);cursor:default}
+  .works-arrow:disabled:hover{background:rgba(47,31,2,.45);transform:translateY(-50%)}
 
   .works-cta{display:flex;justify-content:flex-end;margin-top:60px}
   .works-cta a{
@@ -2025,6 +2028,32 @@
     check();
     requestAnimationFrame(tick);
     window.__deck = { state };
+  })();
+
+  // Arrow buttons dim once the row is scrolled all the way to that side — every finite
+  // horizontal-scroll gallery gets this (reviews; works only if the infinite Deck Carousel
+  // above didn't take over, since a loop never truly "ends").
+  (function () {
+    const EPS = 2;
+    const wire = (track, prev, next) => {
+      if (!track || !prev || !next) return;
+      const update = () => {
+        prev.disabled = track.scrollLeft <= EPS;
+        next.disabled = track.scrollLeft >= track.scrollWidth - track.clientWidth - EPS;
+      };
+      track.addEventListener('scroll', update, { passive: true });
+      window.addEventListener('resize', update);
+      window.addEventListener('load', update);
+      update();
+    };
+    document.querySelectorAll('.works-gallery, .reviews-gallery').forEach(gallery => {
+      if (gallery.classList.contains('deck-on')) return;
+      wire(
+        gallery.querySelector('.works-track, .reviews-track'),
+        gallery.querySelector('.works-arrow.prev'),
+        gallery.querySelector('.works-arrow.next')
+      );
+    });
   })();
 
   // Pressed-plate visibility fix: a click on a link navigates before the browser gets a chance to paint

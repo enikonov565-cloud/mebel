@@ -385,12 +385,16 @@
   }
   .svc-card h3{
     font-family:'Inter',sans-serif;font-weight:500;font-size:36px;line-height:1;letter-spacing:0.72px;
-    color:#CDCBC7;white-space:nowrap;margin-bottom:48px;   /* raised twice now: 8 -> 28 -> 48px */
+    color:#CDCBC7;white-space:nowrap;margin-bottom:75px;   /* raised: 8 -> 28 -> 48 -> 75px, so the
+    "в каталог" button (44px tall, anchored 16px from the card's bottom edge) sits a clean 15px below
+    the title's own bottom edge instead of overlapping it */
   }
-  /* "в каталог" link-affordance button — sits in the blank space to the right of the title, pushed
-     to the card's right edge (margin-left:auto), level with the title's (raised) baseline. */
+  /* "в каталог" link-affordance button — pinned near the card's bottom-right corner with a 16px
+     margin (not flush against the edge), so growing on hover expands leftward and can never push
+     past the card's own edge. max-width is also capped by how much room is actually left of the
+     photo, so it can't grow into the photo either. */
   .svc-card-arrow{
-    flex:none;margin-left:auto;margin-bottom:48px;z-index:2;
+    position:absolute;right:16px;bottom:16px;z-index:2;
     height:44px;min-width:44px;max-width:44px;border-radius:22px;background:rgba(24,15,1,.65);color:#CDCBC7;
     display:flex;align-items:center;justify-content:flex-end;gap:8px;padding:0 14px;
     overflow:hidden;white-space:nowrap;font-size:18px;line-height:1;box-sizing:border-box;
@@ -400,7 +404,7 @@
     font-family:'Inter',sans-serif;font-weight:500;font-size:16px;opacity:0;transform:translateX(8px);
     transition:opacity .25s ease,transform .3s ease;
   }
-  a.svc-card:hover .svc-card-arrow{max-width:190px;background:rgba(24,15,1,.88)}
+  a.svc-card:hover .svc-card-arrow{max-width:min(190px,calc(100% - 284px - 25px - 16px));background:rgba(24,15,1,.88)}
   a.svc-card:hover .svc-card-arrow-label{opacity:1;transform:translateX(0);transition-delay:.1s}
   .svc-cta{display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:40px;height:443px}
   .svc-cta p{

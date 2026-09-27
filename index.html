@@ -385,17 +385,23 @@
   }
   .svc-card h3{
     font-family:'Inter',sans-serif;font-weight:500;font-size:36px;line-height:1;letter-spacing:0.72px;
-    color:#CDCBC7;white-space:nowrap;margin-bottom:28px;   /* 8px + 20pt further up, per request */
+    color:#CDCBC7;white-space:nowrap;margin-bottom:48px;   /* raised twice now: 8 -> 28 -> 48px */
   }
-  /* Small "this is a link" badge, bottom-right corner of the photo itself (see .svc-card-photo-wrap
-     above) — same round-arrow language as the carousel/gallery arrows elsewhere on the site. */
+  /* "в каталог" link-affordance button — sits in the blank space to the right of the title, pushed
+     to the card's right edge (margin-left:auto), level with the title's (raised) baseline. */
   .svc-card-arrow{
-    position:absolute;bottom:16px;right:16px;z-index:2;
-    width:40px;height:40px;border-radius:50%;background:rgba(24,15,1,.55);color:#CDCBC7;
-    display:flex;align-items:center;justify-content:center;font-size:18px;line-height:1;
-    transition:background-color .2s ease,transform .3s ease;
+    flex:none;margin-left:auto;margin-bottom:48px;z-index:2;
+    height:44px;min-width:44px;max-width:44px;border-radius:22px;background:rgba(24,15,1,.65);color:#CDCBC7;
+    display:flex;align-items:center;justify-content:flex-end;gap:8px;padding:0 14px;
+    overflow:hidden;white-space:nowrap;font-size:18px;line-height:1;box-sizing:border-box;
+    transition:max-width .4s cubic-bezier(.22,1,.36,1),background-color .3s ease;
   }
-  a.svc-card:hover .svc-card-arrow{background:rgba(24,15,1,.8);transform:rotate(45deg)}
+  .svc-card-arrow-label{
+    font-family:'Inter',sans-serif;font-weight:500;font-size:16px;opacity:0;transform:translateX(8px);
+    transition:opacity .25s ease,transform .3s ease;
+  }
+  a.svc-card:hover .svc-card-arrow{max-width:190px;background:rgba(24,15,1,.88)}
+  a.svc-card:hover .svc-card-arrow-label{opacity:1;transform:translateX(0);transition-delay:.1s}
   .svc-cta{display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:40px;height:443px}
   .svc-cta p{
     font-family:'Inter',sans-serif;font-weight:300;font-size:20px;line-height:1.2;letter-spacing:0.4px;
@@ -1167,37 +1173,42 @@
       <a class="svc-card" href="catalog-korpusnaya.html"><span class="svc-card-plate" aria-hidden="true"></span>
         <span class="svc-card-photo-wrap">
           <img class="svc-card-photo" src="cat-korpus.jpg" alt="Корпусная мебель">
-          <span class="svc-card-arrow" aria-hidden="true">→</span>
+          
         </span>
         <h3>Корпусная<br>мебель</h3>
+        <span class="svc-card-arrow" aria-hidden="true"><span class="svc-card-arrow-label">в каталог</span>→</span>
       </a>
       <a class="svc-card" href="catalog-eksklyuzivnaya.html"><span class="svc-card-plate" aria-hidden="true"></span>
         <span class="svc-card-photo-wrap">
           <img class="svc-card-photo" src="cat-exclusive.jpg" alt="Эксклюзивная мебель">
-          <span class="svc-card-arrow" aria-hidden="true">→</span>
+          
         </span>
         <h3>Эксклюзивная<br>мебель</h3>
+        <span class="svc-card-arrow" aria-hidden="true"><span class="svc-card-arrow-label">в каталог</span>→</span>
       </a>
       <a class="svc-card" href="catalog-dveri.html"><span class="svc-card-plate" aria-hidden="true"></span>
         <span class="svc-card-photo-wrap">
           <img class="svc-card-photo" src="cat-doors.jpg" alt="Двери и порталы">
-          <span class="svc-card-arrow" aria-hidden="true">→</span>
+          
         </span>
         <h3>Двери<br>и&nbsp;порталы</h3>
+        <span class="svc-card-arrow" aria-hidden="true"><span class="svc-card-arrow-label">в каталог</span>→</span>
       </a>
       <a class="svc-card" href="catalog-ofisnaya.html"><span class="svc-card-plate" aria-hidden="true"></span>
         <span class="svc-card-photo-wrap">
           <img class="svc-card-photo" src="cat-office.jpg" alt="Офисная мебель">
-          <span class="svc-card-arrow" aria-hidden="true">→</span>
+          
         </span>
         <h3>Офисная<br>мебель</h3>
+        <span class="svc-card-arrow" aria-hidden="true"><span class="svc-card-arrow-label">в каталог</span>→</span>
       </a>
       <a class="svc-card" href="catalog-kommercheskaya.html"><span class="svc-card-plate" aria-hidden="true"></span>
         <span class="svc-card-photo-wrap">
           <img class="svc-card-photo" src="cat-commerce.jpg" alt="Коммерческая мебель">
-          <span class="svc-card-arrow" aria-hidden="true">→</span>
+          
         </span>
         <h3>Коммерческая<br>мебель</h3>
+        <span class="svc-card-arrow" aria-hidden="true"><span class="svc-card-arrow-label">в каталог</span>→</span>
       </a>
       <div class="svc-cta">
         <p>Не&nbsp;нашли нужное?<br>Изготовим по&nbsp;вашему<br>эскизу или&nbsp;чертежу дизайнера.</p>

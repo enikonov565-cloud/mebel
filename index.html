@@ -356,9 +356,22 @@
   /* 3 columns x 2 rows: photo 284x440 + title; last cell holds the CTA (Figma 1920 frame) */
   .svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:27px 25px}
   .svc-card{display:flex;align-items:flex-end;gap:25px;height:440px;min-width:0;color:#CDCBC7}
-  a.svc-card{color:#CDCBC7;cursor:pointer}
+  a.svc-card{color:#CDCBC7;cursor:pointer;position:relative}
   .svc-card-photo{flex:none;width:284px;height:440px;object-fit:cover;border-radius:15px;transition:transform .5s cubic-bezier(.22,1,.36,1)}
   a.svc-card:hover .svc-card-photo{transform:translateY(-6px)}
+  /* Light Glass glow (Originkit, ported): a soft light follows the pointer across the whole card */
+  .svc-card-light{
+    position:absolute;inset:0;z-index:1;pointer-events:none;opacity:0;mix-blend-mode:screen;will-change:opacity;
+    background:
+      radial-gradient(circle var(--lr,220px) at var(--mx,50%) var(--my,50%),
+        rgba(255,255,255,.45) 0%,rgba(255,255,255,.43) 8%,rgba(255,255,255,.38) 18%,rgba(255,255,255,.32) 30%,
+        rgba(255,255,255,.24) 42%,rgba(255,255,255,.17) 55%,rgba(255,255,255,.11) 68%,rgba(255,255,255,.06) 80%,
+        rgba(255,255,255,.03) 90%,rgba(255,255,255,.01) 96%,rgba(255,255,255,0) 100%),
+      radial-gradient(circle calc(var(--lr,220px) * 1.9) at var(--mx,50%) var(--my,50%),
+        rgba(255,255,255,.153) 0%,rgba(255,255,255,.146) 8%,rgba(255,255,255,.129) 18%,rgba(255,255,255,.109) 30%,
+        rgba(255,255,255,.082) 42%,rgba(255,255,255,.058) 55%,rgba(255,255,255,.037) 68%,rgba(255,255,255,.02) 80%,
+        rgba(255,255,255,.01) 90%,rgba(255,255,255,.003) 96%,rgba(255,255,255,0) 100%);
+  }
   .svc-card h3{
     font-family:'Inter',sans-serif;font-weight:500;font-size:36px;line-height:1;letter-spacing:0.72px;
     color:#CDCBC7;white-space:nowrap;
@@ -2004,6 +2017,39 @@
     check();
     requestAnimationFrame(tick);
     window.__deck = { state };
+  })();
+
+  // Light Glass glow (Originkit, ported): a soft light follows the pointer across each of the 5 category cards
+  (function () {
+    const cards = [...document.querySelectorAll('a.svc-card')];
+    if (!cards.length || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const LIGHT_SIZE_PCT = 40;             // % of the card's larger side, matches the Originkit preset
+    const SMOOTH_K = 0.22;                 // per-frame lerp factor (higher = snappier)
+    cards.forEach(card => {
+      const glow = document.createElement('span');
+      glow.className = 'svc-card-light';
+      glow.setAttribute('aria-hidden', 'true');
+      card.appendChild(glow);
+      const st = { tx: 0.5, ty: 0.5, ton: 0, x: 0.5, y: 0.5, on: 0, raf: null };
+      const setRadius = () => { const r = card.getBoundingClientRect(); card.style.setProperty('--lr', (Math.max(r.width, r.height) * LIGHT_SIZE_PCT / 100).toFixed(1) + 'px'); };
+      setRadius();
+      new ResizeObserver(setRadius).observe(card);
+      const paint = () => { card.style.setProperty('--mx', (st.x * 100).toFixed(2) + '%'); card.style.setProperty('--my', (st.y * 100).toFixed(2) + '%'); glow.style.opacity = st.on.toFixed(3); };
+      const tick = () => {
+        st.x += (st.tx - st.x) * SMOOTH_K;
+        st.y += (st.ty - st.y) * SMOOTH_K;
+        st.on += (st.ton - st.on) * SMOOTH_K;
+        paint();
+        const settled = Math.abs(st.tx - st.x) < 0.001 && Math.abs(st.ty - st.y) < 0.001 && Math.abs(st.ton - st.on) < 0.002;
+        if (settled && st.ton === 0) { st.x = st.tx; st.y = st.ty; st.on = 0; paint(); st.raf = null; return; }
+        st.raf = requestAnimationFrame(tick);
+      };
+      const kick = () => { if (st.raf == null) st.raf = requestAnimationFrame(tick); };
+      const track = e => { const r = card.getBoundingClientRect(); if (!r.width || !r.height) return; st.tx = (e.clientX - r.left) / r.width; st.ty = (e.clientY - r.top) / r.height; kick(); };
+      card.addEventListener('pointerenter', e => { const r = card.getBoundingClientRect(); if (r.width && r.height) { st.tx = (e.clientX - r.left) / r.width; st.ty = (e.clientY - r.top) / r.height; if (st.on === 0) { st.x = st.tx; st.y = st.ty; } } st.ton = 1; kick(); });
+      card.addEventListener('pointermove', track);
+      card.addEventListener('pointerleave', e => { track(e); st.ton = 0; kick(); });
+    });
   })();
 
   const burger = document.getElementById('burger');

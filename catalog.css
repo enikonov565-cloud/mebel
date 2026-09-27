@@ -28,7 +28,7 @@ body{background:#110B00;color:#CDCBC7}
 /* Section switcher */
 .cat-tabs{display:flex;flex-wrap:wrap;gap:16px 18px}
 .cat-tab{
-  --dot-off:6px;
+  --dot-off:6px;flex:1 1 0;min-width:150px;
   display:inline-flex;align-items:center;justify-content:center;
   height:46px;padding:0 26px;border-radius:15px;
   background:#2F1F02;border:2px solid #CDCBC7;color:#CDCBC7;
@@ -197,7 +197,7 @@ body{background:#110B00;color:#CDCBC7}
   flex:none;width:505px;max-width:calc(85*var(--vw100)/100);aspect-ratio:607/933;scroll-snap-align:start;
   background:#180F01;border-radius:15px;display:flex;flex-direction:column;overflow:hidden;
 }
-.model-photo{width:100%;flex:1 1 auto;min-height:0;object-fit:cover;display:block}
+.model-photo{width:100%;flex:1 1 auto;min-height:0;object-fit:cover;display:block;border-radius:15px}
 .model-card h3{
   padding:16px 22px 0;font-family:'Inter',sans-serif;font-weight:700;font-size:23px;line-height:1.15;
   color:#CDCBC7;flex:none;

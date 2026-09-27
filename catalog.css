@@ -293,32 +293,35 @@ body{background:#110B00;color:#CDCBC7}
   .cta-works{font-size:17px}   /* margin-top stays auto (base rule) — pins it to the bottom */
 }
 
-/* Model detail modal — Figma node 505:344 (light card, dark text — unlike the dark manager modal) */
+/* Model detail modal — Figma node 505:344, dimensions read straight from the Figma metadata
+   (frame 1440×1024; photo 770 wide; 117px gap before the text column; 69/66/70 top/right/bottom
+   margins around it; 38px title-to-specs gap; the ~499px gap before the button is whatever space
+   is left, via flex space-between, same effect as a hardcoded gap but responsive to content). */
 .model-modal-card{
-  width:1300px;max-width:95vw;aspect-ratio:4/3;padding:0;background:#CDCBC7;color:#180F01;
+  width:1440px;max-width:95vw;aspect-ratio:1440/1024;padding:0;background:#CDCBC7;color:#180F01;
   display:flex;border-radius:15px;overflow:hidden;max-height:92vh;
 }
 .model-modal-card .modal-close{color:#180F01}
 .model-modal-card .modal-close:hover{color:#5c3a1e}
-.model-modal-photo{flex:1 1 55%;position:relative;min-width:0}
+.model-modal-photo{flex:0 0 53.47%;position:relative;min-width:0}   /* 770/1440 */
 .model-modal-info{
-  flex:1 1 45%;min-width:0;padding:60px 50px;display:flex;flex-direction:column;justify-content:space-between;
+  flex:1 1 auto;min-width:0;padding:69px 66px 70px 117px;display:flex;flex-direction:column;justify-content:space-between;
   overflow-y:auto;
 }
-.model-modal-text{display:flex;flex-direction:column;gap:36px}
+.model-modal-text{display:flex;flex-direction:column;gap:38px}
 .model-modal-info h3{
   font-family:'Inter',sans-serif;font-weight:700;font-size:28px;line-height:1.2;margin:0;color:#180F01;padding:0;
 }
 .model-modal-specs{
   list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px;
-  font-family:'Inter',sans-serif;font-weight:300;font-size:24px;line-height:1.2;letter-spacing:.64px;color:#180F01;
+  font-family:'Inter',sans-serif;font-weight:300;font-size:32px;line-height:1.2;letter-spacing:.64px;color:#180F01;
 }
 .model-modal-cta{
-  margin-top:40px;align-self:flex-start;
-  display:inline-flex;align-items:center;gap:20px;justify-content:center;
+  margin-top:40px;width:100%;
+  display:flex;align-items:center;gap:25px;justify-content:center;
   border:2px solid #180F01;border-radius:15px;background:transparent;color:#180F01;
-  font-family:'Inter',sans-serif;font-weight:700;font-size:22px;padding:12px 28px;cursor:pointer;white-space:nowrap;
-  transition:background-color .2s ease,color .2s ease;
+  font-family:'Inter',sans-serif;font-weight:700;font-size:28px;padding:7px 30px;cursor:pointer;white-space:nowrap;
+  transition:background-color .2s ease,color .2s ease;box-sizing:border-box;
 }
 .model-modal-cta:hover{background:#180F01;color:#CDCBC7}
 

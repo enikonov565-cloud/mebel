@@ -257,7 +257,7 @@ body{background:#110B00;color:#CDCBC7}
    lives here now (not on .cta-card) so text/buttons are guaranteed to sit inside the plate. */
 .cta-content{
   position:absolute;inset:0;z-index:1;display:flex;flex-direction:column;
-  padding:34px 20px 40px;
+  padding:34px 20px 40px 40px;   /* shifted 20pt further right than the other sides */
 }
 .cta-plus{font-family:'Inter',sans-serif;font-weight:500;font-size:34px;line-height:1;color:#604311;margin-bottom:24px}
 .cta-card h3{padding:0;margin:0 0 18px;font-size:34px;line-height:1.15}
@@ -281,7 +281,7 @@ body{background:#110B00;color:#CDCBC7}
   .model-photo{aspect-ratio:607/767}
 }
 @media (max-width:640px){
-  .cta-content{padding:28px 20px 34px}
+  .cta-content{padding:28px 20px 34px 40px}
   .cta-plus{font-size:28px;margin-bottom:18px}
   .cta-card h3{font-size:26px;margin:0 0 14px}
   .cta-desc{margin:0 0 24px;font-size:12px}

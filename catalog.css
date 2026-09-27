@@ -199,15 +199,11 @@ body{background:#110B00;color:#CDCBC7}
 }
 .model-photo{width:100%;flex:1 1 auto;min-height:0;object-fit:cover;display:block;border-radius:15px}
 .model-card h3{
-  padding:16px 22px 0;font-family:'Inter',sans-serif;font-weight:700;font-size:23px;line-height:1.15;
-  color:#CDCBC7;flex:none;
-}
-.model-card>p{
-  padding:6px 22px 0;font-family:'Inter',sans-serif;font-weight:300;font-size:16px;line-height:1.3;
+  padding:28px 22px 0;font-family:'Inter',sans-serif;font-weight:700;font-size:23px;line-height:1.15;
   color:#CDCBC7;flex:none;
 }
 .model-btn{
-  align-self:flex-start;margin:14px 22px 18px;flex:none;
+  align-self:flex-start;margin:18px 22px 18px;flex:none;
   display:inline-flex;align-items:center;gap:9px;
   background:#CDCBC7;color:#180F01;border:none;border-radius:15px;padding:9px 26px;
   font-family:'Inter',sans-serif;font-weight:500;font-size:16px;cursor:pointer;white-space:nowrap;

@@ -295,8 +295,8 @@ body{background:#110B00;color:#CDCBC7}
 
 /* Model detail modal — Figma node 505:344 (light card, dark text — unlike the dark manager modal) */
 .model-modal-card{
-  width:1100px;max-width:95vw;padding:0;background:#CDCBC7;color:#180F01;
-  display:flex;border-radius:15px;overflow:hidden;max-height:88vh;
+  width:1300px;max-width:95vw;aspect-ratio:4/3;padding:0;background:#CDCBC7;color:#180F01;
+  display:flex;border-radius:15px;overflow:hidden;max-height:92vh;
 }
 .model-modal-card .modal-close{color:#180F01}
 .model-modal-card .modal-close:hover{color:#5c3a1e}
@@ -336,7 +336,7 @@ body{background:#110B00;color:#CDCBC7}
 .mgc-dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.4);transition:background .3s ease}
 .mgc-dot.active{background:#fff}
 @media (max-width:800px){
-  .model-modal-card{flex-direction:column;max-height:92vh;overflow-y:auto}
+  .model-modal-card{flex-direction:column;aspect-ratio:auto;max-height:92vh;overflow-y:auto}
   .model-modal-photo{height:280px;flex:none}
   .model-modal-info{padding:32px 24px}
   .model-modal-info h3{font-size:22px}

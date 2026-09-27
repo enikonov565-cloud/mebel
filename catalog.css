@@ -331,16 +331,21 @@ body{background:#110B00;color:#CDCBC7}
 }
 .model-modal-cta:hover{background:#180F01;color:#CDCBC7}
 
-/* Cursor Image Gallery (Originkit, ported to plain JS) — hover-driven slideshow for the modal photo */
-.mgc{position:relative;width:100%;height:100%;min-height:320px;overflow:hidden;cursor:none}
+/* Cursor Image Gallery (Originkit, ported to plain JS) — slideshow for the modal photo, navigated
+   by fixed arrow buttons at the photo's edges (not a cursor that follows the pointer). */
+.mgc{position:relative;width:100%;height:100%;min-height:320px;overflow:hidden}
 .mgc-frame{position:absolute;inset:0}
 .mgc-layer{position:absolute;inset:0;background-size:cover;background-position:center;will-change:transform}
-.mgc-cursor{
-  position:absolute;top:0;left:0;width:60px;height:60px;margin:-30px 0 0 -30px;border-radius:50%;
-  display:flex;align-items:center;justify-content:center;pointer-events:none;opacity:0;transition:opacity .15s ease;
+.mgc-nav{
+  position:absolute;top:50%;transform:translateY(-50%);z-index:2;
+  width:44px;height:44px;border:none;border-radius:50%;background:rgba(24,15,1,.55);
+  display:flex;align-items:center;justify-content:center;cursor:pointer;
+  transition:background-color .2s ease,opacity .2s ease;
 }
-.mgc-cursor.show{opacity:1}
-.mgc-cursor.mgc-left .mgc-arrow{transform:scaleX(-1)}
+.mgc-nav:hover{background:rgba(24,15,1,.8)}
+.mgc-nav:disabled{opacity:0;pointer-events:none}
+.mgc-prev{left:16px}
+.mgc-next{right:16px}
 .mgc-dots{position:absolute;left:50%;bottom:24px;transform:translateX(-50%);display:flex;gap:8px;pointer-events:none}
 .mgc-dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.4);transition:background .3s ease}
 .mgc-dot.active{background:#fff}

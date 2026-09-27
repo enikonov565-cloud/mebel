@@ -337,12 +337,14 @@ body{background:#110B00;color:#CDCBC7}
 .mgc-frame{position:absolute;inset:0}
 .mgc-layer{position:absolute;inset:0;background-size:cover;background-position:center;will-change:transform}
 .mgc-nav{
-  position:absolute;top:50%;transform:translateY(-50%);z-index:2;
-  width:44px;height:44px;border:none;border-radius:50%;background:rgba(24,15,1,.55);
+  position:absolute;top:50%;transform:translateY(-50%) scale(1);z-index:2;
+  width:44px;height:44px;border:none;border-radius:50%;background:none;   /* no plate — a floating arrow, not a button */
   display:flex;align-items:center;justify-content:center;cursor:pointer;
-  transition:background-color .2s ease,opacity .2s ease;
+  filter:drop-shadow(0 1px 3px rgba(0,0,0,.65));
+  transition:transform .2s ease,opacity .2s ease;
 }
-.mgc-nav:hover{background:rgba(24,15,1,.8)}
+.mgc-nav svg{width:26px;height:26px}
+.mgc-nav:hover{transform:translateY(-50%) scale(1.15)}
 .mgc-nav:disabled{opacity:0;pointer-events:none}
 .mgc-prev{left:16px}
 .mgc-next{right:16px}

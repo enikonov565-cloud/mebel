@@ -295,10 +295,10 @@ body{background:#110B00;color:#CDCBC7}
 
 /* Model detail modal — Figma node 505:344 (light card, dark text — unlike the dark manager modal) */
 .model-modal-card{
-  /* width driven by whichever of these is smallest — including a height-based cap converted
-     through the 4:3 ratio (92vh × 4/3) — so the box is ALWAYS a true 4:3 rectangle, never
-     flattened by max-height clipping the height while the width stays put. */
-  width:min(1300px,95vw,122.667vh);aspect-ratio:4/3;padding:0;background:#CDCBC7;color:#180F01;
+  /* Fills the frame: driven by whichever of these is smallest — 95% of the viewport width, or
+     a height-based cap (94vh × 4/3) converted through the 4:3 ratio — so it grows all the way
+     to the frame's height (not capped at some fixed px) while staying a true 4:3 rectangle. */
+  width:min(95vw,125.333vh);aspect-ratio:4/3;padding:0;background:#CDCBC7;color:#180F01;
   display:flex;border-radius:15px;overflow:hidden;
   container-type:inline-size;container-name:modelmodal;   /* so the text/padding below can scale WITH the card */
 }

@@ -71,7 +71,7 @@
 <section class="cat-items">
   <div class="container">
     <div class="model-gallery">
-      <button type="button" class="model-arrow prev" aria-label="Предыдущая модель" onclick="document.getElementById('modelTrack').scrollBy({left:-541,behavior:'smooth'})">&#8592;</button>
+      <button type="button" class="model-arrow prev" aria-label="Предыдущая модель" onclick="document.getElementById('modelTrack').scrollBy({left:541,behavior:'smooth'})">&#8592;</button>
       <div class="model-track" id="modelTrack">
         <article class="model-card">
           <img class="model-photo" src="cat-korpus.jpg" alt="Угловая кухня цвета слоновой кости">
@@ -127,7 +127,7 @@
       </div>
       <!-- Pinned at the seam where the photo cards disappear under the sticky CTA card
            (505px card width − 25px half-circle), instead of the gallery's outer edge. -->
-      <button type="button" class="model-arrow next" aria-label="Следующая модель" onclick="document.getElementById('modelTrack').scrollBy({left:541,behavior:'smooth'})">&#8594;</button>
+      <button type="button" class="model-arrow next" aria-label="Следующая модель" onclick="document.getElementById('modelTrack').scrollBy({left:-541,behavior:'smooth'})">&#8594;</button>
     </div>
   </div>
 </section>
@@ -206,9 +206,11 @@
     const next = document.querySelector('.model-arrow.next');
     if (!track || !prev || !next) return;
     const EPS = 2;
+    // prev now scrolls forward (photos move left) and next scrolls backward (photos move
+    // right) — see the buttons' onclick — so the disabled edges are swapped to match.
     const update = () => {
-      prev.disabled = track.scrollLeft <= EPS;
-      next.disabled = track.scrollLeft >= track.scrollWidth - track.clientWidth - EPS;
+      prev.disabled = track.scrollLeft >= track.scrollWidth - track.clientWidth - EPS;
+      next.disabled = track.scrollLeft <= EPS;
     };
     track.addEventListener('scroll', update, { passive: true });
     window.addEventListener('resize', update);

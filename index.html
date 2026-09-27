@@ -359,8 +359,11 @@
   /* isolation:isolate gives the card its own stacking context, so the plate's negative z-index stays
      contained here instead of escaping behind the section's opaque background (which hid it entirely) */
   a.svc-card{color:#CDCBC7;cursor:pointer;position:relative;isolation:isolate}
-  .svc-card-photo{flex:none;width:284px;height:440px;object-fit:cover;border-radius:15px;transition:transform .5s cubic-bezier(.22,1,.36,1)}
-  a.svc-card:hover .svc-card-photo{transform:translateY(-6px)}
+  /* Wraps just the photo (not the whole card, which also includes the title's blank space to the
+     right on desktop) so the corner arrow badge anchors to the picture itself, not the card box. */
+  .svc-card-photo-wrap{position:relative;flex:none;width:284px;height:440px;transition:transform .5s cubic-bezier(.22,1,.36,1)}
+  a.svc-card:hover .svc-card-photo-wrap{transform:translateY(-6px)}
+  .svc-card-photo{display:block;width:100%;height:100%;object-fit:cover;border-radius:15px}
   /* Pressed state (Dotted Offset Button, ported): a thin light backing plate shows behind the whole card while held down */
   .svc-card-plate{
     position:absolute;inset:0;z-index:-1;border-radius:15px;
@@ -382,17 +385,17 @@
   }
   .svc-card h3{
     font-family:'Inter',sans-serif;font-weight:500;font-size:36px;line-height:1;letter-spacing:0.72px;
-    color:#CDCBC7;white-space:nowrap;margin-bottom:8px;   /* lifts the title off the card's bottom edge (was flush with the photo) */
+    color:#CDCBC7;white-space:nowrap;margin-bottom:28px;   /* 8px + 20pt further up, per request */
   }
-  /* Small "this is a link" badge in the photo's corner — same round-arrow language as the
-     carousel/gallery arrows elsewhere on the site, so a card reads as clickable at a glance. */
+  /* Small "this is a link" badge, bottom-right corner of the photo itself (see .svc-card-photo-wrap
+     above) — same round-arrow language as the carousel/gallery arrows elsewhere on the site. */
   .svc-card-arrow{
-    position:absolute;top:16px;right:16px;z-index:2;
+    position:absolute;bottom:16px;right:16px;z-index:2;
     width:40px;height:40px;border-radius:50%;background:rgba(24,15,1,.55);color:#CDCBC7;
     display:flex;align-items:center;justify-content:center;font-size:18px;line-height:1;
-    transition:background-color .2s ease,transform .5s cubic-bezier(.22,1,.36,1);
+    transition:background-color .2s ease,transform .3s ease;
   }
-  a.svc-card:hover .svc-card-arrow{background:rgba(24,15,1,.8);transform:translateY(-6px) rotate(45deg)}
+  a.svc-card:hover .svc-card-arrow{background:rgba(24,15,1,.8);transform:rotate(45deg)}
   .svc-cta{display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:40px;height:443px}
   .svc-cta p{
     font-family:'Inter',sans-serif;font-weight:300;font-size:20px;line-height:1.2;letter-spacing:0.4px;
@@ -912,7 +915,7 @@
     .why-vline,.why-hline{display:none}
     .svc-grid{grid-template-columns:repeat(2,1fr);gap:40px 25px}
     .svc-card{flex-direction:column;align-items:flex-start;height:auto;gap:20px}
-    .svc-card-photo{width:100%;height:320px}
+    .svc-card-photo-wrap{width:100%;height:320px}
     .svc-card h3{white-space:normal}
     .svc-head p{white-space:normal}
     .svc-head h2{white-space:normal}
@@ -944,7 +947,7 @@
     }
     .process-text{width:100%}
     .svc-grid{grid-template-columns:1fr}
-    .svc-card-photo{height:260px}
+    .svc-card-photo-wrap{height:260px}
     .contact-head{justify-content:flex-start;flex-wrap:wrap}
     .contact-head p{text-align:left}
     .map-embed{height:auto;aspect-ratio:16/9}
@@ -1162,28 +1165,38 @@
 
     <div class="svc-grid">
       <a class="svc-card" href="catalog-korpusnaya.html"><span class="svc-card-plate" aria-hidden="true"></span>
-        <img class="svc-card-photo" src="cat-korpus.jpg" alt="Корпусная мебель">
-        <span class="svc-card-arrow" aria-hidden="true">→</span>
+        <span class="svc-card-photo-wrap">
+          <img class="svc-card-photo" src="cat-korpus.jpg" alt="Корпусная мебель">
+          <span class="svc-card-arrow" aria-hidden="true">→</span>
+        </span>
         <h3>Корпусная<br>мебель</h3>
       </a>
       <a class="svc-card" href="catalog-eksklyuzivnaya.html"><span class="svc-card-plate" aria-hidden="true"></span>
-        <img class="svc-card-photo" src="cat-exclusive.jpg" alt="Эксклюзивная мебель">
-        <span class="svc-card-arrow" aria-hidden="true">→</span>
+        <span class="svc-card-photo-wrap">
+          <img class="svc-card-photo" src="cat-exclusive.jpg" alt="Эксклюзивная мебель">
+          <span class="svc-card-arrow" aria-hidden="true">→</span>
+        </span>
         <h3>Эксклюзивная<br>мебель</h3>
       </a>
       <a class="svc-card" href="catalog-dveri.html"><span class="svc-card-plate" aria-hidden="true"></span>
-        <img class="svc-card-photo" src="cat-doors.jpg" alt="Двери и порталы">
-        <span class="svc-card-arrow" aria-hidden="true">→</span>
+        <span class="svc-card-photo-wrap">
+          <img class="svc-card-photo" src="cat-doors.jpg" alt="Двери и порталы">
+          <span class="svc-card-arrow" aria-hidden="true">→</span>
+        </span>
         <h3>Двери<br>и&nbsp;порталы</h3>
       </a>
       <a class="svc-card" href="catalog-ofisnaya.html"><span class="svc-card-plate" aria-hidden="true"></span>
-        <img class="svc-card-photo" src="cat-office.jpg" alt="Офисная мебель">
-        <span class="svc-card-arrow" aria-hidden="true">→</span>
+        <span class="svc-card-photo-wrap">
+          <img class="svc-card-photo" src="cat-office.jpg" alt="Офисная мебель">
+          <span class="svc-card-arrow" aria-hidden="true">→</span>
+        </span>
         <h3>Офисная<br>мебель</h3>
       </a>
       <a class="svc-card" href="catalog-kommercheskaya.html"><span class="svc-card-plate" aria-hidden="true"></span>
-        <img class="svc-card-photo" src="cat-commerce.jpg" alt="Коммерческая мебель">
-        <span class="svc-card-arrow" aria-hidden="true">→</span>
+        <span class="svc-card-photo-wrap">
+          <img class="svc-card-photo" src="cat-commerce.jpg" alt="Коммерческая мебель">
+          <span class="svc-card-arrow" aria-hidden="true">→</span>
+        </span>
         <h3>Коммерческая<br>мебель</h3>
       </a>
       <div class="svc-cta">

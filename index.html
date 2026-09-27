@@ -364,9 +364,9 @@
   /* Pressed state (Dotted Offset Button, ported): a thin light backing plate shows behind the whole card while held down */
   .svc-card-plate{
     position:absolute;inset:0;z-index:-1;border-radius:15px;
-    background:rgba(205,203,199,.14);opacity:0;pointer-events:none;transition:opacity .12s ease;
+    background:rgba(205,203,199,.22);opacity:0;pointer-events:none;transition:opacity .3s ease;
   }
-  a.svc-card:active .svc-card-plate{opacity:1;transition:opacity .05s ease}
+  a.svc-card:active .svc-card-plate{opacity:1;transition:opacity .04s ease}
   /* Light Glass glow (Originkit, ported): a soft light follows the pointer across the whole card */
   .svc-card-light{
     position:absolute;inset:0;z-index:1;border-radius:15px;pointer-events:none;opacity:0;mix-blend-mode:screen;will-change:opacity;
@@ -382,7 +382,7 @@
   }
   .svc-card h3{
     font-family:'Inter',sans-serif;font-weight:500;font-size:36px;line-height:1;letter-spacing:0.72px;
-    color:#CDCBC7;white-space:nowrap;
+    color:#CDCBC7;white-space:nowrap;margin-bottom:8px;   /* lifts the title off the card's bottom edge (was flush with the photo) */
   }
   .svc-cta{display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:40px;height:443px}
   .svc-cta p{

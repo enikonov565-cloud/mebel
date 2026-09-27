@@ -489,8 +489,10 @@ void main() {
     // Brand palette (see catalog.css / index.html accents) and a subdued intensity.
     // Less ginger/orange, more chocolate: darker, muted toffee-and-cacao tones.
     const BG = parseColor('#180F01');      // card background
-    const C1 = parseColor('#E8CBA0');      // white-chocolate accent — was too dark/dull
-    const C2 = parseColor('#8B5A2B');      // milk-chocolate accent
+    const C1 = parseColor('#F2E3CB');      // white-chocolate accent (pale ivory, not orange)
+    const C2 = parseColor('#3B2414');      // dark-chocolate accent (deep cacao, not ginger)
+    // The mix() between these two across the layered noise naturally passes through every
+    // shade in between — including a milk-chocolate midtone — without needing a 3rd colour.
     const SPEED = 8 / 50, SIZE = 60 / 100, ANGLE = (-105 * Math.PI) / 180, HOVER = 25 / 100, REACH = 220;
     const INTENSITY = 0.32;   // brightened back up a bit — 0.22 read as too dull/dark
 

@@ -232,12 +232,12 @@ body{background:#110B00;color:#CDCBC7}
 .model-arrow:disabled:hover,.works-arrow:disabled:hover{background:rgba(47,31,2,.45);transform:translateY(-50%)}
 
 /* 6th card in the model gallery — Figma node 487:301 ("Нужен другой вариант?"): same card shell
-   (.model-card), but its own content instead of a photo, pinned to the right edge (position:sticky)
-   so the photo cards scroll underneath it instead of it scrolling away with them. */
+   (.model-card), but its own content instead of a photo. Sitting in the normal scroll flow like
+   every other card here (no more position:sticky) — the overlap it produced against the photo
+   card next to it, plus the arrow sitting on the seam, read as a mess rather than a feature. */
 .cta-card{
   width:400px;   /* narrower than the photo cards (505px) — it was too large */
-  justify-content:flex-start;
-  position:sticky;right:0;z-index:2;scroll-snap-align:none;
+  justify-content:flex-start;position:relative;
   background:#110B00;   /* the page/frame colour, not the card colour (see .cta-glow below) */
 }
 /* Ribbon Glow (Originkit) behind the card content — brand colours, toned down (see catalog-korpusnaya.html).
@@ -249,9 +249,6 @@ body{background:#110B00;color:#CDCBC7}
    render loop sets canvas.width from clientWidth every frame, that became a runaway feedback
    loop (canvas growing every frame — the cause of the earlier WebGL crashes too). */
 .cta-glow{position:absolute;top:0;left:20px;bottom:0;width:calc(100% - 20px);height:100%;display:block;border-radius:15px}
-/* "Next" arrow moved off the gallery's outer edge to the seam where photos vanish under the
-   sticky CTA card (card is a fixed 400px wide whenever arrows are shown, ie. above 960px). */
-.model-gallery .model-arrow.next{right:375px}
 /* position:absolute;inset:0 (not a normal flex child with height:100%) so this box is ALWAYS
    exactly the card's own size, regardless of how that size was arrived at (aspect-ratio, or
    flex "stretch" on mobile where the card matches its tallest row sibling) — a plain percentage

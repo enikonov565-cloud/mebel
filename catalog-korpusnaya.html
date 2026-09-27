@@ -77,7 +77,7 @@
           <img class="model-photo" src="cat-korpus.jpg" alt="Угловая кухня цвета слоновой кости">
           <h3>Угловая кухня в&nbsp;классическом стиле</h3>
           <p>Фрезерованные фасады цвета слоновой кости, столешница из&nbsp;искусственного&nbsp;камня.</p>
-          <button type="button" class="model-btn dot-btn calc-cta">рассмотреть подробнее<span class="model-arrow-ico">→</span></button>
+          <button type="button" class="model-btn dot-btn" id="kitchenDetailsBtn">рассмотреть подробнее<span class="model-arrow-ico">→</span></button>
         </article>
 
         <article class="model-card">
@@ -195,8 +195,132 @@
   </div>
 </div>
 
+<!-- Model detail modal — Figma node 505:344. Opened from a "рассмотреть подробнее" button;
+     the photo side is a hover-cursor image gallery (Originkit "Cursor Image Gallery", ported
+     to plain JS below) instead of one static photo. -->
+<div class="modal-backdrop" id="modelModal" aria-hidden="true">
+  <div class="modal-card model-modal-card" role="dialog" aria-modal="true" aria-labelledby="modelModalTitle">
+    <button type="button" class="modal-close" id="modelModalClose" aria-label="Закрыть">×</button>
+    <div class="model-modal-photo">
+      <div class="mgc" id="modelGallery">
+        <div class="mgc-frame"></div>
+        <div class="mgc-cursor" aria-hidden="true">
+          <svg class="mgc-arrow" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#EAEAEA" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 6 15 12 9 18"></polyline></svg>
+        </div>
+        <div class="mgc-dots"></div>
+      </div>
+    </div>
+    <div class="model-modal-info">
+      <div class="model-modal-text">
+        <h3 id="modelModalTitle">Угловая кухня в&nbsp;классическом стиле</h3>
+        <ul class="model-modal-specs">
+          <li>площадь: 18 м²</li>
+          <li>модель: угловая</li>
+          <li>стиль: классика</li>
+          <li>столешница: компакт</li>
+          <li>фасады: бук (массив)</li>
+        </ul>
+      </div>
+      <button type="button" class="model-modal-cta calc-cta" id="modelModalCta">заказать подобную<span class="model-arrow-ico">→</span></button>
+    </div>
+  </div>
+</div>
 
 <script src="catalog.js"></script>
+<script>
+  // Cursor Image Gallery (Originkit, ported from React to plain JS): hover left/right half of the
+  // photo to see a directional cursor, click to slide to the previous/next image.
+  function initCursorGallery(root, images) {
+    if (!root || !images.length) return;
+    const frame = root.querySelector('.mgc-frame');
+    const cursorEl = root.querySelector('.mgc-cursor');
+    const dotsEl = root.querySelector('.mgc-dots');
+    const DURATION = 600, EASE = 'cubic-bezier(0.42,0,0.58,1)';
+    let index = 0, sliding = false, current = null;
+
+    const setLayer = (el, src) => { el.style.backgroundImage = `url("${src}")`; };
+    current = document.createElement('div');
+    current.className = 'mgc-layer';
+    setLayer(current, images[0]);
+    frame.appendChild(current);
+
+    dotsEl.innerHTML = '';
+    images.forEach((_, i) => {
+      const dot = document.createElement('span');
+      dot.className = 'mgc-dot' + (i === 0 ? ' active' : '');
+      dotsEl.appendChild(dot);
+    });
+    const dots = [...dotsEl.children];
+
+    function sideFor(relX, width) {
+      if (width <= 0) return 'none';
+      if (relX < width / 2) return index > 0 ? 'left' : 'none';
+      return index < images.length - 1 ? 'right' : 'none';
+    }
+
+    function go(dir) {
+      if (sliding || images.length < 2) return;
+      const to = index + dir;
+      if (to < 0 || to >= images.length) return;
+      sliding = true;
+      const next = document.createElement('div');
+      next.className = 'mgc-layer';
+      setLayer(next, images[to]);
+      next.style.transition = 'none';
+      next.style.transform = `translateX(${dir === 1 ? 100 : -100}%)`;
+      frame.appendChild(next);
+      void next.offsetWidth;   // force layout so the starting transform is committed before animating
+      requestAnimationFrame(() => {
+        next.style.transition = `transform ${DURATION}ms ${EASE}`;
+        current.style.transition = `transform ${DURATION}ms ${EASE}`;
+        next.style.transform = 'translateX(0%)';
+        current.style.transform = `translateX(${dir === 1 ? -100 : 100}%)`;
+      });
+      setTimeout(() => {
+        current.remove();
+        current = next;
+        index = to;
+        sliding = false;
+        dots.forEach((d, i) => d.classList.toggle('active', i === index));
+      }, DURATION + 40);
+    }
+
+    root.addEventListener('pointermove', (e) => {
+      const r = root.getBoundingClientRect();
+      const relX = e.clientX - r.left, relY = e.clientY - r.top;
+      cursorEl.style.transform = `translate(${relX}px, ${relY}px)`;
+      const side = sideFor(relX, r.width);
+      cursorEl.classList.toggle('show', side !== 'none');
+      cursorEl.classList.toggle('mgc-left', side === 'left');
+    });
+    root.addEventListener('pointerleave', () => cursorEl.classList.remove('show'));
+    root.addEventListener('click', (e) => {
+      const r = root.getBoundingClientRect();
+      const side = sideFor(e.clientX - r.left, r.width);
+      if (side === 'left') go(-1);
+      else if (side === 'right') go(1);
+    });
+  }
+  initCursorGallery(document.getElementById('modelGallery'), ['cat-korpus.jpg', 'korpus-kitchen-2.webp', 'korpus-kitchen-3.webp']);
+
+  // Model detail modal: "рассмотреть подробнее" on the kitchen card opens it instead of the
+  // manager-consult modal; its own "заказать подобную" (class calc-cta, wired by catalog.js)
+  // opens the manager modal in turn — so this modal just needs to get out of the way for it.
+  (function () {
+    const modal = document.getElementById('modelModal');
+    const closeBtn = document.getElementById('modelModalClose');
+    const openBtn = document.getElementById('kitchenDetailsBtn');
+    const ctaBtn = document.getElementById('modelModalCta');
+    if (!modal) return;
+    const open = () => { modal.classList.add('open'); modal.setAttribute('aria-hidden', 'false'); };
+    const close = () => { modal.classList.remove('open'); modal.setAttribute('aria-hidden', 'true'); };
+    if (openBtn) openBtn.addEventListener('click', (e) => { e.preventDefault(); open(); });
+    if (closeBtn) closeBtn.addEventListener('click', close);
+    if (ctaBtn) ctaBtn.addEventListener('click', close);
+    modal.addEventListener('click', (e) => { if (e.target === modal) close(); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
+  })();
+</script>
 <script>
   // Arrow buttons dim once the row is scrolled all the way to that side (same idea used
   // for the homepage's works/reviews arrows — see the shared .model-arrow:disabled / .works-arrow:disabled rule).

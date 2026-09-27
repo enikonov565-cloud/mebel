@@ -366,7 +366,7 @@
     position:absolute;inset:0;z-index:-1;border-radius:15px;
     background:rgba(205,203,199,.22);opacity:0;pointer-events:none;transition:opacity .3s ease;
   }
-  a.svc-card:active .svc-card-plate{opacity:1;transition:opacity .04s ease}
+  a.svc-card:active .svc-card-plate,a.svc-card.is-pressed .svc-card-plate{opacity:1;transition:opacity .04s ease}
   /* Light Glass glow (Originkit, ported): a soft light follows the pointer across the whole card */
   .svc-card-light{
     position:absolute;inset:0;z-index:1;border-radius:15px;pointer-events:none;opacity:0;mix-blend-mode:screen;will-change:opacity;
@@ -2025,6 +2025,27 @@
     check();
     requestAnimationFrame(tick);
     window.__deck = { state };
+  })();
+
+  // Pressed-plate visibility fix: a click on a link navigates before the browser gets a chance to paint
+  // :active, so the plate never actually flashed. Toggle it via JS on pointerdown, and hold the navigation
+  // back just long enough (140ms) for that frame to render, then follow the link ourselves.
+  (function () {
+    document.querySelectorAll('a.svc-card').forEach(card => {
+      let pressedAt = 0;
+      card.addEventListener('pointerdown', e => { if (e.button === 0) { card.classList.add('is-pressed'); pressedAt = performance.now(); } });
+      const release = () => card.classList.remove('is-pressed');
+      card.addEventListener('pointerup', release);
+      card.addEventListener('pointerleave', release);
+      card.addEventListener('pointercancel', release);
+      card.addEventListener('click', e => {
+        if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;   // let the browser open new tabs, etc. natively
+        if (performance.now() - pressedAt > 1500) return;   // keyboard/synthetic activation: no press was shown, navigate immediately
+        e.preventDefault();
+        const href = card.getAttribute('href');
+        setTimeout(() => { window.location.href = href; }, 140);
+      });
+    });
   })();
 
   // Light Glass glow (Originkit, ported): a soft light follows the pointer across each of the 5 category cards

@@ -183,3 +183,50 @@ body{background:#110B00;color:#CDCBC7}
 @media (max-width:960px){
   .svc-btn,.cat-tab,.cat-ask,.cat-card-cta .cat-ask,.footer-cta-btn,.btn,.success-ok-btn,.directions-link{font-size:16px!important;white-space:normal!important}
 }
+
+/* Product model cards (Figma node 419:34) — used only on catalog-korpusnaya.html; a horizontal
+   scroll strip of real photos + model name + short description + "рассмотреть подробнее" button.
+   New class names, so the other catalog pages (which still use .cat-grid) are unaffected. */
+.model-gallery{position:relative}
+.model-track{
+  display:flex;gap:36px;overflow-x:auto;scroll-snap-type:x mandatory;
+  scrollbar-width:none;-ms-overflow-style:none;
+}
+.model-track::-webkit-scrollbar{display:none}
+.model-card{
+  flex:none;width:505px;max-width:calc(85*var(--vw100)/100);aspect-ratio:607/933;scroll-snap-align:start;
+  background:#180F01;border-radius:15px;display:flex;flex-direction:column;overflow:hidden;
+}
+.model-photo{width:100%;flex:1 1 auto;min-height:0;object-fit:cover;display:block}
+.model-card h3{
+  padding:16px 22px 0;font-family:'Inter',sans-serif;font-weight:700;font-size:23px;line-height:1.15;
+  color:#CDCBC7;flex:none;
+}
+.model-card>p{
+  padding:6px 22px 0;font-family:'Inter',sans-serif;font-weight:300;font-size:16px;line-height:1.3;
+  color:#CDCBC7;flex:none;
+}
+.model-btn{
+  align-self:flex-start;margin:14px 22px 18px;flex:none;
+  display:inline-flex;align-items:center;gap:9px;
+  background:#CDCBC7;color:#180F01;border:none;border-radius:15px;padding:9px 26px;
+  font-family:'Inter',sans-serif;font-weight:500;font-size:16px;cursor:pointer;white-space:nowrap;
+  transition:background-color .2s ease,color .2s ease;
+}
+.model-btn:hover{background:#2F1F02;color:#CDCBC7}
+.model-arrow-ico{font-size:1.05em;line-height:1}
+.model-arrow{
+  position:absolute;top:50%;transform:translateY(-50%);z-index:3;
+  width:50px;height:52px;border:none;background:#2F1F02;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;cursor:pointer;
+  color:#CDCBC7;font-size:20px;line-height:1;transition:transform .15s ease,background .2s ease;
+}
+.model-arrow:hover{background:#432c03;transform:translateY(-50%) scale(1.06)}
+.model-arrow.prev{left:-25px}
+.model-arrow.next{right:-25px}
+@media (max-width:960px){
+  .model-arrow{display:none}
+  .model-track{gap:20px}
+  .model-card{aspect-ratio:auto;height:auto}
+  .model-photo{aspect-ratio:607/767}
+}

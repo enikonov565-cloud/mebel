@@ -232,17 +232,22 @@ body{background:#110B00;color:#CDCBC7}
 .model-arrow:disabled:hover,.works-arrow:disabled:hover{background:rgba(47,31,2,.45);transform:translateY(-50%)}
 
 /* 6th card in the model gallery — Figma node 487:301 ("Нужен другой вариант?"): same card shell
-   (.model-card), but its own content instead of a photo. Sitting in the normal scroll flow like
-   every other card here (no more position:sticky) — the overlap it produced against the photo
-   card next to it, plus the arrow sitting on the seam, read as a mess rather than a feature. */
+   (.model-card), but its own content instead of a photo, pinned to the right edge (position:sticky)
+   so the photo cards scroll underneath it instead of it scrolling away with them. (Was briefly
+   made a plain in-flow card while the canvas-sizing/corner/padding bugs were being tracked down —
+   restored now that those are fixed independently of the positioning scheme.) */
 .cta-card{
   width:400px;   /* narrower than the photo cards (505px) — it was too large */
-  justify-content:flex-start;position:relative;
+  justify-content:flex-start;
+  position:sticky;right:0;z-index:2;scroll-snap-align:none;
   background:#110B00;   /* the page/frame colour, not the card colour (see .cta-glow below) */
 }
 /* Ribbon Glow (Originkit) behind the card content — brand colours, toned down (see catalog-korpusnaya.html).
    Starts 20pt in from the card's left edge: that strip stays the plain frame colour (.cta-card's own
    background above), and the canvas's own uBg fill (#180F01) is what actually reads as "the card". */
+/* "Next" arrow moved off the gallery's outer edge to the seam where photos vanish under the
+   sticky CTA card (card is a fixed 400px wide whenever arrows are shown, ie. above 960px). */
+.model-gallery .model-arrow.next{right:375px}
 .cta-inner{position:relative;height:100%}
 /* width MUST be explicit (not left+right auto-resolve): canvas is a replaced element, so with
    width left implicit it falls back to the canvas's own intrinsic bitmap size — and since the

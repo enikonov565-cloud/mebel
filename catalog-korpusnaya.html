@@ -109,13 +109,18 @@
         </article>
 
         <article class="model-card cta-card" id="ctaCard">
-          <canvas class="cta-glow" id="ctaGlow" aria-hidden="true"></canvas>
-          <div class="cta-content">
-            <span class="cta-plus" aria-hidden="true">+</span>
-            <h3 class="cta-heading" aria-label="Нужен другой вариант?"><span class="cta-line">Нужен</span><span class="cta-line">другой вариант?</span></h3>
-            <p class="cta-desc">Изготовим по&nbsp;Вашему эскизу или&nbsp;чертежу дизайнера.</p>
-            <button type="button" class="model-btn dot-btn calc-cta">рассчитать проект<span class="model-arrow-ico">→</span></button>
-            <a href="index.html#portfolio" class="cta-works">наши работы<span class="model-arrow-ico">→</span></a>
+          <!-- position:sticky on the card itself is unreliable as a containing block for an
+               absolutely-positioned child in some engines — the canvas ended up stretching to
+               the whole track's scrollWidth. A plain position:relative wrapper fixes that. -->
+          <div class="cta-inner">
+            <canvas class="cta-glow" id="ctaGlow" aria-hidden="true"></canvas>
+            <div class="cta-content">
+              <span class="cta-plus" aria-hidden="true">+</span>
+              <h3 class="cta-heading" aria-label="Нужен другой вариант?"><span class="cta-line">Нужен</span><span class="cta-line">другой вариант?</span></h3>
+              <p class="cta-desc">Изготовим по&nbsp;Вашему эскизу или&nbsp;чертежу дизайнера.</p>
+              <button type="button" class="model-btn dot-btn calc-cta">рассчитать проект<span class="model-arrow-ico">→</span></button>
+              <a href="index.html#portfolio" class="cta-works">наши работы<span class="model-arrow-ico">→</span></a>
+            </div>
           </div>
         </article>
 
@@ -127,32 +132,8 @@
   </div>
 </section>
 
-<section class="cat-how">
-  <div class="container">
-    <div class="cat-how-head">
-      <h2>Как&nbsp;заказать</h2>
-      <p>От заявки до монтажа — четыре понятных шага, на каждом из которых вы знаете, что происходит с заказом.</p>
-    </div>
-    <ol class="cat-steps">
-        <li class="cat-step"><b>01</b><h3>Бесплатный проект</h3><p>Собираем пожелания, выезжаем на замер и разрабатываем проект.</p></li>
-        <li class="cat-step"><b>02</b><h3>Договор и предоплата</h3><p>Фиксируем стоимость и сроки в договоре.</p></li>
-        <li class="cat-step"><b>03</b><h3>Производство</h3><p>Изготавливаем изделие на собственном производстве.</p></li>
-        <li class="cat-step"><b>04</b><h3>Установка под ключ</h3><p>Доставляем, устанавливаем и сдаём готовую работу.</p></li>
-    </ol>
-  </div>
-</section>
-
-<section class="cat-cta">
-  <div class="container">
-    <div class="cat-cta-box">
-      <p>Не нашли нужное? Изготовим по вашему эскизу или чертежу дизайнера.</p>
-      <div class="cat-cta-btns">
-        <button type="button" class="svc-btn light dot-btn calc-cta">рассчитать стоимость проекта</button>
-        <a href="index.html#portfolio" class="svc-btn dark dot-btn">смотреть наши работы</a>
-      </div>
-    </div>
-  </div>
-</section>
+<!-- "Как заказать" and the "Не нашли нужное?" banner were removed from this page: the 6th
+     gallery card («Нужен другой вариант?») already covers that call to action. -->
 </main>
 
 <footer>

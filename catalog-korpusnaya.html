@@ -112,7 +112,7 @@
           <canvas class="cta-glow" id="ctaGlow" aria-hidden="true"></canvas>
           <div class="cta-content">
             <span class="cta-plus" aria-hidden="true">+</span>
-            <h3 class="cta-heading">Нужен другой вариант?</h3>
+            <h3 class="cta-heading" aria-label="Нужен другой вариант?"><span class="cta-line">Нужен</span><span class="cta-line">другой вариант?</span></h3>
             <p class="cta-desc">Изготовим по&nbsp;Вашему эскизу или&nbsp;чертежу дизайнера.</p>
             <button type="button" class="model-btn dot-btn calc-cta">рассчитать проект<span class="model-arrow-ico">→</span></button>
             <a href="index.html#portfolio" class="cta-works">наши работы<span class="model-arrow-ico">→</span></a>
@@ -245,24 +245,28 @@
     const WAVE = '#e2a04f';       // brighter amber, derived from the site accent
     const REPEAT_DELAY = 10000;   // pause between cycles, ms
     const DURATION = 600, STAGGER = 40;
-    const text = el.textContent;
     const base = getComputedStyle(el).color;
-    el.setAttribute('aria-label', text);
-    el.textContent = '';
+    // Two fixed lines ("Нужен" / "другой вариант?") — split each independently so the
+    // line break survives the rebuild; the combined label already sits on the <h3> itself.
+    const lines = [...el.querySelectorAll('.cta-line')];
     const chars = [];
-    text.split(' ').forEach((word, wi, arr) => {
-      const w = document.createElement('i');
-      w.className = 'sw-w';
-      w.setAttribute('aria-hidden', 'true');
-      for (const ch of word) {
-        const c = document.createElement('i');
-        c.className = 'sw-c';
-        c.textContent = ch;
-        w.appendChild(c);
-        chars.push(c);
-      }
-      el.appendChild(w);
-      if (wi < arr.length - 1) el.appendChild(document.createTextNode(' '));
+    lines.forEach(lineEl => {
+      const text = lineEl.textContent;
+      lineEl.textContent = '';
+      text.split(' ').forEach((word, wi, arr) => {
+        const w = document.createElement('i');
+        w.className = 'sw-w';
+        w.setAttribute('aria-hidden', 'true');
+        for (const ch of word) {
+          const c = document.createElement('i');
+          c.className = 'sw-c';
+          c.textContent = ch;
+          w.appendChild(c);
+          chars.push(c);
+        }
+        lineEl.appendChild(w);
+        if (wi < arr.length - 1) lineEl.appendChild(document.createTextNode(' '));
+      });
     });
     el.classList.add('sweep-ready');
     let busy = false, due = true, inView = false, timer = null, current = [];

@@ -297,8 +297,12 @@ body{background:#110B00;color:#CDCBC7}
 .model-modal-card{
   /* Fills the frame: driven by whichever of these is smallest — 95% of the viewport width, or
      a height-based cap (94vh × 4/3) converted through the 4:3 ratio — so it grows all the way
-     to the frame's height (not capped at some fixed px) while staying a true 4:3 rectangle. */
-  width:min(95vw,125.333vh);aspect-ratio:4/3;padding:0;background:#CDCBC7;color:#180F01;
+     to the frame's height (not capped at some fixed px) while staying a true 4:3 rectangle.
+     Uses --vw100/--vh100 (fit.js), NOT raw vw/vh — this page is zoomed via CSS zoom for widths
+     1280–1920px, and raw viewport units don't account for that (this is why it measured smaller
+     than expected on some screens: at those widths it was computing against the pre-zoom size). */
+  width:min(calc(95*var(--vw100)/100),calc(125.333*var(--vh100)/100));
+  aspect-ratio:4/3;padding:0;background:#CDCBC7;color:#180F01;
   display:flex;border-radius:15px;overflow:hidden;
   container-type:inline-size;container-name:modelmodal;   /* so the text/padding below can scale WITH the card */
 }

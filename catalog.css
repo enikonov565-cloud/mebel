@@ -243,7 +243,7 @@ body{background:#110B00;color:#CDCBC7}
 /* Ribbon Glow (Originkit) behind the card content — brand colours, toned down (see catalog-korpusnaya.html).
    Starts 20pt in from the card's left edge: that strip stays the plain frame colour (.cta-card's own
    background above), and the canvas's own uBg fill (#180F01) is what actually reads as "the card". */
-.cta-glow{position:absolute;top:0;right:0;bottom:0;left:20px;display:block;height:100%}
+.cta-glow{position:absolute;top:0;right:0;bottom:0;left:20px;display:block;height:100%;border-radius:15px}
 /* "Next" arrow moved off the gallery's outer edge to the seam where photos vanish under the
    sticky CTA card (card is a fixed 400px wide whenever arrows are shown, ie. above 960px). */
 .model-gallery .model-arrow.next{right:375px}

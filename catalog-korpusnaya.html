@@ -108,6 +108,17 @@
           <button type="button" class="model-btn dot-btn calc-cta">рассмотреть подробнее<span class="model-arrow-ico">→</span></button>
         </article>
 
+        <article class="model-card cta-card" id="ctaCard">
+          <canvas class="cta-glow" id="ctaGlow" aria-hidden="true"></canvas>
+          <div class="cta-content">
+            <span class="cta-plus" aria-hidden="true">+</span>
+            <h3 class="cta-heading">Нужен другой вариант?</h3>
+            <p class="cta-desc">Изготовим по&nbsp;Вашему эскизу или&nbsp;чертежу дизайнера.</p>
+            <button type="button" class="model-btn dot-btn calc-cta">рассчитать проект<span class="model-arrow-ico">→</span></button>
+            <a href="index.html#portfolio" class="cta-works">наши работы<span class="model-arrow-ico">→</span></a>
+          </div>
+        </article>
+
       </div>
       <button type="button" class="model-arrow next" aria-label="Следующая модель" onclick="document.getElementById('modelTrack').scrollBy({left:541,behavior:'smooth'})">&#8594;</button>
     </div>
@@ -203,5 +214,336 @@
 
 
 <script src="catalog.js"></script>
+<script>
+  // Text Colour Sweep on "Нужен другой вариант?" — same technique as the homepage's
+  // company-figures block (index.html), ported here for the single CTA-card heading.
+  (function () {
+    const el = document.querySelector('.cta-heading');
+    if (!el || !el.animate || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const box = el.closest('.cta-card') || el;
+    const track = document.getElementById('modelTrack');
+    const WAVE = '#e2a04f';       // brighter amber, derived from the site accent
+    const REPEAT_DELAY = 10000;   // pause between cycles, ms
+    const DURATION = 600, STAGGER = 40;
+    const text = el.textContent;
+    const base = getComputedStyle(el).color;
+    el.setAttribute('aria-label', text);
+    el.textContent = '';
+    const chars = [];
+    text.split(' ').forEach((word, wi, arr) => {
+      const w = document.createElement('i');
+      w.className = 'sw-w';
+      w.setAttribute('aria-hidden', 'true');
+      for (const ch of word) {
+        const c = document.createElement('i');
+        c.className = 'sw-c';
+        c.textContent = ch;
+        w.appendChild(c);
+        chars.push(c);
+      }
+      el.appendChild(w);
+      if (wi < arr.length - 1) el.appendChild(document.createTextNode(' '));
+    });
+    el.classList.add('sweep-ready');
+    let busy = false, due = true, inView = false, timer = null, current = [];
+    const stop = () => {
+      clearTimeout(timer);
+      current.forEach(an => an.cancel());
+      current = [];
+      busy = false; due = true;
+      el.classList.remove('sweep-ready'); el.classList.add('sweep-done');
+    };
+    const run = () => {
+      busy = true; due = false;
+      el.classList.remove('sweep-done'); el.classList.add('sweep-ready');
+      const anims = chars.map((c, i) => c.animate(
+        [
+          { transform: 'translateY(-0.55em)', opacity: 0, color: WAVE },
+          { transform: 'translateY(0)', opacity: 1, color: base }
+        ],
+        { duration: DURATION, delay: i * STAGGER, easing: 'cubic-bezier(.65,0,.35,1)', fill: 'both' }
+      ));
+      current = anims;
+      Promise.all(anims.map(an => an.finished)).then(() => {
+        if (current !== anims) return;   // superseded (card left the screen / restarted)
+        el.classList.remove('sweep-ready'); el.classList.add('sweep-done');
+        anims.forEach(an => an.cancel());
+        current = []; busy = false;
+        timer = setTimeout(() => { due = true; check(); }, REPEAT_DELAY);   // repeat every 10 s while on screen
+      }).catch(() => {});
+    };
+    // The card also travels through the horizontally-scrolling gallery, so both axes matter.
+    const check = () => {
+      const r = box.getBoundingClientRect();
+      const vh = window.innerHeight, vw = window.innerWidth;
+      const visibleV = inView ? (r.top < vh && r.bottom > 0) : (r.top < vh * 0.85 && r.bottom > 0);
+      const visibleH = r.left < vw && r.right > 0;
+      const visible = visibleV && visibleH;
+      if (visible && !inView) { inView = true; stop(); run(); return; }
+      if (!visible && inView) { inView = false; stop(); return; }
+      if (visible && due && !busy) run();
+    };
+    window.addEventListener('scroll', check, { passive: true });
+    window.addEventListener('resize', check);
+    window.addEventListener('load', check);
+    if (track) track.addEventListener('scroll', check, { passive: true });
+    check();
+  })();
+
+  // Ribbon Glow (Originkit, ported from React/WebGL2 to plain JS) behind the CTA-card content.
+  // Brand palette (amber/bronze accents already used across the site) instead of the original
+  // orange/pink preset, and a uIntensity uniform (not in the original) added to the finish pass
+  // to tone the glow down so it stays a quiet backdrop, not the focal point of the card.
+  (function () {
+    const canvas = document.getElementById('ctaGlow');
+    const root = document.getElementById('ctaCard');
+    if (!canvas || !root || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const gl = canvas.getContext('webgl2', { antialias: false, alpha: false, depth: false, stencil: false });
+    if (!gl) return;
+
+    const MAX_DPR = 2;
+    const VERT_SRC = `#version 300 es
+const vec2 P[3] = vec2[3](vec2(-1.0, -1.0), vec2(3.0, -1.0), vec2(-1.0, 3.0));
+void main() { gl_Position = vec4(P[gl_VertexID], 0.0, 1.0); }
+`;
+    const FIELD_SRC = `#version 300 es
+precision highp float;
+uniform vec2 uRes;
+uniform float uTime;
+uniform vec3 uC1;
+uniform vec3 uC2;
+uniform float uSize;
+uniform float uAngle;
+uniform vec2 uMouse;
+uniform float uOn;
+uniform float uReach;
+uniform vec2 uVel;
+out vec4 o;
+
+const float TAU = 6.28318530718;
+const float LAYERS = 84.0;
+const float TWIST = 1.250;
+const float DRAG = 0.180;
+const float GAIN = 0.62;
+const vec2 CENTRE = vec2(-0.62, 0.24);
+const float TILT = 0.6;
+const float ZOOM = 1.05;
+const float THETA = 2.13;
+const float SHEAR = 0.963;
+const float SHRINK = 0.953;
+const vec2 WARP_FREQ = vec2(0.42, 2.4);
+const vec2 WARP_AMP = vec2(0.13, 0.027);
+const vec2 ASPECT = vec2(2.1, 0.17);
+const float OFFSET = 0.36;
+const float GLOW = 0.0021;
+const float SOFT = 0.0019;
+const float FALLOFF = 0.37;
+const float PHASE = 12.0;
+const float CYCLE = 0.16;
+const float HUE_TRAVEL = 2.0;
+
+mat2 rot(float a) { float c = cos(a), s = sin(a); return mat2(c, s, -s, c); }
+
+void main() {
+  vec2 R = uRes;
+  vec2 pos = (gl_FragCoord.xy - 0.5 * R) / R.y;
+
+  vec2 d = pos - uMouse;
+  float w = uOn * exp(-dot(d, d) / (uReach * uReach));
+  if (w > 1e-4) pos = uMouse + rot(w * TWIST) * d * (1.0 - 0.3 * min(w, 1.0)) - uVel * min(w, 1.0) * DRAG;
+
+  pos = rot(uAngle) * pos / uSize;
+  float t = uTime * 0.49 + PHASE;
+  float breath = (-sin(uTime * 0.735) + sin(uTime * 0.49 + 1.0)) * 0.25 + 0.5;
+  vec2 u = rot(TILT) * ((pos - CENTRE) * (ZOOM - breath * 0.085));
+  mat2 fold = mat2(cos(THETA), sin(THETA), -SHEAR, cos(THETA));
+
+  vec3 col = vec3(0.0);
+  for (float i = 1.0; i <= LAYERS; i += 1.0) {
+    u.x -= sin(u.y * WARP_FREQ.x + t + i * 0.007) * WARP_AMP.x;
+    u.y -= sin(u.x * WARP_FREQ.y - t + i * 0.02) * WARP_AMP.y;
+    u = fold * u * SHRINK;
+    vec2 q = (u - vec2(OFFSET + breath * 0.1, 0.0)) * ASPECT;
+    float g = GLOW / (dot(q, q) + SOFT) * (0.25 + breath * 0.4);
+    float r = length(u);
+    float k = sin(i * CYCLE + t * 1.2 + r * HUE_TRAVEL) * 0.5 + 0.5;
+    col += g * mix(uC1, uC2, k) * (0.62 + 0.5 * k) * exp2(-r * FALLOFF);
+  }
+  vec3 x = max(col * GAIN, 0.0);
+  col = (x * (2.51 * x + 0.03)) / (x * (2.43 * x + 0.59) + 0.14);
+  col = pow(clamp(col, 0.0, 1.0), vec3(0.85, 0.92, 0.98));
+  col *= 1.0 - smoothstep(0.5, 1.6, length(pos)) * 0.07;
+  o = vec4(col, 1.0);
+}
+`;
+    const FINISH_SRC = `#version 300 es
+precision highp float;
+uniform sampler2D uField;
+uniform vec2 uRes;
+uniform float uTime;
+uniform vec3 uBg;
+uniform float uPaper;
+uniform float uIntensity;
+out vec4 o;
+
+float ign(vec2 p, float f) { p += 5.588238 * mod(f, 64.0); return fract(52.9829189 * fract(0.06711056 * p.x + 0.00583715 * p.y)); }
+
+void main() {
+  vec2 frag = gl_FragCoord.xy;
+  vec3 L = max(texture(uField, frag / uRes).rgb, 0.0) * uIntensity;
+
+  vec3 dark = uBg + L * (1.0 - uBg);
+  float strength = clamp(max(L.r, max(L.g, L.b)), 0.0, 1.0);
+  vec3 paper = uBg * (1.0 - strength) + L * 0.96;
+  vec3 col = mix(dark, paper, uPaper);
+  col += (ign(frag, floor(uTime * 24.0)) - 0.5) / 255.0;
+  o = vec4(clamp(col, 0.0, 1.0), 1.0);
+}
+`;
+
+    function parseColor(hex) {
+      let h = hex.replace('#', '');
+      if (h.length === 3) h = h[0] + h[0] + h[1] + h[1] + h[2] + h[2];
+      return [parseInt(h.slice(0, 2), 16) / 255, parseInt(h.slice(2, 4), 16) / 255, parseInt(h.slice(4, 6), 16) / 255];
+    }
+    function clampN(v, lo, hi) { return v < lo ? lo : v > hi ? hi : v; }
+
+    function link(frag, label) {
+      const shader = (type, src) => {
+        const sh = gl.createShader(type);
+        gl.shaderSource(sh, src);
+        gl.compileShader(sh);
+        if (!gl.getShaderParameter(sh, gl.COMPILE_STATUS)) { console.error('RibbonGlow ' + label + ' shader:', gl.getShaderInfoLog(sh)); gl.deleteShader(sh); return null; }
+        return sh;
+      };
+      const vs = shader(gl.VERTEX_SHADER, VERT_SRC);
+      const fs = shader(gl.FRAGMENT_SHADER, frag);
+      if (!vs || !fs) return null;
+      const prog = gl.createProgram();
+      gl.attachShader(prog, vs); gl.attachShader(prog, fs); gl.linkProgram(prog);
+      gl.deleteShader(vs); gl.deleteShader(fs);
+      if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) { console.error('RibbonGlow ' + label + ' link:', gl.getProgramInfoLog(prog)); gl.deleteProgram(prog); return null; }
+      return prog;
+    }
+    function locations(prog, names) { const out = {}; names.forEach(n => out[n] = gl.getUniformLocation(prog, n)); return out; }
+
+    function fieldTarget() {
+      const fbo = gl.createFramebuffer();
+      let tex = null, w = 0, h = 0, half = !!gl.getExtension('EXT_color_buffer_float');
+      return {
+        fbo, texture: () => tex, width: () => w, height: () => h,
+        resize(nw, nh) {
+          if (nw === w && nh === h && tex) return;
+          for (let attempt = 0; attempt < 2; attempt++) {
+            if (tex) gl.deleteTexture(tex);
+            tex = gl.createTexture();
+            gl.bindTexture(gl.TEXTURE_2D, tex);
+            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+            gl.texImage2D(gl.TEXTURE_2D, 0, half ? gl.RGBA16F : gl.RGBA8, nw, nh, 0, gl.RGBA, half ? gl.HALF_FLOAT : gl.UNSIGNED_BYTE, null);
+            gl.bindFramebuffer(gl.FRAMEBUFFER, fbo);
+            gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, tex, 0);
+            const ok = gl.checkFramebufferStatus(gl.FRAMEBUFFER) === gl.FRAMEBUFFER_COMPLETE;
+            gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+            if (ok || !half) break;
+            half = false;
+          }
+          w = nw; h = nh;
+        },
+        dispose() { if (tex) gl.deleteTexture(tex); gl.deleteFramebuffer(fbo); }
+      };
+    }
+
+    function trackPointer() {
+      const p = { tx: 0, ty: 0, inside: false };
+      const read = (e) => {
+        const r = root.getBoundingClientRect();
+        const sx = root.offsetWidth / (r.width || 1), sy = root.offsetHeight / (r.height || 1);
+        p.tx = (e.clientX - r.left) * sx; p.ty = (e.clientY - r.top) * sy;
+        p.inside = e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.bottom;
+      };
+      const out = (e) => { if (!e.relatedTarget) p.inside = false; };
+      window.addEventListener('pointermove', read, { passive: true });
+      window.addEventListener('pointerdown', read, { passive: true });
+      document.addEventListener('pointerout', out);
+      return p;
+    }
+
+    const field = link(FIELD_SRC, 'field');
+    const finish = link(FINISH_SRC, 'finish');
+    if (!field || !finish) return;
+    const uf = locations(field, ['uRes', 'uTime', 'uC1', 'uC2', 'uSize', 'uAngle', 'uMouse', 'uOn', 'uReach', 'uVel']);
+    const un = locations(finish, ['uField', 'uRes', 'uTime', 'uBg', 'uPaper', 'uIntensity']);
+    const vao = gl.createVertexArray();
+    gl.bindVertexArray(vao);
+    const target = fieldTarget();
+    const ptr = trackPointer();
+
+    // Brand palette (see catalog.css / index.html accents) and a subdued intensity.
+    const BG = parseColor('#180F01');      // card background
+    const C1 = parseColor('#e2a04f');      // warm amber accent
+    const C2 = parseColor('#a1794c');      // bronze accent
+    const SPEED = 8 / 50, SIZE = 60 / 100, ANGLE = (-105 * Math.PI) / 180, HOVER = 40 / 100, REACH = 260;
+    const INTENSITY = 0.42;   // toned down from the original preset's full-strength glow
+
+    let mx = 0, my = 0, vx = 0, vy = 0, on = 0, last = -1, clock = 0;
+
+    function render(now) {
+      requestAnimationFrame(render);
+      const dt = last < 0 ? 0 : clampN((now - last) / 1000, 0, 0.05);
+      last = now;
+      clock = (clock + dt * SPEED) % 3600;
+
+      const dpr = Math.min(window.devicePixelRatio || 1, MAX_DPR);
+      const cw = canvas.clientWidth || 1, ch = canvas.clientHeight || 1;
+      const bw = Math.max(1, Math.round(cw * dpr)), bh = Math.max(1, Math.round(ch * dpr));
+      if (canvas.width !== bw || canvas.height !== bh) { canvas.width = bw; canvas.height = bh; }
+      target.resize(Math.max(1, Math.round(bw / 2)), Math.max(1, Math.round(bh / 2)));
+
+      const present = ptr.inside ? 1 : 0;
+      if (present && on < 0.02) { mx = ptr.tx; my = ptr.ty; }
+      on += (present - on) * (1 - Math.exp(-dt * 5));
+      const k = 1 - Math.exp(-dt * 16);
+      const nx = mx + (ptr.tx - mx) * k, ny = my + (ptr.ty - my) * k;
+      if (dt > 0) {
+        const kv = 1 - Math.exp(-dt * 8);
+        vx += ((nx - mx) / dt - vx) * kv; vy += ((ny - my) / dt - vy) * kv;
+      }
+      mx = nx; my = ny;
+      const vLen = Math.hypot(vx, vy) / ch, vCap = vLen > 3 ? 3 / vLen : 1;
+
+      gl.bindFramebuffer(gl.FRAMEBUFFER, target.fbo);
+      gl.viewport(0, 0, target.width(), target.height());
+      gl.useProgram(field);
+      gl.uniform2f(uf.uRes, target.width(), target.height());
+      gl.uniform1f(uf.uTime, clock);
+      gl.uniform3f(uf.uC1, C1[0], C1[1], C1[2]);
+      gl.uniform3f(uf.uC2, C2[0], C2[1], C2[2]);
+      gl.uniform1f(uf.uSize, SIZE);
+      gl.uniform1f(uf.uAngle, ANGLE);
+      gl.uniform2f(uf.uMouse, (mx - cw / 2) / ch, (ch / 2 - my) / ch);
+      gl.uniform1f(uf.uOn, on * HOVER);
+      gl.uniform1f(uf.uReach, REACH / ch);
+      gl.uniform2f(uf.uVel, (vx / ch) * vCap, (-vy / ch) * vCap);
+      gl.drawArrays(gl.TRIANGLES, 0, 3);
+
+      gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+      gl.viewport(0, 0, bw, bh);
+      gl.useProgram(finish);
+      gl.activeTexture(gl.TEXTURE0);
+      gl.bindTexture(gl.TEXTURE_2D, target.texture());
+      gl.uniform1i(un.uField, 0);
+      gl.uniform2f(un.uRes, bw, bh);
+      gl.uniform1f(un.uTime, clock);
+      gl.uniform3f(un.uBg, BG[0], BG[1], BG[2]);
+      gl.uniform1f(un.uPaper, 0);
+      gl.uniform1f(un.uIntensity, INTENSITY);
+      gl.drawArrays(gl.TRIANGLES, 0, 3);
+    }
+    requestAnimationFrame(render);
+  })();
+</script>
 </body>
 </html>

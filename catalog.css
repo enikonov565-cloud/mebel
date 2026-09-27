@@ -288,6 +288,15 @@ body{background:#110B00;color:#CDCBC7}
   .cta-desc{margin:0 0 24px;font-size:12px}
   .cta-works{font-size:17px}   /* margin-top stays auto (base rule) — pins it to the bottom */
 }
+@media (max-width:960px){
+  /* position:sticky here only makes sense on a wide viewport, where 2-3 photo cards are still
+     visible at once while the CTA card pins to the right edge and they scroll underneath it. On
+     a touch-scroll mobile viewport only one card fits at a time, so "always stuck at the right
+     edge" instead permanently sits on top of whatever card is currently in view — the card
+     underneath only ever shows as a torn-looking sliver peeking out on the CTA card's left edge.
+     Below this breakpoint it's a plain in-flow card instead, sized/snapped like the others. */
+  .cta-card{position:static;width:505px;scroll-snap-align:start}
+}
 
 /* Model detail modal — Figma node 505:344 (light card, dark text — unlike the dark manager modal) */
 .model-modal-card{

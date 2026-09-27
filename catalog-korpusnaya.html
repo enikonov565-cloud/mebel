@@ -76,31 +76,31 @@
         <article class="model-card">
           <img class="model-photo" src="cat-korpus.jpg" alt="Угловая кухня цвета слоновой кости">
           <h3>Угловая кухня в&nbsp;классическом стиле</h3>
-          <button type="button" class="model-btn dot-btn" id="kitchenDetailsBtn">рассмотреть подробнее<span class="model-arrow-ico">→</span></button>
+          <button type="button" class="model-btn dot-btn model-details-btn" data-model="kitchen">рассмотреть подробнее<span class="model-arrow-ico">→</span></button>
         </article>
 
         <article class="model-card">
           <img class="model-photo" src="korpus-shkaf-belyy.jpg" alt="Встроенный шкаф-купе от пола до потолка">
           <h3>Встроенный шкаф-купе</h3>
-          <button type="button" class="model-btn dot-btn calc-cta">рассмотреть подробнее<span class="model-arrow-ico">→</span></button>
+          <button type="button" class="model-btn dot-btn model-details-btn" data-model="wardrobe-white">рассмотреть подробнее<span class="model-arrow-ico">→</span></button>
         </article>
 
         <article class="model-card">
           <img class="model-photo" src="korpus-shkaf-derevo.jpg" alt="Отдельностоящий шкаф из шпона">
           <h3>Шкаф из&nbsp;натурального шпона</h3>
-          <button type="button" class="model-btn dot-btn calc-cta">рассмотреть подробнее<span class="model-arrow-ico">→</span></button>
+          <button type="button" class="model-btn dot-btn model-details-btn" data-model="wardrobe-oak">рассмотреть подробнее<span class="model-arrow-ico">→</span></button>
         </article>
 
         <article class="model-card">
           <img class="model-photo" src="korpus-vannaya-tumba.jpg" alt="Тумба под раковину с зеркалом в ванной">
           <h3>Тумба под&nbsp;раковину в&nbsp;ванной</h3>
-          <button type="button" class="model-btn dot-btn calc-cta">рассмотреть подробнее<span class="model-arrow-ico">→</span></button>
+          <button type="button" class="model-btn dot-btn model-details-btn" data-model="vanity">рассмотреть подробнее<span class="model-arrow-ico">→</span></button>
         </article>
 
         <article class="model-card">
           <img class="model-photo" src="korpus-detskaya.jpg" alt="Двухъярусная кровать со встроенным шкафом в детской">
           <h3>Двухъярусная кровать со&nbsp;шкафом</h3>
-          <button type="button" class="model-btn dot-btn calc-cta">рассмотреть подробнее<span class="model-arrow-ico">→</span></button>
+          <button type="button" class="model-btn dot-btn model-details-btn" data-model="bunkbed">рассмотреть подробнее<span class="model-arrow-ico">→</span></button>
         </article>
 
         <article class="model-card cta-card" id="ctaCard">
@@ -211,7 +211,7 @@
     <div class="model-modal-info">
       <div class="model-modal-text">
         <h3 id="modelModalTitle">Угловая кухня в&nbsp;классическом стиле</h3>
-        <ul class="model-modal-specs">
+        <ul class="model-modal-specs" id="modelModalSpecs">
           <li>площадь: 18 м²</li>
           <li>модель: угловая</li>
           <li>стиль: классика</li>
@@ -227,34 +227,23 @@
 <script src="catalog.js"></script>
 <script>
   // Cursor Image Gallery (Originkit), adapted: fixed prev/next arrow buttons at the photo's
-  // edges (not a cursor that follows the pointer to the middle of the photo) — click either
-  // to slide to the previous/next image.
-  function initCursorGallery(root, images) {
-    if (!root || !images.length) return;
+  // edges (not a cursor that follows the pointer). Built once, reloaded with a new image set
+  // each time a different model's "рассмотреть подробнее" is clicked — one shared modal for
+  // all 5 models rather than duplicating the whole markup per model.
+  function createCursorGallery(root) {
     const frame = root.querySelector('.mgc-frame');
     const prevBtn = root.querySelector('.mgc-prev');
     const nextBtn = root.querySelector('.mgc-next');
     const dotsEl = root.querySelector('.mgc-dots');
     const DURATION = 600, EASE = 'cubic-bezier(0.42,0,0.58,1)';
-    let index = 0, sliding = false, current = null;
+    let images = [], index = 0, sliding = false, current = null, dots = [];
 
     const setLayer = (el, src) => { el.style.backgroundImage = `url("${src}")`; };
-    current = document.createElement('div');
-    current.className = 'mgc-layer';
-    setLayer(current, images[0]);
-    frame.appendChild(current);
-
-    dotsEl.innerHTML = '';
-    images.forEach((_, i) => {
-      const dot = document.createElement('span');
-      dot.className = 'mgc-dot' + (i === 0 ? ' active' : '');
-      dotsEl.appendChild(dot);
-    });
-    const dots = [...dotsEl.children];
 
     function updateNav() {
       prevBtn.disabled = index <= 0;
       nextBtn.disabled = index >= images.length - 1;
+      dotsEl.style.display = images.length > 1 ? '' : 'none';   // nothing to page through on a single photo
     }
 
     function go(dir) {
@@ -285,24 +274,86 @@
       }, DURATION + 40);
     }
 
+    function load(newImages) {
+      images = newImages.slice();
+      index = 0; sliding = false;
+      frame.innerHTML = '';
+      current = document.createElement('div');
+      current.className = 'mgc-layer';
+      setLayer(current, images[0]);
+      frame.appendChild(current);
+      dotsEl.innerHTML = '';
+      images.forEach((_, i) => {
+        const dot = document.createElement('span');
+        dot.className = 'mgc-dot' + (i === 0 ? ' active' : '');
+        dotsEl.appendChild(dot);
+      });
+      dots = [...dotsEl.children];
+      updateNav();
+    }
+
     prevBtn.addEventListener('click', () => go(-1));
     nextBtn.addEventListener('click', () => go(1));
-    updateNav();
+    return { load };
   }
-  initCursorGallery(document.getElementById('modelGallery'), ['cat-korpus.jpg', 'korpus-kitchen-2.webp', 'korpus-kitchen-3.webp']);
+  const modelGallery = createCursorGallery(document.getElementById('modelGallery'));
 
-  // Model detail modal: "рассмотреть подробнее" on the kitchen card opens it instead of the
-  // manager-consult modal; its own "заказать подобную" (class calc-cta, wired by catalog.js)
+  // One detail record per model. Only the kitchen has extra photos so far — the rest show the
+  // single photo already on its card (the gallery arrows/dots hide themselves automatically
+  // when there's only one image). Specs are drawn only from facts already stated in each card's
+  // own text — nothing new invented — and avoid "МДФ": the site's material story is solid wood
+  // (массив) / veneer (шпон) / enamel finish (эмаль) with named species, never MDF.
+  const MODELS = {
+    kitchen: {
+      title: 'Угловая кухня в классическом стиле',
+      specs: ['площадь: 18 м²', 'модель: угловая', 'стиль: классика', 'столешница: компакт', 'фасады: бук (массив)'],
+      images: ['cat-korpus.jpg', 'korpus-kitchen-2.webp', 'korpus-kitchen-3.webp']
+    },
+    'wardrobe-white': {
+      title: 'Встроенный шкаф-купе',
+      specs: ['тип: встроенный, от пола до потолка', 'дверей: 4', 'цвет: белый', 'фасады: массив, эмаль'],
+      images: ['korpus-shkaf-belyy.jpg']
+    },
+    'wardrobe-oak': {
+      title: 'Шкаф из натурального шпона',
+      specs: ['тип: отдельностоящий', 'дверей: 2', 'фасады: шпон дуба', 'фурнитура: доводчики, регулируемые опоры'],
+      images: ['korpus-shkaf-derevo.jpg']
+    },
+    vanity: {
+      title: 'Тумба под раковину в ванной',
+      specs: ['тип: распашные и выдвижные секции', 'столешница: чёрный камень', 'фасады: массив, эмаль'],
+      images: ['korpus-vannaya-tumba.jpg']
+    },
+    bunkbed: {
+      title: 'Двухъярусная кровать со шкафом',
+      specs: ['комплект: кровать + шкаф-купе', 'лестница: в комплекте', 'цвет: в цвет интерьера'],
+      images: ['korpus-detskaya.jpg']
+    }
+  };
+
+  // Model detail modal: "рассмотреть подробнее" on any card opens this one shared modal, filled
+  // in with that model's data. Its own "заказать подобную" (class calc-cta, wired by catalog.js)
   // opens the manager modal in turn — so this modal just needs to get out of the way for it.
   (function () {
     const modal = document.getElementById('modelModal');
     const closeBtn = document.getElementById('modelModalClose');
-    const openBtn = document.getElementById('kitchenDetailsBtn');
     const ctaBtn = document.getElementById('modelModalCta');
+    const titleEl = document.getElementById('modelModalTitle');
+    const specsEl = document.getElementById('modelModalSpecs');
     if (!modal) return;
     const open = () => { modal.classList.add('open'); modal.setAttribute('aria-hidden', 'false'); };
     const close = () => { modal.classList.remove('open'); modal.setAttribute('aria-hidden', 'true'); };
-    if (openBtn) openBtn.addEventListener('click', (e) => { e.preventDefault(); open(); });
+    document.querySelectorAll('.model-details-btn').forEach(btn => {
+      const data = MODELS[btn.dataset.model];
+      if (!data) return;
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        titleEl.innerHTML = data.title;
+        specsEl.innerHTML = data.specs.map(s => `<li>${s}</li>`).join('');
+        modelGallery.load(data.images);
+        open();
+      });
+    });
     if (closeBtn) closeBtn.addEventListener('click', close);
     if (ctaBtn) ctaBtn.addEventListener('click', close);
     modal.addEventListener('click', (e) => { if (e.target === modal) close(); });

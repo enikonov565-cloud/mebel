@@ -356,7 +356,9 @@
   /* 3 columns x 2 rows: photo 284x440 + title; last cell holds the CTA (Figma 1920 frame) */
   .svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:27px 25px}
   .svc-card{display:flex;align-items:flex-end;gap:25px;height:440px;min-width:0;color:#CDCBC7}
-  a.svc-card{color:#CDCBC7;cursor:pointer;position:relative}
+  /* isolation:isolate gives the card its own stacking context, so the plate's negative z-index stays
+     contained here instead of escaping behind the section's opaque background (which hid it entirely) */
+  a.svc-card{color:#CDCBC7;cursor:pointer;position:relative;isolation:isolate}
   .svc-card-photo{flex:none;width:284px;height:440px;object-fit:cover;border-radius:15px;transition:transform .5s cubic-bezier(.22,1,.36,1)}
   a.svc-card:hover .svc-card-photo{transform:translateY(-6px)}
   /* Pressed state (Dotted Offset Button, ported): a thin light backing plate shows behind the whole card while held down */
@@ -367,16 +369,16 @@
   a.svc-card:active .svc-card-plate{opacity:1;transition:opacity .05s ease}
   /* Light Glass glow (Originkit, ported): a soft light follows the pointer across the whole card */
   .svc-card-light{
-    position:absolute;inset:0;z-index:1;pointer-events:none;opacity:0;mix-blend-mode:screen;will-change:opacity;
+    position:absolute;inset:0;z-index:1;border-radius:15px;pointer-events:none;opacity:0;mix-blend-mode:screen;will-change:opacity;
     background:
       radial-gradient(circle var(--lr,220px) at var(--mx,50%) var(--my,50%),
-        rgba(255,255,255,.45) 0%,rgba(255,255,255,.43) 8%,rgba(255,255,255,.38) 18%,rgba(255,255,255,.32) 30%,
-        rgba(255,255,255,.24) 42%,rgba(255,255,255,.17) 55%,rgba(255,255,255,.11) 68%,rgba(255,255,255,.06) 80%,
-        rgba(255,255,255,.03) 90%,rgba(255,255,255,.01) 96%,rgba(255,255,255,0) 100%),
+        rgba(255,255,255,.32) 0%,rgba(255,255,255,.30) 8%,rgba(255,255,255,.27) 18%,rgba(255,255,255,.22) 30%,
+        rgba(255,255,255,.17) 42%,rgba(255,255,255,.12) 55%,rgba(255,255,255,.08) 68%,rgba(255,255,255,.04) 80%,
+        rgba(255,255,255,.02) 90%,rgba(255,255,255,.01) 96%,rgba(255,255,255,0) 100%),
       radial-gradient(circle calc(var(--lr,220px) * 1.9) at var(--mx,50%) var(--my,50%),
-        rgba(255,255,255,.153) 0%,rgba(255,255,255,.146) 8%,rgba(255,255,255,.129) 18%,rgba(255,255,255,.109) 30%,
-        rgba(255,255,255,.082) 42%,rgba(255,255,255,.058) 55%,rgba(255,255,255,.037) 68%,rgba(255,255,255,.02) 80%,
-        rgba(255,255,255,.01) 90%,rgba(255,255,255,.003) 96%,rgba(255,255,255,0) 100%);
+        rgba(255,255,255,.107) 0%,rgba(255,255,255,.102) 8%,rgba(255,255,255,.09) 18%,rgba(255,255,255,.076) 30%,
+        rgba(255,255,255,.057) 42%,rgba(255,255,255,.041) 55%,rgba(255,255,255,.026) 68%,rgba(255,255,255,.014) 80%,
+        rgba(255,255,255,.007) 90%,rgba(255,255,255,.002) 96%,rgba(255,255,255,0) 100%);
   }
   .svc-card h3{
     font-family:'Inter',sans-serif;font-weight:500;font-size:36px;line-height:1;letter-spacing:0.72px;

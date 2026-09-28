@@ -132,6 +132,17 @@
   }
   .nav-links a:hover{color:var(--accent)}
 
+  /* Weight Hover (Originkit, ported in weight-hover.js): each letter thickens in a
+     left-to-right wave on hover via a staggered transition-delay set inline per letter. */
+  .wh-letter{display:inline-block;white-space:pre;transition:font-weight .35s cubic-bezier(.22,1,.36,1)}
+  .nav-links a .wh-letter{font-weight:500}
+  .nav-links a:hover .wh-letter{font-weight:700}
+  .footer-nav a .wh-letter{font-weight:300}
+  .footer-nav a:hover .wh-letter{font-weight:700}
+  @media (prefers-reduced-motion: reduce){
+    .wh-letter{transition:none!important;transition-delay:0s!important}
+  }
+
   .footer-cta-btn{
     display:flex;align-items:center;justify-content:center;
     width:100%;max-width:360px;height:66px;margin-top:26px;

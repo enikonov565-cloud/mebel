@@ -835,7 +835,7 @@
 
   .footer-cta-btn{
     display:flex;align-items:center;justify-content:center;
-    width:100%;max-width:360px;height:66px;margin-top:26px;
+    width:100%;max-width:360px;height:66px;
     background:#CDCBC7;border:2px solid #2B2620;border-radius:15px;
     font-family:'Inter',sans-serif;font-weight:700;font-size:25px;color:#2B2620;
     text-align:center;cursor:pointer;
@@ -852,10 +852,16 @@
   }
   .map-embed-link:hover{transform:translateY(-2px)}
 
-  /* Footer — same frame as «Как нас найти» */
-  footer{background:#110B00;color:#CDCBC7;padding:120px 0;font-size:.9rem}
-  .footer-grid{display:flex;align-items:stretch;justify-content:space-between;gap:40px;flex-wrap:wrap}
-  .footer-brand{text-align:left;max-width:487px;display:flex;flex-direction:column;justify-content:space-between}
+  /* Footer — restyled after a reference screenshot the client supplied (another studio's site):
+     a thin rule above the columns, small accent-coloured uppercase labels naming each column,
+     a giant hollow-outline repeat of the logotype as a background flourish, and a copyright bar
+     underneath. Columns are simple top-aligned flow now — the previous bottom-pinning
+     (justify-content:flex-end on .footer-nav/.footer-contacts, space-between on .footer-brand)
+     was specific to an earlier, different request and is superseded by this more conventional
+     layout, which is what the reference itself uses (nothing in it is bottom-anchored either). */
+  footer{background:#110B00;color:#CDCBC7;padding:120px 0 0;font-size:.9rem;border-top:1px solid rgba(205,203,199,.14)}
+  .footer-grid{display:flex;align-items:flex-start;justify-content:space-between;gap:40px;flex-wrap:wrap}
+  .footer-brand{text-align:left;max-width:487px;display:flex;flex-direction:column;gap:26px}
   .footer-logo2{display:inline-flex;flex-direction:column;align-items:flex-start;margin-bottom:18px}
   .footer-logo2 .word{
     font-family:'GOST','Inter',sans-serif;font-weight:400;
@@ -868,25 +874,34 @@
     text-transform:uppercase;color:#fff;line-height:normal;
   }
   .footer-brand p{margin:0;font-family:'Inter',sans-serif;font-weight:300;font-size:17px;line-height:1.4;color:#CDCBC7}
-  /* Pins this column's content to the BOTTOM of its stretched flex-row box, so its last item
-     («контакты») lands exactly level with the last item of the other two columns — the button
-     in .footer-brand and the last row in .footer-contacts, both already bottom-aligned the same
-     way by their own justify-content:space-between (align-items:stretch on .footer-grid gives
-     every column the same height; space-between always plants the last child on that height's
-     bottom edge). flex-end does the same job here without space-between's side effect of also
-     spreading out the gaps BETWEEN the 9 links themselves — those keep their fixed 10px `gap`.
-     Reset to flex-start in the ≤960px stacked layout, where columns have no shared stretched
-     height to bottom-align against. */
-  .footer-nav{list-style:none;display:flex;flex-direction:column;justify-content:flex-end;gap:10px;font-family:'Inter',sans-serif;font-weight:300;font-size:20px;letter-spacing:0.4px;color:#CDCBC7}
+  .footer-col-label{
+    display:block;margin-bottom:22px;
+    font-family:'Inter',sans-serif;font-weight:700;font-size:13px;
+    letter-spacing:.14em;text-transform:uppercase;color:var(--accent);
+  }
+  .footer-nav{list-style:none;display:flex;flex-direction:column;gap:10px;font-family:'Inter',sans-serif;font-weight:300;font-size:20px;letter-spacing:0.4px;color:#CDCBC7}
   .footer-nav a{line-height:1.2;transition:opacity .2s}
   .footer-nav a:hover{opacity:.7}
-  /* flex-end (not the original space-between), to match .footer-nav: keeps the gap between the
-     4 items at the declared 20px instead of stretching it out to fill the row's full height,
-     while still bottom-anchoring the block so its last row stays level with the other columns. */
-  .footer-contacts{list-style:none;padding-left:0;display:flex;flex-direction:column;justify-content:flex-end;gap:20px;font-family:'Inter',sans-serif;color:#CDCBC7;max-width:659px}
+  .footer-contacts{list-style:none;padding-left:0;display:flex;flex-direction:column;gap:20px;font-family:'Inter',sans-serif;color:#CDCBC7;max-width:659px}
   .footer-contacts li{display:flex;flex-direction:column;gap:5px}
   .footer-contacts .fc-label{font-weight:500;font-size:20px;letter-spacing:0.48px}
   .footer-contacts .fc-value{font-weight:300;font-size:20px;letter-spacing:0.4px;line-height:1.2}
+
+  /* Giant hollow repeat of the logotype, purely decorative — sized with vw so it scales with the
+     viewport at any zoom level, clipped by footer's own overflow so it can never cause horizontal
+     scroll, and using -webkit-text-stroke (supported in every current engine, Firefox included)
+     for the outline look; the very faint fill colour is the fallback for the rare engine without
+     stroke support, so the word still reads as a pale watermark rather than vanishing. */
+  footer{overflow-x:clip}
+  .footer-watermark-wrap{overflow:hidden;margin-top:80px}
+  .footer-watermark{
+    font-family:'GOST','Inter',sans-serif;font-weight:400;
+    font-size:clamp(56px,13vw,220px);line-height:1;letter-spacing:-.03em;
+    white-space:nowrap;user-select:none;pointer-events:none;
+    color:rgba(205,203,199,.05);-webkit-text-stroke:1px rgba(205,203,199,.16);
+  }
+  .footer-bottom{margin-top:40px;padding:24px 0;border-top:1px solid rgba(205,203,199,.14)}
+  .footer-bottom p{margin:0;font-family:'Inter',sans-serif;font-size:.85rem;color:rgba(205,203,199,.55)}
 
   /* Contact modal */
   .modal-backdrop{
@@ -1004,7 +1019,6 @@
     .contact-head p{text-align:left}
     .map-embed{height:auto;aspect-ratio:16/9}
     .footer-grid{flex-direction:column;gap:40px}
-    .footer-nav{justify-content:flex-start}
     .about-photo-img{max-width:560px}
     .stats-grid{grid-template-columns:1fr;column-gap:40px;row-gap:24px}
     .stats-grid::after{display:none}
@@ -1669,7 +1683,9 @@
       </button>
     </div>
 
-    <ul class="footer-nav">
+    <div class="footer-col">
+      <span class="footer-col-label">Навигация</span>
+      <ul class="footer-nav">
       <li><a href="#about">О&nbsp;Компании</a></li>
       <li><a href="#services">Услуги</a></li>
       <li><a href="#materials">Материалы</a></li>
@@ -1680,13 +1696,24 @@
       <li><a href="#faq">Вопросы</a></li>
       <li><a href="#contact">Контакты</a></li>
     </ul>
+    </div>
 
-    <ul class="footer-contacts">
+    <div class="footer-col">
+      <span class="footer-col-label">Контакты</span>
+      <ul class="footer-contacts">
       <li><p class="fc-label">Телефон:</p><p class="fc-value">+7 (900) 000-00-00</p></li>
       <li><p class="fc-label">E-mail:</p><p class="fc-value">info@anturage-interior.ru</p></li>
       <li><p class="fc-label">Мастерская:</p><p class="fc-value">Московская обл., Раменский г.о.,<br>пгт Удельная, ул. Салтыкова-Щедрина, 10</p></li>
       <li><p class="fc-label">Режим работы:</p><p class="fc-value">Пн–Сб, 9:00–19:00</p></li>
     </ul>
+    </div>
+  </div>
+
+  <div class="container footer-watermark-wrap">
+    <div class="footer-watermark" aria-hidden="true">АНТУРАЖ</div>
+  </div>
+  <div class="container footer-bottom">
+    <p>© 2014–2026 Антураж интерьер. Все права защищены.</p>
   </div>
 </footer>
 

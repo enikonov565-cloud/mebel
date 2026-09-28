@@ -130,7 +130,7 @@ body{background:#110B00;color:#CDCBC7}
   .cat-cta-box{padding:40px 30px}
   .cat-cta-btns,.cat-cta-btns .svc-btn{width:100%}
   .footer-grid{flex-direction:column;gap:40px}
-  .footer-nav{transform:none}
+  .footer-nav{justify-content:flex-start}
   .footer-cta-btn{width:290px;font-size:20px;height:44px}
   .nav-cta{width:165px;height:24px;font-size:11px;border-radius:15pt}
 }

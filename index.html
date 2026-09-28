@@ -868,17 +868,17 @@
     text-transform:uppercase;color:#fff;line-height:normal;
   }
   .footer-brand p{margin:0;font-family:'Inter',sans-serif;font-weight:300;font-size:17px;line-height:1.4;color:#CDCBC7}
-  /* Aligns the top of this column with the bottom edge of the "оставить заявку" button in
-     .footer-brand — measured empirically (~396px at the site's 1920px design width; the
-     zoom-based responsive scaling keeps that ratio correct across 1280–1920px), reset in the
-     ≤960px stacked layout where columns flow one under another instead. A transform, not
-     margin-top: .footer-grid is align-items:stretch and .footer-brand uses
-     justify-content:space-between to pin the button to its own column's bottom, so a margin
-     here would inflate this column's hypothetical height, stretch .footer-brand taller too, and
-     push the button down right along with it — a transform shifts the rendered box only, so it
-     doesn't feed back into that layout. */
-  .footer-nav{list-style:none;display:flex;flex-direction:column;gap:10px;font-family:'Inter',sans-serif;font-weight:300;font-size:20px;letter-spacing:0.4px;color:#CDCBC7;transform:translateY(396px)}
-  .footer-nav a{transition:opacity .2s}
+  /* Pins this column's content to the BOTTOM of its stretched flex-row box, so its last item
+     («контакты») lands exactly level with the last item of the other two columns — the button
+     in .footer-brand and the last row in .footer-contacts, both already bottom-aligned the same
+     way by their own justify-content:space-between (align-items:stretch on .footer-grid gives
+     every column the same height; space-between always plants the last child on that height's
+     bottom edge). flex-end does the same job here without space-between's side effect of also
+     spreading out the gaps BETWEEN the 9 links themselves — those keep their fixed 10px `gap`.
+     Reset to flex-start in the ≤960px stacked layout, where columns have no shared stretched
+     height to bottom-align against. */
+  .footer-nav{list-style:none;display:flex;flex-direction:column;justify-content:flex-end;gap:10px;font-family:'Inter',sans-serif;font-weight:300;font-size:20px;letter-spacing:0.4px;color:#CDCBC7}
+  .footer-nav a{line-height:1.2;transition:opacity .2s}
   .footer-nav a:hover{opacity:.7}
   .footer-contacts{list-style:none;padding-left:0;display:flex;flex-direction:column;justify-content:space-between;gap:20px;font-family:'Inter',sans-serif;color:#CDCBC7;max-width:659px}
   .footer-contacts li{display:flex;flex-direction:column;gap:5px}
@@ -1001,7 +1001,7 @@
     .contact-head p{text-align:left}
     .map-embed{height:auto;aspect-ratio:16/9}
     .footer-grid{flex-direction:column;gap:40px}
-    .footer-nav{transform:none}
+    .footer-nav{justify-content:flex-start}
     .about-photo-img{max-width:560px}
     .stats-grid{grid-template-columns:1fr;column-gap:40px;row-gap:24px}
     .stats-grid::after{display:none}

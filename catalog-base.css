@@ -221,10 +221,15 @@
   }
   /* Mirrors the real logo's "интерьер" sub-line under the watermark, same hollow treatment, at
      roughly the same size ratio to the big word as the real .footer-logo2 .sub is (2rem/7.75rem).
-     line-height:1 (not the inherited body line-height) pulls it flush under «антураж» instead of
-     floating below it with a tall, mostly-empty line box. */
+     line-height:1 got the *line box* flush, but a visible gap remained below that — the GOST
+     font reserves a lot of empty space under the baseline in its own metrics (unused by
+     «антураж», an all-caps word with no descenders), so line-height:1 alone still leaves that
+     reserved space showing above «интерьер». The negative margin-top pulls it up through that
+     reserved space; -.22em was found by testing against a magnified render, not derived from any
+     documented font metric (GOST has none published), so nudge it if a future GOST file build
+     changes those metrics. */
   .footer-watermark-sub{
-    display:block;margin-top:0;line-height:1;white-space:nowrap;
+    display:block;margin-top:-.22em;line-height:1;white-space:nowrap;
     font-family:'Inter',sans-serif;font-weight:400;font-size:.26em;letter-spacing:.03em;
     text-transform:uppercase;color:inherit;-webkit-text-stroke:inherit;
   }

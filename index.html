@@ -882,7 +882,10 @@
   .footer-nav{list-style:none;display:flex;flex-direction:column;gap:10px;font-family:'Inter',sans-serif;font-weight:300;font-size:20px;letter-spacing:0.4px;color:#CDCBC7}
   .footer-nav a{line-height:1.2;transition:opacity .2s}
   .footer-nav a:hover{opacity:.7}
-  .footer-contacts{list-style:none;padding-left:0;display:flex;flex-direction:column;gap:20px;font-family:'Inter',sans-serif;color:#CDCBC7;max-width:659px}
+  /* gap widened from 20px so this column's total height (4 rows) lands exactly on .footer-nav's
+     (9 links, 10px gap) — measured empirically, holds at any zoom since both gaps are plain
+     declared px scaled the same way by the site's zoom-based responsive sizing. */
+  .footer-contacts{list-style:none;padding-left:0;display:flex;flex-direction:column;gap:33.3px;font-family:'Inter',sans-serif;color:#CDCBC7;max-width:659px}
   .footer-contacts li{display:flex;flex-direction:column;gap:5px}
   .footer-contacts .fc-label{font-weight:500;font-size:20px;letter-spacing:0.48px}
   .footer-contacts .fc-value{font-weight:300;font-size:20px;letter-spacing:0.4px;line-height:1.2}

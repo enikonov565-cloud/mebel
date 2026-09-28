@@ -244,7 +244,11 @@ body{background:#110B00;color:#CDCBC7}
 /* "Next" arrow moved off the gallery's outer edge to the seam where photos vanish under the
    sticky CTA card (card is a fixed 400px wide whenever arrows are shown, ie. above 960px). */
 .model-gallery .model-arrow.next{right:375px}
-.cta-inner{position:relative;height:100%}
+/* Belt-and-suspenders on top of .cta-card's own overflow:hidden and the canvas's own
+   border-radius (below): some engines don't reliably clip a <canvas> replaced element to a
+   border-radius through two nested boxes, and the corner ends up looking square/torn — so the
+   immediate wrapper around the canvas clips to the same 15px radius too. */
+.cta-inner{position:relative;height:100%;overflow:hidden;border-radius:15px}
 /* width MUST be explicit (not left+right auto-resolve): canvas is a replaced element, so with
    width left implicit it falls back to the canvas's own intrinsic bitmap size — and since the
    render loop sets canvas.width from clientWidth every frame, that became a runaway feedback

@@ -24,7 +24,7 @@
 */
 (function () {
   const SELECTOR = '.footer-nav a, .footer-contacts .fc-label, .footer-contacts .fc-value';
-  const DRAW_MS = 450;
+  const DRAW_MS = 900; // must match the CSS .wh-underline.run transition-duration
 
   function reducedMotion() {
     return matchMedia('(prefers-reduced-motion: reduce)').matches;

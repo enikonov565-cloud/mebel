@@ -197,7 +197,7 @@
      the positioning root, so the underline is sized to the visible text, not the parent's box. */
   .wh-wrap{position:relative;display:inline-block}
   .wh-underline{position:absolute;left:0;bottom:-3px;height:2px;width:0;background:currentColor;pointer-events:none}
-  .wh-underline.run{transition:width .45s cubic-bezier(.22,1,.36,1);width:100%}
+  .wh-underline.run{transition:width .9s cubic-bezier(.22,1,.36,1);width:100%}
   @media (prefers-reduced-motion: reduce){
     .wh-letter{transition:none!important;transition-delay:0s!important}
     .wh-underline.run{transition:none!important}
@@ -880,7 +880,10 @@
   .footer-nav{list-style:none;display:flex;flex-direction:column;justify-content:flex-end;gap:10px;font-family:'Inter',sans-serif;font-weight:300;font-size:20px;letter-spacing:0.4px;color:#CDCBC7}
   .footer-nav a{line-height:1.2;transition:opacity .2s}
   .footer-nav a:hover{opacity:.7}
-  .footer-contacts{list-style:none;padding-left:0;display:flex;flex-direction:column;justify-content:space-between;gap:20px;font-family:'Inter',sans-serif;color:#CDCBC7;max-width:659px}
+  /* flex-end (not the original space-between), to match .footer-nav: keeps the gap between the
+     4 items at the declared 20px instead of stretching it out to fill the row's full height,
+     while still bottom-anchoring the block so its last row stays level with the other columns. */
+  .footer-contacts{list-style:none;padding-left:0;display:flex;flex-direction:column;justify-content:flex-end;gap:20px;font-family:'Inter',sans-serif;color:#CDCBC7;max-width:659px}
   .footer-contacts li{display:flex;flex-direction:column;gap:5px}
   .footer-contacts .fc-label{font-weight:500;font-size:20px;letter-spacing:0.48px}
   .footer-contacts .fc-value{font-weight:300;font-size:20px;letter-spacing:0.4px;line-height:1.2}

@@ -215,6 +215,13 @@
     white-space:nowrap;user-select:none;pointer-events:none;
     color:rgba(205,203,199,.05);-webkit-text-stroke:1px rgba(205,203,199,.16);
   }
+  /* Mirrors the real logo's "интерьер" sub-line under the watermark, same hollow treatment, at
+     roughly the same size ratio to the big word as the real .footer-logo2 .sub is (2rem/7.75rem). */
+  .footer-watermark-sub{
+    display:block;margin-top:.05em;
+    font-family:'Inter',sans-serif;font-weight:400;font-size:.26em;letter-spacing:.03em;
+    text-transform:uppercase;color:inherit;-webkit-text-stroke:inherit;
+  }
   .footer-bottom{margin-top:40px;padding:24px 0;border-top:1px solid rgba(205,203,199,.14)}
   .footer-bottom p{margin:0;font-family:'Inter',sans-serif;font-size:.85rem;color:rgba(205,203,199,.55)}
   /* Contact modal */

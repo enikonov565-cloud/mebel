@@ -184,8 +184,26 @@
   .nav-links a:hover .wh-letter{font-weight:700}
   .footer-nav a .wh-letter{font-weight:300}
   .footer-nav a:hover .wh-letter{font-weight:700}
+  .footer-contacts .fc-label .wh-letter{font-weight:500}
+  .footer-contacts .fc-label:hover .wh-letter{font-weight:700}
+  .footer-contacts .fc-value .wh-letter{font-weight:300}
+  .footer-contacts .fc-value:hover .wh-letter{font-weight:700}
+  .footer-contacts .fc-label,.footer-contacts .fc-value{cursor:pointer}
+  .footer-contacts .fc-label[data-wh-no-marquee],.footer-contacts .fc-value[data-wh-no-marquee]{cursor:auto}
+
+  /* Footer running text (click), ported in footer-marquee.js: the label slides in from the
+     right edge of its own box and exits past the left edge once, then the element returns to
+     its normal hoverable letters. */
+  .wh-marquee-holder{display:inline-block;overflow:hidden;vertical-align:top}
+  .wh-marquee-track{display:inline-block;white-space:pre;transform:translateX(var(--wh-start,100%))}
+  .wh-marquee-track.run{animation:whMarqueeRun linear 1 forwards}
+  @keyframes whMarqueeRun{
+    from{transform:translateX(var(--wh-start,100%))}
+    to{transform:translateX(var(--wh-end,-100%))}
+  }
   @media (prefers-reduced-motion: reduce){
     .wh-letter{transition:none!important;transition-delay:0s!important}
+    .wh-marquee-track{animation:none!important}
   }
 
   /* Hero — exact spec from Figma node 20:353 */
@@ -1727,6 +1745,7 @@
 </div>
 
 <script src="weight-hover.js"></script>
+<script src="footer-marquee.js"></script>
 <script>
   // Play autoplay videos only while they are on screen (keeps the page smooth); checked on scroll/resize
   (function () {

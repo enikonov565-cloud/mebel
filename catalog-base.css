@@ -110,18 +110,22 @@
   .burger.active span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
 
   /* Small popup, anchored under the burger — not a full-width bar. Its right edge
-     stays clear of the logo by the same 40pt rhythm as the burger→logo gap. */
+     stays clear of the logo by the same 40pt rhythm as the burger→logo gap. Two columns
+     (split roughly in half: the "Услуги" group with its 5 catalog sub-links, then the
+     rest) so the popup stays short instead of needing an inner scrollbar. */
   .nav-links{
     position:absolute;top:calc(100% + 10px);left:20px;z-index:99;
-    width:264px;max-width:calc(calc(100*var(--vw100)/100) - 40px - 40pt);
+    width:460px;max-width:calc(calc(100*var(--vw100)/100) - 40px - 40pt);
     background:var(--bg);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);
-    display:flex;flex-direction:column;
+    display:flex;flex-direction:row;align-items:stretch;
     max-height:0;opacity:0;overflow:hidden;
     transform:translateY(-6px);
     transition:max-height .3s ease,opacity .25s ease,transform .25s ease;
   }
   .nav-links.open{max-height:calc(80*var(--vh100)/100);opacity:1;transform:translateY(0);overflow-y:auto}
-  .nav-links a:first-child{border-top:none}
+  .nav-links-col{flex:1 1 0;min-width:0;display:flex;flex-direction:column}
+  .nav-links-col+.nav-links-col{border-left:1px solid var(--line)}
+  .nav-links-col a:first-child{border-top:none}
   .nav-links a{
     padding:14px 20px;border-top:1px solid var(--line);
     font-weight:500;color:var(--muted);transition:color .2s;

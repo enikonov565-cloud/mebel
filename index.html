@@ -837,6 +837,15 @@
     color:#CDCBC7;margin-bottom:-.3em;
   }
   .footer-logo2 .word .edge{font-size:1.5625em}
+  /* Vector Wordmark (Originkit, ported in footer-wordmark.js): the canvas sits absolutely over
+     a hidden reference copy of the same .word markup, which the script measures for its exact
+     font/size/box at the current breakpoint and never removes — so with JS or WebGL unavailable
+     the reference span alone still shows the plain "АНТУРАЖ" wordmark as a fallback. */
+  .footer-wordmark{
+    position:relative;display:inline-block;
+    --wordmark-text:#CDCBC7;--wordmark-shade:#2F1F02;--wordmark-accent:rgba(226,160,79,.85);
+  }
+  .footer-wordmark-canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
   .footer-logo2 .sub{
     display:block;font-family:'Inter',sans-serif;font-weight:400;font-size:2rem;
     text-transform:uppercase;color:#fff;line-height:normal;
@@ -1621,7 +1630,10 @@
   <div class="container footer-grid">
     <div class="footer-brand">
       <div class="footer-logo2">
-        <span class="word"><span class="edge">А</span>НТУРА<span class="edge">Ж</span></span>
+        <span class="footer-wordmark" data-text="АНТУРАЖ">
+          <span class="word footer-wordmark-ref"><span class="edge">А</span>НТУРА<span class="edge">Ж</span></span>
+          <canvas class="footer-wordmark-canvas" aria-hidden="true"></canvas>
+        </span>
         <span class="sub">ИНТЕРЬЕР</span>
       </div>
       <p>Оставьте заявку — перезвоним в&nbsp;течение рабочего дня, обсудим задачу и&nbsp;запишем на&nbsp;бесплатный замер.</p>
@@ -1715,6 +1727,7 @@
   </div>
 </div>
 
+<script src="footer-wordmark.js"></script>
 <script>
   // Play autoplay videos only while they are on screen (keeps the page smooth); checked on scroll/resize
   (function () {

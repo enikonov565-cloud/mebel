@@ -28,8 +28,10 @@
      as-is between letter runs instead of being flattened into the label, so the line break still
      renders; only the text runs on either side of it get the per-letter treatment.
 
-   footer-marquee.js (loaded after this file) reads the `.wh-wrap` structure built here to play a
-   click-triggered running-text effect on footer links/contacts; see that file for its own notes.
+   This also appends a `.wh-underline` element (empty, 0-width by default) alongside `.wh-wrap` on
+   every wrapped element — footer-underline.js (loaded after this file, footer elements only)
+   grows it left-to-right on click. It's appended here rather than there so it always exists even
+   if footer-underline.js isn't loaded on a given page (e.g. if .nav-links ever needs it later).
 */
 (function () {
   const STAGGER_MS = 28;      // per-letter delay step (source default staggerDuration: 30ms)
@@ -61,7 +63,7 @@
           const span = document.createElement('span');
           span.className = 'wh-letter';
           span.style.transitionDelay = (i * STAGGER_MS) + 'ms';
-          span.textContent = ch === ' ' ? ' ' : ch;
+          span.textContent = ch === ' ' ? ' ' : ch;
           wrapEl.appendChild(span);
           i++;
         });
@@ -71,7 +73,18 @@
       }
     });
 
-    if (hasBreak) el.dataset.whNoMarquee = '1';
+    if (hasBreak) el.dataset.whNoUnderline = '1';
+
+    // Appended inside wrapEl (not as a sibling of it) so its position:relative + shrink-to-fit
+    // width give the underline a containing block sized to the visible TEXT, not to el's own
+    // box — el (an <a> or <p>) can be block-level and full-width in its own layout (e.g. the
+    // footer-contacts <p> values), which would otherwise stretch the underline out past the
+    // label's actual width.
+    const underline = document.createElement('span');
+    underline.className = 'wh-underline';
+    underline.setAttribute('aria-hidden', 'true');
+    wrapEl.appendChild(underline);
+
     el.appendChild(wrapEl);
   }
 

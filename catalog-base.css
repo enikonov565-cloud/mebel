@@ -174,7 +174,7 @@
   .modal-backdrop.open{opacity:1;pointer-events:auto}
   .modal-card{
     position:relative;width:560px;max-width:100%;
-    background:var(--bg);border-radius:var(--radius);padding:48px 44px 40px;
+    background:var(--bg);color:var(--text);border-radius:var(--radius);padding:48px 44px 40px;
     box-shadow:0 20px 60px rgba(0,0,0,.35);
     transform:translateY(12px);transition:transform .25s ease;
   }

@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Коммерческая мебель — каталог — Антураж интерьер</title>
-<meta name="description" content="Коммерческая мебель на заказ от «Антураж интерьер»: барные стойки, торговые островки, витрины, мебель для кафе и ресторанов, оформление зон.">
+<meta name="description" content="Коммерческая мебель на заказ от «Антураж интерьер»: барные стойки, торговые и прикассовые стойки, стеллажи для торговых залов — из износостойких материалов.">
 <script src="fit.js"></script>
 <link rel="stylesheet" href="fonts.css">
 <link rel="stylesheet" href="catalog-base.css">
@@ -59,116 +59,72 @@
     </nav>
     <div class="cat-head">
       <h1>Коммерческая мебель</h1>
-      <p>Мебель из износостойких материалов для бизнеса: заведения, магазины и общественные пространства.</p>
+      <p>Мебель из износостойких материалов.</p>
     </div>
     <div class="cat-tabs" aria-label="Разделы каталога">
         <a class="cat-tab dot-btn" href="catalog-korpusnaya.html">Корпусная мебель</a>
         <a class="cat-tab dot-btn" href="catalog-eksklyuzivnaya.html">Эксклюзивная мебель</a>
-        <a class="cat-tab dot-btn" href="catalog-dveri.html">Двери и порталы</a>
+        <a class="cat-tab dot-btn" href="catalog-dveri.html">Двери и порталы</a>
         <a class="cat-tab dot-btn" href="catalog-ofisnaya.html">Офисная мебель</a>
         <a class="cat-tab dot-btn active" href="catalog-kommercheskaya.html" aria-current="page">Коммерческая мебель</a>
     </div>
   </div>
 </section>
 
+<!-- Item cards — Figma node 419:258 (same model-gallery pattern as catalog-korpusnaya.html /
+     catalog-eksklyuzivnaya.html / catalog-dveri.html / catalog-ofisnaya.html). Name/description
+     are specific to what is on each photo — no invented specs, and no "МДФ" (site's material
+     story is solid wood/veneer). -->
 <section class="cat-items">
   <div class="container">
-    <div class="cat-grid cols-3">
-        <article class="cat-card">
-          <div class="cat-num">01</div>
-          <h2>Барные стойки</h2>
-          <p class="cat-desc">Барные стойки для кафе, ресторанов и баров с рабочей зоной бармена.</p>
-          <ul class="cat-list">
-            <li>Устойчивые к влаге покрытия</li>
-            <li>Ниши для оборудования</li>
-            <li>Подсветка и декор</li>
-          </ul>
-          <button type="button" class="cat-ask dot-btn calc-cta">узнать стоимость</button>
+    <div class="model-gallery">
+      <button type="button" class="model-arrow prev" aria-label="Предыдущая модель" onclick="document.getElementById('modelTrack').scrollBy({left:-541,behavior:'smooth'})">&#8592;</button>
+      <div class="model-track" id="modelTrack">
+        <article class="model-card">
+          <img class="model-photo" src="kommerch-fastfood.jpg" alt="Барная стойка с табуретами для фудкорта">
+          <h3>Барная стойка с&nbsp;табуретами</h3>
+          <button type="button" class="model-btn dot-btn model-details-btn" data-model="bar-stoyka">рассмотреть подробнее<span class="model-arrow-ico">→</span></button>
         </article>
 
-        <article class="cat-card">
-          <div class="cat-num">02</div>
-          <h2>Торговые островки</h2>
-          <p class="cat-desc">Островные стойки и павильоны для торговых центров и выставок.</p>
-          <ul class="cat-list">
-            <li>Быстрая сборка и монтаж</li>
-            <li>Брендирование под ваш стиль</li>
-            <li>Прочные конструкции</li>
-          </ul>
-          <button type="button" class="cat-ask dot-btn calc-cta">узнать стоимость</button>
+        <article class="model-card">
+          <img class="model-photo" src="kommerch-vinoteka.jpg" alt="Стеллаж для торгового зала винотеки">
+          <h3>Стеллаж для&nbsp;винотеки</h3>
+          <button type="button" class="model-btn dot-btn model-details-btn" data-model="stellazh-vinoteka">рассмотреть подробнее<span class="model-arrow-ico">→</span></button>
         </article>
 
-        <article class="cat-card">
-          <div class="cat-num">03</div>
-          <h2>Витрины</h2>
-          <p class="cat-desc">Витрины и прилавки для демонстрации товаров — со стеклом и подсветкой.</p>
-          <ul class="cat-list">
-            <li>Стекло и подсветка на выбор</li>
-            <li>Замки и системы хранения</li>
-            <li>Размеры под ваш магазин</li>
-          </ul>
-          <button type="button" class="cat-ask dot-btn calc-cta">узнать стоимость</button>
+        <article class="model-card">
+          <img class="model-photo" src="kommerch-bar-kassa.jpg" alt="Торговая стойка с прикассовой зоной">
+          <h3>Торговая стойка с&nbsp;кассой</h3>
+          <button type="button" class="model-btn dot-btn model-details-btn" data-model="stoyka-kassa">рассмотреть подробнее<span class="model-arrow-ico">→</span></button>
         </article>
 
-        <article class="cat-card">
-          <div class="cat-num">04</div>
-          <h2>Мебель для кафе и ресторанов</h2>
-          <p class="cat-desc">Столы, диваны, стулья и перегородки для залов любого формата.</p>
-          <ul class="cat-list">
-            <li>Износостойкие материалы</li>
-            <li>Комплекты в едином стиле</li>
-            <li>Простая уборка и уход</li>
-          </ul>
-          <button type="button" class="cat-ask dot-btn calc-cta">узнать стоимость</button>
+        <article class="model-card cta-card" id="ctaCard">
+          <!-- position:sticky on the card itself is unreliable as a containing block for an
+               absolutely-positioned child in some engines — the canvas ended up stretching to
+               the whole track's scrollWidth. A plain position:relative wrapper fixes that. -->
+          <div class="cta-inner">
+            <canvas class="cta-glow" id="ctaGlow" aria-hidden="true"></canvas>
+            <div class="cta-content">
+              <span class="cta-plus" aria-hidden="true">+</span>
+              <h3 class="cta-heading" aria-label="Нужен другой вариант?"><span class="cta-line">Нужен</span><span class="cta-line">другой вариант?</span></h3>
+              <p class="cta-desc">Изготовим по&nbsp;Вашему эскизу или&nbsp;чертежу дизайнера.</p>
+              <button type="button" class="model-btn dot-btn calc-cta">рассчитать проект<span class="model-arrow-ico">→</span></button>
+              <a href="index.html#portfolio" class="cta-works">наши работы<span class="model-arrow-ico">→</span></a>
+            </div>
+          </div>
         </article>
 
-        <article class="cat-card">
-          <div class="cat-num">05</div>
-          <h2>Оформление зон</h2>
-          <p class="cat-desc">Комплексное оформление торговых и общественных пространств.</p>
-          <ul class="cat-list">
-            <li>Проект под ключ</li>
-            <li>Единый стиль всей зоны</li>
-            <li>Монтаж и установка</li>
-          </ul>
-          <button type="button" class="cat-ask dot-btn calc-cta">узнать стоимость</button>
-        </article>
-        <article class="cat-card cat-card-cta">
-          <div class="cat-num">+</div>
-          <h2>Нужен другой вариант?</h2>
-          <p class="cat-desc">Изготовим по вашему эскизу или чертежу дизайнера.</p>
-          <button type="button" class="cat-ask dot-btn calc-cta">рассчитать проект</button>
-        </article>
-    </div>
-  </div>
-</section>
-
-<section class="cat-how">
-  <div class="container">
-    <div class="cat-how-head">
-      <h2>Как&nbsp;заказать</h2>
-      <p>От заявки до монтажа — четыре понятных шага, на каждом из которых вы знаете, что происходит с заказом.</p>
-    </div>
-    <ol class="cat-steps">
-        <li class="cat-step"><b>01</b><h3>Бесплатный проект</h3><p>Собираем пожелания, выезжаем на замер и разрабатываем проект.</p></li>
-        <li class="cat-step"><b>02</b><h3>Договор и предоплата</h3><p>Фиксируем стоимость и сроки в договоре.</p></li>
-        <li class="cat-step"><b>03</b><h3>Производство</h3><p>Изготавливаем изделие на собственном производстве.</p></li>
-        <li class="cat-step"><b>04</b><h3>Установка под ключ</h3><p>Доставляем, устанавливаем и сдаём готовую работу.</p></li>
-    </ol>
-  </div>
-</section>
-
-<section class="cat-cta">
-  <div class="container">
-    <div class="cat-cta-box">
-      <p>Не нашли нужное? Изготовим по вашему эскизу или чертежу дизайнера.</p>
-      <div class="cat-cta-btns">
-        <button type="button" class="svc-btn light dot-btn calc-cta">рассчитать стоимость проекта</button>
-        <a href="index.html#portfolio" class="svc-btn dark dot-btn">смотреть наши работы</a>
       </div>
+      <!-- Pinned at the seam where the photo cards disappear under the sticky CTA card
+           (505px card width − 25px half-circle), instead of the gallery's outer edge. -->
+      <button type="button" class="model-arrow next" aria-label="Следующая модель" onclick="document.getElementById('modelTrack').scrollBy({left:541,behavior:'smooth'})">&#8594;</button>
     </div>
   </div>
 </section>
+
+<!-- "Как заказать" and the "Не нашли нужное?" banner were removed from this page: the last
+     gallery card («Нужен другой вариант?») already covers that call to action — same as
+     catalog-korpusnaya.html / catalog-eksklyuzivnaya.html. -->
 </main>
 
 <footer>
@@ -209,7 +165,7 @@
   <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="managerModalTitle">
     <button type="button" class="modal-close" id="managerClose" aria-label="Закрыть">×</button>
     <h3 id="managerModalTitle">Оставьте свой номер, и&nbsp;наши консультанты помогут Вам с&nbsp;выбором!</h3>
-    <form id="managerForm" onsubmit="event.preventDefault(); this.reset(); document.getElementById('managerModal').classList.remove('open'); openSuccessModal('Спасибо! Ваша заявка успешно отправлена.', 'Менеджер свяжется с Вами в указанное время или в течение 15 минут в рабочее время.');">
+    <form id="managerForm" onsubmit="event.preventDefault(); this.reset(); document.getElementById('managerModal').classList.remove('open'); openSuccessModal('Спасибо! Ваша заявка успешно отправлена.', 'Менеджер свяжется с Вами в указанное время или в течение 15 минут в рабочее время.');">
       <input type="text" name="name" placeholder="Ваше имя" required>
       <input type="tel" name="phone" placeholder="Ваш телефон" required>
       <button type="submit" class="btn dot-btn">
@@ -230,7 +186,517 @@
   </div>
 </div>
 
+<!-- Model detail modal — same shared component as catalog-korpusnaya.html / catalog-eksklyuzivnaya.html.
+     Opened from a "рассмотреть подробнее" button; the photo side is the Cursor Image Gallery. -->
+<div class="modal-backdrop" id="modelModal" aria-hidden="true">
+  <div class="modal-card model-modal-card" role="dialog" aria-modal="true" aria-labelledby="modelModalTitle">
+    <button type="button" class="modal-close" id="modelModalClose" aria-label="Закрыть">×</button>
+    <div class="model-modal-photo">
+      <div class="mgc" id="modelGallery">
+        <div class="mgc-frame"></div>
+        <button type="button" class="mgc-nav mgc-prev" aria-label="Предыдущее фото">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#EAEAEA" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 6 9 12 15 18"></polyline></svg>
+        </button>
+        <button type="button" class="mgc-nav mgc-next" aria-label="Следующее фото">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#EAEAEA" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 6 15 12 9 18"></polyline></svg>
+        </button>
+        <div class="mgc-dots"></div>
+      </div>
+    </div>
+    <div class="model-modal-info">
+      <div class="model-modal-text">
+        <h3 id="modelModalTitle">Барная стойка с табуретами</h3>
+        <ul class="model-modal-specs" id="modelModalSpecs">
+          <li>тип: барная стойка с табуретами</li>
+          <li>столешница: компакт-плита</li>
+          <li>опоры: массив, металл</li>
+          <li>количество мест: по проекту</li>
+        </ul>
+      </div>
+      <button type="button" class="model-modal-cta calc-cta" id="modelModalCta">заказать подобную<span class="model-arrow-ico">→</span></button>
+    </div>
+  </div>
+</div>
 
 <script src="catalog.js"></script>
+<script>
+  // Cursor Image Gallery (Originkit), adapted: fixed prev/next arrow buttons at the photo's
+  // edges (not a cursor that follows the pointer). Built once, reloaded with a new image set
+  // each time a different model's "рассмотреть подробнее" is clicked — one shared modal for
+  // all models rather than duplicating the whole markup per model.
+  function createCursorGallery(root) {
+    const frame = root.querySelector('.mgc-frame');
+    const prevBtn = root.querySelector('.mgc-prev');
+    const nextBtn = root.querySelector('.mgc-next');
+    const dotsEl = root.querySelector('.mgc-dots');
+    const DURATION = 600, EASE = 'cubic-bezier(0.42,0,0.58,1)';
+    let images = [], index = 0, sliding = false, current = null, dots = [];
+
+    const setLayer = (el, src) => { el.style.backgroundImage = `url("${src}")`; };
+
+    function updateNav() {
+      prevBtn.disabled = index <= 0;
+      nextBtn.disabled = index >= images.length - 1;
+      dotsEl.style.display = images.length > 1 ? '' : 'none';   // nothing to page through on a single photo
+    }
+
+    function go(dir) {
+      if (sliding || images.length < 2) return;
+      const to = index + dir;
+      if (to < 0 || to >= images.length) return;
+      sliding = true;
+      const next = document.createElement('div');
+      next.className = 'mgc-layer';
+      setLayer(next, images[to]);
+      next.style.transition = 'none';
+      next.style.transform = `translateX(${dir === 1 ? 100 : -100}%)`;
+      frame.appendChild(next);
+      void next.offsetWidth;   // force layout so the starting transform is committed before animating
+      requestAnimationFrame(() => {
+        next.style.transition = `transform ${DURATION}ms ${EASE}`;
+        current.style.transition = `transform ${DURATION}ms ${EASE}`;
+        next.style.transform = 'translateX(0%)';
+        current.style.transform = `translateX(${dir === 1 ? -100 : 100}%)`;
+      });
+      setTimeout(() => {
+        current.remove();
+        current = next;
+        index = to;
+        sliding = false;
+        dots.forEach((d, i) => d.classList.toggle('active', i === index));
+        updateNav();
+      }, DURATION + 40);
+    }
+
+    function load(newImages) {
+      images = newImages.slice();
+      index = 0; sliding = false;
+      frame.innerHTML = '';
+      current = document.createElement('div');
+      current.className = 'mgc-layer';
+      setLayer(current, images[0]);
+      frame.appendChild(current);
+      dotsEl.innerHTML = '';
+      images.forEach((_, i) => {
+        const dot = document.createElement('span');
+        dot.className = 'mgc-dot' + (i === 0 ? ' active' : '');
+        dotsEl.appendChild(dot);
+      });
+      dots = [...dotsEl.children];
+      updateNav();
+    }
+
+    prevBtn.addEventListener('click', () => go(-1));
+    nextBtn.addEventListener('click', () => go(1));
+    return { load };
+  }
+  const modelGallery = createCursorGallery(document.getElementById('modelGallery'));
+
+  // One detail record per model. Specs describe only what's visible in the photo — nothing
+  // invented — and avoid "МДФ": the site's material story is solid wood (массив) / veneer
+  // (шпон) / enamel finish (эмаль) with named species, never MDF.
+  const MODELS = {
+    'bar-stoyka': {
+      title: 'Барная стойка с табуретами',
+      specs: ['тип: барная стойка с табуретами', 'столешница: компакт-плита', 'опоры: массив, металл', 'количество мест: по проекту'],
+      images: ['kommerch-fastfood.jpg']
+    },
+    'stellazh-vinoteka': {
+      title: 'Стеллаж для винотеки',
+      specs: ['тип: стеллаж для торгового зала', 'материал: массив, тёмный тон', 'подсветка: встроенная', 'комплектация: по проекту помещения'],
+      images: ['kommerch-vinoteka.jpg']
+    },
+    'stoyka-kassa': {
+      title: 'Торговая стойка с кассой',
+      specs: ['тип: торговая стойка', 'материал: массив, тёмный тон', 'комплектация: место кассира и витрина', 'подсветка: встроенная'],
+      images: ['kommerch-bar-kassa.jpg']
+    }
+  };
+
+  // Model detail modal: "рассмотреть подробнее" on any card opens this one shared modal, filled
+  // in with that model's data. Its own "заказать подобную" (class calc-cta, wired by catalog.js)
+  // opens the manager modal in turn — so this modal just needs to get out of the way for it.
+  (function () {
+    const modal = document.getElementById('modelModal');
+    const closeBtn = document.getElementById('modelModalClose');
+    const ctaBtn = document.getElementById('modelModalCta');
+    const titleEl = document.getElementById('modelModalTitle');
+    const specsEl = document.getElementById('modelModalSpecs');
+    if (!modal) return;
+    const open = () => { modal.classList.add('open'); modal.setAttribute('aria-hidden', 'false'); };
+    const close = () => { modal.classList.remove('open'); modal.setAttribute('aria-hidden', 'true'); };
+    document.querySelectorAll('.model-details-btn').forEach(btn => {
+      const data = MODELS[btn.dataset.model];
+      if (!data) return;
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        titleEl.innerHTML = data.title;
+        specsEl.innerHTML = data.specs.map(s => `<li>${s}</li>`).join('');
+        modelGallery.load(data.images);
+        open();
+      });
+    });
+    if (closeBtn) closeBtn.addEventListener('click', close);
+    if (ctaBtn) ctaBtn.addEventListener('click', close);
+    modal.addEventListener('click', (e) => { if (e.target === modal) close(); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
+  })();
+</script>
+<script>
+  // Arrow buttons dim once the row is scrolled all the way to that side (same idea used
+  // for the homepage's works/reviews arrows — see the shared .model-arrow:disabled / .works-arrow:disabled rule).
+  (function () {
+    const track = document.getElementById('modelTrack');
+    const prev = document.querySelector('.model-arrow.prev');
+    const next = document.querySelector('.model-arrow.next');
+    if (!track || !prev || !next) return;
+    const EPS = 2;
+    const update = () => {
+      prev.disabled = track.scrollLeft <= EPS;
+      next.disabled = track.scrollLeft >= track.scrollWidth - track.clientWidth - EPS;
+    };
+    track.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    window.addEventListener('load', update);
+    update();
+  })();
+
+  // Text Colour Sweep on "Нужен другой вариант?" — same technique as the homepage's
+  // company-figures block (index.html), ported here for the single CTA-card heading.
+  (function () {
+    const el = document.querySelector('.cta-heading');
+    if (!el || !el.animate || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const box = el.closest('.cta-card') || el;
+    const track = document.getElementById('modelTrack');
+    const WAVE = '#e2a04f';       // brighter amber, derived from the site accent
+    const REPEAT_DELAY = 10000;   // pause between cycles, ms
+    const DURATION = 600, STAGGER = 40;
+    const base = getComputedStyle(el).color;
+    // Two fixed lines ("Нужен" / "другой вариант?") — split each independently so the
+    // line break survives the rebuild; the combined label already sits on the <h3> itself.
+    const lines = [...el.querySelectorAll('.cta-line')];
+    const chars = [];
+    lines.forEach(lineEl => {
+      const text = lineEl.textContent;
+      lineEl.textContent = '';
+      text.split(' ').forEach((word, wi, arr) => {
+        const w = document.createElement('i');
+        w.className = 'sw-w';
+        w.setAttribute('aria-hidden', 'true');
+        for (const ch of word) {
+          const c = document.createElement('i');
+          c.className = 'sw-c';
+          c.textContent = ch;
+          w.appendChild(c);
+          chars.push(c);
+        }
+        lineEl.appendChild(w);
+        if (wi < arr.length - 1) lineEl.appendChild(document.createTextNode(' '));
+      });
+    });
+    el.classList.add('sweep-ready');
+    let busy = false, due = true, inView = false, timer = null, current = [];
+    const stop = () => {
+      clearTimeout(timer);
+      current.forEach(an => an.cancel());
+      current = [];
+      busy = false; due = true;
+      el.classList.remove('sweep-ready'); el.classList.add('sweep-done');
+    };
+    const run = () => {
+      busy = true; due = false;
+      el.classList.remove('sweep-done'); el.classList.add('sweep-ready');
+      const anims = chars.map((c, i) => c.animate(
+        [
+          { transform: 'translateY(-0.55em)', opacity: 0, color: WAVE },
+          { transform: 'translateY(0)', opacity: 1, color: base }
+        ],
+        { duration: DURATION, delay: i * STAGGER, easing: 'cubic-bezier(.65,0,.35,1)', fill: 'both' }
+      ));
+      current = anims;
+      Promise.all(anims.map(an => an.finished)).then(() => {
+        if (current !== anims) return;   // superseded (card left the screen / restarted)
+        el.classList.remove('sweep-ready'); el.classList.add('sweep-done');
+        anims.forEach(an => an.cancel());
+        current = []; busy = false;
+        timer = setTimeout(() => { due = true; check(); }, REPEAT_DELAY);   // repeat every 10 s while on screen
+      }).catch(() => {});
+    };
+    // The card also travels through the horizontally-scrolling gallery, so both axes matter.
+    const check = () => {
+      const r = box.getBoundingClientRect();
+      const vh = window.innerHeight, vw = window.innerWidth;
+      const visibleV = inView ? (r.top < vh && r.bottom > 0) : (r.top < vh * 0.85 && r.bottom > 0);
+      const visibleH = r.left < vw && r.right > 0;
+      const visible = visibleV && visibleH;
+      if (visible && !inView) { inView = true; stop(); run(); return; }
+      if (!visible && inView) { inView = false; stop(); return; }
+      if (visible && due && !busy) run();
+    };
+    window.addEventListener('scroll', check, { passive: true });
+    window.addEventListener('resize', check);
+    window.addEventListener('load', check);
+    if (track) track.addEventListener('scroll', check, { passive: true });
+    check();
+  })();
+
+  // Ribbon Glow (Originkit, ported from React/WebGL2 to plain JS) behind the CTA-card content.
+  // Brand palette (amber/bronze accents already used across the site) instead of the original
+  // orange/pink preset, and a uIntensity uniform (not in the original) added to the finish pass
+  // to tone the glow down so it stays a quiet backdrop, not the focal point of the card.
+  (function () {
+    const canvas = document.getElementById('ctaGlow');
+    const root = document.getElementById('ctaCard');
+    if (!canvas || !root || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const gl = canvas.getContext('webgl2', { antialias: false, alpha: false, depth: false, stencil: false });
+    if (!gl) return;
+
+    const MAX_DPR = 2;
+    const VERT_SRC = `#version 300 es
+const vec2 P[3] = vec2[3](vec2(-1.0, -1.0), vec2(3.0, -1.0), vec2(-1.0, 3.0));
+void main() { gl_Position = vec4(P[gl_VertexID], 0.0, 1.0); }
+`;
+    const FIELD_SRC = `#version 300 es
+precision highp float;
+uniform vec2 uRes;
+uniform float uTime;
+uniform vec3 uC1;
+uniform vec3 uC2;
+uniform float uSize;
+uniform float uAngle;
+uniform vec2 uMouse;
+uniform float uOn;
+uniform float uReach;
+uniform vec2 uVel;
+out vec4 o;
+
+const float TAU = 6.28318530718;
+const float LAYERS = 84.0;
+const float TWIST = 1.250;
+const float DRAG = 0.180;
+const float GAIN = 0.62;
+const vec2 CENTRE = vec2(-0.62, 0.24);
+const float TILT = 0.6;
+const float ZOOM = 1.05;
+const float THETA = 2.13;
+const float SHEAR = 0.963;
+const float SHRINK = 0.953;
+const vec2 WARP_FREQ = vec2(0.42, 2.4);
+const vec2 WARP_AMP = vec2(0.13, 0.027);
+const vec2 ASPECT = vec2(2.1, 0.17);
+const float OFFSET = 0.36;
+const float GLOW = 0.0021;
+const float SOFT = 0.0019;
+const float FALLOFF = 0.37;
+const float PHASE = 12.0;
+const float CYCLE = 0.16;
+const float HUE_TRAVEL = 2.0;
+
+mat2 rot(float a) { float c = cos(a), s = sin(a); return mat2(c, s, -s, c); }
+
+void main() {
+  vec2 R = uRes;
+  vec2 pos = (gl_FragCoord.xy - 0.5 * R) / R.y;
+
+  vec2 d = pos - uMouse;
+  float w = uOn * exp(-dot(d, d) / (uReach * uReach));
+  if (w > 1e-4) pos = uMouse + rot(w * TWIST) * d * (1.0 - 0.3 * min(w, 1.0)) - uVel * min(w, 1.0) * DRAG;
+
+  pos = rot(uAngle) * pos / uSize;
+  float t = uTime * 0.49 + PHASE;
+  float breath = (-sin(uTime * 0.735) + sin(uTime * 0.49 + 1.0)) * 0.25 + 0.5;
+  vec2 u = rot(TILT) * ((pos - CENTRE) * (ZOOM - breath * 0.085));
+  mat2 fold = mat2(cos(THETA), sin(THETA), -SHEAR, cos(THETA));
+
+  vec3 col = vec3(0.0);
+  for (float i = 1.0; i <= LAYERS; i += 1.0) {
+    u.x -= sin(u.y * WARP_FREQ.x + t + i * 0.007) * WARP_AMP.x;
+    u.y -= sin(u.x * WARP_FREQ.y - t + i * 0.02) * WARP_AMP.y;
+    u = fold * u * SHRINK;
+    vec2 q = (u - vec2(OFFSET + breath * 0.1, 0.0)) * ASPECT;
+    float g = GLOW / (dot(q, q) + SOFT) * (0.25 + breath * 0.4);
+    float r = length(u);
+    float k = sin(i * CYCLE + t * 1.2 + r * HUE_TRAVEL) * 0.5 + 0.5;
+    col += g * mix(uC1, uC2, k) * (0.62 + 0.5 * k) * exp2(-r * FALLOFF);
+  }
+  vec3 x = max(col * GAIN, 0.0);
+  col = (x * (2.51 * x + 0.03)) / (x * (2.43 * x + 0.59) + 0.14);
+  col = pow(clamp(col, 0.0, 1.0), vec3(0.85, 0.92, 0.98));
+  col *= 1.0 - smoothstep(0.5, 1.6, length(pos)) * 0.07;
+  o = vec4(col, 1.0);
+}
+`;
+    const FINISH_SRC = `#version 300 es
+precision highp float;
+uniform sampler2D uField;
+uniform vec2 uRes;
+uniform float uTime;
+uniform vec3 uBg;
+uniform float uPaper;
+uniform float uIntensity;
+out vec4 o;
+
+float ign(vec2 p, float f) { p += 5.588238 * mod(f, 64.0); return fract(52.9829189 * fract(0.06711056 * p.x + 0.00583715 * p.y)); }
+
+void main() {
+  vec2 frag = gl_FragCoord.xy;
+  vec3 L = max(texture(uField, frag / uRes).rgb, 0.0) * uIntensity;
+
+  vec3 dark = uBg + L * (1.0 - uBg);
+  float strength = clamp(max(L.r, max(L.g, L.b)), 0.0, 1.0);
+  vec3 paper = uBg * (1.0 - strength) + L * 0.96;
+  vec3 col = mix(dark, paper, uPaper);
+  col += (ign(frag, floor(uTime * 24.0)) - 0.5) / 255.0;
+  o = vec4(clamp(col, 0.0, 1.0), 1.0);
+}
+`;
+
+    function parseColor(hex) {
+      let h = hex.replace('#', '');
+      if (h.length === 3) h = h[0] + h[0] + h[1] + h[1] + h[2] + h[2];
+      return [parseInt(h.slice(0, 2), 16) / 255, parseInt(h.slice(2, 4), 16) / 255, parseInt(h.slice(4, 6), 16) / 255];
+    }
+    function clampN(v, lo, hi) { return v < lo ? lo : v > hi ? hi : v; }
+
+    function link(frag, label) {
+      const shader = (type, src) => {
+        const sh = gl.createShader(type);
+        gl.shaderSource(sh, src);
+        gl.compileShader(sh);
+        if (!gl.getShaderParameter(sh, gl.COMPILE_STATUS)) { console.error('RibbonGlow ' + label + ' shader:', gl.getShaderInfoLog(sh)); gl.deleteShader(sh); return null; }
+        return sh;
+      };
+      const vs = shader(gl.VERTEX_SHADER, VERT_SRC);
+      const fs = shader(gl.FRAGMENT_SHADER, frag);
+      if (!vs || !fs) return null;
+      const prog = gl.createProgram();
+      gl.attachShader(prog, vs); gl.attachShader(prog, fs); gl.linkProgram(prog);
+      gl.deleteShader(vs); gl.deleteShader(fs);
+      if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) { console.error('RibbonGlow ' + label + ' link:', gl.getProgramInfoLog(prog)); gl.deleteProgram(prog); return null; }
+      return prog;
+    }
+    function locations(prog, names) { const out = {}; names.forEach(n => out[n] = gl.getUniformLocation(prog, n)); return out; }
+
+    function fieldTarget() {
+      const fbo = gl.createFramebuffer();
+      let tex = null, w = 0, h = 0, half = !!gl.getExtension('EXT_color_buffer_float');
+      return {
+        fbo, texture: () => tex, width: () => w, height: () => h,
+        resize(nw, nh) {
+          if (nw === w && nh === h && tex) return;
+          for (let attempt = 0; attempt < 2; attempt++) {
+            if (tex) gl.deleteTexture(tex);
+            tex = gl.createTexture();
+            gl.bindTexture(gl.TEXTURE_2D, tex);
+            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+            gl.texImage2D(gl.TEXTURE_2D, 0, half ? gl.RGBA16F : gl.RGBA8, nw, nh, 0, gl.RGBA, half ? gl.HALF_FLOAT : gl.UNSIGNED_BYTE, null);
+            gl.bindFramebuffer(gl.FRAMEBUFFER, fbo);
+            gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, tex, 0);
+            const ok = gl.checkFramebufferStatus(gl.FRAMEBUFFER) === gl.FRAMEBUFFER_COMPLETE;
+            gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+            if (ok || !half) break;
+            half = false;
+          }
+          w = nw; h = nh;
+        },
+        dispose() { if (tex) gl.deleteTexture(tex); gl.deleteFramebuffer(fbo); }
+      };
+    }
+
+    function trackPointer() {
+      const p = { tx: 0, ty: 0, inside: false };
+      const read = (e) => {
+        const r = root.getBoundingClientRect();
+        const sx = root.offsetWidth / (r.width || 1), sy = root.offsetHeight / (r.height || 1);
+        p.tx = (e.clientX - r.left) * sx; p.ty = (e.clientY - r.top) * sy;
+        p.inside = e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.bottom;
+      };
+      const out = (e) => { if (!e.relatedTarget) p.inside = false; };
+      window.addEventListener('pointermove', read, { passive: true });
+      window.addEventListener('pointerdown', read, { passive: true });
+      document.addEventListener('pointerout', out);
+      return p;
+    }
+
+    const field = link(FIELD_SRC, 'field');
+    const finish = link(FINISH_SRC, 'finish');
+    if (!field || !finish) return;
+    const uf = locations(field, ['uRes', 'uTime', 'uC1', 'uC2', 'uSize', 'uAngle', 'uMouse', 'uOn', 'uReach', 'uVel']);
+    const un = locations(finish, ['uField', 'uRes', 'uTime', 'uBg', 'uPaper', 'uIntensity']);
+    const vao = gl.createVertexArray();
+    gl.bindVertexArray(vao);
+    const target = fieldTarget();
+    const ptr = trackPointer();
+
+    // Brand palette (see catalog.css / index.html accents) and a subdued intensity.
+    // Less ginger/orange, more chocolate: darker, muted toffee-and-cacao tones.
+    const BG = parseColor('#180F01');      // card background
+    const C1 = parseColor('#F2E3CB');      // white-chocolate accent (pale ivory, not orange)
+    const C2 = parseColor('#3B2414');      // dark-chocolate accent (deep cacao, not ginger)
+    // The mix() between these two across the layered noise naturally passes through every
+    // shade in between — including a milk-chocolate midtone — without needing a 3rd colour.
+    const SPEED = 8 / 50, SIZE = 60 / 100, ANGLE = (-105 * Math.PI) / 180, HOVER = 25 / 100, REACH = 220;
+    const INTENSITY = 0.32;   // brightened back up a bit — 0.22 read as too dull/dark
+
+    let mx = 0, my = 0, vx = 0, vy = 0, on = 0, last = -1, clock = 0;
+
+    function render(now) {
+      requestAnimationFrame(render);
+      const dt = last < 0 ? 0 : clampN((now - last) / 1000, 0, 0.05);
+      last = now;
+      clock = (clock + dt * SPEED) % 3600;
+
+      const dpr = Math.min(window.devicePixelRatio || 1, MAX_DPR);
+      const cw = canvas.clientWidth || 1, ch = canvas.clientHeight || 1;
+      const bw = Math.max(1, Math.round(cw * dpr)), bh = Math.max(1, Math.round(ch * dpr));
+      if (canvas.width !== bw || canvas.height !== bh) { canvas.width = bw; canvas.height = bh; }
+      target.resize(Math.max(1, Math.round(bw / 2)), Math.max(1, Math.round(bh / 2)));
+
+      const present = ptr.inside ? 1 : 0;
+      if (present && on < 0.02) { mx = ptr.tx; my = ptr.ty; }
+      on += (present - on) * (1 - Math.exp(-dt * 5));
+      const k = 1 - Math.exp(-dt * 16);
+      const nx = mx + (ptr.tx - mx) * k, ny = my + (ptr.ty - my) * k;
+      if (dt > 0) {
+        const kv = 1 - Math.exp(-dt * 8);
+        vx += ((nx - mx) / dt - vx) * kv; vy += ((ny - my) / dt - vy) * kv;
+      }
+      mx = nx; my = ny;
+      const vLen = Math.hypot(vx, vy) / ch, vCap = vLen > 3 ? 3 / vLen : 1;
+
+      gl.bindFramebuffer(gl.FRAMEBUFFER, target.fbo);
+      gl.viewport(0, 0, target.width(), target.height());
+      gl.useProgram(field);
+      gl.uniform2f(uf.uRes, target.width(), target.height());
+      gl.uniform1f(uf.uTime, clock);
+      gl.uniform3f(uf.uC1, C1[0], C1[1], C1[2]);
+      gl.uniform3f(uf.uC2, C2[0], C2[1], C2[2]);
+      gl.uniform1f(uf.uSize, SIZE);
+      gl.uniform1f(uf.uAngle, ANGLE);
+      gl.uniform2f(uf.uMouse, (mx - cw / 2) / ch, (ch / 2 - my) / ch);
+      gl.uniform1f(uf.uOn, on * HOVER);
+      gl.uniform1f(uf.uReach, REACH / ch);
+      gl.uniform2f(uf.uVel, (vx / ch) * vCap, (-vy / ch) * vCap);
+      gl.drawArrays(gl.TRIANGLES, 0, 3);
+
+      gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+      gl.viewport(0, 0, bw, bh);
+      gl.useProgram(finish);
+      gl.activeTexture(gl.TEXTURE0);
+      gl.bindTexture(gl.TEXTURE_2D, target.texture());
+      gl.uniform1i(un.uField, 0);
+      gl.uniform2f(un.uRes, bw, bh);
+      gl.uniform1f(un.uTime, clock);
+      gl.uniform3f(un.uBg, BG[0], BG[1], BG[2]);
+      gl.uniform1f(un.uPaper, 0);
+      gl.uniform1f(un.uIntensity, INTENSITY);
+      gl.drawArrays(gl.TRIANGLES, 0, 3);
+    }
+    requestAnimationFrame(render);
+  })();
+</script>
 </body>
 </html>

@@ -837,7 +837,7 @@
     display:flex;align-items:center;justify-content:center;
     width:100%;max-width:360px;height:66px;
     background:#CDCBC7;border:2px solid #2B2620;border-radius:15px;
-    font-family:'Inter',sans-serif;font-weight:700;font-size:25px;color:#2B2620;
+    font-family:'Inter',sans-serif;font-weight:700;font-size:21px;color:#2B2620;
     text-align:center;cursor:pointer;
     --reveal-bg:#2B2620;--reveal-text:#CDCBC7;--dot-shadow:#CDCBC7;
   }
@@ -865,30 +865,31 @@
   .footer-logo2{display:inline-flex;flex-direction:column;align-items:flex-start;margin-bottom:18px}
   .footer-logo2 .word{
     font-family:'GOST','Inter',sans-serif;font-weight:400;
-    font-size:7.75rem;letter-spacing:-.09em;white-space:nowrap;line-height:normal;
+    font-size:7.5rem;letter-spacing:-.09em;white-space:nowrap;line-height:normal;
     color:#CDCBC7;margin-bottom:-.3em;
   }
   .footer-logo2 .word .edge{font-size:1.5625em}
   .footer-logo2 .sub{
-    display:block;font-family:'Inter',sans-serif;font-weight:400;font-size:2rem;
+    display:block;font-family:'Inter',sans-serif;font-weight:400;font-size:1.75rem;
     text-transform:uppercase;color:#fff;line-height:normal;
   }
-  .footer-brand p{margin:0;font-family:'Inter',sans-serif;font-weight:300;font-size:17px;line-height:1.4;color:#CDCBC7}
+  .footer-brand p{margin:0;font-family:'Inter',sans-serif;font-weight:300;font-size:13px;line-height:1.4;color:#CDCBC7}
   .footer-col-label{
     display:block;margin-bottom:22px;
-    font-family:'Inter',sans-serif;font-weight:700;font-size:13px;
+    font-family:'Inter',sans-serif;font-weight:700;font-size:9px;
     letter-spacing:.14em;text-transform:uppercase;color:var(--accent);
   }
-  .footer-nav{list-style:none;display:flex;flex-direction:column;gap:10px;font-family:'Inter',sans-serif;font-weight:300;font-size:20px;letter-spacing:0.4px;color:#CDCBC7}
+  .footer-nav{list-style:none;display:flex;flex-direction:column;gap:10px;font-family:'Inter',sans-serif;font-weight:300;font-size:16px;letter-spacing:0.4px;color:#CDCBC7}
   .footer-nav a{line-height:1.2;transition:opacity .2s}
   .footer-nav a:hover{opacity:.7}
-  /* gap widened from 20px so this column's total height (4 rows) lands exactly on .footer-nav's
-     (9 links, 10px gap) — measured empirically, holds at any zoom since both gaps are plain
-     declared px scaled the same way by the site's zoom-based responsive sizing. */
-  .footer-contacts{list-style:none;padding-left:0;display:flex;flex-direction:column;gap:33.3px;font-family:'Inter',sans-serif;color:#CDCBC7;max-width:659px}
+  /* gap re-tuned (was 33.3px at 20px font) so this column's total height still lands exactly on
+     .footer-nav's after both columns' text shrank 3pt — measured empirically again, holds at any
+     zoom since both gaps are plain declared px scaled the same way by the site's zoom-based
+     responsive sizing. */
+  .footer-contacts{list-style:none;padding-left:0;display:flex;flex-direction:column;gap:30.66px;font-family:'Inter',sans-serif;color:#CDCBC7;max-width:659px}
   .footer-contacts li{display:flex;flex-direction:column;gap:5px}
-  .footer-contacts .fc-label{font-weight:500;font-size:20px;letter-spacing:0.48px}
-  .footer-contacts .fc-value{font-weight:300;font-size:20px;letter-spacing:0.4px;line-height:1.2}
+  .footer-contacts .fc-label{font-weight:500;font-size:16px;letter-spacing:0.48px}
+  .footer-contacts .fc-value{font-weight:300;font-size:16px;letter-spacing:0.4px;line-height:1.2}
 
   /* Giant hollow repeat of the logotype, purely decorative — sized with vw so it scales with the
      viewport at any zoom level, clipped by footer's own overflow so it can never cause horizontal
@@ -900,7 +901,7 @@
   .footer-watermark{
     width:max-content;margin-left:auto;
     font-family:'GOST','Inter',sans-serif;font-weight:400;
-    font-size:clamp(56px,13vw,220px);line-height:1;letter-spacing:-.03em;
+    font-size:clamp(52px,13vw,216px);line-height:1;letter-spacing:-.03em;
     white-space:nowrap;user-select:none;pointer-events:none;
     color:rgba(205,203,199,.05);-webkit-text-stroke:1px rgba(205,203,199,.16);
   }
@@ -919,7 +920,7 @@
     text-transform:uppercase;color:inherit;-webkit-text-stroke:inherit;
   }
   .footer-bottom{margin-top:40px;padding:24px 0;border-top:1px solid rgba(205,203,199,.14)}
-  .footer-bottom p{margin:0;font-family:'Inter',sans-serif;font-size:.85rem;color:rgba(205,203,199,.55)}
+  .footer-bottom p{margin:0;font-family:'Inter',sans-serif;font-size:.6rem;color:rgba(205,203,199,.55)}
 
   /* Contact modal */
   .modal-backdrop{

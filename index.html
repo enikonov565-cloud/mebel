@@ -874,19 +874,22 @@
     text-transform:uppercase;color:#fff;line-height:normal;
   }
   .footer-brand p{margin:0;font-family:'Inter',sans-serif;font-weight:300;font-size:13px;line-height:1.4;color:#CDCBC7}
+  /* .footer-brand (logo + text + button) is the tallest column, so stretch the other two
+     columns' own boxes to match its height (align-self:stretch works off the row's hypothetical
+     cross-size regardless of .footer-grid's own align-items), then margin-top:auto on the list
+     inside each pushes it down to sit flush with that shared bottom edge, while the «навигация»/
+     «контакты» label above it stays put at the top — a guaranteed-exact match by construction,
+     not a tuned px value that drifts whenever the column's own content height changes. */
+  .footer-col{display:flex;flex-direction:column;align-self:stretch}
   .footer-col-label{
     display:block;margin-bottom:22px;
     font-family:'Inter',sans-serif;font-weight:700;font-size:9px;
     letter-spacing:.14em;text-transform:uppercase;color:var(--accent);
   }
-  .footer-nav{list-style:none;display:flex;flex-direction:column;gap:10px;font-family:'Inter',sans-serif;font-weight:300;font-size:16px;letter-spacing:0.4px;color:#CDCBC7}
+  .footer-nav{list-style:none;display:flex;flex-direction:column;gap:10px;margin-top:auto;font-family:'Inter',sans-serif;font-weight:300;font-size:16px;letter-spacing:0.4px;color:#CDCBC7}
   .footer-nav a{line-height:1.2;transition:opacity .2s}
   .footer-nav a:hover{opacity:.7}
-  /* gap re-tuned (was 33.3px at 20px font) so this column's total height still lands exactly on
-     .footer-nav's after both columns' text shrank 3pt — measured empirically again, holds at any
-     zoom since both gaps are plain declared px scaled the same way by the site's zoom-based
-     responsive sizing. */
-  .footer-contacts{list-style:none;padding-left:0;display:flex;flex-direction:column;gap:30.66px;font-family:'Inter',sans-serif;color:#CDCBC7;max-width:659px}
+  .footer-contacts{list-style:none;padding-left:0;display:flex;flex-direction:column;gap:20px;margin-top:auto;font-family:'Inter',sans-serif;color:#CDCBC7;max-width:659px}
   .footer-contacts li{display:flex;flex-direction:column;gap:5px}
   .footer-contacts .fc-label{font-weight:500;font-size:16px;letter-spacing:0.48px}
   .footer-contacts .fc-value{font-weight:300;font-size:16px;letter-spacing:0.4px;line-height:1.2}

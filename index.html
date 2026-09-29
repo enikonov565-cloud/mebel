@@ -919,7 +919,10 @@
     font-family:'Inter',sans-serif;font-weight:400;font-size:.26em;letter-spacing:.03em;
     text-transform:uppercase;color:inherit;-webkit-text-stroke:inherit;
   }
-  .footer-bottom{margin-top:40px;padding:24px 0;border-top:1px solid rgba(205,203,199,.14)}
+  /* left padding = .container's own 60px + 80px (60pt) requested extra offset from the edge;
+     right restored to the container's 60px too, since the padding shorthand here would otherwise
+     override (not add to) .container's own padding on this same element. */
+  .footer-bottom{margin-top:40px;padding:24px 60px 24px 140px;border-top:1px solid rgba(205,203,199,.14)}
   .footer-bottom p{margin:0;font-family:'Inter',sans-serif;font-size:.6rem;color:rgba(205,203,199,.55)}
 
   /* Contact modal */

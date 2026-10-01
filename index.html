@@ -1060,9 +1060,22 @@
     .stats-grid::after{display:none}
     .stats-grid::before{display:none}
     .why-grid{grid-template-columns:1fr;grid-template-rows:none;gap:24px}
+    /* Single column puts cell 4 (text) and cell 5 (text) directly back to back — on the 4-col
+       desktop grid they sit in different rows with a divider line between them, so the collision
+       only exists once everything collapses to one column. Swap each with its media neighbour so
+       photo/video and text keep alternating instead of stacking two empty-feeling text squares. */
+    .why-cell:nth-child(9){order:5}
+    .why-cell:nth-child(10){order:4}
+    .why-cell:nth-child(11){order:7}
+    .why-cell:nth-child(12){order:6}
     .why-cell{aspect-ratio:1/1}
     .why-cell img.nightstand{object-position:center 30% !important}
-    .why-cell.text p{font-size:24px;max-width:100%}
+    .why-cell.text p{font-size:24px;max-width:100%;width:100%}
+    /* the "Быстрая доставка..." cell is the only one with hard-coded <br> line breaks (sized for
+       its desktop position) — at this breakpoint every cell is the same square, so let it wrap
+       naturally like its siblings instead of shrink-wrapping to its shortest forced line and
+       looking off-centre next to them. */
+    .why-cell.text p br{display:none}
     .why-inner{gap:56px}
     #about,#why-us,#services,#materials,#process,#benefits,#portfolio,#reviews,#faq,#contact{padding:72px 0;scroll-margin-top:88px}
     footer{padding:72px 0 0}
@@ -1262,7 +1275,7 @@
       <div class="why-cell"><img class="nightstand" src="why-photo-4.jpg" alt="Прикроватная тумба с лампой" style="object-position:center 30%"></div>
       <div class="why-cell text"><p>Фабричное качество производимой мебели</p></div>
 
-      <div class="why-cell text"><p>Быстрая<br>доставка и&nbsp;сборка<br>мебели на&nbsp;дому</p></div>
+      <div class="why-cell text"><p>Быстрая <br>доставка и&nbsp;сборка <br>мебели на&nbsp;дому</p></div>
       <div class="why-cell"><img src="why-photo-3.jpg" alt="Сборка встроенного стеллажа" style="object-position:35% 40%"></div>
       <div class="why-cell text"><p>Гарантия по&nbsp;договору на&nbsp;мебель 3&nbsp;года</p></div>
       <div class="why-cell"><video autoplay muted loop playsinline preload="metadata" poster="why-photo-2.jpg" aria-label="Обеденный стол с мягкими стульями" style="object-position:50% 50%"><source src="why-table-mobile.mp4" media="(max-width:640px)"><source src="why-table.mp4"></video></div>

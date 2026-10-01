@@ -378,7 +378,10 @@ body{background:#110B00;color:#CDCBC7}
 @media (max-width:800px){
   .model-modal-card{flex-direction:column;aspect-ratio:auto;max-height:92vh;overflow-y:auto}
   .model-modal-photo{height:280px;flex:none}
-  .model-modal-info{padding:32px 24px}
+  /* The slideshow dots (.mgc-dots) sit 24px up from the photo's own bottom edge, so the 32px
+     top padding here only reads as ~16px of actual breathing room below them — title looked
+     glued to the photo. Push padding-top out so the gap below the dots is a true 20pt. */
+  .model-modal-info{padding:calc(16px + 20pt) 24px 32px}
   .model-modal-info h3{font-size:22px}
   .model-modal-specs{font-size:18px}
   .model-modal-cta{font-size:18px;padding:10px 22px}

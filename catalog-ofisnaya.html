@@ -73,14 +73,14 @@
 
 <!-- Item cards — Figma node 419:202 (same model-gallery pattern as catalog-korpusnaya.html /
      catalog-eksklyuzivnaya.html / catalog-dveri.html). Name/description are specific to what is
-     on each photo — no invented specs, and no "МДФ" (site's material story is solid wood/veneer). -->
+     on each photo — no invented specs, and no "МДФ"/"шпон" (site's material story is solid wood only). -->
 <section class="cat-items">
   <div class="container">
     <div class="model-gallery">
       <button type="button" class="model-arrow prev" aria-label="Предыдущая модель" onclick="document.getElementById('modelTrack').scrollBy({left:-541,behavior:'smooth'})">&#8592;</button>
       <div class="model-track" id="modelTrack">
         <article class="model-card">
-          <img class="model-photo" src="ofisnaya-pereg-stol.jpg" alt="Переговорный стол с радиальным рисунком шпона">
+          <img class="model-photo" src="ofisnaya-pereg-stol.jpg" alt="Переговорный стол с радиальным наборным рисунком">
           <h3>Переговорный стол</h3>
           <button type="button" class="model-btn dot-btn model-details-btn" data-model="pereg-stol">рассмотреть подробнее<span class="model-arrow-ico">→</span></button>
         </article>
@@ -309,8 +309,8 @@
   const modelGallery = createCursorGallery(document.getElementById('modelGallery'));
 
   // One detail record per model. Specs describe only what's visible in the photo — nothing
-  // invented — and avoid "МДФ": the site's material story is solid wood (массив) / veneer
-  // (шпон) / enamel finish (эмаль) with named species, never MDF.
+  // invented — and avoid "МДФ"/"шпон": the site's material story is solid wood (массив) with
+  // named species and an enamel finish (эмаль) where relevant, never MDF or veneer.
   const MODELS = {
     'pereg-stol': {
       title: 'Переговорный стол',

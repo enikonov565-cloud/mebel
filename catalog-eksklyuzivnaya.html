@@ -73,7 +73,7 @@
 
 <!-- Item cards — Figma node 419:90 (3 real photos from the file, same model-gallery pattern as
      catalog-korpusnaya.html / Figma node 419:34). Name/description are specific to what is on
-     each photo — no invented specs, and no "МДФ" (site's material story is solid wood/veneer). -->
+     each photo — no invented specs, and no "МДФ"/"шпон" (site's material story is solid wood only). -->
 <section class="cat-items">
   <div class="container">
     <div class="model-gallery">
@@ -322,8 +322,9 @@
 
   // One detail record per model. Each has a single photo so far (the gallery arrows/dots hide
   // themselves automatically when there's only one image). Specs describe only what's visible
-  // in the photo — nothing invented — and avoid "МДФ": the site's material story is solid wood
-  // (массив) / veneer (шпон) / enamel finish (эмаль) with named species, never MDF.
+  // in the photo — nothing invented — and avoid "МДФ"/"шпон": the site's material story is
+  // solid wood (массив) with named species and an enamel finish (эмаль) where relevant, never MDF
+  // or veneer.
   const MODELS = {
     bar: {
       title: 'Барный шкаф',

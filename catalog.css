@@ -385,16 +385,21 @@ body{background:#110B00;color:#CDCBC7}
    layout above (photo left, info right via container-query/cqw sizing), which already scales
    down cleanly to this width on its own. Only true mobile (<=640px) switches to a stacked
    column, since a side-by-side row has no room to breathe at phone widths. */
+/* Figma node 604:377 ("мебель 20") — the mobile card is two independently-rounded panels (a tall
+   portrait photo, then a solid info panel) that overlap by 16px, not one unified stacked card
+   with a gap; the "заказать подобную" button isn't part of this mobile design at all. */
 @media (max-width:640px){
-  .model-modal-card{flex-direction:column;aspect-ratio:auto;max-height:92vh;overflow-y:auto}
-  /* Stretched taller (was 280px) so the photo reads as a real photo instead of a thin strip,
-     now that the row-vs-column split happens at 640px instead of 800px. */
-  .model-modal-photo{height:340px;flex:none}
-  /* The slideshow dots (.mgc-dots) sit 24px up from the photo's own bottom edge, so the 32px
-     top padding here only reads as ~16px of actual breathing room below them — title looked
-     glued to the photo. Push padding-top out so the gap below the dots is a true 20pt. */
-  .model-modal-info{padding:calc(16px + 20pt) 24px 28px}
-  .model-modal-info h3{font-size:18px}
-  .model-modal-specs{font-size:14px}
-  .model-modal-cta{font-size:14px;padding:8px 18px}
+  .model-modal-card{
+    flex-direction:column;aspect-ratio:auto;max-height:92vh;overflow-y:auto;
+    width:78vw;max-width:336px;
+  }
+  .model-modal-photo{flex:none;aspect-ratio:336/572;border-radius:15px;overflow:hidden}
+  .model-modal-info{
+    background:#CDCBC7;border-radius:15px;margin-top:-16px;
+    padding:27px 11px 10px 14px;overflow:visible;justify-content:flex-start;
+  }
+  .model-modal-text{gap:10px}
+  .model-modal-info h3{font-size:22px;line-height:1}
+  .model-modal-specs{font-size:18px;line-height:1.2;letter-spacing:.36px;gap:0}
+  .model-modal-cta{display:none}
 }

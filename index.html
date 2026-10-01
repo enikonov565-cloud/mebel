@@ -1007,6 +1007,9 @@
     .stats-grid{margin-left:0;width:100%}
     .about-photo-img{order:-1;width:100%;height:auto;aspect-ratio:817/862;max-width:817px}
     .about-headline,.why-head{justify-content:flex-start;flex-wrap:wrap}
+    /* same forced-<br>-fights-text-wrap:balance issue as the services intro: drop it here and
+       let balance pick its own break points instead of wrapping two fixed halves separately. */
+    .why-head p br{display:none}
     .why-grid{grid-template-columns:repeat(2,1fr);grid-template-rows:none;grid-auto-rows:auto}
     .why-cell{position:relative;aspect-ratio:4/3}
     .why-cell img,.why-cell video{position:absolute;inset:0}
@@ -1265,7 +1268,7 @@
   <div class="container why-inner">
     <div class="why-head">
       <h2>Почему выбирают нас</h2>
-      <p>Показываем не&nbsp;только рекламный ракурс, но&nbsp;и&nbsp;рабочую сторону,<br>внутреннее наполнение и&nbsp;этапы изготовления.</p>
+      <p>Показываем не&nbsp;только рекламный ракурс, но&nbsp;и&nbsp;рабочую сторону, <br>внутреннее наполнение и&nbsp;этапы изготовления.</p>
     </div>
 
     <div class="why-grid">

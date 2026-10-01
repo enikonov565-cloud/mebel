@@ -1145,11 +1145,11 @@
       position:relative;z-index:2;left:auto;right:auto;top:auto;bottom:auto;width:100%;max-width:100%;min-width:0;
     }
     .hero-eyebrow{margin-top:24px}
-    /* Headline pulled down from the very top of the screen via margin-top:auto (eats the leftover
-       space above it instead of sitting flush under the header), and the button gets the same
-       treatment below the stats — so the content reads as "upper-middle title, lower-middle
-       stats, button at the bottom" rather than "stuck to the top" or a rigid 3-way even split. */
-    .hero-headline{margin-top:auto}
+    /* margin-top:auto depends on the flex container actually having leftover space to distribute —
+       on a real phone (shorter usable viewport once Safari's own chrome is subtracted, and content
+       close to or taller than that) there's little to none, so the "auto" push collapsed to ~0 and
+       the headline stayed flush under the header. A fixed push works unconditionally. */
+    .hero-headline{margin-top:72px}
     /* Stats move to the right edge, stacked one above another (closer to the desktop composition,
        where .hero-stats2 is a right-anchored column too) instead of a centered horizontal row. */
     .hero-stats2{

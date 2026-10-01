@@ -1123,8 +1123,8 @@
        pinned near the bottom) without trying to reuse its absolute percentages. */
     .hero{
       aspect-ratio:auto;min-height:100vh;min-height:100dvh;
-      display:flex;flex-direction:column;
-      padding:110px 20px 32px;
+      display:flex;flex-direction:column;justify-content:flex-end;
+      padding:110px 20px 40pt;
     }
     /* .hero::before's desktop gradient only darkens the right ~50% and the bottom ~38% of the
        frame — tuned for the absolutely-positioned desktop layout, where the headline sits
@@ -1144,18 +1144,26 @@
          changed. */
       position:relative;z-index:2;left:auto;right:auto;top:auto;bottom:auto;
     }
-    /* Headline and stats now sit in one row (.hero-top-row, see markup) instead of stacked, so
-       they read as "one level" — and a single vh-based push on the row (not a fixed px value on
-       the headline alone) moves that whole group down together, scaling with the actual screen
-       instead of depending on leftover flex space the way margin-top:auto did. */
+    /* Headline and stats sit in one row (.hero-top-row, see markup) instead of stacked, so they
+       read as "one level". .hero now uses justify-content:flex-end instead of a margin-top push on
+       this row — that pins the whole group (row + button) flush to the bottom via the hero's own
+       40pt padding-bottom, reliably, regardless of how much leftover space the flex column has
+       (unlike margin-top:auto, which needs genuine leftover space to push anything). */
     .hero-top-row{
       display:flex;flex-direction:row;flex-wrap:nowrap;justify-content:space-between;align-items:flex-end;
-      gap:10px;width:100%;max-width:100%;margin-top:18vh;
+      gap:10px;width:100%;max-width:100%;
     }
     .hero-headline{width:auto;flex:1 1 auto;min-width:0}
     .hero-headline h1{font-size:1.3rem}
-    .hero-headline .hero-sub{font-size:.95rem}
+    /* Same line-height as h1 (was the default 1.3 vs. h1's 0.9) so the gap from the headline's
+       last line down to this line matches the gap between the headline's own two lines instead of
+       reading as a bigger jump. */
+    .hero-headline .hero-sub{font-size:.95rem;line-height:0.9}
     .hero-eyebrow{margin-top:16px;font-size:11px}
+    /* the forced <br> (authored for the desktop one-line/nowrap layout) was chopping this into two
+       independently-wrapped halves — 4 lines once squeezed into the narrower column this shares
+       with the headline. Drop it and let text-wrap:balance produce 3 even lines instead. */
+    .hero-eyebrow br{display:none}
     /* Stats stay a right-hand stack (number centered over its own label), just narrower now that
        it shares the row with the headline instead of spanning the full width on its own line. */
     .hero-stats2{
@@ -1215,13 +1223,10 @@
     .process-text{gap:28px}
     .process-text h3{font-size:24px}
     .process-checklist li{font-size:16px;padding:8px 4px}
-    .hero{padding:110px 20px 32px}
-    .hero-eyebrow{font-size:13px}
-    .hero-headline h1{font-size:1.5rem}
-    .hero-headline .hero-sub{font-size:calc(1.2rem - 3px)}
-    .hero-stats2{gap:16px}
-    .hero-stat2 b{font-size:1.8rem}
-    .hero-stat2 span{font-size:11px;white-space:normal}
+    /* stale sizing from an earlier (pre side-by-side) version of the mobile hero — it fought the
+       <=1279px rules above (e.g. h1 back up to 1.5rem, wide enough to wrap onto a 3rd line; the
+       40pt padding-bottom back down to 32px), so the bottom gap and line counts weren't what they
+       looked like from the <=1279px CSS alone. Removed; the <=1279px rules already cover mobile. */
     .hero-cta a{font-size:16px;height:50px}
     .about-cta a{width:100%;height:46px;padding:9px 20px;font-size:16px}
     #about,#why-us,#services,#materials,#process,#benefits,#portfolio,#reviews,#faq,#contact{padding:56px 0;scroll-margin-top:88px}
@@ -1307,7 +1312,7 @@
     <div class="hero-headline">
       <h1>Уникальная мебель<br>из&nbsp;массива</h1>
       <p class="hero-sub">по&nbsp;Вашим размерам</p>
-      <p class="hero-eyebrow">Собственное производство полного цикла:<br>проектируем, изготавливаем, монтируем</p>
+      <p class="hero-eyebrow">Собственное производство полного цикла: <br>проектируем, изготавливаем, монтируем</p>
     </div>
     <div class="hero-stats2">
       <div class="hero-stat2"><b>0 ₽</b><span>замер и&nbsp;дизайн-проект</span></div>

@@ -1004,6 +1004,14 @@
   @media (max-width:1279px){
     .about-row2{flex-direction:column;align-items:center;gap:56px}
     .about-stats-col{width:100%;gap:56px}
+    /* .about-stats-col has align-items:center (never overridden here), so its flex children —
+       including .about-cta — never stretch to the column's own full width; they shrink-wrap to
+       their content instead. .about-cta a{width:100%} below then resolves against that
+       shrink-wrapped (button-sized) parent instead of the real column width, so the button hugs
+       its own label ("перейти в каталог") in a sea of empty space rather than matching the width
+       every other full-width mobile button has. Give the wrapper an explicit width so the
+       percentage below has something real to resolve against. */
+    .about-cta{width:100%}
     .stats-grid{margin-left:0;width:100%}
     .about-photo-img{order:-1;width:100%;height:auto;aspect-ratio:817/862;max-width:817px}
     .about-headline,.why-head{justify-content:flex-start;flex-wrap:wrap}

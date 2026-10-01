@@ -1115,14 +1115,24 @@
     .svc-head,.mat-head,.process-head,.benefits-head,.works-head,.reviews-head,.faq-head,.contact-head{margin-bottom:36px}
     .footer-cta-btn{width:290px;font-size:20px;height:44px}
     .nav-cta{width:165px;height:24px;font-size:11px;border-radius:15pt}
-    .hero{aspect-ratio:auto;min-height:0;padding:140px 24px 40px}
+    /* Rebuilt as a full-screen flex column instead of reusing the desktop frame's content-driven
+       height: real phone height varies a lot, and squeezing a fixed-aspect desktop frame down to
+       375px wide was producing a very short, cramped hero. One screen tall, three slots spaced
+       top/middle/bottom (headline, stats, button) via justify-content:space-between — matches the
+       desktop composition's spirit (headline anchored one corner, stats the opposite, button
+       pinned near the bottom) without trying to reuse its absolute percentages. */
+    .hero{
+      aspect-ratio:auto;min-height:100vh;min-height:100dvh;
+      display:flex;flex-direction:column;justify-content:space-between;
+      padding:110px 20px 32px;
+    }
     /* .hero::before's desktop gradient only darkens the right ~50% and the bottom ~38% of the
        frame — tuned for the absolutely-positioned desktop layout, where the headline sits
        bottom-left (inside that darkened band) and nothing overlaps the busy middle of the shot.
-       On mobile every text block (eyebrow, headline, stats, button) stacks down the full height
-       of the hero instead, so most of it sat directly over whatever the video happened to be
-       showing with no scrim at all — illegible wherever the footage was bright or busy. Replace
-       it with one gradient that darkens the whole frame top-to-bottom instead. */
+       On mobile every text block (eyebrow, headline, stats, button) spans close to the full
+       height of the hero instead, so most of it sat directly over whatever the video happened to
+       be showing with no scrim at all — illegible wherever the footage was bright or busy.
+       Replace it with one gradient that darkens the whole frame top-to-bottom instead. */
     .hero::before{
       background:linear-gradient(180deg, rgba(17,11,0,.6) 0%, rgba(17,11,0,.72) 55%, rgba(17,11,0,.85) 100%);
     }
@@ -1135,8 +1145,13 @@
       position:relative;z-index:2;left:auto;right:auto;top:auto;bottom:auto;width:100%;max-width:100%;min-width:0;
     }
     .hero-eyebrow{margin-top:24px}
-    .hero-headline{margin-bottom:40px}
-    .hero-stats2{flex-direction:row;flex-wrap:wrap;justify-content:center;gap:24px;margin-bottom:32px}
+    /* Stats move to the right edge, stacked one above another (closer to the desktop composition,
+       where .hero-stats2 is a right-anchored column too) instead of a centered horizontal row. */
+    .hero-stats2{
+      flex-direction:column;align-items:flex-end;align-self:flex-end;
+      width:max-content;max-width:100%;gap:18px;
+    }
+    .hero-stat2{align-items:flex-end;text-align:right}
     .hero-stat-divider{display:none}
   }
   /* Mobile */

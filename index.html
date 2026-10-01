@@ -1158,7 +1158,11 @@
     /* Same line-height as h1 (was the default 1.3 vs. h1's 0.9) so the gap from the headline's
        last line down to this line matches the gap between the headline's own two lines instead of
        reading as a bigger jump. */
-    .hero-headline .hero-sub{font-size:.95rem;line-height:0.9}
+    /* Matching line-height alone (0.9 on both) still left a ~3px shorter gap here than between the
+       headline's own two lines, since h1's -4px margin-bottom and the half-leading math don't
+       scale the same way across two different font sizes. Topped up with a small margin-top so the
+       three lines read as evenly spaced. */
+    .hero-headline .hero-sub{font-size:.95rem;line-height:0.9;margin-top:3.2px}
     .hero-eyebrow{margin-top:16px;font-size:11px}
     /* the forced <br> (authored for the desktop one-line/nowrap layout) was chopping this into two
        independently-wrapped halves — 4 lines once squeezed into the narrower column this shares

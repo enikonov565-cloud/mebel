@@ -145,6 +145,11 @@ body{background:#110B00;color:#CDCBC7}
 }
 @media (max-width:640px){
   .container{padding:0 20pt}
+  /* Two side-by-side columns leave ~140px per label at this width — too narrow for "Как мы
+     работаем", "Эксклюзивная мебель" etc., which wrapped to 2 lines. Stack the columns instead,
+     same fix already applied on index.html's own nav-links. */
+  .nav-links{flex-direction:column}
+  .nav-links-col+.nav-links-col{border-left:none;border-top:1px solid var(--line)}
   .nav{padding:10px 20pt}
   .nav-left{gap:16px}
   .logo .word{font-size:1.35rem}
@@ -166,6 +171,9 @@ body{background:#110B00;color:#CDCBC7}
   .cat-cta-box p{font-size:22px}
   .svc-btn{font-size:18px;height:60px}
   .footer-logo2 .word{font-size:3rem}
+  /* .word got a mobile step but .sub ("интерьер") didn't, so it stayed at the 1.875rem desktop
+     size (30px) — oversized next to the now-shrunk 3rem word above it. */
+  .footer-logo2 .sub{font-size:1.65rem}
   .modal-card{padding:28px 20px 22px}
   .cat-how,.cat-cta,.cat-items{padding-bottom:80px}
 }

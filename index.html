@@ -1116,6 +1116,16 @@
     .footer-cta-btn{width:290px;font-size:20px;height:44px}
     .nav-cta{width:165px;height:24px;font-size:11px;border-radius:15pt}
     .hero{aspect-ratio:auto;min-height:0;padding:140px 24px 40px}
+    /* .hero::before's desktop gradient only darkens the right ~50% and the bottom ~38% of the
+       frame — tuned for the absolutely-positioned desktop layout, where the headline sits
+       bottom-left (inside that darkened band) and nothing overlaps the busy middle of the shot.
+       On mobile every text block (eyebrow, headline, stats, button) stacks down the full height
+       of the hero instead, so most of it sat directly over whatever the video happened to be
+       showing with no scrim at all — illegible wherever the footage was bright or busy. Replace
+       it with one gradient that darkens the whole frame top-to-bottom instead. */
+    .hero::before{
+      background:linear-gradient(180deg, rgba(17,11,0,.6) 0%, rgba(17,11,0,.72) 55%, rgba(17,11,0,.85) 100%);
+    }
     .hero-eyebrow,.hero-headline,.hero-stats2,.hero-cta{
       /* position:relative (not static) so these keep a z-index above .hero::before's dark gradient
          scrim (z-index:1) — static elements always paint below any positioned sibling with a

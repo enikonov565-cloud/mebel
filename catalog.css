@@ -387,7 +387,9 @@ body{background:#110B00;color:#CDCBC7}
    column, since a side-by-side row has no room to breathe at phone widths. */
 /* Figma node 604:377 ("мебель 20") — the mobile card is two independently-rounded panels (a tall
    portrait photo, then a solid info panel) that overlap by 16px, not one unified stacked card
-   with a gap; the "заказать подобную" button isn't part of this mobile design at all. */
+   with a gap. The design file's frame doesn't include the "заказать подобную" button, but it's
+   wanted here too: pinned to the panel's bottom-right corner, 20pt in from each edge, in the
+   same outline style as the desktop card's button (not the filled mobile .model-btn style). */
 @media (max-width:640px){
   .model-modal-card{
     flex-direction:column;aspect-ratio:auto;max-height:92vh;overflow-y:auto;
@@ -395,11 +397,18 @@ body{background:#110B00;color:#CDCBC7}
   }
   .model-modal-photo{flex:none;aspect-ratio:336/572;border-radius:15px;overflow:hidden}
   .model-modal-info{
-    background:#CDCBC7;border-radius:15px;margin-top:-16px;
-    padding:27px 11px 10px 14px;overflow:visible;justify-content:flex-start;
+    background:#CDCBC7;border-radius:15px;margin-top:-16px;position:relative;
+    padding:27px 11px 68px 14px;overflow:visible;justify-content:flex-start;
   }
   .model-modal-text{gap:10px}
   .model-modal-info h3{font-size:22px;line-height:1}
   .model-modal-specs{font-size:18px;line-height:1.2;letter-spacing:.36px;gap:0}
-  .model-modal-cta{display:none}
+  /* Absolutely positioned (not a normal flex child) so its 20pt margins are exact regardless of
+     how tall the specs list is, instead of inheriting the text block's own tighter padding. */
+  .model-modal-cta{
+    position:absolute;right:20pt;bottom:20pt;margin:0;
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    border:2px solid #180F01;border-radius:15px;background:transparent;color:#180F01;
+    font-family:'Inter',sans-serif;font-weight:700;font-size:14px;padding:9px 18px;white-space:nowrap;
+  }
 }

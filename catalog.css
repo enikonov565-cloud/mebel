@@ -381,14 +381,20 @@ body{background:#110B00;color:#CDCBC7}
 .mgc-dots{position:absolute;left:50%;bottom:24px;transform:translateX(-50%);display:flex;gap:8px;pointer-events:none}
 .mgc-dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.4);transition:background .3s ease}
 .mgc-dot.active{background:#fff}
-@media (max-width:800px){
+/* Tablet (641-960px) deliberately gets no override here — it falls through to the desktop row
+   layout above (photo left, info right via container-query/cqw sizing), which already scales
+   down cleanly to this width on its own. Only true mobile (<=640px) switches to a stacked
+   column, since a side-by-side row has no room to breathe at phone widths. */
+@media (max-width:640px){
   .model-modal-card{flex-direction:column;aspect-ratio:auto;max-height:92vh;overflow-y:auto}
-  .model-modal-photo{height:280px;flex:none}
+  /* Stretched taller (was 280px) so the photo reads as a real photo instead of a thin strip,
+     now that the row-vs-column split happens at 640px instead of 800px. */
+  .model-modal-photo{height:340px;flex:none}
   /* The slideshow dots (.mgc-dots) sit 24px up from the photo's own bottom edge, so the 32px
      top padding here only reads as ~16px of actual breathing room below them — title looked
      glued to the photo. Push padding-top out so the gap below the dots is a true 20pt. */
-  .model-modal-info{padding:calc(16px + 20pt) 24px 32px}
-  .model-modal-info h3{font-size:22px}
-  .model-modal-specs{font-size:18px}
-  .model-modal-cta{font-size:18px;padding:10px 22px}
+  .model-modal-info{padding:calc(16px + 20pt) 24px 28px}
+  .model-modal-info h3{font-size:18px}
+  .model-modal-specs{font-size:14px}
+  .model-modal-cta{font-size:14px;padding:8px 18px}
 }

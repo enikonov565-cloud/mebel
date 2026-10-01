@@ -1123,7 +1123,7 @@
        pinned near the bottom) without trying to reuse its absolute percentages. */
     .hero{
       aspect-ratio:auto;min-height:100vh;min-height:100dvh;
-      display:flex;flex-direction:column;justify-content:space-between;
+      display:flex;flex-direction:column;
       padding:110px 20px 32px;
     }
     /* .hero::before's desktop gradient only darkens the right ~50% and the bottom ~38% of the
@@ -1145,14 +1145,21 @@
       position:relative;z-index:2;left:auto;right:auto;top:auto;bottom:auto;width:100%;max-width:100%;min-width:0;
     }
     .hero-eyebrow{margin-top:24px}
+    /* Headline pulled down from the very top of the screen via margin-top:auto (eats the leftover
+       space above it instead of sitting flush under the header), and the button gets the same
+       treatment below the stats — so the content reads as "upper-middle title, lower-middle
+       stats, button at the bottom" rather than "stuck to the top" or a rigid 3-way even split. */
+    .hero-headline{margin-top:auto}
     /* Stats move to the right edge, stacked one above another (closer to the desktop composition,
        where .hero-stats2 is a right-anchored column too) instead of a centered horizontal row. */
     .hero-stats2{
-      flex-direction:column;align-items:flex-end;align-self:flex-end;
+      flex-direction:column;align-self:flex-end;margin-top:48px;
       width:max-content;max-width:100%;gap:18px;
     }
-    .hero-stat2{align-items:flex-end;text-align:right}
+    /* each number centered over its own label, not flush with the stack's right edge */
+    .hero-stat2{align-items:center;text-align:center}
     .hero-stat-divider{display:none}
+    .hero-cta{margin-top:auto}
   }
   /* Mobile */
   @media (max-width:640px){

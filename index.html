@@ -1136,30 +1136,40 @@
     .hero::before{
       background:linear-gradient(180deg, rgba(17,11,0,.6) 0%, rgba(17,11,0,.72) 55%, rgba(17,11,0,.85) 100%);
     }
-    .hero-eyebrow,.hero-headline,.hero-stats2,.hero-cta{
+    .hero-eyebrow,.hero-headline,.hero-stats2,.hero-cta,.hero-top-row{
       /* position:relative (not static) so these keep a z-index above .hero::before's dark gradient
          scrim (z-index:1) — static elements always paint below any positioned sibling with a
          z-index regardless of DOM order, which is why the "рассчитать стоимость проекта" button's
          light fill was reading as washed-out/low-contrast here even though its own colors never
          changed. */
-      position:relative;z-index:2;left:auto;right:auto;top:auto;bottom:auto;width:100%;max-width:100%;min-width:0;
+      position:relative;z-index:2;left:auto;right:auto;top:auto;bottom:auto;
     }
-    .hero-eyebrow{margin-top:24px}
-    /* margin-top:auto depends on the flex container actually having leftover space to distribute —
-       on a real phone (shorter usable viewport once Safari's own chrome is subtracted, and content
-       close to or taller than that) there's little to none, so the "auto" push collapsed to ~0 and
-       the headline stayed flush under the header. A fixed push works unconditionally. */
-    .hero-headline{margin-top:72px}
-    /* Stats move to the right edge, stacked one above another (closer to the desktop composition,
-       where .hero-stats2 is a right-anchored column too) instead of a centered horizontal row. */
+    /* Headline and stats now sit in one row (.hero-top-row, see markup) instead of stacked, so
+       they read as "one level" — and a single vh-based push on the row (not a fixed px value on
+       the headline alone) moves that whole group down together, scaling with the actual screen
+       instead of depending on leftover flex space the way margin-top:auto did. */
+    .hero-top-row{
+      display:flex;flex-direction:row;flex-wrap:nowrap;justify-content:space-between;align-items:flex-end;
+      gap:10px;width:100%;max-width:100%;margin-top:18vh;
+    }
+    .hero-headline{width:auto;flex:1 1 auto;min-width:0}
+    .hero-headline h1{font-size:1.3rem}
+    .hero-headline .hero-sub{font-size:.95rem}
+    .hero-eyebrow{margin-top:16px;font-size:11px}
+    /* Stats stay a right-hand stack (number centered over its own label), just narrower now that
+       it shares the row with the headline instead of spanning the full width on its own line. */
     .hero-stats2{
-      flex-direction:column;align-self:flex-end;margin-top:48px;
-      width:max-content;max-width:100%;gap:18px;
+      flex-direction:column;align-items:center;
+      width:auto;flex:0 0 auto;min-width:0;gap:10px;
     }
-    /* each number centered over its own label, not flush with the stack's right edge */
+    .hero-stat2 b{font-size:1.3rem}
+    .hero-stat2 span{font-size:10px;white-space:normal}
     .hero-stat2{align-items:center;text-align:center}
-    .hero-stat-divider{display:none}
-    .hero-cta{margin-top:auto}
+    .hero-stat-divider{width:100%;max-width:120px}
+    /* Small fixed gap instead of margin-top:auto, so the button sits close under the row
+       ("опустить... ближе к кнопке") rather than being pinned to the very bottom edge regardless
+       of how far down the row above it already sits. */
+    .hero-cta{width:100%;margin-top:28px}
   }
   /* Mobile */
   @media (max-width:640px){
@@ -1288,17 +1298,24 @@
     <source src="hero-video-mobile.mp4" media="(max-width:640px)">
     <source src="hero-video.mp4">
   </video>
-  <div class="hero-headline">
-    <h1>Уникальная мебель<br>из&nbsp;массива</h1>
-    <p class="hero-sub">по&nbsp;Вашим размерам</p>
-    <p class="hero-eyebrow">Собственное производство полного цикла:<br>проектируем, изготавливаем, монтируем</p>
-  </div>
-  <div class="hero-stats2">
-    <div class="hero-stat2"><b>0 ₽</b><span>замер и&nbsp;дизайн-проект</span></div>
-    <div class="hero-stat-divider"></div>
-    <div class="hero-stat2"><b>15–25</b><span>дней на&nbsp;изготовление</span></div>
-    <div class="hero-stat-divider"></div>
-    <div class="hero-stat2"><b>10%</b><span>предоплата по&nbsp;договору</span></div>
+  <!-- .hero-top-row only matters at <=1279px (see mobile/tablet CSS): groups the headline and
+       stats onto one row, side by side, so they can be pushed down and lowered together as one
+       block instead of the headline sitting near the top and the stats separately below it.
+       Static (no position set), so it doesn't interfere with desktop's absolute positioning of
+       its two children, which still looks straight past it to .hero. -->
+  <div class="hero-top-row">
+    <div class="hero-headline">
+      <h1>Уникальная мебель<br>из&nbsp;массива</h1>
+      <p class="hero-sub">по&nbsp;Вашим размерам</p>
+      <p class="hero-eyebrow">Собственное производство полного цикла:<br>проектируем, изготавливаем, монтируем</p>
+    </div>
+    <div class="hero-stats2">
+      <div class="hero-stat2"><b>0 ₽</b><span>замер и&nbsp;дизайн-проект</span></div>
+      <div class="hero-stat-divider"></div>
+      <div class="hero-stat2"><b>15–25</b><span>дней на&nbsp;изготовление</span></div>
+      <div class="hero-stat-divider"></div>
+      <div class="hero-stat2"><b>10%</b><span>предоплата по&nbsp;договору</span></div>
+    </div>
   </div>
   <div class="hero-cta">
     <a href="#contact" class="dot-btn calc-cta">

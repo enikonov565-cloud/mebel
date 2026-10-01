@@ -1109,7 +1109,12 @@
     .nav-cta{width:165px;height:24px;font-size:11px;border-radius:15pt}
     .hero{aspect-ratio:auto;min-height:0;padding:140px 24px 40px}
     .hero-eyebrow,.hero-headline,.hero-stats2,.hero-cta{
-      position:static;left:auto;right:auto;top:auto;bottom:auto;width:100%;max-width:100%;min-width:0;
+      /* position:relative (not static) so these keep a z-index above .hero::before's dark gradient
+         scrim (z-index:1) — static elements always paint below any positioned sibling with a
+         z-index regardless of DOM order, which is why the "рассчитать стоимость проекта" button's
+         light fill was reading as washed-out/low-contrast here even though its own colors never
+         changed. */
+      position:relative;z-index:2;left:auto;right:auto;top:auto;bottom:auto;width:100%;max-width:100%;min-width:0;
     }
     .hero-eyebrow{margin-top:24px}
     .hero-headline{margin-bottom:40px}

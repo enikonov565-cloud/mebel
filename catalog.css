@@ -297,8 +297,14 @@ body{background:#110B00;color:#CDCBC7}
 @media (max-width:960px){
   .model-arrow{display:none}
   .model-track{gap:20px}
-  .model-card{aspect-ratio:auto;height:auto}
-  .model-photo{aspect-ratio:607/767}
+  /* The card filled ~85% of the viewport edge-to-edge, which read as a wide/landscape block even
+     though the photo itself is a portrait shot -- barely more than one fit on screen at a time
+     and the product got lost. Narrower card + a taller photo ratio so the portrait framing
+     actually reads as tall; name stays its own block below the photo, smaller to match. */
+  .model-card{aspect-ratio:auto;height:auto;width:64vw;max-width:270px}
+  .model-photo{aspect-ratio:3/4}
+  .model-card h3{font-size:17px}
+  .model-btn{font-size:14px}
 }
 @media (max-width:640px){
   .cta-content{padding:28px 20px 34px 40px}

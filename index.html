@@ -1094,6 +1094,12 @@
     .why-inner{gap:56px}
     #about,#why-us,#services,#materials,#process,#benefits,#portfolio,#reviews,#faq,#contact{padding:72px 0;scroll-margin-top:88px}
     footer{padding:72px 0 0}
+    /* the -200px "dealing" pull-up was tuned for desktop's one-line heading; on mobile/tablet the
+       heading wraps onto 2 lines and the intro paragraph wraps too, so the same fixed offset drags
+       the photo row up over that taller text block instead of just under it. Let it sit in normal
+       flow here instead of chasing a second magic-number offset per breakpoint. */
+    .works-gallery.deck-on{margin-top:0}
+    .works-gallery.deck-on + .works-cta{margin-top:60px}
     /* desktop's 7.5rem word had no tablet step at all — rendered at full 120px (471px wide) on a
        768px screen, same oversized-logo complaint as mobile just not yet fixed here. */
     .footer-logo2 .word{font-size:4rem}

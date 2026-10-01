@@ -127,8 +127,8 @@ body{background:#110B00;color:#CDCBC7}
   .cat-hero{padding:150px 0 40px}
   .cat-head,.cat-how-head{flex-direction:column;align-items:flex-start;gap:18px}
   .cat-head p,.cat-how-head p{text-align:left}
-  .cat-tabs{flex-direction:column;gap:8px}
-  .cat-tab{width:100%;flex:none;height:32px;padding:0 16px;min-width:0}
+  .cat-tabs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  .cat-tab{width:100%;flex:none;height:32px;padding:0 14px;min-width:0}
   .cat-tabs .cat-tab{font-size:14px!important}
   .cat-cta-box{padding:40px 30px}
   .cat-cta-btns,.cat-cta-btns .svc-btn{width:100%}
@@ -156,7 +156,7 @@ body{background:#110B00;color:#CDCBC7}
   }
   .cat-hero{padding:120px 0 30px}
   .cat-head p,.cat-how-head p{font-size:15px}
-  .cat-tab{height:28px;padding:0 12px}
+  .cat-tab{height:28px;padding:0 8px}
   .cat-tabs .cat-tab{font-size:12px!important}
   .cat-grid,.cat-steps{grid-template-columns:1fr}
   .cat-card{padding:28px 24px}

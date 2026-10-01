@@ -1052,6 +1052,12 @@
       padding:0;box-shadow:none;
     }
     .process-text{width:100%}
+    /* .process-media's desktop flex:1 1 480px sets a 480px flex-basis along the MAIN axis — once
+       .process-step switches to flex-direction:column above, that axis is height, not width. With
+       aspect-ratio:1198/621 then deriving width from that 480px height, the video rendered ~926px
+       wide (480 * 1198/621), blowing way past a 375px phone screen instead of filling it. Reset
+       flex and size from width instead, like every other full-bleed media block on the page. */
+    .process-media{flex:none;width:100%;height:auto}
     .svc-grid{grid-template-columns:minmax(0,1fr)}
     .contact-head{justify-content:flex-start;flex-wrap:wrap}
     .contact-head p{text-align:left}

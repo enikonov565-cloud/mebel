@@ -759,7 +759,7 @@
   .faq-list summary::-webkit-details-marker{display:none}
   @keyframes faqSway{0%,100%{transform:translateX(0)}50%{transform:translateX(6px)}}
   .faq-q{
-    display:inline-block;
+    display:inline-block;min-width:0;
     animation:faqSway 3.6s ease-in-out infinite;
     transition:color .25s ease,letter-spacing .25s ease;
   }
@@ -1014,7 +1014,7 @@
     .why-vline,.why-hline{display:none}
     .svc-grid{grid-template-columns:repeat(2,1fr);gap:40px 25px}
     .svc-card{flex-direction:column;align-items:flex-start;height:auto;gap:20px}
-    .svc-card-photo-wrap{width:100%;height:320px}
+    .svc-card-photo-wrap{width:100%;height:auto;aspect-ratio:3/4}
     .svc-card h3{white-space:normal}
     .svc-head p{white-space:normal}
     .svc-head h2{white-space:normal}
@@ -1046,9 +1046,13 @@
     }
     .process-text{width:100%}
     .svc-grid{grid-template-columns:1fr}
-    .svc-card-photo-wrap{height:260px}
     .contact-head{justify-content:flex-start;flex-wrap:wrap}
     .contact-head p{text-align:left}
+    .reviews-head{justify-content:flex-start;flex-wrap:wrap}
+    .reviews-head p{text-align:left}
+    .faq-head{justify-content:flex-start;flex-wrap:wrap}
+    .faq-head p{text-align:left}
+    .faq-list summary{font-size:24px}
     .map-embed{height:auto;aspect-ratio:16/9}
     .footer-grid{flex-direction:column;gap:40px}
     .about-photo-img{max-width:560px}
@@ -1059,7 +1063,10 @@
     .why-cell{aspect-ratio:1/1}
     .why-cell img.nightstand{object-position:center 30% !important}
     .why-cell.text p{font-size:24px;max-width:100%}
-    section{padding:120px 0}
+    .why-inner{gap:56px}
+    #about,#why-us,#services,#materials,#process,#benefits,#portfolio,#reviews,#faq,#contact{padding:72px 0;scroll-margin-top:88px}
+    footer{padding:72px 0 0}
+    .svc-head,.mat-head,.process-head,.benefits-head,.works-head,.reviews-head,.faq-head,.contact-head{margin-bottom:36px}
     .footer-cta-btn{width:290px;font-size:20px;height:44px}
     .nav-cta{width:165px;height:24px;font-size:11px;border-radius:15pt}
     .hero{aspect-ratio:auto;min-height:0;padding:140px 24px 40px}
@@ -1087,7 +1094,11 @@
     .stat-box span{font-size:14px}
     .stats-grid{column-gap:24px;row-gap:28px}
     .why-cell.text p{font-size:18px}
-    .svc-head p,.benefits-head p{font-size:13px}
+    .svc-head p,.benefits-head p,.mat-head p,.process-head p,.works-head p,.reviews-head p,.faq-head p,.contact-head p{font-size:13px}
+    .faq-list summary{font-size:19px;gap:12px}
+    .faq-toggle{width:32px;height:32px;font-size:16px;flex:none}
+    .why-inner{gap:40px}
+    .svc-head,.mat-head,.process-head,.benefits-head,.works-head,.reviews-head,.faq-head,.contact-head{margin-bottom:24px}
     .svc-card h3{font-size:26px}
     .svc-btn{font-size:18px;height:60px;padding:5px 20px}
     .benefits-tag{font-size:14px;padding:8px 18px}
@@ -1114,7 +1125,8 @@
     .hero-stat2 span{font-size:11px;white-space:normal}
     .hero-cta a{font-size:16px;height:50px}
     .about-cta a{width:100%;height:46px;padding:9px 20px;font-size:16px}
-    section{padding:120px 0}
+    #about,#why-us,#services,#materials,#process,#benefits,#portfolio,#reviews,#faq,#contact{padding:56px 0;scroll-margin-top:88px}
+    footer{padding:56px 0 0}
     .footer-logo2 .word{font-size:3rem}
     .contact-cta button{width:100%;height:46px;font-size:18px}
     .modal-card{padding:28px 20px 22px}

@@ -398,7 +398,9 @@ body{background:#110B00;color:#CDCBC7}
   .model-modal-photo{flex:none;aspect-ratio:336/572;border-radius:15px;overflow:hidden}
   .model-modal-info{
     background:#CDCBC7;border-radius:15px;margin-top:-16px;position:relative;
-    padding:27px 11px 68px 14px;overflow:visible;justify-content:flex-start;
+    /* Bottom padding = the button's own ~38px height + its 20pt inset off the corner + a 12pt
+       gap above it off the last spec line — was just 68px, leaving only ~3px above the button. */
+    padding:27px 11px calc(38px + 20pt + 12pt) 14px;overflow:visible;justify-content:flex-start;
   }
   .model-modal-text{gap:10px}
   .model-modal-info h3{font-size:22px;line-height:1}

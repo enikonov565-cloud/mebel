@@ -1154,15 +1154,13 @@
       gap:10px;width:100%;max-width:100%;
     }
     .hero-headline{width:auto;flex:1 1 auto;min-width:0}
-    .hero-headline h1{font-size:1.3rem}
-    /* Same line-height as h1 (was the default 1.3 vs. h1's 0.9) so the gap from the headline's
-       last line down to this line matches the gap between the headline's own two lines instead of
-       reading as a bigger jump. */
-    /* Matching line-height alone (0.9 on both) still left a ~3px shorter gap here than between the
-       headline's own two lines, since h1's -4px margin-bottom and the half-leading math don't
-       scale the same way across two different font sizes. Topped up with a small margin-top so the
-       three lines read as evenly spaced. */
-    .hero-headline .hero-sub{font-size:.95rem;line-height:0.9;margin-top:3.2px}
+    /* line-height:0.9 (desktop's value, meant for a 68px display size) reads fine at that scale but
+       is tight enough at mobile's much smaller 1.3rem that Cyrillic ascenders/descenders from
+       adjacent lines visually touch ("строки слиплись"). Loosened both the headline and the line
+       below it to the same more readable 1.15 instead, so they stay evenly spaced without
+       colliding. */
+    .hero-headline h1{font-size:1.3rem;line-height:1.15;margin-bottom:0}
+    .hero-headline .hero-sub{font-size:.95rem;line-height:1.15}
     .hero-eyebrow{margin-top:16px;font-size:11px}
     /* the forced <br> (authored for the desktop one-line/nowrap layout) was chopping this into two
        independently-wrapped halves — 4 lines once squeezed into the narrower column this shares

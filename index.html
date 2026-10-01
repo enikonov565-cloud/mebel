@@ -1119,6 +1119,12 @@
   /* Mobile */
   @media (max-width:640px){
     .container{padding:0 20pt}
+    /* below ~553px the popup's own max-width calc shrinks it under its 460px default, splitting
+       each 2-column half to ~100px of usable text width — too narrow for labels like "Эксклюзивная
+       мебель", which wrapped to 2 lines. Stack the two link groups instead of sitting them
+       side by side, so every link gets the popup's full width. */
+    .nav-links{flex-direction:column}
+    .nav-links-col+.nav-links-col{border-left:none;border-top:1px solid var(--line)}
     .nav{padding:10px 20pt}
     .nav-left{gap:16px}
     .logo .word{font-size:1.35rem}

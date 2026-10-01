@@ -158,26 +158,48 @@
     .wh-underline.run{transition:none!important}
   }
 
+  /* Sized/spaced from the Figma reference (node 562:37, file LtvoN6nYLzxsWLZNtPNLZg): padding
+     px-40/py-7, font-size 28px, auto height (not a fixed px height), full column width. */
   .footer-cta-btn{
     display:flex;align-items:center;justify-content:center;
-    width:100%;max-width:360px;height:66px;
+    width:100%;padding:7px 40px;margin-top:25px;
     background:#CDCBC7;border:2px solid #2B2620;border-radius:15px;
-    font-family:'Inter',sans-serif;font-weight:700;font-size:21px;color:#2B2620;
+    font-family:'Inter',sans-serif;font-weight:700;font-size:28px;color:#2B2620;
     text-align:center;cursor:pointer;
     --reveal-bg:#2B2620;--reveal-text:#CDCBC7;--dot-shadow:#CDCBC7;
   }
+  /* catalog.css's "one font size for every button" rule (.footer-cta-btn among others,
+     font-size:22px!important) otherwise wins here, since it's declared later in the cascade —
+     this footer button specifically needs the Figma-exact 28px, so beat it with a more specific
+     selector (still !important, since the other rule also is) without touching that shared list
+     or any of the other buttons it covers. Scoped to >960px only — catalog.css's OWN ≤960px
+     button rule (font-size:16px!important) also needs to keep winning on mobile, and a bare
+     "footer .footer-cta-btn" selector would have beaten that one too (same extra specificity),
+     which first shipped as a real regression here (caught via a mobile screenshot: the button
+     text wrapped to 2 lines against its own dashed border). */
+  @media (min-width:961px){
+    footer .footer-cta-btn{font-size:28px!important}
+  }
 
-  /* Footer — restyled after a reference screenshot the client supplied (another studio's site):
-     a thin rule above the columns, small accent-coloured uppercase labels naming each column,
-     a giant hollow-outline repeat of the logotype as a background flourish, and a copyright bar
-     underneath. Columns are simple top-aligned flow now — the previous bottom-pinning
-     (justify-content:flex-end on .footer-nav/.footer-contacts, space-between on .footer-brand)
-     was specific to an earlier, different request and is superseded by this more conventional
-     layout, which is what the reference itself uses (nothing in it is bottom-anchored either). */
+  /* Footer — rebuilt to match the Figma reference exactly (node 562:37, file
+     LtvoN6nYLzxsWLZNtPNLZg): column widths/gaps, type sizes and the nav/contacts colour split are
+     all read off that node (metadata + a direct render, since a couple of the node's own
+     auto-layout width properties turned out stale/inconsistent with what actually renders — the
+     rendered screenshot was treated as the source of truth over those). The «навигация»/
+     «контакты» eyebrow labels aren't in the Figma file at all (an earlier, separate addition) —
+     kept per explicit instruction, both pinned to the same 18pt. */
   footer{background:#110B00;color:#CDCBC7;padding:120px 0 0;font-size:.9rem;border-top:1px solid rgba(205,203,199,.14)}
-  .footer-grid{display:flex;align-items:flex-start;justify-content:space-between;gap:40px;flex-wrap:wrap}
-  .footer-brand{text-align:left;max-width:487px;display:flex;flex-direction:column;gap:26px}
-  .footer-logo2{display:inline-flex;flex-direction:column;align-items:flex-start;margin-bottom:18px}
+  /* .footer-grid holds only 2 items now (.footer-brand + .footer-nav-contacts) so its own gap can
+     be the Figma-exact 338px between them; nav and contacts need a different, smaller 291px gap
+     from EACH OTHER, which a single uniform .footer-grid gap couldn't give both at once. */
+  /* flex-wrap:nowrap (not wrap) — the combined width is a tight fit against the 1800px content
+     area at exactly 338+291px of Figma-exact gaps, and the ≤960px breakpoint already switches
+     .footer-grid to flex-direction:column for mobile, so wrapping here on desktop was only ever
+     an unwanted accident (observed: the whole nav+contacts row dropping to its own line). */
+  .footer-grid{display:flex;align-items:flex-start;gap:338px;flex-wrap:nowrap}
+  .footer-nav-contacts{display:flex;align-items:flex-start;gap:291px;flex-wrap:nowrap}
+  .footer-brand{text-align:left;max-width:585px;display:flex;flex-direction:column;gap:18px}
+  .footer-logo2{display:inline-flex;flex-direction:column;align-items:flex-start}
   .footer-logo2 .word{
     font-family:'GOST','Inter',sans-serif;font-weight:400;
     font-size:7.5rem;letter-spacing:-.09em;white-space:nowrap;line-height:normal;
@@ -185,28 +207,25 @@
   }
   .footer-logo2 .word .edge{font-size:1.5625em}
   .footer-logo2 .sub{
-    display:block;font-family:'Inter',sans-serif;font-weight:400;font-size:1.75rem;
+    display:block;font-family:'Inter',sans-serif;font-weight:400;font-size:1.875rem;
     text-transform:uppercase;color:#fff;line-height:normal;
   }
-  .footer-brand p{margin:0;font-family:'Inter',sans-serif;font-weight:300;font-size:13px;line-height:1.4;color:#CDCBC7}
-  /* Reverted the align-self:stretch + margin-top:auto bottom-alignment trick from an earlier
-     request: it worked (all 3 columns' bottoms matched exactly), but its side effect — a big
-     empty gap opening up between the «навигация»/«контакты» label and the list below it, to push
-     the list down to that shared bottom line — turned out to be unwanted. Simple top-aligned
-     flow now: the list sits immediately under its label, no forced bottom match. */
+  .footer-brand p{margin:0;font-family:'Inter',sans-serif;font-weight:500;font-size:20px;line-height:1.3;color:#CDCBC7}
   .footer-col{display:flex;flex-direction:column}
+  /* Not part of the Figma file — kept from an earlier addition, both pinned to the same 18pt
+     per explicit instruction, with the same 1.2 line-height used throughout this footer. */
   .footer-col-label{
     display:block;margin-bottom:22px;
-    font-family:'Inter',sans-serif;font-weight:700;font-size:9px;
+    font-family:'Inter',sans-serif;font-weight:700;font-size:18pt;line-height:1.2;
     letter-spacing:.14em;text-transform:uppercase;color:var(--accent);
   }
-  .footer-nav{list-style:none;display:flex;flex-direction:column;gap:10px;font-family:'Inter',sans-serif;font-weight:300;font-size:16px;letter-spacing:0.4px;color:#CDCBC7}
+  .footer-nav{list-style:none;display:flex;flex-direction:column;gap:10px;font-family:'Inter',sans-serif;font-weight:300;font-size:18px;letter-spacing:0.36px;text-transform:lowercase;color:#fff;width:208px}
   .footer-nav a{line-height:1.2;transition:opacity .2s}
   .footer-nav a:hover{opacity:.7}
-  .footer-contacts{list-style:none;padding-left:0;display:flex;flex-direction:column;gap:20px;font-family:'Inter',sans-serif;color:#CDCBC7;max-width:659px}
+  .footer-contacts{list-style:none;padding-left:0;display:flex;flex-direction:column;gap:20px;font-family:'Inter',sans-serif;color:#CDCBC7;max-width:420px;text-transform:lowercase}
   .footer-contacts li{display:flex;flex-direction:column;gap:5px}
-  .footer-contacts .fc-label{font-weight:500;font-size:16px;letter-spacing:0.48px}
-  .footer-contacts .fc-value{font-weight:300;font-size:16px;letter-spacing:0.4px;line-height:1.2}
+  .footer-contacts .fc-label{font-weight:600;font-size:20px;letter-spacing:0.4px}
+  .footer-contacts .fc-value{font-weight:300;font-size:18px;letter-spacing:0.36px;line-height:1.2}
 
   /* Giant hollow repeat of the logotype, purely decorative — sized with vw so it scales with the
      viewport at any zoom level, clipped by footer's own overflow so it can never cause horizontal
@@ -240,7 +259,7 @@
      right restored to the container's 60px too, since the padding shorthand here would otherwise
      override (not add to) .container's own padding on this same element. */
   .footer-bottom{margin-top:8px;padding:16px 60px 24px 140px;border-top:1px solid rgba(205,203,199,.14)}
-  .footer-bottom p{margin:0;font-family:'Inter',sans-serif;font-size:.85rem;color:rgba(205,203,199,.55)}
+  .footer-bottom p{margin:0;font-family:'Inter',sans-serif;font-size:1rem;color:rgba(205,203,199,.55)}
   /* Contact modal */
   .modal-backdrop{
     position:fixed;inset:0;z-index:200;

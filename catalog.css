@@ -130,6 +130,13 @@ body{background:#110B00;color:#CDCBC7}
   .cat-cta-box{padding:40px 30px}
   .cat-cta-btns,.cat-cta-btns .svc-btn{width:100%}
   .footer-grid{flex-direction:column;gap:40px}
+  /* .footer-nav-contacts is a nowrap row with Figma-exact fixed gaps on desktop (needed so the
+     291px nav-to-contacts gap and 338px brand-to-group gap can differ) — at this width nowrap
+     would force nav+contacts into one row wider than the viewport, which footer's own
+     overflow-x:clip (added to contain the watermark) then silently clipped instead of letting it
+     scroll, making the contacts column effectively disappear. Stack them instead, same as the
+     other columns. */
+  .footer-nav-contacts{flex-direction:column;flex-wrap:wrap;gap:40px}
   .footer-cta-btn{width:290px;font-size:20px;height:44px}
   .nav-cta{width:165px;height:24px;font-size:11px;border-radius:15pt}
 }

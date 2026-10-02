@@ -597,6 +597,8 @@
   .benefits-list li:last-child{border-bottom:none}
   .benefits-list h3{font-family:'Inter',sans-serif;font-weight:500;font-size:28px;line-height:39px;color:#CDCBC7;margin-bottom:10px}
   .benefits-list p{font-family:'Inter',sans-serif;font-weight:300;font-size:15px;line-height:28.05px;color:#CDCBC7}
+  .bn-toggle{display:none}   /* only used by the <=640px accordion (button added by script) */
+  @keyframes bnReveal{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
   .benefits-consult{
     flex:none;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;
     margin-top:24px;padding-top:24px;border-top:1px solid rgba(205,203,199,.25);
@@ -1219,6 +1221,23 @@
     .benefits-tag{font-size:14px;padding:8px 18px}
     .benefits-list h3{font-size:20px;line-height:28.6px}
     .benefits-list p{font-size:14px;line-height:26.4px}
+    /* Accordion, like the FAQ: only the headline shows, the small-print line opens with the round
+       «+» button (or a tap on the headline). Too much text at once was hard to read on a phone. */
+    .benefits-list li{
+      display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:14px;align-items:center;
+      padding:14px 10px;cursor:pointer;
+    }
+    .benefits-list h3{margin-bottom:0}
+    .benefits-list p{display:none;grid-column:1 / -1;margin-top:10px}
+    .benefits-list li.open p{display:block;animation:bnReveal .3s ease both}
+    .bn-toggle{
+      display:flex;align-items:center;justify-content:center;flex:none;
+      width:32px;height:32px;border-radius:50%;border:2px dashed #CDCBC7;background:transparent;
+      color:#CDCBC7;font-size:16px;line-height:1;padding:0;cursor:pointer;
+      transition:transform .35s cubic-bezier(.22,1,.36,1),background-color .25s ease,color .25s ease;
+    }
+    .benefits-list li.open .bn-toggle{transform:rotate(45deg);background:#CDCBC7;color:#180F01}
+    @media (prefers-reduced-motion:reduce){.benefits-list li.open p{animation:none}.bn-toggle{transition:none}}
     .cards,.reviews-grid{grid-template-columns:1fr}
     .works-arrow{width:38px;height:40px;font-size:16px}
     .works-arrow.prev{left:8px}
@@ -2406,6 +2425,27 @@
       card.addEventListener('pointerenter', e => { const r = card.getBoundingClientRect(); if (r.width && r.height) { st.tx = (e.clientX - r.left) / r.width; st.ty = (e.clientY - r.top) / r.height; if (st.on === 0) { st.x = st.tx; st.y = st.ty; } } st.ton = 1; kick(); });
       card.addEventListener('pointermove', track);
       card.addEventListener('pointerleave', e => { track(e); st.ton = 0; kick(); });
+    });
+  })();
+
+  // "Что вы получаете" — each item gets a «+» button; on <=640px (CSS) the small-print line is
+  // hidden until the item is opened. The button is display:none above that width.
+  (function () {
+    document.querySelectorAll('.benefits-list li').forEach(li => {
+      const h = li.querySelector('h3'), p = li.querySelector('p');
+      if (!h || !p) return;
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'bn-toggle';
+      btn.textContent = '+';
+      btn.setAttribute('aria-expanded', 'false');
+      btn.setAttribute('aria-label', 'Показать подробности: ' + h.textContent.replace(/\s+/g, ' ').trim());
+      h.after(btn);
+      li.addEventListener('click', e => {
+        if (!window.matchMedia('(max-width:640px)').matches) return;
+        const open = li.classList.toggle('open');
+        btn.setAttribute('aria-expanded', open);
+      });
     });
   })();
 

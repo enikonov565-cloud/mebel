@@ -1107,7 +1107,7 @@
        the photo row up over that taller text block instead of just under it. Let it sit in normal
        flow here instead of chasing a second magic-number offset per breakpoint. */
     .works-gallery.deck-on{margin-top:0}
-    .works-gallery.deck-on + .works-cta{margin-top:60px}
+    .works-gallery.deck-on + .works-cta{margin-top:36px}
     /* desktop's 7.5rem word had no tablet step at all — rendered at full 120px (471px wide) on a
        768px screen, same oversized-logo complaint as mobile just not yet fixed here. */
     .footer-logo2 .word{font-size:4rem}
@@ -2116,6 +2116,12 @@
       deck.style.height = Math.ceil((TOP_ROOM + CARD_H + BOTTOM_ROOM) * baseScale) + 'px';
       strip.style.top = ((TOP_ROOM + CARD_H / 2) * baseScale) + 'px';
       gallery.style.setProperty('--row-y', ((TOP_ROOM + CARD_H / 2) * baseScale) + 'px');   // arrows sit on the row
+      // The frame's empty room above/below the row (needed for the dealing hop) is pulled into the
+      // neighbouring blocks, same idea as desktop's -200px — but scaled with the card size, since a
+      // fixed offset leaves a huge gap on narrow screens. Desktop keeps its own CSS margins.
+      const compact = window.innerWidth <= 1279;
+      gallery.style.marginTop = compact ? '-' + Math.max(0, TOP_ROOM * baseScale - 20) + 'px' : '';
+      gallery.style.marginBottom = compact ? '-' + (BOTTOM_ROOM * baseScale) + 'px' : '';
       const repeats = Math.max(1, Math.ceil((w / baseScale + CARD_W) / (count * step)) || 1);
       const newTotal = count * repeats;
       period = newTotal * step;

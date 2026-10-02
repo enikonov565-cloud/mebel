@@ -303,8 +303,13 @@ body{background:#110B00;color:#CDCBC7}
      actually reads as tall; name stays its own block below the photo, smaller to match. */
   .model-card{aspect-ratio:auto;height:auto;width:64vw;max-width:270px}
   .model-photo{aspect-ratio:3/4}
-  .model-card h3{font-size:17px}
-  .model-btn{font-size:14px}
+  .model-card h3{font-size:17px;padding-left:14px;padding-right:14px}
+  /* The button's desktop 26px side padding + nowrap text made it ~250px wide inside a 240px card,
+     so its right end got clipped / ran under the next card. Fit it to the card instead. */
+  .model-btn{
+    font-size:13px;padding:9px 10px;margin:14px 14px 16px;
+    align-self:stretch;justify-content:center;gap:6px;
+  }
 }
 @media (max-width:640px){
   .cta-content{padding:28px 20px 34px 40px}

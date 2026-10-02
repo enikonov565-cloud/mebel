@@ -315,7 +315,7 @@ body{background:#110B00;color:#CDCBC7}
   .cta-content{padding:28px 20px 34px 40px}
   .cta-plus{font-size:28px;margin-bottom:18px}
   .cta-card h3{font-size:26px;margin:0 0 14px}
-  .cta-desc{margin:0 0 24px;font-size:12px}
+  .cta-desc{margin:0 0 24px;font-size:12px;white-space:normal}   /* nowrap (desktop's single line) clipped the sentence at the card's right edge */
   .cta-works{font-size:17px}   /* margin-top stays auto (base rule) — pins it to the bottom */
 }
 @media (max-width:960px){

@@ -2068,7 +2068,6 @@
     const TOP_ROOM = 230, BOTTOM_ROOM = 80;   // px (card scale 1): space above / below the row inside the frame
     const STACK_HOLD = 550, DEAL_STAGGER = 4.8 * 24, DEAL_LIFT = 0.30, TOUCH_GAIN = 2.2, WHEEL_CLAMP = 400;
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const fine = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
     const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
     const wrap = (v, s) => ((v % s) + s) % s;
     const wrapCentred = (v, s) => wrap(v + s / 2, s) - s / 2;
@@ -2278,8 +2277,10 @@
       state.target += clamp(dx * TOUCH_GAIN, -WHEEL_CLAMP, WHEEL_CLAMP) / scrollPerLap;
     }, { passive: false });
     deck.addEventListener('touchend', () => { tx = null; }, { passive: true });
+    // Not gated to mouse pointers: on touch screens the cards near the finger flip while swiping,
+    // the same way they flip near the cursor on desktop (pointermove fires for touch drags too,
+    // since the deck is touch-action:pan-y).
     deck.addEventListener('pointermove', e => {
-      if (!fine) return;
       const r = deck.getBoundingClientRect(), z = zoom();
       const px = (e.clientX - r.left) / z, py = (e.clientY - r.top) / z;
       const cy = (TOP_ROOM + CARD_H / 2) * baseScale, cx = r.width / z / 2;
@@ -2288,7 +2289,10 @@
         c.aim = d < hoverRadius ? 180 * Math.max(0, 1 - d / falloff) : 0;
       });
     });
-    deck.addEventListener('pointerleave', () => cards.forEach(c => { c.aim = 0; }));
+    const unflip = () => cards.forEach(c => { c.aim = 0; });
+    deck.addEventListener('pointerleave', unflip);
+    deck.addEventListener('pointercancel', unflip);
+    deck.addEventListener('pointerup', e => { if (e.pointerType !== 'mouse') unflip(); });
 
     gallery.querySelectorAll('.works-arrow').forEach(btn => btn.addEventListener('click', () => {
       state.target += (btn.classList.contains('prev') ? -1 : 1) / count;

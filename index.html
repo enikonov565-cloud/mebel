@@ -1111,7 +1111,7 @@
     /* desktop's 7.5rem word had no tablet step at all — rendered at full 120px (471px wide) on a
        768px screen, same oversized-logo complaint as mobile just not yet fixed here. */
     .footer-logo2 .word{font-size:4rem}
-    .footer-logo2 .sub{font-size:1.4rem}
+    .footer-logo2 .sub{font-size:calc(4rem*28/120)}   /* keeps the desktop sub:word ratio (1.75rem:7.5rem) of the logo lockup */
     .svc-head,.mat-head,.process-head,.benefits-head,.works-head,.reviews-head,.faq-head,.contact-head{margin-bottom:36px}
     .footer-cta-btn{width:290px;font-size:20px;height:44px}
     .nav-cta{width:165px;height:24px;font-size:11px;border-radius:15pt}
@@ -1234,7 +1234,7 @@
     #about,#why-us,#services,#materials,#process,#benefits,#portfolio,#reviews,#faq,#contact{padding:56px 0;scroll-margin-top:88px}
     footer{padding:56px 0 0}
     .footer-logo2 .word{font-size:2rem}
-    .footer-logo2 .sub{font-size:1.1rem}
+    .footer-logo2 .sub{font-size:calc(2rem*28/120)}   /* same sub:word ratio as desktop (was 1.1rem, over twice too big) */
     .contact-cta button{width:100%;height:46px;font-size:18px}
     .modal-card{padding:28px 20px 22px}
   }

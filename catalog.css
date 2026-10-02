@@ -142,6 +142,10 @@ body{background:#110B00;color:#CDCBC7}
   .footer-nav-contacts{flex-direction:column;flex-wrap:wrap;gap:40px}
   .footer-cta-btn{width:290px;font-size:20px;height:44px}
   .nav-cta{width:165px;height:24px;font-size:11px;border-radius:15pt}
+  /* Logo lockup scaled as a unit: word 7.5rem -> 4rem, sub keeps the desktop 1.875rem:7.5rem ratio
+     (the word had no tablet step at all and rendered at the full 120px here). */
+  .footer-logo2 .word{font-size:4rem}
+  .footer-logo2 .sub{font-size:1rem}
 }
 @media (max-width:640px){
   .container{padding:0 20pt}
@@ -171,9 +175,8 @@ body{background:#110B00;color:#CDCBC7}
   .cat-cta-box p{font-size:22px}
   .svc-btn{font-size:18px;height:60px}
   .footer-logo2 .word{font-size:3rem}
-  /* .word got a mobile step but .sub ("интерьер") didn't, so it stayed at the 1.875rem desktop
-     size (30px) — oversized next to the now-shrunk 3rem word above it. */
-  .footer-logo2 .sub{font-size:1.65rem}
+  /* .sub ("интерьер") keeps the desktop 1.875rem:7.5rem (1:4) ratio to the word, as in the logo lockup. */
+  .footer-logo2 .sub{font-size:.75rem}
   .modal-card{padding:28px 20px 22px}
   .cat-how,.cat-cta,.cat-items{padding-bottom:80px}
 }

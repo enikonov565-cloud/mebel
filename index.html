@@ -400,7 +400,10 @@
   /* Wraps just the photo (not the whole card, which also includes the title's blank space to the
      right on desktop) so the corner arrow badge anchors to the picture itself, not the card box. */
   .svc-card-photo-wrap{position:relative;flex:none;width:284px;height:440px;transition:transform .5s cubic-bezier(.22,1,.36,1)}
-  a.svc-card:hover .svc-card-photo-wrap{transform:translateY(-6px)}
+  /* Hover effects live inside (hover:hover): on iPhone a :hover that changes what is shown (photo lift,
+     the arrow growing into «в каталог») makes the FIRST tap only "hover" the card and swallow the click,
+     so the card/arrow looked dead until tapped twice. Touch screens skip them and navigate on one tap. */
+  @media (hover:hover){a.svc-card:hover .svc-card-photo-wrap{transform:translateY(-6px)}}
   .svc-card-photo{display:block;width:100%;height:100%;object-fit:cover;border-radius:15px}
   /* Pressed state (Dotted Offset Button, ported): a thin light backing plate shows behind the whole card while held down */
   .svc-card-plate{
@@ -408,6 +411,8 @@
     background:rgba(205,203,199,.22);opacity:0;pointer-events:none;transition:opacity .3s ease;
   }
   a.svc-card:active .svc-card-plate,a.svc-card.is-pressed .svc-card-plate{opacity:1;transition:opacity .04s ease}
+  /* Touch: the press feedback fades in more slowly (and the tap holds navigation longer, see script) so it is actually seen */
+  @media (hover:none){a.svc-card:active .svc-card-plate,a.svc-card.is-pressed .svc-card-plate{transition:opacity .22s ease}}
   /* Light Glass glow (Originkit, ported): a soft light follows the pointer across the whole card */
   .svc-card-light{
     position:absolute;inset:0;z-index:1;border-radius:15px;pointer-events:none;opacity:0;mix-blend-mode:screen;will-change:opacity;
@@ -442,8 +447,10 @@
     font-family:'Inter',sans-serif;font-weight:500;font-size:16px;opacity:0;transform:translateX(8px);
     transition:opacity .25s ease,transform .3s ease;
   }
-  a.svc-card:hover .svc-card-arrow{max-width:min(190px,calc(100% - 284px - 25px - 16px));background:rgba(24,15,1,.88)}
-  a.svc-card:hover .svc-card-arrow-label{opacity:1;transform:translateX(0);transition-delay:.1s}
+  @media (hover:hover){
+    a.svc-card:hover .svc-card-arrow{max-width:min(190px,calc(100% - 284px - 25px - 16px));background:rgba(24,15,1,.88)}
+    a.svc-card:hover .svc-card-arrow-label{opacity:1;transform:translateX(0);transition-delay:.1s}
+  }
   .svc-cta{display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:40px;height:443px}
   .svc-cta p{
     font-family:'Inter',sans-serif;font-weight:300;font-size:20px;line-height:1.2;letter-spacing:0.4px;
@@ -1049,6 +1056,12 @@
     .cards,.reviews-grid{grid-template-columns:repeat(2,1fr)}
     .works-head{justify-content:flex-start;flex-wrap:wrap;gap:16px;margin-bottom:16px}
     .works-head p{text-align:left}
+    /* On a real iPhone the heading shrank to its longest word ("Примеры / наших / работ") and the
+       subtitle broke into 1-2 word lines: Safari sized the wrapped flex items from the per-word
+       inline-block spans the heading script wraps text in. Give both items the full row, and let
+       those word spans be plain inline (they only need nowrap) so the text wraps like normal text. */
+    .works-head h2,.works-head p{flex:1 1 100%;min-width:0}
+    .hc-w{display:inline}
     .works-cta{justify-content:flex-start}
     .material{flex:1 1 200px}
     .mat-head{justify-content:flex-start;flex-wrap:wrap}
@@ -2379,8 +2392,8 @@
   // back just long enough (140ms) for that frame to render, then follow the link ourselves.
   (function () {
     document.querySelectorAll('a.svc-card').forEach(card => {
-      let pressedAt = 0;
-      card.addEventListener('pointerdown', e => { if (e.button === 0) { card.classList.add('is-pressed'); pressedAt = performance.now(); } });
+      let pressedAt = 0, touchTap = false;
+      card.addEventListener('pointerdown', e => { if (e.button === 0) { touchTap = e.pointerType !== 'mouse'; card.classList.add('is-pressed'); pressedAt = performance.now(); } });
       const release = () => card.classList.remove('is-pressed');
       card.addEventListener('pointerup', release);
       card.addEventListener('pointerleave', release);
@@ -2390,7 +2403,7 @@
         if (performance.now() - pressedAt > 1500) return;   // keyboard/synthetic activation: no press was shown, navigate immediately
         e.preventDefault();
         const href = card.getAttribute('href');
-        setTimeout(() => { window.location.href = href; }, 140);
+        setTimeout(() => { window.location.href = href; }, touchTap ? 320 : 140);
       });
     });
   })();

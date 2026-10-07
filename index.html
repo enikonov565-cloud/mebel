@@ -225,26 +225,24 @@
       linear-gradient(180deg, rgba(47,31,2,0) 62%, #110B00 100%);
   }
   .hero-eyebrow{
-    margin-top:40px;
+    margin-top:40px;text-transform:lowercase;
     font-family:'Inter',sans-serif;font-weight:300;font-size:clamp(12px,calc(1.1*var(--vw100)/100),20px);
     line-height:1.2;letter-spacing:0.4px;color:#CDCBC7;
   }
   .hero-headline{position:absolute;z-index:2;left:3.13%;bottom:12%;width:38%;min-width:260px}
-  .hero-headline h1{
-    font-family:'Inter',sans-serif;font-weight:400;
-    font-size:clamp(1.6rem,calc(4.2*var(--vw100)/100),68px);line-height:0.9;letter-spacing:-0.76px;
-    color:#CDCBC7;margin-bottom:-4px;
-  }
-  .hero-headline .hero-sub{
-    font-family:'Inter',sans-serif;font-weight:300;
-    font-size:clamp(1rem,calc(2.8*var(--vw100)/100),44px);line-height:1.3;letter-spacing:1px;color:#CDCBC7;
+  /* Headline and the line under it are one style in the design: Inter Medium 64 / line-height 90% / 1.28px (.02em) */
+  .hero-headline h1,.hero-headline .hero-sub{
+    font-family:'Inter',sans-serif;font-weight:500;
+    font-size:clamp(1.6rem,calc(4.2*var(--vw100)/100),64px);line-height:0.9;letter-spacing:.02em;
+    color:#CDCBC7;margin:0;
   }
   .hero-stats2{
     position:absolute;z-index:2;left:81.15%;top:22%;width:15.7%;min-width:190px;
     display:flex;flex-direction:column;align-items:center;gap:clamp(12px,calc(1.6*var(--vw100)/100),27px);
   }
   .hero-stat2{display:flex;flex-direction:column;align-items:center;gap:2px;text-align:center}
-  .hero-stat2 b{font-family:'Inter',sans-serif;font-weight:500;font-size:clamp(1.4rem,calc(3*var(--vw100)/100),64px);letter-spacing:-1.28px;color:#CDCBC7;line-height:1}
+  .hero-stat2 b{font-family:'Inter',sans-serif;font-weight:500;font-size:clamp(1.4rem,calc(3*var(--vw100)/100),64px);color:#CDCBC7;line-height:1}
+  .hero-stat2:first-child b{letter-spacing:-1.28px}
   .hero-stat2 span{font-family:'Inter',sans-serif;font-weight:300;font-size:clamp(11px,calc(1*var(--vw100)/100),20px);color:#CDCBC7;white-space:nowrap}
   .hero-stat-divider{
     width:170px;max-width:80%;height:4px;border:none;
@@ -266,11 +264,11 @@
       --fx:max(0px,calc((var(--vw100) - 1920px)/2));
       aspect-ratio:auto;height:max(calc(1091*var(--u)),var(--vh100));min-height:0;
     }
-    .hero-headline h1{font-size:max(1.5rem,calc(68*var(--u)))}
-    .hero-headline .hero-sub{font-size:max(1rem,calc(44*var(--u)))}
-    .hero-headline{left:calc(var(--fx) + 60px);bottom:calc(91*var(--u));width:calc(735*var(--u));min-width:0}
-    .hero-headline h1{white-space:nowrap}
-    .hero-eyebrow{margin-top:calc(40*var(--u));font-size:max(12px,calc(20*var(--u)));line-height:1.2;white-space:nowrap}
+    /* three 64px lines, 56u apart (each 58u tall, overlapping by 2u) */
+    .hero-headline h1,.hero-headline .hero-sub{font-size:max(1.5rem,calc(64*var(--u)));line-height:calc(55.6*var(--u));white-space:nowrap}
+    .hero-headline{left:calc(var(--fx) + 57*var(--u));bottom:calc(91*var(--u));width:calc(818*var(--u));min-width:0}
+    /* 70u under the headline block; bottom edge shares the button's bottom (both 91u from the frame bottom) */
+    .hero-eyebrow{margin-top:calc(70*var(--u));font-size:max(12px,calc(20*var(--u)));line-height:1.2;white-space:nowrap}
     .hero-stats2{
       right:calc(var(--fx) + 60px);left:auto;top:calc(499*var(--u));transform:none;
       width:max-content;min-width:0;gap:calc(10*var(--u));
@@ -279,8 +277,8 @@
     .hero-stat2 b{font-size:max(24px,calc(64*var(--u)));line-height:1.21;margin-bottom:calc(-10*var(--u))}
     .hero-stat2 span{font-size:max(11px,calc(20*var(--u)));line-height:1.21}
     .hero-stat-divider{width:calc(237*var(--u));max-width:none;height:calc(4*var(--u));margin:calc(-2*var(--u)) 0;background-size:100% 100%}
-    .hero-cta{right:calc(var(--fx) + 60px);bottom:calc(91*var(--u));width:calc(505*var(--u));min-width:430px;max-width:none}
-    .hero-cta a{height:max(44px,calc(68*var(--u)));font-size:max(12px,calc(25*var(--u)))}
+    .hero-cta{right:calc(var(--fx) + 66*var(--u));bottom:calc(91*var(--u));width:calc(505*var(--u));min-width:430px;max-width:none}
+    .hero-cta a{height:max(44px,calc(78*var(--u)));font-size:max(12px,calc(25*var(--u)));border-width:1px}
   }
 
   /* Собственное производство полного цикла — Figma node 270:439 */
@@ -1180,8 +1178,10 @@
        adjacent lines visually touch ("строки слиплись"). Loosened both the headline and the line
        below it to the same more readable 1.15 instead, so they stay evenly spaced without
        colliding. */
-    .hero-headline h1{font-size:1.3rem;line-height:1.15;margin-bottom:0}
-    .hero-headline .hero-sub{font-size:.95rem;line-height:1.15}
+    /* three lines like the design ("Уникальная / мебель из массива / по Вашим размерам"): the longest line is
+       ~10.5em wide and the column is viewport minus the stats column (~170px), so the size follows the viewport
+       on narrow phones instead of letting "по Вашим размерам" wrap to a 4th line. */
+    .hero-headline h1,.hero-headline .hero-sub{font-size:min(1.3rem,calc((100vw - 170px)/10.7));line-height:1.15;white-space:nowrap}
     .hero-eyebrow{margin-top:16px;font-size:11px}
     /* the forced <br> (authored for the desktop one-line/nowrap layout) was chopping this into two
        independently-wrapped halves — 4 lines once squeezed into the narrower column this shares
@@ -1351,14 +1351,14 @@
        its two children, which still looks straight past it to .hero. -->
   <div class="hero-top-row">
     <div class="hero-headline">
-      <h1>Уникальная мебель<br>из&nbsp;массива</h1>
+      <h1>Уникальная<br>мебель из&nbsp;массива</h1>
       <p class="hero-sub">по&nbsp;Вашим размерам</p>
       <p class="hero-eyebrow">Собственное производство полного цикла: <br>проектируем, изготавливаем, монтируем</p>
     </div>
     <div class="hero-stats2">
       <div class="hero-stat2"><b>0 ₽</b><span>замер и&nbsp;дизайн-проект</span></div>
       <div class="hero-stat-divider"></div>
-      <div class="hero-stat2"><b>15–25</b><span>дней на&nbsp;изготовление</span></div>
+      <div class="hero-stat2"><b>15&nbsp;–25</b><span>дней на&nbsp;изготовление</span></div>
       <div class="hero-stat-divider"></div>
       <div class="hero-stat2"><b>10%</b><span>предоплата по&nbsp;договору</span></div>
     </div>

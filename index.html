@@ -1198,10 +1198,9 @@
        on narrow phones instead of letting "по Вашим размерам" wrap to a 4th line. */
     .hero-headline h1,.hero-headline .hero-sub{font-size:min(1.3rem,calc((100vw - 170px)/10.7));line-height:1.15;white-space:nowrap}
     .hero-eyebrow{margin-top:16px;font-size:11px}
-    /* the forced <br> (authored for the desktop one-line/nowrap layout) was chopping this into two
-       independently-wrapped halves — 4 lines once squeezed into the narrower column this shares
-       with the headline. Drop it and let text-wrap:balance produce 3 even lines instead. */
-    .hero-eyebrow br{display:none}
+    /* tablet keeps the design's two lines ("собственное производство полного цикла:" / "проектируем,
+       изготавливаем, монтируем"); on phones the column is too narrow for those halves (see <=640px) */
+    .hero-eyebrow{white-space:nowrap}
     /* Stats stay a right-hand stack (number centered over its own label), just narrower now that
        it shares the row with the headline instead of spanning the full width on its own line. */
     .hero-stats2{
@@ -1218,6 +1217,12 @@
     .hero-cta{width:100%;margin-top:28px}
   }
   /* Mobile */
+  /* Narrow phones only: the column next to the stats is too narrow for the design's two eyebrow lines, so drop the
+     forced <br> and let text-wrap:balance make 3 even lines. From ~400px up each half fits and the 2 lines stay. */
+  @media (max-width:400px){
+    .hero-eyebrow{white-space:normal}
+    .hero-eyebrow br{display:none}
+  }
   @media (max-width:640px){
     .container{padding:0 20pt}
     /* below ~553px the popup's own max-width calc shrinks it under its 460px default, splitting

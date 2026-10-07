@@ -84,7 +84,8 @@
   .nav-left{display:flex;align-items:center;gap:40px;flex:none}
   .nav-cta{
     flex:none;
-    width:272px;max-width:100%;height:25px;
+    /* sized by its label: 20pt left/right, 10pt top/bottom */
+    width:auto;max-width:100%;height:auto;padding:10pt 20pt;
     background:#2F1F02;border:1pt solid #CDCBC7;border-radius:15pt;
     color:#CDCBC7;font-family:'Inter',sans-serif;font-size:14px;font-style:normal;
     font-weight:700;line-height:normal;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;

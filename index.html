@@ -129,7 +129,8 @@
   .nav-left{display:flex;align-items:center;gap:40px;flex:none}
   .nav-cta{
     flex:none;
-    width:272px;max-width:100%;height:25px;
+    /* sized by its label: 20pt left/right, 10pt top/bottom */
+    width:auto;max-width:100%;height:auto;padding:10pt 20pt;
     background:#2F1F02;border:1pt solid #CDCBC7;border-radius:15pt;
     color:#CDCBC7;font-family:'Inter',sans-serif;font-size:14px;font-style:normal;
     font-weight:700;line-height:normal;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
@@ -1147,7 +1148,7 @@
     .footer-brand p{margin-bottom:26px}
     .svc-head,.mat-head,.process-head,.benefits-head,.works-head,.reviews-head,.faq-head,.contact-head{margin-bottom:36px}
     .footer-cta-btn{width:290px;font-size:20px;height:44px}
-    .nav-cta{width:165px;height:24px;font-size:11px;border-radius:15pt}
+    .nav-cta{width:auto;height:auto;font-size:11px;border-radius:15pt}
     /* Rebuilt as a full-screen flex column instead of reusing the desktop frame's content-driven
        height: real phone height varies a lot, and squeezing a fixed-aspect desktop frame down to
        375px wide was producing a very short, cramped hero. One screen tall, three slots spaced
@@ -1230,8 +1231,8 @@
     .logo .word{font-size:1.35rem}
     .logo .sub{font-size:.34rem}
     .nav-cta{
-      width:auto;height:auto;min-height:34px;max-width:165px;
-      padding:6px 12px;font-size:11px;line-height:1.2;
+      width:min-content;height:auto;   /* hugs the two-line label ("с&nbsp;менеджером" is the widest line) so the 20pt side padding is exact */
+      padding:10pt 20pt;font-size:11px;line-height:1.2;
       white-space:normal;text-align:center;border-radius:15pt;
     }
     .about-headline p,.why-head p{font-size:13px}

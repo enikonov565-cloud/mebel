@@ -141,7 +141,7 @@ body{background:#110B00;color:#CDCBC7}
      other columns. */
   .footer-nav-contacts{flex-direction:column;flex-wrap:wrap;gap:40px}
   .footer-cta-btn{width:290px;font-size:20px;height:44px}
-  .nav-cta{width:165px;height:24px;font-size:11px;border-radius:15pt}
+  .nav-cta{width:auto;height:auto;font-size:11px;border-radius:15pt}
   /* Logo lockup scaled as a unit: word 7.5rem -> 4rem, sub keeps the desktop 1.875rem:7.5rem ratio
      (the word had no tablet step at all and rendered at the full 120px here). */
   .footer-logo2 .word{font-size:4rem}
@@ -159,8 +159,8 @@ body{background:#110B00;color:#CDCBC7}
   .logo .word{font-size:1.35rem}
   .logo .sub{font-size:.34rem}
   .nav-cta{
-    width:auto;height:auto;min-height:34px;max-width:165px;
-    padding:6px 12px;font-size:11px;line-height:1.2;
+    width:min-content;height:auto;
+    padding:10pt 20pt;font-size:11px;line-height:1.2;
     white-space:normal;text-align:center;border-radius:15pt;
   }
   .cat-hero{padding:120px 0 30px}

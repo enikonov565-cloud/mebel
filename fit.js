@@ -15,6 +15,13 @@
     d.style.zoom = z === 1 ? '' : String(z);
     d.style.setProperty('--vw100', (cw / z) + 'px');
     d.style.setProperty('--vh100', (vis / z) + 'px');
+    // About block (index.html): vertical fit factor so the whole block is on screen at 100% zoom.
+    // 959 = design heights that can shrink (85 gap + 874 row), 115 = headline, 152 = header offset + small paddings.
+    var vh = vis / z;
+    var ak = Math.max(0.5, Math.min(1, (vh - 152 - 115) / 959));
+    d.style.setProperty('--ak', String(ak));
+    d.style.setProperty('--af', String(Math.min(1, ak / 0.8)));   // text inside the block starts shrinking below ak=0.8
+    d.style.setProperty('--ap', vh >= 1414 ? '1' : '0');   // design paddings (120/132) only when there is room for them
     window.__fit = { z: z, innerW: iw, innerH: ih, clientH: d.clientHeight, visualH: vv, vis: vis, clientW: cw };
   }
 

@@ -307,32 +307,38 @@
      Tracks 505 | 45 | 710 | 68 | 468 = 1796px; the panel is 874px tall starting 85px under the headline, the
      photo (862px) sits 12px lower, so both end on the same line; links start 23px and the button ends 7px
      inside that 874px box. */
+  /* Heights below are the design's values times --ak (fit.js): at 100% zoom the whole block has to fit the window
+     height, so on shorter windows the gaps, photo height and panel shrink together (widths stay). */
   @media (min-width:1280px){
-    .about-inner{gap:85px}
+    #about{padding:calc(40px + 80px*var(--ap,1)) 0 calc(24px + 108px*var(--ap,1))}
+    .about-inner{gap:calc(85px*var(--ak,1))}
     .about-headline p{width:539px;flex:none}
     .about-row2{
       display:grid;grid-template-columns:505px 45px 710px 68px 468px;justify-content:start;
       align-items:start;gap:0;
     }
-    .about-left{grid-column:1;align-items:stretch;justify-content:space-between;gap:0;height:874px;padding:23px 0 7px}
+    .about-left{grid-column:1;align-items:stretch;justify-content:space-between;gap:0;height:calc(874px*var(--ak,1));padding:calc(23px*var(--ak,1)) 0 calc(7px*var(--ak,1))}
     /* rows 36px tall (the third 42px) 119px apart, as laid out in the design */
-    .about-links{display:flex;flex-direction:column;gap:119px;width:438px;margin-left:16px;height:662px}
-    .about-links a:nth-child(3){height:42px}
+    .about-links{display:flex;flex-direction:column;justify-content:space-between;width:438px;margin-left:16px;height:calc(740px*var(--ak,1) - 78px)}
+    .about-links a:nth-child(3){height:calc(42px*var(--af,1))}
     .about-links a{
-      display:block;height:36px;font-family:'Inter',sans-serif;font-weight:500;font-size:36px;line-height:1;letter-spacing:.02em;
+      display:block;height:calc(36px*var(--af,1));font-family:'Inter',sans-serif;font-weight:500;font-size:calc(36px*var(--af,1));line-height:1;letter-spacing:.02em;
       color:#CDCBC7;transition:color .2s ease;
     }
     .about-links a:hover{color:#fff}
     .about-cta{align-self:flex-start}
-    .about-photo-img{grid-column:3;margin-top:12px}
+    .about-row2 > .about-photo-img{grid-column:3;margin-top:calc(12px*var(--ak,1));height:calc(862px*var(--ak,1))}
     .about-panel{
-      grid-column:5;width:468px;height:874px;border-radius:20px;background:rgba(50,31,1,.2);
-      padding:133px 0 0 8px;
+      grid-column:5;width:468px;height:calc(874px*var(--ak,1));border-radius:20px;background:rgba(50,31,1,.2);
+      padding:calc(133px*var(--ak,1)) 0 0 8px;
     }
-    .about-panel .stats-grid{display:flex;flex-direction:column;gap:75px;width:423px}
+    .about-panel .stats-grid{display:flex;flex-direction:column;gap:calc(75px*var(--ak,1));width:423px}
     .about-panel .stats-grid::before,.about-panel .stats-grid::after{display:none}
-    .about-panel .stat-box{min-height:92px;justify-content:flex-start}
-    .about-panel .stat-box:nth-child(-n+2){min-height:96px}
+    .about-panel .stat-box{min-height:calc(92px*var(--af,1));justify-content:flex-start;gap:calc(10px*var(--af,1))}
+    .about-panel .stat-box:nth-child(-n+2){min-height:calc(96px*var(--af,1))}
+    .about-panel .stat-box b{font-size:calc(64px*var(--af,1))}
+    .about-panel .stat-box:nth-child(2) b{min-height:calc(62px*var(--af,1))}
+    .about-panel .stat-box span{font-size:calc(20px*var(--af,1))}
   }
 
   .stats-grid{

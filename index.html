@@ -2576,7 +2576,9 @@
         gsap.fromTo(it.thumb, { clipPath: 'inset(0 0 0 100%)', scale: 1.25 }, { clipPath: 'inset(0 0 0 0%)', scale: 1, duration: .6, ease: 'power3.out', overwrite: true });
       };
       const leave = () => {
-        gsap.to(it.chars, { color: BASE, duration: .3, stagger: { each: .012, from: 'end' }, overwrite: true });
+        // opacity/yPercent too: leaving mid-roll used to freeze letters half-faded
+        gsap.to(it.chars, { color: BASE, opacity: 1, yPercent: 0, duration: .3, stagger: { each: .012, from: 'end' }, overwrite: true });
+        gsap.to(links, { opacity: 1, duration: .4, overwrite: true });   // un-dim the others; the next row's enter() takes over if the pointer moves on
         gsap.to(it.thumb, { clipPath: 'inset(0 100% 0 0)', duration: .35, ease: 'power2.in', overwrite: true, onComplete: () => gsap.set(it.a, { zIndex: 'auto' }) });
       };
       it.a.addEventListener('mouseenter', enter);
@@ -2584,8 +2586,14 @@
       it.a.addEventListener('mouseleave', leave);
       it.a.addEventListener('blur', leave);
     });
-    list.addEventListener('mouseleave', () => gsap.to(links, { opacity: 1, duration: .35, overwrite: true }));
-    list.addEventListener('focusout', () => gsap.to(links, { opacity: 1, duration: .35, overwrite: true }));
+    // calm state: every row fully visible, base colour, no photo (also repairs anything left half-way by a quick exit)
+    const calm = () => {
+      gsap.to(links, { opacity: 1, duration: .35, overwrite: true });
+      gsap.to(items.flatMap(o => o.chars), { color: BASE, opacity: 1, yPercent: 0, duration: .3, overwrite: true });
+      gsap.to(items.map(o => o.thumb), { clipPath: 'inset(0 100% 0 0)', duration: .3, overwrite: true });
+    };
+    list.addEventListener('mouseleave', calm);
+    list.addEventListener('focusout', calm);
   })();
 
   const burger = document.getElementById('burger');

@@ -330,9 +330,10 @@
     .about-row2 > .about-photo-img{grid-column:3;margin-top:calc(12px*var(--ak,1));height:calc(862px*var(--ak,1))}
     .about-panel{
       grid-column:5;width:468px;height:calc(874px*var(--ak,1));border-radius:20px;background:rgba(50,31,1,.2);
-      padding:calc(133px*var(--ak,1)) 0 0 8px;
+      /* figures spread over the whole plate: 20pt in from every edge, equal gaps, centred on the plate */
+      padding:20pt;display:flex;flex-direction:column;
     }
-    .about-panel .stats-grid{display:flex;flex-direction:column;gap:calc(75px*var(--ak,1));width:423px}
+    .about-panel .stats-grid{display:flex;flex-direction:column;justify-content:space-between;gap:0;flex:1;width:100%}
     .about-panel .stats-grid::before,.about-panel .stats-grid::after{display:none}
     .about-panel .stat-box{min-height:calc(92px*var(--af,1));justify-content:flex-start;gap:calc(10px*var(--af,1))}
     .about-panel .stat-box:nth-child(-n+2){min-height:calc(96px*var(--af,1))}

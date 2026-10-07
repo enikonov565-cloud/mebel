@@ -301,14 +301,38 @@
   }
 
   .about-row2{display:flex;align-items:flex-end;justify-content:space-between;gap:56px;flex-wrap:wrap}
-  .about-stats-col{display:flex;flex-direction:column;align-items:center;gap:124px}
-  /* Figma 270:439 (1920 frame): headline -> photo 80px; the 832px stats grid is centred in the column left of
-     the photo (60..1008) and starts 183px below the photo's top; the button sits on the photo's bottom edge. */
+  .about-left{display:flex;flex-direction:column;align-items:center;gap:56px}
+  .about-links{display:none}   /* catalogue links only exist in the wide layout below */
+  /* Figma 270:439 (1920 frame, updated): three columns — catalogue links + button | photo | stats panel.
+     Tracks 505 | 45 | 710 | 68 | 468 = 1796px; the panel is 874px tall starting 85px under the headline, the
+     photo (862px) sits 12px lower, so both end on the same line; links start 23px and the button ends 7px
+     inside that 874px box. */
   @media (min-width:1280px){
-    .about-inner{gap:80px}
-    .about-row2{align-items:stretch;justify-content:flex-start;gap:32px;flex-wrap:nowrap}
-    .about-stats-col{flex:1 1 0;min-width:0;justify-content:space-between;padding-top:183px}
+    .about-inner{gap:85px}
     .about-headline p{width:539px;flex:none}
+    .about-row2{
+      display:grid;grid-template-columns:505px 45px 710px 68px 468px;justify-content:start;
+      align-items:start;gap:0;
+    }
+    .about-left{grid-column:1;align-items:stretch;justify-content:space-between;gap:0;height:874px;padding:23px 0 7px}
+    /* rows 36px tall (the third 42px) 119px apart, as laid out in the design */
+    .about-links{display:flex;flex-direction:column;gap:119px;width:438px;margin-left:16px;height:662px}
+    .about-links a:nth-child(3){height:42px}
+    .about-links a{
+      display:block;height:36px;font-family:'Inter',sans-serif;font-weight:500;font-size:36px;line-height:1;letter-spacing:.02em;
+      color:#CDCBC7;transition:color .2s ease;
+    }
+    .about-links a:hover{color:#fff}
+    .about-cta{align-self:flex-start}
+    .about-photo-img{grid-column:3;margin-top:12px}
+    .about-panel{
+      grid-column:5;width:468px;height:874px;border-radius:20px;background:rgba(50,31,1,.2);
+      padding:133px 0 0 8px;
+    }
+    .about-panel .stats-grid{display:flex;flex-direction:column;gap:75px;width:423px}
+    .about-panel .stats-grid::before,.about-panel .stats-grid::after{display:none}
+    .about-panel .stat-box{min-height:92px;justify-content:flex-start}
+    .about-panel .stat-box:nth-child(-n+2){min-height:96px}
   }
 
   .stats-grid{
@@ -1023,7 +1047,8 @@
   /* About / Why-us rows need ~1900px to stay in one line (exact Figma widths) */
   @media (max-width:1279px){
     .about-row2{flex-direction:column;align-items:center;gap:56px}
-    .about-stats-col{width:100%;gap:56px}
+    .about-left{width:100%;order:2}
+    .about-panel{width:100%;order:1}
     /* .about-stats-col has align-items:center (never overridden here), so its flex children —
        including .about-cta — never stretch to the column's own full width; they shrink-wrap to
        their content instead. .about-cta a{width:100%} below then resolves against that
@@ -1399,13 +1424,14 @@
     </div>
 
     <div class="about-row2">
-      <div class="about-stats-col">
-        <div class="stats-grid">
-          <div class="stat-box"><b>12+</b><span>лет на&nbsp;рынке</span></div>
-          <div class="stat-box"><b>3 года</b><span>гарантии на&nbsp;изделия</span></div>
-          <div class="stat-box"><b>800+</b><span>выполненных проектов</span></div>
-          <div class="stat-box"><b>15–25</b><span class="nowrap-line">дней средний срок изготовления</span></div>
-        </div>
+      <div class="about-left">
+        <nav class="about-links" aria-label="Каталог">
+          <a href="catalog-korpusnaya.html">Корпусная мебель</a>
+          <a href="catalog-ofisnaya.html">Офисная мебель</a>
+          <a href="catalog-kommercheskaya.html">Коммерческая мебель</a>
+          <a href="catalog-dveri.html">Двери и порталы</a>
+          <a href="catalog-eksklyuzivnaya.html">Эксклюзивная мебель</a>
+        </nav>
 
         <div class="about-cta">
           <a href="#services" class="dot-btn">
@@ -1418,6 +1444,15 @@
         <source src="about-video-mobile.mp4" media="(max-width:640px)">
         <source src="about-video.mp4">
       </video>
+
+      <div class="about-panel">
+        <div class="stats-grid">
+          <div class="stat-box"><b>12+</b><span>лет на&nbsp;рынке</span></div>
+          <div class="stat-box"><b>3 года</b><span>гарантии на&nbsp;изделия</span></div>
+          <div class="stat-box"><b>800+</b><span>выполненных проектов</span></div>
+          <div class="stat-box"><b>15–25</b><span class="nowrap-line">дней средний срок изготовления</span></div>
+        </div>
+      </div>
     </div>
   </div>
 </section>

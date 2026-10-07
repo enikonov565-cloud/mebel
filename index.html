@@ -2551,18 +2551,8 @@
     const list = document.querySelector('.about-links');
     if (!list || !window.gsap || !window.SplitType) return;
     const links = [...list.querySelectorAll('a')];
-    const GOLD = '#e2a04f', BASE = '#CDCBC7', DARK = '#110B00', LIGHT = '#ffffff';
+    const GOLD = '#e2a04f', BASE = '#CDCBC7', WHITE = '#ffffff';
     const zoom = () => parseFloat(document.documentElement.style.zoom) || 1;
-    // average brightness of a photo (0..1); null if the canvas is tainted / not loaded yet
-    const lum = img => {
-      try {
-        const c = document.createElement('canvas'); c.width = c.height = 8;
-        const x = c.getContext('2d'); x.drawImage(img, 0, 0, 8, 8);
-        const d = x.getImageData(0, 0, 8, 8).data; let s = 0;
-        for (let i = 0; i < d.length; i += 4) s += (0.2126 * d[i] + 0.7152 * d[i + 1] + 0.0722 * d[i + 2]) / 255;
-        return s / 64;
-      } catch (e) { return null; }
-    };
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     document.documentElement.classList.add('al-js');
     const items = links.map(a => {
@@ -2578,11 +2568,9 @@
         if (reduce) { gsap.set(it.chars, { color: GOLD }); return; }
         gsap.killTweensOf(it.chars);
         gsap.set(it.a, { zIndex: 2 });
-        // letters lying over the photo take a colour that reads on it (dark on a light photo, white on a dark one)
+        // letters lying over the photo are white, the rest gold
         const aRect = it.a.getBoundingClientRect(), thumbLeft = aRect.right - it.thumb.offsetWidth * zoom();
-        const L = it.thumb.complete ? lum(it.thumb) : null;
-        const onPhoto = L === null ? DARK : (L > 0.5 ? DARK : LIGHT);
-        it.chars.forEach(ch => { ch._to = ch.getBoundingClientRect().right > thumbLeft + 1 ? onPhoto : GOLD; });
+        it.chars.forEach(ch => { ch._to = ch.getBoundingClientRect().right > thumbLeft + 1 ? WHITE : GOLD; });
         gsap.fromTo(it.chars, { yPercent: 35, opacity: .25 }, { yPercent: 0, opacity: 1, duration: .5, ease: 'power3.out', stagger: .022 });
         gsap.to(it.chars, { color: i => it.chars[i]._to, duration: .35, stagger: .022, overwrite: 'auto' });
         gsap.fromTo(it.thumb, { clipPath: 'inset(0 0 0 100%)', scale: 1.25 }, { clipPath: 'inset(0 0 0 0%)', scale: 1, duration: .6, ease: 'power3.out', overwrite: true });

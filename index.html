@@ -320,12 +320,24 @@
     .about-left{grid-column:1;align-items:stretch;justify-content:space-between;gap:0;height:calc(874px*var(--ak,1));padding:calc(23px*var(--ak,1)) 0 calc(7px*var(--ak,1))}
     /* rows 36px tall (the third 42px) 119px apart, as laid out in the design */
     .about-links{display:flex;flex-direction:column;justify-content:space-between;width:438px;margin-left:16px;height:calc(740px*var(--ak,1) - 78px)}
-    .about-links a:nth-child(3){height:calc(42px*var(--af,1))}
+    .about-links a:nth-of-type(3){height:calc(42px*var(--af,1))}
+    /* Light weight: the design's Medium read heavy next to the photo */
     .about-links a{
-      display:block;height:calc(36px*var(--af,1));font-family:'Inter',sans-serif;font-weight:300;font-size:calc(36px*var(--af,1));   /* Light: the design's Medium read heavy next to the photo */line-height:1;letter-spacing:.02em;
-      color:#CDCBC7;transition:color .2s ease;
+      position:relative;display:block;height:calc(36px*var(--af,1));font-family:'Inter',sans-serif;font-weight:300;
+      font-size:calc(36px*var(--af,1));line-height:1;letter-spacing:.02em;color:#CDCBC7;
     }
-    .about-links a:hover{color:#fff}
+    /* thin rules between the rows (flex items, so space-between keeps them centred in each gap) */
+    .about-links .al-line{display:block;flex:none;height:1px;width:505px;margin-left:-16px;background:rgba(205,203,199,.22)}
+    /* category preview that opens at the right end of a row on hover (animated by gsap, see script) */
+    .about-links .al-thumb{
+      position:absolute;right:0;top:calc(50% - 37px*var(--af,1));width:calc(112px*var(--af,1));height:calc(74px*var(--af,1));
+      object-fit:cover;border-radius:6px;pointer-events:none;clip-path:inset(0 0 0 100%);
+    }
+    .about-links .char{display:inline-block}
+    /* no gsap / SplitType (offline, blocked): plain CSS hover instead */
+    html:not(.al-js) .about-links a{transition:color .2s ease}
+    html:not(.al-js) .about-links a:hover{color:#e2a04f}
+    html:not(.al-js) .about-links a:hover .al-thumb{clip-path:inset(0)}
     .about-cta{align-self:flex-start}
     .about-row2 > .about-photo-img{grid-column:3;margin-top:calc(12px*var(--ak,1));height:calc(862px*var(--ak,1))}
     .about-panel{
@@ -1433,11 +1445,15 @@
     <div class="about-row2">
       <div class="about-left">
         <nav class="about-links" aria-label="Каталог">
-          <a href="catalog-korpusnaya.html">Корпусная мебель</a>
-          <a href="catalog-ofisnaya.html">Офисная мебель</a>
-          <a href="catalog-kommercheskaya.html">Коммерческая мебель</a>
-          <a href="catalog-dveri.html">Двери и порталы</a>
-          <a href="catalog-eksklyuzivnaya.html">Эксклюзивная мебель</a>
+          <a href="catalog-korpusnaya.html"><span class="al-text">Корпусная мебель</span><img class="al-thumb" src="cat-korpus.jpg" alt="" loading="lazy"></a>
+          <i class="al-line" aria-hidden="true"></i>
+          <a href="catalog-ofisnaya.html"><span class="al-text">Офисная мебель</span><img class="al-thumb" src="cat-office.jpg" alt="" loading="lazy"></a>
+          <i class="al-line" aria-hidden="true"></i>
+          <a href="catalog-kommercheskaya.html"><span class="al-text">Коммерческая мебель</span><img class="al-thumb" src="cat-commerce.jpg" alt="" loading="lazy"></a>
+          <i class="al-line" aria-hidden="true"></i>
+          <a href="catalog-dveri.html"><span class="al-text">Двери и порталы</span><img class="al-thumb" src="cat-doors.jpg" alt="" loading="lazy"></a>
+          <i class="al-line" aria-hidden="true"></i>
+          <a href="catalog-eksklyuzivnaya.html"><span class="al-text">Эксклюзивная мебель</span><img class="al-thumb" src="cat-exclusive.jpg" alt="" loading="lazy"></a>
         </nav>
 
         <div class="about-cta">
@@ -2046,6 +2062,8 @@
   </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://unpkg.com/split-type@0.3.4"></script>
 <script src="weight-hover.js"></script>
 <script src="footer-underline.js"></script>
 <script>
@@ -2522,6 +2540,44 @@
         btn.setAttribute('aria-expanded', open);
       });
     });
+  })();
+
+  // Catalogue links in the about block (>=1280px): letters of the hovered row roll in and turn gold, the other rows
+  // dim, a category photo opens at the row's right end. gsap + SplitType; without them the CSS hover above is used.
+  (function () {
+    const list = document.querySelector('.about-links');
+    if (!list || !window.gsap || !window.SplitType) return;
+    const links = [...list.querySelectorAll('a')];
+    const GOLD = '#e2a04f', BASE = '#CDCBC7';
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    document.documentElement.classList.add('al-js');
+    const items = links.map(a => {
+      const text = a.querySelector('.al-text');
+      a.setAttribute('aria-label', text.textContent.trim());
+      const split = new SplitType(text, { types: 'words,chars', tagName: 'span' });
+      return { a, chars: split.chars, thumb: a.querySelector('.al-thumb') };
+    });
+    items.forEach(it => {
+      const enter = () => {
+        gsap.to(items.filter(o => o !== it).map(o => o.a), { opacity: .42, duration: .35, overwrite: true });
+        gsap.to(it.a, { opacity: 1, duration: .2, overwrite: true });
+        if (reduce) { gsap.set(it.chars, { color: GOLD }); gsap.set(it.thumb, { clipPath: 'inset(0 0 0 0%)' }); return; }
+        gsap.killTweensOf(it.chars);
+        gsap.fromTo(it.chars, { yPercent: 35, opacity: .25 }, { yPercent: 0, opacity: 1, duration: .5, ease: 'power3.out', stagger: .022 });
+        gsap.to(it.chars, { color: GOLD, duration: .35, stagger: .022, overwrite: 'auto' });
+        gsap.fromTo(it.thumb, { clipPath: 'inset(0 0 0 100%)', scale: 1.25 }, { clipPath: 'inset(0 0 0 0%)', scale: 1, duration: .6, ease: 'power3.out', overwrite: true });
+      };
+      const leave = () => {
+        gsap.to(it.chars, { color: BASE, duration: .3, stagger: { each: .012, from: 'end' }, overwrite: true });
+        gsap.to(it.thumb, { clipPath: 'inset(0 100% 0 0)', duration: .35, ease: 'power2.in', overwrite: true });
+      };
+      it.a.addEventListener('mouseenter', enter);
+      it.a.addEventListener('focus', enter);
+      it.a.addEventListener('mouseleave', leave);
+      it.a.addEventListener('blur', leave);
+    });
+    list.addEventListener('mouseleave', () => gsap.to(links, { opacity: 1, duration: .35, overwrite: true }));
+    list.addEventListener('focusout', () => gsap.to(links, { opacity: 1, duration: .35, overwrite: true }));
   })();
 
   const burger = document.getElementById('burger');

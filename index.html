@@ -439,10 +439,19 @@
   @media (min-width:961px){
     .why-grid{display:none}
     .why-stage{display:grid;grid-template-areas:'page';position:relative;isolation:isolate}
-    .why-previews{grid-area:page;position:relative;z-index:1;display:flex;flex-direction:column;gap:40px}
+    /* the four blocks lie stacked under one another (sticky, each a little lower than the one beneath) and are pulled
+       out one by one as the page scrolls: the next block slides up over the previous one, which shrinks and darkens */
+    .why-previews{grid-area:page;position:relative;z-index:1;display:block}
     .why-stage .oh{position:relative;overflow:hidden;display:block}
     .why-stage .oh__inner{display:inline-block;will-change:transform}
-    .wp{position:relative;height:min(780px,calc(var(--vh100,100vh) - 120px));display:grid;grid-template:100% / 100%}
+    .wp{
+      position:sticky;top:calc(96px + var(--n,0)*26px);height:min(760px,calc(var(--vh100,100vh) - 96px - 3*26px - 32px));
+      display:grid;grid-template:100% / 100%;margin-bottom:calc(var(--vh100,100vh)*.6);transform-origin:50% 0;
+    }
+    .wp:nth-child(2){--n:1}
+    .wp:nth-child(3){--n:2}
+    .wp:nth-child(4){--n:3;margin-bottom:0}
+    .wp-shade{grid-area:1/1;z-index:4;background:#110B00;opacity:0;border-radius:15px;pointer-events:none}
     .wp-img-wrap{grid-area:1/1;cursor:pointer;border-radius:15px}
     .wp-img{position:relative;width:100%;height:100%;overflow:hidden;border-radius:15px;background:#1b1206}
     .wp-img::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(17,11,0,.28),rgba(17,11,0,.5));pointer-events:none}
@@ -465,15 +474,21 @@
       grid-area:page;position:sticky;top:0;align-self:start;height:var(--vh100,100vh);overflow:hidden;pointer-events:none;z-index:6;
       display:grid;grid-template-rows:auto 1fr;padding:96px 60px 40px;
     }
-    .why-back{
-      grid-row:1;justify-self:start;display:inline-flex;align-items:center;gap:10px;opacity:0;visibility:hidden;margin-bottom:12px;
-      padding:6px 20px;background:#2F1F02;border:2px solid #CDCBC7;border-radius:15px;color:#CDCBC7;
-      font-family:'Inter',sans-serif;font-weight:700;font-size:18px;cursor:pointer;
+    /* while a panel is open the wrap is pinned to the window itself (a sticky box is pushed up near the end of the
+       stage, which hid the back button on the last block) and gets an opaque backdrop */
+    html.why-open .why-content-wrap{position:fixed;left:0;right:0;top:0}
+    .why-bar{grid-row:1;display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;opacity:0;visibility:hidden}
+    html.why-open .why-bar{visibility:visible}
+    .why-back,.why-step{
+      display:inline-flex;align-items:center;gap:10px;padding:6px 20px;background:#2F1F02;border:2px solid #CDCBC7;border-radius:15px;color:#CDCBC7;
+      font-family:'Inter',sans-serif;font-weight:700;font-size:18px;cursor:pointer;pointer-events:auto;
       --reveal-bg:#CDCBC7;--reveal-text:#2F1F02;--dot-shadow:#2F1F02;
     }
-    html.why-open .why-back{visibility:visible;pointer-events:auto}
+    .why-pager{display:flex;align-items:center;gap:14px;font-family:'Inter',sans-serif;font-weight:300;font-size:18px;letter-spacing:.02em;color:#CDCBC7}
+    .why-step{padding:6px 16px}
+    .wc-slot{cursor:pointer}
     .wc{
-      grid-row:2;position:absolute;left:60px;right:60px;top:144px;bottom:40px;opacity:0;pointer-events:none;
+      grid-area:2 / 1 / 3 / 2;position:absolute;inset:0;opacity:0;pointer-events:none;
       display:grid;gap:2vw;grid-template-columns:60% 1fr;
       grid-template-areas:'img group' 'img thumbs';grid-template-rows:1fr auto;
     }
@@ -1621,6 +1636,7 @@
           <p class="wp-desc oh"><span class="oh__inner">Проектируем, изготавливаем, монтируем.</span></p>
         </div>
         <span class="wp-more" aria-hidden="true"><i></i><span>подробнее</span></span>
+        <span class="wp-shade" aria-hidden="true"></span>
       </article>
       <article class="wp">
         <div class="wp-img-wrap" role="button" tabindex="0" aria-label="Подробнее: Фабричное качество производимой мебели">
@@ -1631,6 +1647,7 @@
           <p class="wp-desc oh"><span class="oh__inner">Массив, а не ЛДСП.</span></p>
         </div>
         <span class="wp-more" aria-hidden="true"><i></i><span>подробнее</span></span>
+        <span class="wp-shade" aria-hidden="true"></span>
       </article>
       <article class="wp">
         <div class="wp-img-wrap" role="button" tabindex="0" aria-label="Подробнее: Быстрая доставка и сборка мебели на дому">
@@ -1641,6 +1658,7 @@
           <p class="wp-desc oh"><span class="oh__inner">15–25 дней на изготовление.</span></p>
         </div>
         <span class="wp-more" aria-hidden="true"><i></i><span>подробнее</span></span>
+        <span class="wp-shade" aria-hidden="true"></span>
       </article>
       <article class="wp">
         <div class="wp-img-wrap" role="button" tabindex="0" aria-label="Подробнее: Гарантия по договору на мебель 3 года">
@@ -1651,10 +1669,18 @@
           <p class="wp-desc oh"><span class="oh__inner">Фиксированная цена и срок.</span></p>
         </div>
         <span class="wp-more" aria-hidden="true"><i></i><span>подробнее</span></span>
+        <span class="wp-shade" aria-hidden="true"></span>
       </article>
       </div>
       <div class="why-content-wrap">
-        <button type="button" class="why-back dot-btn">← назад</button>
+        <div class="why-bar">
+          <button type="button" class="why-back dot-btn" aria-label="Закрыть описание">← назад</button>
+          <div class="why-pager">
+            <button type="button" class="why-step why-prev dot-btn" aria-label="Предыдущий пункт">←</button>
+            <span class="why-count" aria-live="polite">1 / 4</span>
+            <button type="button" class="why-step why-next dot-btn" aria-label="Следующий пункт">→</button>
+          </div>
+        </div>
         <div class="wc">
           <div class="wc-slot"></div>
           <div class="wc-group">
@@ -2328,6 +2354,7 @@
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
 <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
 <script src="https://unpkg.com/split-type@0.3.4"></script>
+<script src="typo.js"></script>
 <script src="weight-hover.js"></script>
 <script src="footer-underline.js"></script>
 <script>
@@ -2932,7 +2959,9 @@
     const D = reduce ? 0.01 : 1.5, EASE = 'power4.inOut';
     const zoom = () => parseFloat(document.documentElement.style.zoom) || 1;
     const root = document.documentElement;
-    const back = stage.querySelector('.why-back');
+    const wrap = stage.querySelector('.why-content-wrap');
+    const back = stage.querySelector('.why-bar');
+    const count = stage.querySelector('.why-count');
     const contentEls = [...stage.querySelectorAll('.wc')];
     const items = [...stage.querySelectorAll('.wp')].map((el, i) => {
       const c = contentEls[i];
@@ -2963,9 +2992,28 @@
     };
     const inView = el => { const r = el.getBoundingClientRect(); return r.bottom > 0 && r.top < window.innerHeight; };
 
+    // split into lines by hand: SplitType turns no-break spaces into ordinary ones, which let lines end on "по", "и" …
     const splitLines = c => {
-      c.split = new SplitType(c.text, { types: 'lines' });
-      c.split.lines.forEach(l => { const w = document.createElement('div'); w.className = 'oh'; l.parentNode.appendChild(w); w.appendChild(l); });
+      const original = c.text.textContent;
+      c.text.textContent = '';
+      const spans = original.split(' ').map((word, k, arr) => {
+        const s = document.createElement('span'); s.textContent = word; c.text.appendChild(s);
+        if (k < arr.length - 1) c.text.appendChild(document.createTextNode(' '));
+        return s;
+      });
+      const rows = []; let top = null;
+      spans.forEach(s => {
+        const t = Math.round(s.getBoundingClientRect().top);
+        if (top === null || Math.abs(t - top) > 4) { rows.push([]); top = t; }
+        rows[rows.length - 1].push(s.textContent);
+      });
+      c.text.textContent = '';
+      const lines = rows.map(words => {
+        const o = document.createElement('div'); o.className = 'oh';
+        const l = document.createElement('div'); l.className = 'line'; l.textContent = words.join(' ');
+        o.appendChild(l); c.text.appendChild(o); return l;
+      });
+      c.split = { lines, original, revert: () => { c.text.textContent = original; } };
     };
 
     const open = item => {
@@ -2981,9 +3029,12 @@
       gsap.set(c.thumbs, { transformOrigin: '0% 0%', scale: 0, yPercent: 150 });
       gsap.set(c.text, { opacity: 0 });
       gsap.set(back, { opacity: 0 });
+      gsap.set(wrap, { backgroundColor: 'rgba(17,11,0,0)' });
+      count.textContent = (item.i + 1) + ' / ' + items.length;
       item.innerScale = gsap.getProperty(item.inner, 'scale') || 1;
 
       const tl = gsap.timeline({ defaults: { duration: D, ease: EASE }, onComplete: () => { busy = false; } }).addLabel('start', 0);
+      tl.to(wrap, { backgroundColor: 'rgba(17,11,0,1)' }, 'start');
       adjacent.forEach(o => tl.to(o.el, { y: o.i < item.i ? -vh : vh }, 'start'));
       tl.add(() => flip(item.img, () => c.slot.appendChild(item.img)), 'start')
         .to(item.titleInner, { yPercent: 101, opacity: 0, stagger: -0.03 }, 'start')
@@ -3002,7 +3053,7 @@
       item.adjacent = adjacent;
     };
 
-    const close = () => {
+    const close = after => {
       if (busy || !current) return;
       busy = true;
       const item = current, c = item.c;
@@ -3013,8 +3064,10 @@
           root.classList.remove('why-open');
           c.el.classList.remove('wc--current');
           if (c.split) { c.split.revert(); c.split = null; }
+          gsap.set(wrap, { clearProps: 'backgroundColor' });
           current = null; busy = false;
           ScrollTrigger.refresh();
+          if (after) after();
         }
       }).addLabel('start', 0)
         .to(back, { opacity: 0 }, 'start')
@@ -3023,6 +3076,7 @@
         .to(c.thumbs, { scale: 0, yPercent: 150, stagger: -0.05 }, 'start')
         .to(c.split ? c.split.lines : [], { yPercent: -105, stagger: 0.02 }, 'start')
         .addLabel('preview', reduce ? 0 : 0.15)
+        .to(wrap, { backgroundColor: 'rgba(17,11,0,0)' }, 'preview')
         .to(item.adjacent.map(o => o.el), { y: 0 }, 'preview')
         .add(() => flip(item.img, () => item.wrap.appendChild(item.img)), 'preview')
         .to(item.titleInner, { yPercent: 0, opacity: 1, stagger: 0.03 }, 'preview')
@@ -3035,21 +3089,46 @@
       it.wrap.addEventListener('click', () => open(it));
       it.wrap.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(it); } });
     });
-    back.addEventListener('click', close);
-    document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
+    // ways out / between panels: «← назад», Esc, a click on the photo, «←» «→» buttons and the arrow keys
+    const go = dir => {
+      if (busy || !current) return;
+      const next = items[(current.i + dir + items.length) % items.length];
+      close(() => {
+        // bring the next block to the middle of the window (instantly), then open it
+        const r = next.el.getBoundingClientRect(), y = window.scrollY + r.top - (window.innerHeight - r.height) / 2;
+        if (window.__lenis) window.__lenis.scrollTo(y, { immediate: true }); else window.scrollTo(0, y);
+        requestAnimationFrame(() => open(next));
+      });
+    };
+    back.querySelector('.why-back').addEventListener('click', () => close());
+    back.querySelector('.why-prev').addEventListener('click', () => go(-1));
+    back.querySelector('.why-next').addEventListener('click', () => go(1));
+    items.forEach(it => it.c.slot.addEventListener('click', e => { if (e.target.closest('.wp-img')) close(); }));
+    document.addEventListener('keydown', e => {
+      if (!current) return;
+      if (e.key === 'Escape') close();
+      else if (e.key === 'ArrowRight') go(1);
+      else if (e.key === 'ArrowLeft') go(-1);
+    });
 
-    // scroll animation: the title drifts up, the photo grows (uniform scale, so faces/furniture are not stretched)
+    // scroll animation (stacked cards): the block that is covered shrinks and darkens, the block that slides up settles
+    // (its photo eases from a slight zoom to 1)
     const mm = gsap.matchMedia();
     mm.add('(min-width:961px)', () => {
-      items.forEach(it => {
-        gsap.set(it.inner, { transformOrigin: '50% 0%' });
-        gsap.set(it.title, { yPercent: 45 });
-        gsap.timeline({ scrollTrigger: { trigger: it.el, start: 'top bottom', end: 'bottom top', scrub: true } })
-          .addLabel('start', 0)
-          .to(it.title, { ease: 'none', yPercent: -100 }, 'start')
-          .to(it.inner, { ease: 'none', scale: 1.35 }, 'start');
+      items.forEach((it, k) => {
+        const next = items[k + 1];
+        gsap.set(it.inner, { transformOrigin: '50% 0%', scale: k === 0 ? 1 : 1.2 });
+        if (k > 0) {
+          gsap.to(it.inner, { ease: 'none', scale: 1, scrollTrigger: { trigger: it.el, start: 'top bottom', end: 'top 30%', scrub: true } });
+        }
+        if (next) {
+          const shade = it.el.querySelector('.wp-shade');
+          gsap.timeline({ scrollTrigger: { trigger: next.el, start: 'top bottom', end: 'top 30%', scrub: true } })
+            .to(it.el, { ease: 'none', scale: 0.92 }, 0)
+            .to(shade, { ease: 'none', opacity: 0.6 }, 0);
+        }
       });
-      return () => { items.forEach(it => gsap.set([it.inner, it.title], { clearProps: 'transform' })); };
+      return () => { items.forEach(it => gsap.set([it.inner, it.el, it.el.querySelector('.wp-shade')], { clearProps: 'transform,opacity' })); };
     });
     window.addEventListener('load', () => ScrollTrigger.refresh());
   })();

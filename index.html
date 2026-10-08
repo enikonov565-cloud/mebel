@@ -597,7 +597,9 @@
     .svc-grid{display:block}
     /* the closing call-to-action: text and both buttons spread across one row (wraps only when the window is too narrow) */
     .svc-grid .svc-cta{
-      height:auto;padding:80px 0 20px;flex-direction:row;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:24px 40px;
+      height:auto;padding:0 0 20px;flex-direction:row;
+      /* pull the row up under the last photo: the sheet is a full window tall, the photo is at most 760px, so the rest is empty — leave 40px */
+      margin-top:calc(40px - max(70px, (var(--vh100,100vh) - 760px) / 2));flex-wrap:wrap;align-items:center;justify-content:space-between;gap:24px 40px;
     }
     .svc-grid .svc-cta p{flex:0 1 430px;width:auto}
     .svc-grid .svc-cta .svc-btn{flex:0 1 430px}
@@ -1646,7 +1648,7 @@
         <div class="ws-img-wrap ws-img-wrap--current"><div class="ws-img"><video src="why-cnc-hd.mp4" muted loop playsinline preload="auto" aria-label="Станок с ЧПУ в работе" style="object-position:center 24%"></video></div></div>
         <div class="ws-img-wrap"><div class="ws-img"><img src="why-quality.jpg" alt="Стол из шпона с радиальным рисунком" loading="lazy" decoding="async" style="object-position:center 62%"></div></div>
         <div class="ws-img-wrap"><div class="ws-img"><img src="why-assembly.jpg" alt="Собранный на месте встроенный стеллаж" loading="lazy" decoding="async" style="object-position:center 38%"></div></div>
-        <div class="ws-img-wrap"><div class="ws-img"><video src="why-table.mp4" poster="why-photo-2.jpg" muted loop playsinline preload="metadata" aria-label="Стол из массива в интерьере"></video></div></div>
+        <div class="ws-img-wrap"><div class="ws-img"><video src="why-table-hd.mp4" poster="why-photo-2.jpg" muted loop playsinline preload="metadata" aria-label="Стол из массива в интерьере"></video></div></div>
       </div>
       <nav class="ws-nav" aria-label="Слайды">
         <button type="button" class="ws-btn ws-btn--prev" aria-label="Предыдущий слайд"><svg viewBox="0 0 55 24"><path d="M54 12H2M13 1.5 2 12l11 10.5"/></svg></button>
@@ -2896,8 +2898,8 @@
 
     gsap.set(slides[current].wrap, { clipPath: CP.initial });
     slides.forEach(s => {
-      s.link.addEventListener('mouseenter', () => { gsap.killTweensOf(s.wrap); gsap.to(s.wrap, { duration: 1, ease: 'expo', clipPath: CP.hover }); });
-      s.link.addEventListener('mouseleave', () => { gsap.killTweensOf(s.wrap); gsap.to(s.wrap, { duration: 1, ease: 'expo', clipPath: CP.initial }); });
+      s.link.addEventListener('mouseenter', () => { gsap.killTweensOf(s.wrap); gsap.to(s.wrap, { duration: 1.4, ease: 'power3.out', clipPath: CP.hover }); });
+      s.link.addEventListener('mouseleave', () => { gsap.killTweensOf(s.wrap); gsap.to(s.wrap, { duration: 1.4, ease: 'power3.out', clipPath: CP.initial }); });
     });
 
     const show = (direction) => {
@@ -2914,17 +2916,24 @@
         gsap.set([from.cap, from.wrap], { clearProps: 'opacity' });
         from.cap.classList.remove('ws-cap--current'); from.wrap.classList.remove('ws-img-wrap--current');
         to.cap.classList.add('ws-cap--current'); to.wrap.classList.add('ws-img-wrap--current');
-        gsap.set(to.wrap, { clipPath: CP.initial, x: 0 }); gsap.set(to.img, { x: 0 }); gsap.set(to.text, { y: 0 }); gsap.set([to.body, to.link], { opacity: 1, y: 0 });
+        gsap.set(to.wrap, { clipPath: CP.initial, x: 0 }); gsap.set(to.img, { x: 0 }); gsap.set(to.text, { yPercent: 0 }); gsap.set([to.body, to.link], { opacity: 1, y: 0 });
         if (from.media) from.media.pause();
         busy = false; return;
       }
 
+      // order: 1) the old caption slides out under its mask, 2) the picture folds into the arrow, 3) it slides away while the
+      // next one comes from the other side, 4) the arrow opens to the full frame, 5) the new caption rises. The rows travel
+      // 120% (not 100%) so no sliver of a letter is left in the mask on either slide.
+      const OUT = next ? -120 : 120, IN = next ? 120 : -120;
       gsap.timeline({
+        defaults: { force3D: true },
         onStart: () => { to.cap.classList.add('ws-cap--current'); to.wrap.classList.add('ws-img-wrap--current'); },
         onComplete: () => {
           busy = false;
           from.cap.classList.remove('ws-cap--current'); from.wrap.classList.remove('ws-img-wrap--current');
           gsap.set([from.cap, from.wrap], { clearProps: 'opacity' });
+          gsap.set(from.text, { yPercent: OUT });
+          gsap.set([from.body, from.link], { opacity: 0 });
           if (from.media) from.media.pause();
         }
       })
@@ -2932,20 +2941,23 @@
         .set(to.wrap, { x: next ? '-100%' : '100%', clipPath: next ? CP.final.right : CP.final.left }, 'start')
         .set([to.cap, to.wrap], { opacity: 1 }, 'start')
         .set(to.img, { x: next ? '100%' : '-100%' }, 'start')
-        .set(to.text, { y: next ? '100%' : '-100%' }, 'start')
+        .set(to.text, { yPercent: IN }, 'start')
         .set([to.body, to.link], { opacity: 0, y: next ? 24 : -24 }, 'start')
-        // current image: collapse into the arrow shape, then slide out while the picture counter-moves
-        .to(from.wrap, { duration: 0.7, ease: 'expo', clipPath: next ? CP.final.right : CP.final.left, rotation: 0.001 }, 'start')
-        .to(from.text, { duration: 1, ease: 'power3', y: next ? '-100%' : '100%' }, 'start')
-        .to([from.body, from.link], { duration: 0.5, ease: 'power3', opacity: 0, y: next ? -24 : 24 }, 'start')
-        .to(from.wrap, { duration: 0.5, ease: 'expo.inOut', x: next ? '100%' : '-100%', rotation: 0.001 }, 'start+=0.4')
-        .to(from.img, { duration: 0.5, ease: 'expo.inOut', x: next ? '-100%' : '100%' }, 'start+=0.4')
-        // upcoming image: slide in, then open to the full frame
-        .to(to.wrap, { duration: 0.5, ease: 'expo', x: '0%', rotation: 0.001 }, 'start+=0.7')
-        .to(to.img, { duration: 0.5, ease: 'expo', x: '0%' }, 'start+=0.7')
-        .to(to.wrap, { duration: 0.7, ease: 'expo.inOut', clipPath: CP.initial }, 'start+=0.7')
-        .to(to.text, { duration: 1.5, ease: 'expo.inOut', y: '0%', rotation: 0.001, stagger: next ? 0.1 : -0.1 }, 'start+=0.4')
-        .to([to.body, to.link], { duration: 0.6, ease: 'power3.out', opacity: 1, y: 0 }, 'start+=1');
+        // 1. old caption out
+        .to(from.text, { duration: 0.9, ease: 'power3.inOut', yPercent: OUT, stagger: next ? 0.07 : -0.07 }, 'start')
+        .to([from.body, from.link], { duration: 0.6, ease: 'power2.inOut', opacity: 0, y: next ? -24 : 24 }, 'start')
+        // 2. picture folds into the arrow
+        .to(from.wrap, { duration: 1.2, ease: 'power4.inOut', clipPath: next ? CP.final.right : CP.final.left }, 'start+=0.6')
+        // 3. it slides away (the image counter-moves), the next one slides in
+        .to(from.wrap, { duration: 1, ease: 'power3.inOut', x: next ? '100%' : '-100%' }, 'start+=1.5')
+        .to(from.img, { duration: 1, ease: 'power3.inOut', x: next ? '-100%' : '100%' }, 'start+=1.5')
+        .to(to.wrap, { duration: 1, ease: 'power3.out', x: '0%' }, 'start+=2')
+        .to(to.img, { duration: 1, ease: 'power3.out', x: '0%' }, 'start+=2')
+        // 4. the arrow opens to the full frame
+        .to(to.wrap, { duration: 1.2, ease: 'power4.inOut', clipPath: CP.initial }, 'start+=2.3')
+        // 5. new caption
+        .to(to.text, { duration: 1.2, ease: 'power3.out', yPercent: 0, stagger: next ? 0.1 : -0.1 }, 'start+=2.9')
+        .to([to.body, to.link], { duration: 0.9, ease: 'power2.out', opacity: 1, y: 0 }, 'start+=3.3');
     };
 
     root.querySelector('.ws-btn--next').addEventListener('click', () => show('next'));

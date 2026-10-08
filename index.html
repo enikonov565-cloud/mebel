@@ -444,6 +444,12 @@
   .ws-img-wrap--current{opacity:1;pointer-events:auto}
   .ws-img{will-change:transform}
   .ws-img img,.ws-img video{display:block;width:100%;height:100%;object-fit:cover;object-position:center}
+  /* Ролик ЧПУ вертикальный (480×854): на широком экране он показан в своих пропорциях на всю высоту кадра (уменьшение 0.75× —
+     чётко, без растяжения и обрезки), справа; остальное — фон сайта. На телефоне кадр почти того же формата и ролик заполняет его. */
+  @media (min-width:961px){
+    .ws-img--portrait{background:#110B00}
+    .ws-img--portrait video{position:absolute;top:0;right:max(60px,calc((var(--vw100,1920px) - 1800px)/2 + 60px));width:auto;height:100%;aspect-ratio:480/854;object-fit:cover}
+  }
   /* darkening so the caption reads on any footage */
   .ws-img::after{content:'';position:absolute;inset:0;pointer-events:none;
     background:linear-gradient(90deg,rgba(17,11,0,.8) 0%,rgba(17,11,0,.5) 42%,rgba(17,11,0,.12) 100%),linear-gradient(0deg,rgba(17,11,0,.45) 0%,rgba(17,11,0,0) 35%)}
@@ -1643,7 +1649,7 @@
         </figure>
       </div>
       <div class="ws-frame">
-        <div class="ws-img-wrap ws-img-wrap--current"><div class="ws-img"><video src="process-3.mp4" muted loop playsinline preload="auto" aria-label="Мастер за станком в цеху"></video></div></div>
+        <div class="ws-img-wrap ws-img-wrap--current"><div class="ws-img ws-img--portrait"><video src="why-cnc.mp4" muted loop playsinline preload="auto" aria-label="Станок с ЧПУ в работе"></video></div></div>
         <div class="ws-img-wrap"><div class="ws-img"><video src="process-4.mp4" muted loop playsinline preload="metadata" aria-label="Столешница из шпонированного дуба"></video></div></div>
         <div class="ws-img-wrap"><div class="ws-img"><video src="process-1.mp4" muted loop playsinline preload="metadata" aria-label="Обсуждение проекта на месте"></video></div></div>
         <div class="ws-img-wrap"><div class="ws-img"><video src="process-2.mp4" muted loop playsinline preload="metadata" aria-label="Обсуждение и подписание договора"></video></div></div>

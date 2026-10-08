@@ -742,18 +742,19 @@
     overflow:hidden;background:#2B2620;
   }
   .process-media video{width:100%;height:100%;object-fit:cover;display:block}
-  .process-text{flex:none;width:569px;max-width:100%;display:flex;flex-direction:column;gap:45px}
+  /* text block in the voice of the rest of the site: a quiet number, a large light-weight title, the points as thin ruled rows
+     (like the catalogue rows of the about block) — no tick circles */
+  .process-text{flex:none;width:569px;max-width:100%;display:flex;flex-direction:column}
+  .process-num{display:block;font-family:'Inter',sans-serif;font-weight:300;font-size:20px;letter-spacing:.02em;color:rgba(205,203,199,.6);margin-bottom:20px}
   .process-text h3{
-    font-family:'Inter',sans-serif;font-weight:500;font-size:32px;
-    letter-spacing:.02em;color:#CDCBC7;
+    font-family:'Inter',sans-serif;font-weight:500;font-size:clamp(2rem,calc(3.4*var(--vw100)/100),52px);line-height:1;
+    letter-spacing:.01em;color:#CDCBC7;margin-bottom:36px;
   }
-  .process-checklist{list-style:none;display:flex;flex-direction:column}
+  .process-checklist{list-style:none;display:flex;flex-direction:column;border-top:1px solid rgba(205,203,199,.22)}
   .process-checklist li{
-    display:flex;align-items:flex-start;gap:10px;padding:10px;
-    font-family:'Inter',sans-serif;font-weight:500;font-size:20px;color:#CDCBC7;
+    padding:16px 0;border-bottom:1px solid rgba(205,203,199,.22);
+    font-family:'Inter',sans-serif;font-weight:300;font-size:20px;line-height:1.3;letter-spacing:.02em;color:#CDCBC7;
   }
-  /* the icon sits on the first line of the text (centred on that line), also when the item wraps to two lines */
-  .process-checklist svg{flex:none;width:24px;height:24px;margin-top:calc((1.6em - 24px) / 2)}
 
   /* Что вы получаете — Figma node 61:80 */
   #benefits{background:#110B00;padding:120px 0}
@@ -1467,9 +1468,9 @@
     .material h3{font-size:32px}
     .material p{font-size:15px}
     .process-steps{gap:36px}
-    .process-text{gap:28px}
-    .process-text h3{font-size:24px}
-    .process-checklist li{font-size:16px;padding:8px 4px}
+    .process-num{font-size:16px;margin-bottom:12px}
+    .process-text h3{font-size:24px;margin-bottom:20px}
+    .process-checklist li{font-size:16px;padding:12px 0}
     /* stale sizing from an earlier (pre side-by-side) version of the mobile hero — it fought the
        <=1279px rules above (e.g. h1 back up to 1.5rem, wide enough to wrap onto a 3rd line; the
        40pt padding-bottom back down to 32px), so the bottom gap and line counts weren't what they
@@ -1867,11 +1868,12 @@
           </video>
         </div>
         <div class="process-text">
-          <h3>1. Бесплатный проект</h3>
+          <span class="process-num">01</span>
+          <h3>Бесплатный проект</h3>
           <ul class="process-checklist">
-            <li><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="11" stroke="#CDCBC7" stroke-width="1.5"/><path d="M7 12.5l3 3 7-7" stroke="#CDCBC7" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>Собираем ваши пожелания к&nbsp;дизайну и&nbsp;оснащению</li>
-            <li><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="11" stroke="#CDCBC7" stroke-width="1.5"/><path d="M7 12.5l3 3 7-7" stroke="#CDCBC7" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>Приезжаем на&nbsp;место и&nbsp;проводим все замеры</li>
-            <li><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="11" stroke="#CDCBC7" stroke-width="1.5"/><path d="M7 12.5l3 3 7-7" stroke="#CDCBC7" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>Разрабатываем бесплатный дизайн-проект</li>
+            <li>Собираем ваши пожелания к&nbsp;дизайну и&nbsp;оснащению</li>
+            <li>Приезжаем на&nbsp;место и&nbsp;проводим все замеры</li>
+            <li>Разрабатываем бесплатный дизайн-проект</li>
           </ul>
         </div>
       </div>
@@ -1884,10 +1886,11 @@
           </video>
         </div>
         <div class="process-text">
-          <h3>2. Договор и&nbsp;предоплата</h3>
+          <span class="process-num">02</span>
+          <h3>Договор и&nbsp;предоплата</h3>
           <ul class="process-checklist">
-            <li><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="11" stroke="#CDCBC7" stroke-width="1.5"/><path d="M7 12.5l3 3 7-7" stroke="#CDCBC7" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>Закрепляем все условия и&nbsp;сроки в&nbsp;договоре</li>
-            <li><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="11" stroke="#CDCBC7" stroke-width="1.5"/><path d="M7 12.5l3 3 7-7" stroke="#CDCBC7" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>Получаем предоплату и&nbsp;запускаем производство</li>
+            <li>Закрепляем все условия и&nbsp;сроки в&nbsp;договоре</li>
+            <li>Получаем предоплату и&nbsp;запускаем производство</li>
           </ul>
         </div>
       </div>
@@ -1900,12 +1903,13 @@
           </video>
         </div>
         <div class="process-text">
-          <h3>3. Производство</h3>
+          <span class="process-num">03</span>
+          <h3>Производство</h3>
           <ul class="process-checklist">
-            <li><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="11" stroke="#CDCBC7" stroke-width="1.5"/><path d="M7 12.5l3 3 7-7" stroke="#CDCBC7" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>Создаём образцы</li>
-            <li><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="11" stroke="#CDCBC7" stroke-width="1.5"/><path d="M7 12.5l3 3 7-7" stroke="#CDCBC7" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>Изготавливаем модули</li>
-            <li><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="11" stroke="#CDCBC7" stroke-width="1.5"/><path d="M7 12.5l3 3 7-7" stroke="#CDCBC7" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>При&nbsp;необходимости делаем повторные замеры</li>
-            <li><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="11" stroke="#CDCBC7" stroke-width="1.5"/><path d="M7 12.5l3 3 7-7" stroke="#CDCBC7" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>Присылаем фотоотчёты на&nbsp;каждом этапе производства</li>
+            <li>Создаём образцы</li>
+            <li>Изготавливаем модули</li>
+            <li>При&nbsp;необходимости делаем повторные замеры</li>
+            <li>Присылаем фотоотчёты на&nbsp;каждом этапе производства</li>
           </ul>
         </div>
       </div>
@@ -1918,11 +1922,12 @@
           </video>
         </div>
         <div class="process-text">
-          <h3>4. Установка под&nbsp;ключ</h3>
+          <span class="process-num">04</span>
+          <h3>Установка под&nbsp;ключ</h3>
           <ul class="process-checklist">
-            <li><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="11" stroke="#CDCBC7" stroke-width="1.5"/><path d="M7 12.5l3 3 7-7" stroke="#CDCBC7" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>Предварительно полностью собираем изделие на&nbsp;производстве, чтобы исключить ошибки</li>
-            <li><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="11" stroke="#CDCBC7" stroke-width="1.5"/><path d="M7 12.5l3 3 7-7" stroke="#CDCBC7" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>Привозим и&nbsp;собираем изделие на&nbsp;месте</li>
-            <li><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="11" stroke="#CDCBC7" stroke-width="1.5"/><path d="M7 12.5l3 3 7-7" stroke="#CDCBC7" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>Получаем остаток суммы</li>
+            <li>Предварительно полностью собираем изделие на&nbsp;производстве, чтобы исключить ошибки</li>
+            <li>Привозим и&nbsp;собираем изделие на&nbsp;месте</li>
+            <li>Получаем остаток суммы</li>
           </ul>
         </div>
       </div>

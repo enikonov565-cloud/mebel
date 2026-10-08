@@ -332,15 +332,21 @@
        than the row (it may stick out above/below), lying UNDER the text; letters over it switch colour (script) */
     .about-links a{isolation:isolate}
     .about-links .al-text{position:relative;z-index:1}
-    .about-links .al-thumb{
+    .about-links .al-thumb-wrap{
       position:absolute;z-index:0;right:0;top:calc(50% - 66px*var(--af,1));width:calc(100px*var(--af,1));height:calc(132px*var(--af,1));
-      object-fit:cover;border-radius:6px;pointer-events:none;clip-path:inset(0 0 0 100%);
+      overflow:hidden;border-radius:6px;pointer-events:none;
     }
+    .about-links .al-thumb{
+      display:block;width:100%;height:100%;object-fit:cover;
+      transform:translate3d(140%,0,0) scale(1.25);will-change:transform;
+      transition:transform .7s cubic-bezier(.22,1,.36,1);
+    }
+    .about-links a:hover,.about-links a:focus-visible{z-index:2}
+    .about-links a:hover .al-thumb,.about-links a:focus-visible .al-thumb{transform:translate3d(0,0,0) scale(1)}
     .about-links .char{display:inline-block}
     /* no gsap / SplitType (offline, blocked): plain CSS hover instead */
     html:not(.al-js) .about-links a{transition:color .2s ease}
     html:not(.al-js) .about-links a:hover{color:#fff}
-    html:not(.al-js) .about-links a:hover .al-thumb{clip-path:inset(0)}
     .about-cta{align-self:flex-start}
     .about-row2 > .about-photo-img{grid-column:3;margin-top:calc(12px*var(--ak,1));height:calc(862px*var(--ak,1))}
     .about-panel{
@@ -1579,15 +1585,15 @@
     <div class="about-row2">
       <div class="about-left">
         <nav class="about-links" aria-label="Каталог">
-          <a href="catalog-korpusnaya.html"><span class="al-text">Корпусная мебель</span><img class="al-thumb" src="cat-korpus-thumb.jpg" alt="" width="300" height="396" decoding="async"></a>
+          <a href="catalog-korpusnaya.html"><span class="al-text">Корпусная мебель</span><span class="al-thumb-wrap"><img class="al-thumb" src="cat-korpus-thumb.jpg" alt="" width="300" height="396" decoding="async"></span></a>
           <i class="al-line" aria-hidden="true"></i>
-          <a href="catalog-ofisnaya.html"><span class="al-text">Офисная мебель</span><img class="al-thumb" src="cat-office-thumb.jpg" alt="" width="300" height="396" decoding="async"></a>
+          <a href="catalog-ofisnaya.html"><span class="al-text">Офисная мебель</span><span class="al-thumb-wrap"><img class="al-thumb" src="cat-office-thumb.jpg" alt="" width="300" height="396" decoding="async"></span></a>
           <i class="al-line" aria-hidden="true"></i>
-          <a href="catalog-kommercheskaya.html"><span class="al-text">Коммерческая мебель</span><img class="al-thumb" src="cat-commerce-thumb.jpg" alt="" width="300" height="396" decoding="async"></a>
+          <a href="catalog-kommercheskaya.html"><span class="al-text">Коммерческая мебель</span><span class="al-thumb-wrap"><img class="al-thumb" src="cat-commerce-thumb.jpg" alt="" width="300" height="396" decoding="async"></span></a>
           <i class="al-line" aria-hidden="true"></i>
-          <a href="catalog-dveri.html"><span class="al-text">Двери и порталы</span><img class="al-thumb" src="cat-doors-thumb.jpg" alt="" width="300" height="396" decoding="async"></a>
+          <a href="catalog-dveri.html"><span class="al-text">Двери и порталы</span><span class="al-thumb-wrap"><img class="al-thumb" src="cat-doors-thumb.jpg" alt="" width="300" height="396" decoding="async"></span></a>
           <i class="al-line" aria-hidden="true"></i>
-          <a href="catalog-eksklyuzivnaya.html"><span class="al-text">Эксклюзивная мебель</span><img class="al-thumb" src="cat-exclusive-thumb.jpg" alt="" width="300" height="396" decoding="async"></a>
+          <a href="catalog-eksklyuzivnaya.html"><span class="al-text">Эксклюзивная мебель</span><span class="al-thumb-wrap"><img class="al-thumb" src="cat-exclusive-thumb.jpg" alt="" width="300" height="396" decoding="async"></span></a>
         </nav>
 
         <div class="about-cta">
@@ -2790,19 +2796,16 @@
         gsap.to(it.a, { opacity: 1, duration: .2, overwrite: true });
         if (reduce) { gsap.set(it.chars, { color: GOLD }); return; }
         gsap.killTweensOf(it.chars);
-        gsap.set(it.a, { zIndex: 2 });
         // letters lying over the photo are white, the rest gold
         const aRect = it.a.getBoundingClientRect(), thumbLeft = aRect.right - it.thumb.offsetWidth * zoom();
         it.chars.forEach(ch => { ch._to = ch.getBoundingClientRect().right > thumbLeft + 1 ? WHITE : GOLD; });
         gsap.fromTo(it.chars, { yPercent: 35, opacity: .25 }, { yPercent: 0, opacity: 1, duration: .5, ease: 'power3.out', stagger: .022 });
         gsap.to(it.chars, { color: i => it.chars[i]._to, duration: .35, stagger: .022, overwrite: 'auto' });
-        gsap.fromTo(it.thumb, { clipPath: 'inset(0 0 0 100%)', scale: 1.25 }, { clipPath: 'inset(0 0 0 0%)', scale: 1, duration: .6, ease: 'power3.out', overwrite: true });
       };
       const leave = () => {
         // opacity/yPercent too: leaving mid-roll used to freeze letters half-faded
         gsap.to(it.chars, { color: BASE, opacity: 1, yPercent: 0, duration: .3, stagger: { each: .012, from: 'end' }, overwrite: true });
         gsap.to(links, { opacity: 1, duration: .4, overwrite: true });   // un-dim the others; the next row's enter() takes over if the pointer moves on
-        gsap.to(it.thumb, { clipPath: 'inset(0 100% 0 0)', duration: .35, ease: 'power2.in', overwrite: true, onComplete: () => gsap.set(it.a, { zIndex: 'auto' }) });
       };
       it.a.addEventListener('mouseenter', enter);
       it.a.addEventListener('focus', enter);
@@ -2813,7 +2816,6 @@
     const calm = () => {
       gsap.to(links, { opacity: 1, duration: .35, overwrite: true });
       gsap.to(items.flatMap(o => o.chars), { color: BASE, opacity: 1, yPercent: 0, duration: .3, overwrite: true });
-      gsap.to(items.map(o => o.thumb), { clipPath: 'inset(0 100% 0 0)', duration: .3, overwrite: true });
     };
     list.addEventListener('mouseleave', calm);
     list.addEventListener('focusout', calm);

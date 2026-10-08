@@ -1570,15 +1570,15 @@
     <div class="about-row2">
       <div class="about-left">
         <nav class="about-links" aria-label="Каталог">
-          <a href="catalog-korpusnaya.html"><span class="al-text">Корпусная мебель</span><img class="al-thumb" src="cat-korpus.jpg" alt="" loading="lazy"></a>
+          <a href="catalog-korpusnaya.html"><span class="al-text">Корпусная мебель</span><img class="al-thumb" src="cat-korpus-thumb.jpg" alt="" width="300" height="396" decoding="async"></a>
           <i class="al-line" aria-hidden="true"></i>
-          <a href="catalog-ofisnaya.html"><span class="al-text">Офисная мебель</span><img class="al-thumb" src="cat-office.jpg" alt="" loading="lazy"></a>
+          <a href="catalog-ofisnaya.html"><span class="al-text">Офисная мебель</span><img class="al-thumb" src="cat-office-thumb.jpg" alt="" width="300" height="396" decoding="async"></a>
           <i class="al-line" aria-hidden="true"></i>
-          <a href="catalog-kommercheskaya.html"><span class="al-text">Коммерческая мебель</span><img class="al-thumb" src="cat-commerce.jpg" alt="" loading="lazy"></a>
+          <a href="catalog-kommercheskaya.html"><span class="al-text">Коммерческая мебель</span><img class="al-thumb" src="cat-commerce-thumb.jpg" alt="" width="300" height="396" decoding="async"></a>
           <i class="al-line" aria-hidden="true"></i>
-          <a href="catalog-dveri.html"><span class="al-text">Двери и порталы</span><img class="al-thumb" src="cat-doors.jpg" alt="" loading="lazy"></a>
+          <a href="catalog-dveri.html"><span class="al-text">Двери и порталы</span><img class="al-thumb" src="cat-doors-thumb.jpg" alt="" width="300" height="396" decoding="async"></a>
           <i class="al-line" aria-hidden="true"></i>
-          <a href="catalog-eksklyuzivnaya.html"><span class="al-text">Эксклюзивная мебель</span><img class="al-thumb" src="cat-exclusive.jpg" alt="" loading="lazy"></a>
+          <a href="catalog-eksklyuzivnaya.html"><span class="al-text">Эксклюзивная мебель</span><img class="al-thumb" src="cat-exclusive-thumb.jpg" alt="" width="300" height="396" decoding="async"></a>
         </nav>
 
         <div class="about-cta">
@@ -2763,6 +2763,8 @@
     const zoom = () => parseFloat(document.documentElement.style.zoom) || 1;
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     document.documentElement.classList.add('al-js');
+    // the previews are tiny files loaded eagerly and decoded up front, so the first hover never shows a half-drawn photo
+    links.forEach(a => { const im = a.querySelector(".al-thumb"); if (im && im.decode) im.decode().catch(() => {}); });
     const items = links.map(a => {
       const text = a.querySelector('.al-text');
       a.setAttribute('aria-label', text.textContent.trim());

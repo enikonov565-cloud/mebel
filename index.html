@@ -527,6 +527,46 @@
   .svc-btn.consult{background:#450A03;border:2px solid #CDCBC7;color:#CDCBC7;--reveal-bg:#CDCBC7;--reveal-text:#450A03;--dot-shadow:#450A03}
   .svc-btn.consult:hover{background:#CDCBC7;color:#450A03}
 
+  /* Что мы изготавливаем — одна категория на лист (>=961px): слева листы с текстом по 100% высоты окна, справа
+     закреплённая стопка фото; пока листаются тексты, верхнее фото «стирается» маской и открывает следующее
+     (приём из GSAP pinned image mask reveal: sticky + ScrollTrigger scrub). Ниже 961px остаётся сетка карточек. */
+  .svc-sheets{display:none}
+  @media (min-width:961px){
+    .svc-grid > a.svc-card{display:none}
+    .svc-grid{display:block}
+    .svc-grid .svc-cta{height:auto;padding:80px 0 20px;align-items:center}
+    .svc-sheets{
+      display:grid;grid-template-columns:minmax(0,1fr) minmax(320px,46%);gap:96px;align-items:start;
+      margin-top:calc(-93px + 24px);
+    }
+    .svc-sheets-left{display:flex;flex-direction:column}
+    .svc-sheet{height:var(--vh100,100vh);display:flex;align-items:center}
+    .svc-sheet-in{max-width:560px}
+    .svc-sheet-num{display:block;font-family:'Inter',sans-serif;font-weight:300;font-size:20px;letter-spacing:.02em;color:#a1794c;margin-bottom:24px}
+    .svc-sheet h3{
+      font-family:'Inter',sans-serif;font-weight:500;font-size:clamp(2.4rem,calc(4.2*var(--vw100)/100),64px);line-height:.95;
+      letter-spacing:.01em;color:#CDCBC7;margin-bottom:28px;
+    }
+    .svc-sheet p{font-family:'Inter',sans-serif;font-weight:300;font-size:20px;line-height:1.3;letter-spacing:.02em;color:#CDCBC7;max-width:460px;margin-bottom:40px}
+    .svc-sheet-link{
+      display:inline-flex;align-items:center;gap:12px;padding:10pt 20pt;background:#2F1F02;border:1px solid #CDCBC7;border-radius:15px;
+      font-family:'Inter',sans-serif;font-weight:700;font-size:22px;color:#CDCBC7;transition:background-color .25s ease,color .25s ease;
+    }
+    .svc-sheet-link:hover{background:#CDCBC7;color:#2F1F02}
+    .svc-sheets-right{position:sticky;top:0;height:var(--vh100,100vh)}
+    .svc-sheet-img{
+      position:absolute;left:0;top:50%;transform:translateY(-50%);width:100%;
+      height:min(760px,calc(var(--vh100,100vh) - 140px));border-radius:15px;overflow:hidden;
+    }
+    .svc-sheet-img img{width:100%;height:100%;object-fit:cover;object-position:center;display:block}
+  }
+
+  /* Lenis (smooth scroll) base rules */
+  html.lenis,html.lenis body{height:auto}
+  .lenis.lenis-smooth{scroll-behavior:auto!important}
+  .lenis.lenis-smooth [data-lenis-prevent]{overscroll-behavior:contain}
+  .lenis.lenis-stopped{overflow:hidden}
+
   /* Материалы — Figma node 208:166 */
   #materials{background:#110B00;padding:120px 0}
   .mat-head{
@@ -1518,6 +1558,58 @@
       <p>Каждое изделие разрабатывается под&nbsp;ваше помещение. <br>Работаем с&nbsp;дубом, ясенем, буком, орехом и&nbsp;другими породами.</p>
     </div>
 
+    <div class="svc-sheets" id="svcSheets">
+      <div class="svc-sheets-left">
+        <article class="svc-sheet">
+          <div class="svc-sheet-in">
+            <span class="svc-sheet-num">01</span>
+            <h3>Корпусная мебель</h3>
+            <p>Точная подгонка по&nbsp;размерам помещения. Проектируем и&nbsp;изготавливаем корпусную мебель под&nbsp;ваш интерьер.</p>
+            <a class="svc-sheet-link" href="catalog-korpusnaya.html">в каталог <span aria-hidden="true">→</span></a>
+          </div>
+        </article>
+        <article class="svc-sheet">
+          <div class="svc-sheet-in">
+            <span class="svc-sheet-num">02</span>
+            <h3>Эксклюзивная мебель</h3>
+            <p>Изделия по&nbsp;индивидуальным чертежам и&nbsp;размерам. Каждая вещь создаётся в&nbsp;единственном экземпляре.</p>
+            <a class="svc-sheet-link" href="catalog-eksklyuzivnaya.html">в каталог <span aria-hidden="true">→</span></a>
+          </div>
+        </article>
+        <article class="svc-sheet">
+          <div class="svc-sheet-in">
+            <span class="svc-sheet-num">03</span>
+            <h3>Двери и&nbsp;порталы</h3>
+            <p>Точная подгонка по&nbsp;проёму, единый стиль с&nbsp;мебелью.</p>
+            <a class="svc-sheet-link" href="catalog-dveri.html">в каталог <span aria-hidden="true">→</span></a>
+          </div>
+        </article>
+        <article class="svc-sheet">
+          <div class="svc-sheet-in">
+            <span class="svc-sheet-num">04</span>
+            <h3>Офисная мебель</h3>
+            <p>Соблюдение единого стиля в&nbsp;офисном пространстве.</p>
+            <a class="svc-sheet-link" href="catalog-ofisnaya.html">в каталог <span aria-hidden="true">→</span></a>
+          </div>
+        </article>
+        <article class="svc-sheet">
+          <div class="svc-sheet-in">
+            <span class="svc-sheet-num">05</span>
+            <h3>Коммерческая мебель</h3>
+            <p>Мебель из&nbsp;износостойких материалов.</p>
+            <a class="svc-sheet-link" href="catalog-kommercheskaya.html">в каталог <span aria-hidden="true">→</span></a>
+          </div>
+        </article>
+      </div>
+      <div class="svc-sheets-right">
+        <div class="svc-sheet-img" style="z-index:5"><img src="cat-korpus.jpg" alt="Корпусная мебель"></div>
+        <div class="svc-sheet-img" style="z-index:4"><img src="cat-exclusive.jpg" alt="Эксклюзивная мебель"></div>
+        <div class="svc-sheet-img" style="z-index:3"><img src="cat-doors.jpg" alt="Двери и порталы"></div>
+        <div class="svc-sheet-img" style="z-index:2"><img src="cat-office.jpg" alt="Офисная мебель"></div>
+        <div class="svc-sheet-img" style="z-index:1"><img src="cat-commerce.jpg" alt="Коммерческая мебель"></div>
+      </div>
+    </div>
+
     <div class="svc-grid">
       <a class="svc-card" href="catalog-korpusnaya.html"><span class="svc-card-plate" aria-hidden="true"></span>
         <span class="svc-card-photo-wrap">
@@ -2065,7 +2157,9 @@
   </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://unpkg.com/gsap@3/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
 <script src="https://unpkg.com/split-type@0.3.4"></script>
 <script src="weight-hover.js"></script>
 <script src="footer-underline.js"></script>
@@ -2594,6 +2688,68 @@
     };
     list.addEventListener('mouseleave', calm);
     list.addEventListener('focusout', calm);
+  })();
+
+  // «Что мы изготавливаем»: по одному листу на категорию (>=961px). Справа закреплённая (sticky) стопка фото: пока
+  // листаются тексты слева, верхнее фото стирается маской (clip-path) и открывает следующее, фон секции меняет
+  // оттенок. Сам скролл ведёт ScrollTrigger (scrub); Lenis сглаживает колесо на устройствах с мышью.
+  (function () {
+    const root = document.getElementById('svcSheets');
+    if (!root || !window.gsap || !window.ScrollTrigger) return;
+    gsap.registerPlugin(ScrollTrigger);
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const zoom = () => parseFloat(document.documentElement.style.zoom) || 1;
+
+    // smooth wheel scrolling only with a mouse; touch keeps the native scroll
+    let lenis = null;
+    if (window.Lenis && !reduce && window.matchMedia('(min-width:961px) and (hover:hover) and (pointer:fine)').matches) {
+      document.querySelectorAll('.deck,.modal-backdrop,.nav-links').forEach(e => e.setAttribute('data-lenis-prevent', ''));
+      lenis = new Lenis({ duration: 1.2, easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)), smoothWheel: true });
+      lenis.on('scroll', ScrollTrigger.update);
+      gsap.ticker.add(t => lenis.raf(t * 1000));
+      gsap.ticker.lagSmoothing(0);
+      // in-page anchors: native smooth scroll is switched off by Lenis, so do it here (keeping each section's scroll-margin)
+      document.addEventListener('click', e => {
+        if (e.defaultPrevented) return;   // e.g. the «рассчитать стоимость» buttons open a modal instead
+        const a = e.target.closest && e.target.closest('a[href^="#"]');
+        if (!a || a.getAttribute('href').length < 2) return;
+        const target = document.querySelector(a.getAttribute('href'));
+        if (!target) return;
+        e.preventDefault();
+        const margin = parseFloat(getComputedStyle(target).scrollMarginTop) || 0;
+        lenis.scrollTo(target.getBoundingClientRect().top + window.scrollY - margin * zoom(), { duration: 1.4 });
+      });
+    }
+
+    const sheets = gsap.utils.toArray('.svc-sheet', root);
+    const imgs = gsap.utils.toArray('.svc-sheet-img img', root);
+    const section = document.getElementById('services');
+    const tints = ['#1B1206', '#20140A', '#1A1308', '#110B00'];   // section background after each hand-over (the last returns to the page colour)
+
+    const mm = gsap.matchMedia();
+    mm.add('(min-width:961px)', () => {
+      gsap.set(imgs, { clipPath: 'inset(0)', objectPosition: '0px 0%' });
+      const main = gsap.timeline({ scrollTrigger: { trigger: root, start: 'top top', end: 'bottom bottom', scrub: true } });
+      imgs.forEach((cur, i) => {
+        const next = imgs[i + 1];
+        if (!next) return;
+        const step = gsap.timeline();
+        step.to(section, { backgroundColor: tints[i], duration: 1.5, ease: 'power2.inOut' }, 0)
+            .to(cur, { clipPath: 'inset(0px 0px 100%)', objectPosition: '0px 60%', duration: 1.5, ease: 'none' }, 0)
+            .to(next, { objectPosition: '0px 40%', duration: 1.5, ease: 'none' }, 0);
+        main.add(step);
+      });
+      // each text sheet fades/slides in as it reaches the middle of the window and out again as it leaves
+      sheets.forEach(s => {
+        const box = s.querySelector('.svc-sheet-in');
+        gsap.timeline({ scrollTrigger: { trigger: s, start: 'top 85%', end: 'bottom 15%', scrub: true } })
+          .fromTo(box, { opacity: .12, y: 50 }, { opacity: 1, y: 0, duration: 1, ease: 'none' })
+          .to(box, { duration: 1 })
+          .to(box, { opacity: .12, y: -50, duration: 1, ease: 'none' });
+      });
+      return () => { gsap.set(section, { clearProps: 'backgroundColor' }); gsap.set(imgs, { clearProps: 'clipPath,objectPosition' }); };
+    });
+    window.addEventListener('load', () => ScrollTrigger.refresh());
   })();
 
   const burger = document.getElementById('burger');

@@ -468,11 +468,11 @@
   .text-row > span{display:block;position:relative;padding:.3rem 0}
   .ws-body{margin:18px 0 32px;max-width:520px;font-family:'Inter',sans-serif;font-weight:300;font-size:17px;line-height:1.35;letter-spacing:.02em;color:#fff}
   .ws-link{
-    display:inline-flex;align-items:center;gap:12px;height:58px;box-sizing:border-box;padding:0 20pt;background:#2F1F02;border:2px solid #CDCBC7;border-radius:15px;
+    display:flex;align-items:center;justify-content:center;width:505px;max-width:100%;height:78px;box-sizing:border-box;padding:0 32px;white-space:nowrap;text-align:center;background:#2F1F02;border:1px solid #CDCBC7;border-radius:15px;
     font-family:'Inter',sans-serif;font-weight:700;font-size:22px;color:#CDCBC7;
     --reveal-bg:#CDCBC7;--reveal-text:#2F1F02;--dot-shadow:#2F1F02;
   }
-  .ws-nav{position:absolute;z-index:3;right:max(60px,calc((var(--vw100,1920px) - 1800px)/2 + 60px));bottom:44px;height:58px;display:flex;align-items:center;gap:6px}
+  .ws-nav{position:absolute;z-index:3;right:max(60px,calc((var(--vw100,1920px) - 1800px)/2 + 60px));bottom:44px;height:78px;display:flex;align-items:center;gap:6px}
   .ws-btn{display:block;width:55px;height:24px;margin:0 .6rem;padding:0;background:none;border:0;cursor:pointer;opacity:.9;transition:opacity .2s ease,transform .3s cubic-bezier(.22,1,.36,1)}
   .ws-btn:hover{opacity:1}
   .ws-btn--prev:hover{transform:translateX(-5px)}
@@ -491,21 +491,12 @@
     .ws-cap{justify-content:flex-end;padding:0 20px 96px}
     .ws-title{font-size:1.6rem}
     .ws-body{font-size:15px;margin:14px 0 22px}
-    .ws-link{font-size:18px}
+    .ws-link{width:100%;height:auto;padding:5pt 20px;font-size:16px}
     .ws-img::after{background:linear-gradient(0deg,rgba(17,11,0,.88) 0%,rgba(17,11,0,.55) 50%,rgba(17,11,0,.2) 100%)}
     .ws-nav{left:20px;right:20px;bottom:24px;justify-content:space-between}
     .ws-count{margin-left:0}
   }
 
-  /* большая кнопка «перейти в каталог» под слайдером */
-  .why-cta{display:flex;justify-content:center;margin-top:-40px}
-  .why-cta a{
-    display:flex;align-items:center;justify-content:center;gap:18px;width:min(100%,860px);height:96px;box-sizing:border-box;
-    background:#2F1F02;border:2px solid #CDCBC7;border-radius:15px;
-    font-family:'Inter',sans-serif;font-weight:700;font-size:26px;color:#CDCBC7;
-    --reveal-bg:#CDCBC7;--reveal-text:#2F1F02;--dot-shadow:#2F1F02;
-  }
-  @media (max-width:960px){.why-cta{margin-top:-16px}.why-cta a{height:72px;font-size:22px;width:100%}}
   .nav-links a.sub{padding-left:36px;font-size:.92rem;font-weight:400}
 
   /* Что мы изготавливаем — Figma node 445:196 */
@@ -1634,28 +1625,28 @@
           <figcaption>
             <h3 class="ws-title"><span class="text-row"><span>Собственное</span></span><span class="text-row"><span>высокотехнологичное</span></span><span class="text-row"><span>современное производство</span></span></h3>
             <p class="ws-body">Проектируем, изготавливаем и&nbsp;монтируем мебель из&nbsp;массива с&nbsp;2014 года. Замер и&nbsp;дизайн-проект&nbsp;— бесплатно.</p>
-            <a class="ws-link dot-btn" href="#services">в каталог <span aria-hidden="true">→</span></a>
+            <a class="ws-link dot-btn" href="#services">перейти в&nbsp;каталог</a>
           </figcaption>
         </figure>
         <figure class="ws-cap">
           <figcaption>
             <h3 class="ws-title"><span class="text-row"><span>Фабричное качество</span></span><span class="text-row"><span>производимой мебели</span></span></h3>
             <p class="ws-body">Дуб, ясень, орех; финишное покрытие маслами и&nbsp;воском. Контрольная сборка в&nbsp;цеху перед отгрузкой&nbsp;— результат как в&nbsp;проекте.</p>
-            <a class="ws-link dot-btn" href="#services">в каталог <span aria-hidden="true">→</span></a>
+            <a class="ws-link dot-btn" href="#services">перейти в&nbsp;каталог</a>
           </figcaption>
         </figure>
         <figure class="ws-cap">
           <figcaption>
             <h3 class="ws-title"><span class="text-row"><span>Быстрая доставка и сборка</span></span><span class="text-row"><span>мебели на дому</span></span></h3>
             <p class="ws-body">Средний срок изготовления&nbsp;— 15–25 дней. Доставляем и&nbsp;собираем мебель у&nbsp;вас дома. Смета в&nbsp;договоре не&nbsp;меняется&nbsp;— без доплат по&nbsp;ходу работ.</p>
-            <a class="ws-link dot-btn" href="#services">в каталог <span aria-hidden="true">→</span></a>
+            <a class="ws-link dot-btn" href="#services">перейти в&nbsp;каталог</a>
           </figcaption>
         </figure>
         <figure class="ws-cap">
           <figcaption>
             <h3 class="ws-title"><span class="text-row"><span>Гарантия по договору</span></span><span class="text-row"><span>на мебель 3 года</span></span></h3>
             <p class="ws-body">Сервисный выезд и&nbsp;устранение недочётов по&nbsp;гарантии&nbsp;— бесплатно. Договор с&nbsp;фиксированной ценой и&nbsp;сроком, предоплата&nbsp;10%.</p>
-            <a class="ws-link dot-btn" href="#services">в каталог <span aria-hidden="true">→</span></a>
+            <a class="ws-link dot-btn" href="#services">перейти в&nbsp;каталог</a>
           </figcaption>
         </figure>
       </div>
@@ -1670,10 +1661,6 @@
         <button type="button" class="ws-btn ws-btn--next" aria-label="Следующий слайд"><svg viewBox="0 0 55 24"><path d="M1 12h52M42 1.5 53 12 42 22.5"/></svg></button>
         <div class="ws-count" aria-live="polite"><span class="ws-count-cur">01</span><span>—</span><span class="ws-count-total">04</span></div>
       </nav>
-    </div>
-
-    <div class="why-cta">
-      <a class="dot-btn" href="#services">перейти в&nbsp;каталог <span aria-hidden="true">→</span></a>
     </div>
   </div>
 </section>

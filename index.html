@@ -339,7 +339,7 @@
     .about-links .char{display:inline-block}
     /* no gsap / SplitType (offline, blocked): plain CSS hover instead */
     html:not(.al-js) .about-links a{transition:color .2s ease}
-    html:not(.al-js) .about-links a:hover{color:#e2a04f}
+    html:not(.al-js) .about-links a:hover{color:#fff}
     html:not(.al-js) .about-links a:hover .al-thumb{clip-path:inset(0)}
     .about-cta{align-self:flex-start}
     .about-row2 > .about-photo-img{grid-column:3;margin-top:calc(12px*var(--ak,1));height:calc(862px*var(--ak,1))}
@@ -463,26 +463,15 @@
       line-height:1;letter-spacing:.01em;color:#CDCBC7;margin:0;
     }
     .wp-desc{font-family:'Inter',sans-serif;font-weight:300;font-size:20px;line-height:1.2;letter-spacing:.02em;color:#CDCBC7;margin:26px auto 0;max-width:460px}
-    /* "подробнее +": sits right under the caption; white-on-photo only (no accent colour): a glass ring that pulses, the
-       label breathes between full and 60% white, on hover the circle fills white and the plus turns dark brown */
+    /* "подробнее": a quiet white label under the caption (no icon, no pulse, no accent colour); a thin underline is drawn
+       under it on hover */
     .wp-more{
-      justify-content:center;margin:44px auto 0;pointer-events:none;
-      display:flex;align-items:center;gap:14px;font-family:'Inter',sans-serif;font-weight:500;font-size:20px;letter-spacing:.02em;color:#fff;
+      display:block;margin:40px auto 0;pointer-events:none;text-align:center;
+      font-family:'Inter',sans-serif;font-weight:500;font-size:20px;letter-spacing:.02em;color:#fff;
     }
-    .wp-more > span{animation:wpHue 2.6s ease-in-out infinite}
-    .wp-more i{
-      display:block;width:46px;height:46px;border:1px dashed rgba(255,255,255,.9);border-radius:50%;position:relative;
-      background:rgba(255,255,255,.14);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);transition:background-color .3s ease,transform .45s cubic-bezier(.22,1,.36,1);
-      animation:wpPulse 2.2s ease-out infinite;
-    }
-    .wp-more i::before,.wp-more i::after{content:'';position:absolute;left:50%;top:50%;width:16px;height:2px;background:#fff;transform:translate(-50%,-50%);transition:background-color .3s ease}
-    .wp-more i::after{transform:translate(-50%,-50%) rotate(90deg)}
-    .wp:hover .wp-more i{background:#fff;transform:rotate(90deg)}
-    .wp:hover .wp-more i::before,.wp:hover .wp-more i::after{background:#2F1F02}
-    .wp:hover .wp-more > span{animation:none;color:#fff}
-    @keyframes wpPulse{0%{box-shadow:0 0 0 0 rgba(255,255,255,.45)}70%{box-shadow:0 0 0 18px rgba(255,255,255,0)}100%{box-shadow:0 0 0 0 rgba(255,255,255,0)}}
-    @keyframes wpHue{0%,100%{color:#fff}50%{color:rgba(255,255,255,.6)}}
-    @media (prefers-reduced-motion:reduce){.wp-more > span,.wp-more i{animation:none}}
+    .wp-more > span{position:relative;display:inline-block;padding-bottom:6px}
+    .wp-more > span::after{content:'';position:absolute;left:0;bottom:0;height:1px;width:100%;background:rgba(255,255,255,.55);transform-origin:0 50%;transition:transform .5s cubic-bezier(.22,1,.36,1)}
+    .wp:hover .wp-more > span::after{background:#fff}
     .why-content-wrap{
       grid-area:page;position:sticky;top:0;align-self:start;height:var(--vh100,100vh);overflow:hidden;pointer-events:none;z-index:6;
       display:grid;grid-template-rows:auto 1fr;padding:96px 60px 40px;
@@ -1650,7 +1639,7 @@
         <div class="wp-title">
           <h3 class="wp-title-main"><span class="oh"><span class="oh__inner">Собственное высокотехнологичное</span></span><span class="oh"><span class="oh__inner">современное производство</span></span></h3>
           <p class="wp-desc oh"><span class="oh__inner">Проектируем, изготавливаем, монтируем.</span></p>
-          <span class="wp-more" aria-hidden="true"><i></i><span>подробнее</span></span>
+          <span class="wp-more" aria-hidden="true"><span>подробнее</span></span>
         </div>
         <span class="wp-shade" aria-hidden="true"></span>
       </article>
@@ -1661,7 +1650,7 @@
         <div class="wp-title">
           <h3 class="wp-title-main"><span class="oh"><span class="oh__inner">Фабричное качество</span></span><span class="oh"><span class="oh__inner">производимой мебели</span></span></h3>
           <p class="wp-desc oh"><span class="oh__inner">Массив, а не ЛДСП.</span></p>
-          <span class="wp-more" aria-hidden="true"><i></i><span>подробнее</span></span>
+          <span class="wp-more" aria-hidden="true"><span>подробнее</span></span>
         </div>
         <span class="wp-shade" aria-hidden="true"></span>
       </article>
@@ -1672,7 +1661,7 @@
         <div class="wp-title">
           <h3 class="wp-title-main"><span class="oh"><span class="oh__inner">Быстрая доставка</span></span><span class="oh"><span class="oh__inner">и сборка мебели на дому</span></span></h3>
           <p class="wp-desc oh"><span class="oh__inner">15–25 дней на изготовление.</span></p>
-          <span class="wp-more" aria-hidden="true"><i></i><span>подробнее</span></span>
+          <span class="wp-more" aria-hidden="true"><span>подробнее</span></span>
         </div>
         <span class="wp-shade" aria-hidden="true"></span>
       </article>
@@ -1683,7 +1672,7 @@
         <div class="wp-title">
           <h3 class="wp-title-main"><span class="oh"><span class="oh__inner">Гарантия по договору</span></span><span class="oh"><span class="oh__inner">на мебель 3 года</span></span></h3>
           <p class="wp-desc oh"><span class="oh__inner">Фиксированная цена и срок.</span></p>
-          <span class="wp-more" aria-hidden="true"><i></i><span>подробнее</span></span>
+          <span class="wp-more" aria-hidden="true"><span>подробнее</span></span>
         </div>
         <span class="wp-shade" aria-hidden="true"></span>
       </article>
@@ -2855,7 +2844,7 @@
     const list = document.querySelector('.about-links');
     if (!list || !window.gsap || !window.SplitType) return;
     const links = [...list.querySelectorAll('a')];
-    const GOLD = '#e2a04f', BASE = '#CDCBC7', WHITE = '#ffffff';
+    const GOLD = '#ffffff', BASE = '#CDCBC7', WHITE = '#ffffff';   // hovered row: white (no accent colour), the others dim
     const zoom = () => parseFloat(document.documentElement.style.zoom) || 1;
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     document.documentElement.classList.add('al-js');

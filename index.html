@@ -430,6 +430,66 @@
     font-size:32px;line-height:1.2;letter-spacing:.02em;color:#CDCBC7;max-width:370px;
   }
 
+  /* Почему выбирают нас (>=961px) — приём «Image to Content» (Codrops): четыре крупных фото-блока, при прокрутке
+     заголовок уходит вверх, а фото плавно увеличивается; по клику фото «перелетает» (FLIP) в панель с описанием,
+     соседние блоки уезжают, заголовок/подпись/миниатюры/строки текста выезжают маской. Ниже 961px — прежняя сетка. */
+  .why-stage{display:none}
+  html{scrollbar-gutter:stable}
+  html.why-open{overflow:hidden}
+  @media (min-width:961px){
+    .why-grid{display:none}
+    .why-stage{display:grid;grid-template-areas:'page';position:relative;isolation:isolate}
+    .why-previews{grid-area:page;position:relative;z-index:1;display:flex;flex-direction:column;gap:40px}
+    .why-stage .oh{position:relative;overflow:hidden;display:block}
+    .why-stage .oh__inner{display:inline-block;will-change:transform}
+    .wp{position:relative;height:min(780px,calc(var(--vh100,100vh) - 120px));display:grid;grid-template:100% / 100%}
+    .wp-img-wrap{grid-area:1/1;cursor:pointer;border-radius:15px}
+    .wp-img{position:relative;width:100%;height:100%;overflow:hidden;border-radius:15px;background:#1b1206}
+    .wp-img::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(17,11,0,.28),rgba(17,11,0,.5));pointer-events:none}
+    .wp-img-inner{width:100%;height:100%;will-change:transform}
+    .wp-img-inner img,.wp-img-inner video{width:100%;height:100%;object-fit:cover;object-position:center 30%;display:block}
+    .wp-title{grid-area:1/1;position:relative;z-index:2;align-self:center;justify-self:center;text-align:center;pointer-events:none;padding:0 60px;max-width:1300px}
+    .wp-title-main{
+      font-family:'Inter',sans-serif;font-weight:500;font-size:clamp(2.2rem,calc(4.4*var(--vw100)/100),72px);
+      line-height:1;letter-spacing:.01em;color:#CDCBC7;margin:0;
+    }
+    .wp-desc{font-family:'Inter',sans-serif;font-weight:300;font-size:20px;line-height:1.2;letter-spacing:.02em;color:#CDCBC7;margin:26px auto 0;max-width:460px}
+    .wp-more{
+      grid-area:1/1;align-self:end;justify-self:center;margin-bottom:30px;z-index:2;pointer-events:none;
+      display:flex;align-items:center;gap:12px;font-family:'Inter',sans-serif;font-weight:300;font-size:16px;letter-spacing:.02em;color:rgba(205,203,199,.85);
+    }
+    .wp-more i{display:block;width:34px;height:34px;border:1px dashed #CDCBC7;border-radius:50%;position:relative}
+    .wp-more i::before,.wp-more i::after{content:'';position:absolute;left:50%;top:50%;width:12px;height:1px;background:#CDCBC7;transform:translate(-50%,-50%)}
+    .wp-more i::after{transform:translate(-50%,-50%) rotate(90deg)}
+    .why-content-wrap{
+      grid-area:page;position:sticky;top:0;align-self:start;height:var(--vh100,100vh);overflow:hidden;pointer-events:none;z-index:6;
+      display:grid;grid-template-rows:auto 1fr;padding:96px 60px 40px;
+    }
+    .why-back{
+      grid-row:1;justify-self:start;display:inline-flex;align-items:center;gap:10px;opacity:0;visibility:hidden;margin-bottom:12px;
+      padding:6px 20px;background:#2F1F02;border:2px solid #CDCBC7;border-radius:15px;color:#CDCBC7;
+      font-family:'Inter',sans-serif;font-weight:700;font-size:18px;cursor:pointer;
+      --reveal-bg:#CDCBC7;--reveal-text:#2F1F02;--dot-shadow:#2F1F02;
+    }
+    html.why-open .why-back{visibility:visible;pointer-events:auto}
+    .wc{
+      grid-row:2;position:absolute;left:60px;right:60px;top:144px;bottom:40px;opacity:0;pointer-events:none;
+      display:grid;gap:2vw;grid-template-columns:60% 1fr;
+      grid-template-areas:'img group' 'img thumbs';grid-template-rows:1fr auto;
+    }
+    .wc--current{opacity:1;pointer-events:auto}
+    .wc-slot{grid-area:img;min-height:0}
+    .wc-slot .wp-img{height:100%}
+    .wc-slot .wp-img::after{display:none}
+    .wc-group{grid-area:group;align-self:center;max-width:520px}
+    .wc-title{font-family:'Inter',sans-serif;font-weight:500;font-size:clamp(2.2rem,calc(3.6*var(--vw100)/100),60px);line-height:1;letter-spacing:.01em;color:#CDCBC7}
+    .wc-meta{margin:22px 0 28px;font-family:'Inter',sans-serif;font-weight:300;font-size:20px;letter-spacing:.02em;color:#a1794c}
+    .wc-text{font-family:'Inter',sans-serif;font-weight:300;font-size:20px;line-height:1.35;letter-spacing:.02em;color:#CDCBC7}
+    .wc-text .line{will-change:transform}
+    .wc-thumbs{grid-area:thumbs;display:flex;gap:2vw;justify-content:flex-start}
+    .wc-thumb{width:110px;aspect-ratio:1.5;border-radius:8px;background-size:cover;background-position:center}
+  }
+
   .nav-links a.sub{padding-left:36px;font-size:.92rem;font-weight:400}
 
   /* Что мы изготавливаем — Figma node 445:196 */
@@ -1548,6 +1608,90 @@
     <div class="why-head">
       <h2>Почему выбирают нас</h2>
       <p>Показываем не&nbsp;только рекламный ракурс, но&nbsp;и&nbsp;рабочую сторону, <br>внутреннее наполнение и&nbsp;этапы изготовления.</p>
+    </div>
+
+    <div class="why-stage" id="whyStage">
+      <div class="why-previews">
+      <article class="wp">
+        <div class="wp-img-wrap" role="button" tabindex="0" aria-label="Подробнее: Собственное высокотехнологичное современное производство">
+          <div class="wp-img"><div class="wp-img-inner"><video src="why-cnc.mp4" autoplay muted loop playsinline preload="metadata" aria-hidden="true"></video></div></div>
+        </div>
+        <div class="wp-title">
+          <h3 class="wp-title-main"><span class="oh"><span class="oh__inner">Собственное высокотехнологичное</span></span><span class="oh"><span class="oh__inner">современное производство</span></span></h3>
+          <p class="wp-desc oh"><span class="oh__inner">Проектируем, изготавливаем, монтируем.</span></p>
+        </div>
+        <span class="wp-more" aria-hidden="true"><i></i><span>подробнее</span></span>
+      </article>
+      <article class="wp">
+        <div class="wp-img-wrap" role="button" tabindex="0" aria-label="Подробнее: Фабричное качество производимой мебели">
+          <div class="wp-img"><div class="wp-img-inner"><img src="why-photo-4.jpg" alt="Прикроватная тумба с лампой" loading="lazy"></div></div>
+        </div>
+        <div class="wp-title">
+          <h3 class="wp-title-main"><span class="oh"><span class="oh__inner">Фабричное качество</span></span><span class="oh"><span class="oh__inner">производимой мебели</span></span></h3>
+          <p class="wp-desc oh"><span class="oh__inner">Массив, а не ЛДСП.</span></p>
+        </div>
+        <span class="wp-more" aria-hidden="true"><i></i><span>подробнее</span></span>
+      </article>
+      <article class="wp">
+        <div class="wp-img-wrap" role="button" tabindex="0" aria-label="Подробнее: Быстрая доставка и сборка мебели на дому">
+          <div class="wp-img"><div class="wp-img-inner"><img src="why-photo-3.jpg" alt="Сборка встроенного стеллажа" loading="lazy"></div></div>
+        </div>
+        <div class="wp-title">
+          <h3 class="wp-title-main"><span class="oh"><span class="oh__inner">Быстрая доставка</span></span><span class="oh"><span class="oh__inner">и сборка мебели на дому</span></span></h3>
+          <p class="wp-desc oh"><span class="oh__inner">15–25 дней на изготовление.</span></p>
+        </div>
+        <span class="wp-more" aria-hidden="true"><i></i><span>подробнее</span></span>
+      </article>
+      <article class="wp">
+        <div class="wp-img-wrap" role="button" tabindex="0" aria-label="Подробнее: Гарантия по договору на мебель 3 года">
+          <div class="wp-img"><div class="wp-img-inner"><video src="why-table.mp4" poster="why-photo-2.jpg" autoplay muted loop playsinline preload="metadata" aria-hidden="true"></video></div></div>
+        </div>
+        <div class="wp-title">
+          <h3 class="wp-title-main"><span class="oh"><span class="oh__inner">Гарантия по договору</span></span><span class="oh"><span class="oh__inner">на мебель 3 года</span></span></h3>
+          <p class="wp-desc oh"><span class="oh__inner">Фиксированная цена и срок.</span></p>
+        </div>
+        <span class="wp-more" aria-hidden="true"><i></i><span>подробнее</span></span>
+      </article>
+      </div>
+      <div class="why-content-wrap">
+        <button type="button" class="why-back dot-btn">← назад</button>
+        <div class="wc">
+          <div class="wc-slot"></div>
+          <div class="wc-group">
+            <div class="wc-title"><span class="oh"><span class="oh__inner">Собственное</span></span><span class="oh"><span class="oh__inner">производство</span></span></div>
+            <div class="wc-meta oh"><span class="oh__inner">с&nbsp;2014 года</span></div>
+            <div class="wc-text">Проектируем, изготавливаем и&nbsp;монтируем мебель из&nbsp;массива с&nbsp;2014 года. Замер и&nbsp;дизайн-проект&nbsp;— бесплатно. Перед отгрузкой собираем изделие в&nbsp;цеху, чтобы результат совпал с&nbsp;проектом.</div>
+          </div>
+          <div class="wc-thumbs"><div class="wc-thumb" style="background-image:url(why-photo-2.jpg)"></div><div class="wc-thumb" style="background-image:url(why-photo-3.jpg)"></div><div class="wc-thumb" style="background-image:url(why-photo-4.jpg)"></div></div>
+        </div>
+        <div class="wc">
+          <div class="wc-slot"></div>
+          <div class="wc-group">
+            <div class="wc-title"><span class="oh"><span class="oh__inner">Фабричное</span></span><span class="oh"><span class="oh__inner">качество</span></span></div>
+            <div class="wc-meta oh"><span class="oh__inner">массив, а&nbsp;не&nbsp;ЛДСП</span></div>
+            <div class="wc-text">Дуб, ясень, орех; финишное покрытие маслами и&nbsp;воском. Контрольная сборка в&nbsp;цеху перед отгрузкой&nbsp;— результат как в&nbsp;проекте.</div>
+          </div>
+          <div class="wc-thumbs"><div class="wc-thumb" style="background-image:url(why-photo-2.jpg)"></div><div class="wc-thumb" style="background-image:url(why-photo-3.jpg)"></div><div class="wc-thumb" style="background-image:url(about-photo-main.jpg)"></div></div>
+        </div>
+        <div class="wc">
+          <div class="wc-slot"></div>
+          <div class="wc-group">
+            <div class="wc-title"><span class="oh"><span class="oh__inner">Доставка</span></span><span class="oh"><span class="oh__inner">и сборка</span></span></div>
+            <div class="wc-meta oh"><span class="oh__inner">15–25 дней</span></div>
+            <div class="wc-text">Средний срок изготовления&nbsp;— 15–25 дней. Доставляем и&nbsp;собираем мебель у&nbsp;вас дома. Смета в&nbsp;договоре не&nbsp;меняется&nbsp;— без доплат по&nbsp;ходу работ.</div>
+          </div>
+          <div class="wc-thumbs"><div class="wc-thumb" style="background-image:url(why-photo-2.jpg)"></div><div class="wc-thumb" style="background-image:url(why-photo-4.jpg)"></div><div class="wc-thumb" style="background-image:url(about-photo-main.jpg)"></div></div>
+        </div>
+        <div class="wc">
+          <div class="wc-slot"></div>
+          <div class="wc-group">
+            <div class="wc-title"><span class="oh"><span class="oh__inner">Гарантия</span></span><span class="oh"><span class="oh__inner">3 года</span></span></div>
+            <div class="wc-meta oh"><span class="oh__inner">по&nbsp;договору</span></div>
+            <div class="wc-text">Сервисный выезд и&nbsp;устранение недочётов по&nbsp;гарантии&nbsp;— бесплатно. Договор с&nbsp;фиксированной ценой и&nbsp;сроком, предоплата&nbsp;10%.</div>
+          </div>
+          <div class="wc-thumbs"><div class="wc-thumb" style="background-image:url(why-photo-3.jpg)"></div><div class="wc-thumb" style="background-image:url(why-photo-4.jpg)"></div><div class="wc-thumb" style="background-image:url(about-photo-main.jpg)"></div></div>
+        </div>
+      </div>
     </div>
 
     <div class="why-grid">
@@ -2728,6 +2872,7 @@
     if (window.Lenis && !reduce && window.matchMedia('(min-width:961px) and (hover:hover) and (pointer:fine)').matches) {
       document.querySelectorAll('.deck,.modal-backdrop,.nav-links').forEach(e => e.setAttribute('data-lenis-prevent', ''));
       lenis = new Lenis({ duration: 1.2, easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)), smoothWheel: true });
+      window.__lenis = lenis;
       lenis.on('scroll', ScrollTrigger.update);
       gsap.ticker.add(t => lenis.raf(t * 1000));
       gsap.ticker.lagSmoothing(0);
@@ -2771,6 +2916,140 @@
           .to(box, { opacity: .12, y: -50, duration: 1, ease: 'none' });
       });
       return () => { gsap.set(section, { clearProps: 'backgroundColor' }); gsap.set(imgs, { clearProps: 'clipPath,objectPosition' }); };
+    });
+    window.addEventListener('load', () => ScrollTrigger.refresh());
+  })();
+
+  // «Почему выбирают нас» (>=961px): Image-to-Content (Codrops ImageToContent), перенесено на стиль сайта.
+  // Прокрутка: заголовок блока уходит вверх, фото увеличивается (scrub). Клик по фото: фото летит в панель описания
+  // (ручной FLIP — Flip-плагин считает в «зумированных» пикселях страницы неверно), соседние блоки уезжают,
+  // тексты выезжают маской. Назад / Esc — обратно.
+  (function () {
+    const stage = document.getElementById('whyStage');
+    if (!stage || !window.gsap || !window.ScrollTrigger || !window.SplitType) return;
+    gsap.registerPlugin(ScrollTrigger);
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const D = reduce ? 0.01 : 1.5, EASE = 'power4.inOut';
+    const zoom = () => parseFloat(document.documentElement.style.zoom) || 1;
+    const root = document.documentElement;
+    const back = stage.querySelector('.why-back');
+    const contentEls = [...stage.querySelectorAll('.wc')];
+    const items = [...stage.querySelectorAll('.wp')].map((el, i) => {
+      const c = contentEls[i];
+      return {
+        el, i,
+        wrap: el.querySelector('.wp-img-wrap'), img: el.querySelector('.wp-img'), inner: el.querySelector('.wp-img-inner'),
+        title: el.querySelector('.wp-title'), titleInner: [...el.querySelectorAll('.wp-title-main .oh__inner')],
+        desc: el.querySelector('.wp-desc .oh__inner'), more: el.querySelector('.wp-more'),
+        c: {
+          el: c, slot: c.querySelector('.wc-slot'), titleInner: [...c.querySelectorAll('.wc-title .oh__inner')],
+          metaInner: c.querySelector('.wc-meta .oh__inner'), text: c.querySelector('.wc-text'), thumbs: [...c.querySelectorAll('.wc-thumb')],
+          split: null
+        }
+      };
+    });
+    let current = null, busy = false;
+
+    // FLIP: move el, then animate from its old box to the new one (rects are in zoomed px, transforms in CSS px)
+    const flip = (el, move) => {
+      const a = el.getBoundingClientRect();
+      move();
+      const b = el.getBoundingClientRect(), z = zoom();
+      gsap.fromTo(el,
+        { x: (a.left - b.left) / z, y: (a.top - b.top) / z, scaleX: a.width / b.width, scaleY: a.height / b.height, transformOrigin: '0 0' },
+        { x: 0, y: 0, scaleX: 1, scaleY: 1, duration: D, ease: EASE, onComplete: () => gsap.set(el, { clearProps: 'transform' }) });
+      const v = el.querySelector('video');
+      if (v) { const p = v.play(); if (p && p.catch) p.catch(() => {}); }   // a media element pauses when it is moved in the DOM
+    };
+    const inView = el => { const r = el.getBoundingClientRect(); return r.bottom > 0 && r.top < window.innerHeight; };
+
+    const splitLines = c => {
+      c.split = new SplitType(c.text, { types: 'lines' });
+      c.split.lines.forEach(l => { const w = document.createElement('div'); w.className = 'oh'; l.parentNode.appendChild(w); w.appendChild(l); });
+    };
+
+    const open = item => {
+      if (busy || current) return;
+      busy = true; current = item;
+      const c = item.c, vh = window.innerHeight / zoom();
+      const adjacent = items.filter(o => o !== item && inView(o.el));
+      if (window.__lenis) window.__lenis.stop();
+      root.classList.add('why-open');
+      c.el.classList.add('wc--current');
+      splitLines(c);
+      gsap.set([c.titleInner, c.metaInner], { yPercent: -101, opacity: 0 });
+      gsap.set(c.thumbs, { transformOrigin: '0% 0%', scale: 0, yPercent: 150 });
+      gsap.set(c.text, { opacity: 0 });
+      gsap.set(back, { opacity: 0 });
+      item.innerScale = gsap.getProperty(item.inner, 'scale') || 1;
+
+      const tl = gsap.timeline({ defaults: { duration: D, ease: EASE }, onComplete: () => { busy = false; } }).addLabel('start', 0);
+      adjacent.forEach(o => tl.to(o.el, { y: o.i < item.i ? -vh : vh }, 'start'));
+      tl.add(() => flip(item.img, () => c.slot.appendChild(item.img)), 'start')
+        .to(item.titleInner, { yPercent: 101, opacity: 0, stagger: -0.03 }, 'start')
+        .to(item.desc, { yPercent: 101, opacity: 0 }, 'start')
+        .to(item.more, { opacity: 0 }, 'start')
+        .to(item.inner, { scale: 1 }, 'start')
+        .addLabel('content', reduce ? 0 : 0.15)
+        .to(back, { opacity: 1 }, 'content')
+        .to(c.titleInner, { yPercent: 0, opacity: 1, stagger: -0.05 }, 'content')
+        .to(c.metaInner, { yPercent: 0, opacity: 1 }, 'content')
+        .to(c.thumbs, { scale: 1, yPercent: 0, stagger: -0.05 }, 'content')
+        .add(() => {
+          gsap.set(c.text, { opacity: 1 });
+          gsap.fromTo(c.split.lines, { yPercent: 105 }, { yPercent: 0, duration: D, ease: EASE, stagger: 0.1 });
+        }, 'content');
+      item.adjacent = adjacent;
+    };
+
+    const close = () => {
+      if (busy || !current) return;
+      busy = true;
+      const item = current, c = item.c;
+      gsap.timeline({
+        defaults: { duration: D, ease: EASE },
+        onComplete: () => {
+          if (window.__lenis) window.__lenis.start();
+          root.classList.remove('why-open');
+          c.el.classList.remove('wc--current');
+          if (c.split) { c.split.revert(); c.split = null; }
+          current = null; busy = false;
+          ScrollTrigger.refresh();
+        }
+      }).addLabel('start', 0)
+        .to(back, { opacity: 0 }, 'start')
+        .to(c.titleInner, { yPercent: -101, opacity: 0, stagger: 0.05 }, 'start')
+        .to(c.metaInner, { yPercent: -101, opacity: 0 }, 'start')
+        .to(c.thumbs, { scale: 0, yPercent: 150, stagger: -0.05 }, 'start')
+        .to(c.split ? c.split.lines : [], { yPercent: -105, stagger: 0.02 }, 'start')
+        .addLabel('preview', reduce ? 0 : 0.15)
+        .to(item.adjacent.map(o => o.el), { y: 0 }, 'preview')
+        .add(() => flip(item.img, () => item.wrap.appendChild(item.img)), 'preview')
+        .to(item.titleInner, { yPercent: 0, opacity: 1, stagger: 0.03 }, 'preview')
+        .to(item.desc, { yPercent: 0, opacity: 1 }, 'preview')
+        .to(item.more, { opacity: 1 }, 'preview')
+        .to(item.inner, { scale: item.innerScale }, 'preview');
+    };
+
+    items.forEach(it => {
+      it.wrap.addEventListener('click', () => open(it));
+      it.wrap.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(it); } });
+    });
+    back.addEventListener('click', close);
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
+
+    // scroll animation: the title drifts up, the photo grows (uniform scale, so faces/furniture are not stretched)
+    const mm = gsap.matchMedia();
+    mm.add('(min-width:961px)', () => {
+      items.forEach(it => {
+        gsap.set(it.inner, { transformOrigin: '50% 0%' });
+        gsap.set(it.title, { yPercent: 45 });
+        gsap.timeline({ scrollTrigger: { trigger: it.el, start: 'top bottom', end: 'bottom top', scrub: true } })
+          .addLabel('start', 0)
+          .to(it.title, { ease: 'none', yPercent: -100 }, 'start')
+          .to(it.inner, { ease: 'none', scale: 1.35 }, 'start');
+      });
+      return () => { items.forEach(it => gsap.set([it.inner, it.title], { clearProps: 'transform' })); };
     });
     window.addEventListener('load', () => ScrollTrigger.refresh());
   })();

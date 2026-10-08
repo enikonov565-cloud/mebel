@@ -491,6 +491,15 @@
     .ws-count{margin-left:0}
   }
 
+  /* большая кнопка «перейти в каталог» под слайдером */
+  .why-cta{display:flex;justify-content:center;margin-top:-40px}
+  .why-cta a{
+    display:flex;align-items:center;justify-content:center;gap:18px;width:min(100%,860px);height:96px;box-sizing:border-box;
+    background:#2F1F02;border:2px solid #CDCBC7;border-radius:15px;
+    font-family:'Inter',sans-serif;font-weight:700;font-size:26px;color:#CDCBC7;
+    --reveal-bg:#CDCBC7;--reveal-text:#2F1F02;--dot-shadow:#2F1F02;
+  }
+  @media (max-width:960px){.why-cta{margin-top:-16px}.why-cta a{height:72px;font-size:22px;width:100%}}
   .nav-links a.sub{padding-left:36px;font-size:.92rem;font-weight:400}
 
   /* Что мы изготавливаем — Figma node 445:196 */
@@ -1655,6 +1664,10 @@
         <button type="button" class="ws-btn ws-btn--next" aria-label="Следующий слайд"><svg viewBox="0 0 55 24"><path d="M1 12h52M42 1.5 53 12 42 22.5"/></svg></button>
         <div class="ws-count" aria-live="polite"><span class="ws-count-cur">01</span><span>—</span><span class="ws-count-total">04</span></div>
       </nav>
+    </div>
+
+    <div class="why-cta">
+      <a class="dot-btn" href="#services">перейти в&nbsp;каталог <span aria-hidden="true">→</span></a>
     </div>
   </div>
 </section>

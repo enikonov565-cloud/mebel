@@ -2882,7 +2882,7 @@
         else { window.scrollTo({ top: y, behavior: 'smooth' }); setTimeout(done, 900); }
       };
       const settle = () => {
-        if (snapping || (lenis && lenis.isScrolling)) { timer = setTimeout(settle, 120); return; }
+        if (snapping || (lenis && lenis.isScrolling)) { if (Date.now() - lastInput < 3000) timer = setTimeout(settle, 120); return; }
         const p = tops(), y = window.scrollY, step = p.length > 1 ? p[1] - p[0] : window.innerHeight;
         if (y < p[0] - 4) { snapIdx = null; return; }   // outside: free scrolling
         const f = (y - p[0]) / step;
@@ -2894,9 +2894,24 @@
         snapIdx = t;
         if (Math.abs(y - p[t]) > 2) goTo(p[t]);
       };
-      const onScroll = () => { if (snapping) return; clearTimeout(timer); timer = setTimeout(settle, 140); };
-      if (!reduce) window.addEventListener('scroll', onScroll, { passive: true });
-      return () => { window.removeEventListener('scroll', onScroll); clearTimeout(timer); gsap.set(section, { clearProps: 'backgroundColor' }); gsap.set(imgs, { clearProps: 'clipPath,objectPosition' }); };
+      // only a scroll the visitor started (wheel, touch, keys, scrollbar) is settled; scrolls caused by the page itself
+      // (layout shifts while pictures load, anchor jumps, resize) are left alone, so nothing ever moves on its own
+      let lastInput = 0;
+      const mark = () => { lastInput = Date.now(); };
+      const markKey = e => { if (['ArrowDown', 'ArrowUp', 'PageDown', 'PageUp', 'Home', 'End', ' ', 'Spacebar'].includes(e.key)) mark(); };
+      const onScroll = () => {
+        if (snapping || Date.now() - lastInput > 1600) return;
+        clearTimeout(timer); timer = setTimeout(settle, 140);
+      };
+      if (!reduce) {
+        window.addEventListener('scroll', onScroll, { passive: true });
+        window.addEventListener('wheel', mark, { passive: true });
+        window.addEventListener('touchstart', mark, { passive: true });
+        window.addEventListener('touchmove', mark, { passive: true });
+        window.addEventListener('mousedown', mark, { passive: true });
+        window.addEventListener('keydown', markKey);
+      }
+      return () => { [['scroll', onScroll], ['wheel', mark], ['touchstart', mark], ['touchmove', mark], ['mousedown', mark], ['keydown', markKey]].forEach(([n, f]) => window.removeEventListener(n, f)); clearTimeout(timer); gsap.set(section, { clearProps: 'backgroundColor' }); gsap.set(imgs, { clearProps: 'clipPath,objectPosition' }); };
     });
     window.addEventListener('load', () => ScrollTrigger.refresh());
   })();

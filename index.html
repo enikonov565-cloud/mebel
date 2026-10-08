@@ -608,7 +608,8 @@
     .svc-grid .svc-cta{
       height:auto;padding:0 0 20px;flex-direction:row;
       /* pull the row up under the last photo: the sheet is a full window tall, the photo is at most 760px, so the rest is empty — leave 40px */
-      margin-top:calc(40px - max(70px, (var(--vh100,100vh) - 760px) / 2));flex-wrap:wrap;align-items:center;justify-content:space-between;gap:24px 40px;
+      margin-top:calc(40px - max(70px, (var(--vh100,100vh) - 760px) / 2));
+      position:relative;z-index:10;   /* above the (opaque, pinned) last sheet it is pulled up under */flex-wrap:wrap;align-items:center;justify-content:space-between;gap:24px 40px;
     }
     .svc-grid .svc-cta p{flex:0 1 430px;width:auto}
     .svc-grid .svc-cta .svc-btn{flex:0 1 430px}

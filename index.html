@@ -490,7 +490,7 @@
     .wc{
       grid-area:2 / 1 / 3 / 2;position:absolute;inset:0;opacity:0;pointer-events:none;
       display:grid;gap:2vw;grid-template-columns:60% 1fr;
-      grid-template-areas:'img group' 'img thumbs';grid-template-rows:1fr auto;
+      grid-template-areas:'img group';grid-template-rows:1fr;
     }
     .wc--current{opacity:1;pointer-events:auto}
     .wc-slot{grid-area:img;min-height:0}
@@ -498,11 +498,14 @@
     .wc-slot .wp-img::after{display:none}
     .wc-group{grid-area:group;align-self:center;max-width:520px}
     .wc-title{font-family:'Inter',sans-serif;font-weight:500;font-size:clamp(2.2rem,calc(3.6*var(--vw100)/100),60px);line-height:1;letter-spacing:.01em;color:#CDCBC7}
-    .wc-meta{margin:22px 0 28px;font-family:'Inter',sans-serif;font-weight:300;font-size:20px;letter-spacing:.02em;color:#a1794c}
+    .wc-meta{margin:18px 0 22px;font-family:'Inter',sans-serif;font-weight:300;font-size:20px;letter-spacing:.02em;color:#a1794c}
     .wc-text{font-family:'Inter',sans-serif;font-weight:300;font-size:20px;line-height:1.35;letter-spacing:.02em;color:#CDCBC7}
     .wc-text .line{will-change:transform}
-    .wc-thumbs{grid-area:thumbs;display:flex;gap:2vw;justify-content:flex-start}
-    .wc-thumb{width:110px;aspect-ratio:1.5;border-radius:8px;background-size:cover;background-position:center}
+    .wc-link{
+      display:inline-flex;align-items:center;gap:12px;margin-top:36px;padding:10pt 20pt;background:#2F1F02;border:2px solid #CDCBC7;border-radius:15px;
+      font-family:'Inter',sans-serif;font-weight:700;font-size:22px;color:#CDCBC7;
+      --reveal-bg:#CDCBC7;--reveal-text:#2F1F02;--dot-shadow:#2F1F02;
+    }
   }
 
   .nav-links a.sub{padding-left:36px;font-size:.92rem;font-weight:400}
@@ -1687,8 +1690,8 @@
             <div class="wc-title"><span class="oh"><span class="oh__inner">Собственное</span></span><span class="oh"><span class="oh__inner">производство</span></span></div>
             <div class="wc-meta oh"><span class="oh__inner">с&nbsp;2014 года</span></div>
             <div class="wc-text">Проектируем, изготавливаем и&nbsp;монтируем мебель из&nbsp;массива с&nbsp;2014 года. Замер и&nbsp;дизайн-проект&nbsp;— бесплатно. Перед отгрузкой собираем изделие в&nbsp;цеху, чтобы результат совпал с&nbsp;проектом.</div>
+            <a class="wc-link dot-btn" href="#services">в каталог <span aria-hidden="true">→</span></a>
           </div>
-          <div class="wc-thumbs"><div class="wc-thumb" style="background-image:url(why-photo-2.jpg)"></div><div class="wc-thumb" style="background-image:url(why-photo-3.jpg)"></div><div class="wc-thumb" style="background-image:url(why-photo-4.jpg)"></div></div>
         </div>
         <div class="wc">
           <div class="wc-slot"></div>
@@ -1696,8 +1699,8 @@
             <div class="wc-title"><span class="oh"><span class="oh__inner">Фабричное</span></span><span class="oh"><span class="oh__inner">качество</span></span></div>
             <div class="wc-meta oh"><span class="oh__inner">массив, а&nbsp;не&nbsp;ЛДСП</span></div>
             <div class="wc-text">Дуб, ясень, орех; финишное покрытие маслами и&nbsp;воском. Контрольная сборка в&nbsp;цеху перед отгрузкой&nbsp;— результат как в&nbsp;проекте.</div>
+            <a class="wc-link dot-btn" href="#services">в каталог <span aria-hidden="true">→</span></a>
           </div>
-          <div class="wc-thumbs"><div class="wc-thumb" style="background-image:url(why-photo-2.jpg)"></div><div class="wc-thumb" style="background-image:url(why-photo-3.jpg)"></div><div class="wc-thumb" style="background-image:url(about-photo-main.jpg)"></div></div>
         </div>
         <div class="wc">
           <div class="wc-slot"></div>
@@ -1705,8 +1708,8 @@
             <div class="wc-title"><span class="oh"><span class="oh__inner">Доставка</span></span><span class="oh"><span class="oh__inner">и сборка</span></span></div>
             <div class="wc-meta oh"><span class="oh__inner">15–25 дней</span></div>
             <div class="wc-text">Средний срок изготовления&nbsp;— 15–25 дней. Доставляем и&nbsp;собираем мебель у&nbsp;вас дома. Смета в&nbsp;договоре не&nbsp;меняется&nbsp;— без доплат по&nbsp;ходу работ.</div>
+            <a class="wc-link dot-btn" href="#services">в каталог <span aria-hidden="true">→</span></a>
           </div>
-          <div class="wc-thumbs"><div class="wc-thumb" style="background-image:url(why-photo-2.jpg)"></div><div class="wc-thumb" style="background-image:url(why-photo-4.jpg)"></div><div class="wc-thumb" style="background-image:url(about-photo-main.jpg)"></div></div>
         </div>
         <div class="wc">
           <div class="wc-slot"></div>
@@ -1714,8 +1717,8 @@
             <div class="wc-title"><span class="oh"><span class="oh__inner">Гарантия</span></span><span class="oh"><span class="oh__inner">3 года</span></span></div>
             <div class="wc-meta oh"><span class="oh__inner">по&nbsp;договору</span></div>
             <div class="wc-text">Сервисный выезд и&nbsp;устранение недочётов по&nbsp;гарантии&nbsp;— бесплатно. Договор с&nbsp;фиксированной ценой и&nbsp;сроком, предоплата&nbsp;10%.</div>
+            <a class="wc-link dot-btn" href="#services">в каталог <span aria-hidden="true">→</span></a>
           </div>
-          <div class="wc-thumbs"><div class="wc-thumb" style="background-image:url(why-photo-3.jpg)"></div><div class="wc-thumb" style="background-image:url(why-photo-4.jpg)"></div><div class="wc-thumb" style="background-image:url(about-photo-main.jpg)"></div></div>
         </div>
       </div>
     </div>
@@ -2972,7 +2975,7 @@
         desc: el.querySelector('.wp-desc .oh__inner'), more: el.querySelector('.wp-more'),
         c: {
           el: c, slot: c.querySelector('.wc-slot'), titleInner: [...c.querySelectorAll('.wc-title .oh__inner')],
-          metaInner: c.querySelector('.wc-meta .oh__inner'), text: c.querySelector('.wc-text'), thumbs: [...c.querySelectorAll('.wc-thumb')],
+          metaInner: c.querySelector('.wc-meta .oh__inner'), text: c.querySelector('.wc-text'), link: c.querySelector('.wc-link'),
           split: null
         }
       };
@@ -3026,7 +3029,7 @@
       c.el.classList.add('wc--current');
       splitLines(c);
       gsap.set([c.titleInner, c.metaInner], { yPercent: -101, opacity: 0 });
-      gsap.set(c.thumbs, { transformOrigin: '0% 0%', scale: 0, yPercent: 150 });
+      gsap.set(c.link, { opacity: 0, y: 24 });
       gsap.set(c.text, { opacity: 0 });
       gsap.set(back, { opacity: 0 });
       gsap.set(wrap, { backgroundColor: 'rgba(17,11,0,0)' });
@@ -3045,7 +3048,7 @@
         .to(back, { opacity: 1 }, 'content')
         .to(c.titleInner, { yPercent: 0, opacity: 1, stagger: -0.05 }, 'content')
         .to(c.metaInner, { yPercent: 0, opacity: 1 }, 'content')
-        .to(c.thumbs, { scale: 1, yPercent: 0, stagger: -0.05 }, 'content')
+        .to(c.link, { opacity: 1, y: 0 }, 'content+=0.3')
         .add(() => {
           gsap.set(c.text, { opacity: 1 });
           gsap.fromTo(c.split.lines, { yPercent: 105 }, { yPercent: 0, duration: D, ease: EASE, stagger: 0.1 });
@@ -3073,7 +3076,7 @@
         .to(back, { opacity: 0 }, 'start')
         .to(c.titleInner, { yPercent: -101, opacity: 0, stagger: 0.05 }, 'start')
         .to(c.metaInner, { yPercent: -101, opacity: 0 }, 'start')
-        .to(c.thumbs, { scale: 0, yPercent: 150, stagger: -0.05 }, 'start')
+        .to(c.link, { opacity: 0, y: 24 }, 'start')
         .to(c.split ? c.split.lines : [], { yPercent: -105, stagger: 0.02 }, 'start')
         .addLabel('preview', reduce ? 0 : 0.15)
         .to(wrap, { backgroundColor: 'rgba(17,11,0,0)' }, 'preview')
@@ -3100,6 +3103,14 @@
         requestAnimationFrame(() => open(next));
       });
     };
+    items.forEach(it => it.c.link.addEventListener('click', e => {
+      e.preventDefault();
+      close(() => {
+        const t = document.getElementById('services'), margin = parseFloat(getComputedStyle(t).scrollMarginTop) || 0;
+        const y = window.scrollY + t.getBoundingClientRect().top - margin * zoom();
+        if (window.__lenis) window.__lenis.scrollTo(y, { duration: 1.4 }); else window.scrollTo({ top: y, behavior: 'smooth' });
+      });
+    }));
     back.querySelector('.why-back').addEventListener('click', () => close());
     back.querySelector('.why-prev').addEventListener('click', () => go(-1));
     back.querySelector('.why-next').addEventListener('click', () => go(1));

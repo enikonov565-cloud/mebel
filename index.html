@@ -477,7 +477,10 @@
   .ws-btn:hover{opacity:1}
   .ws-btn--prev:hover{transform:translateX(-5px)}
   .ws-btn--next:hover{transform:translateX(5px)}
-  .ws-btn svg{display:block;width:100%;height:100%;fill:none;stroke:#fff;stroke-width:1}
+  .ws-btn svg{display:block;width:100%;height:100%;fill:none;stroke:#fff;stroke-width:1;transition:stroke .5s ease}
+  /* while a transition runs the arrows are dark brown (inactive); when the movement ends they fade back to white */
+  .ws-nav.is-busy .ws-btn{cursor:default;pointer-events:none}
+  .ws-nav.is-busy .ws-btn svg{stroke:#2F1F02}
   .ws-count{
     margin-left:1.2rem;display:flex;align-items:center;gap:.7rem;
     font-family:'Inter',sans-serif;font-weight:500;font-size:22px;letter-spacing:.02em;color:#fff;white-space:nowrap;
@@ -2894,6 +2897,7 @@
     };
     const cur = root.querySelector('.ws-count-cur'), total = root.querySelector('.ws-count-total');
     total.textContent = String(N).padStart(2, '0');
+    const nav = root.querySelector(".ws-nav");
     let current = 0, busy = false, visible = false;
 
     const play = s => { if (s.media && visible) { const p = s.media.play(); if (p && p.catch) p.catch(() => {}); } };
@@ -2909,6 +2913,7 @@
     const show = (direction) => {
       if (busy) return;
       busy = true;
+      nav.classList.add("is-busy");
       const from = slides[current];
       current = direction === 'next' ? (current + 1) % N : (current - 1 + N) % N;
       const to = slides[current];
@@ -2922,7 +2927,7 @@
         to.cap.classList.add('ws-cap--current'); to.wrap.classList.add('ws-img-wrap--current');
         gsap.set(to.wrap, { clipPath: CP.initial, x: 0 }); gsap.set(to.img, { x: 0 }); gsap.set(to.text, { yPercent: 0 }); gsap.set([to.body, to.link], { opacity: 1, y: 0 });
         if (from.media) from.media.pause();
-        busy = false; return;
+        busy = false; nav.classList.remove("is-busy"); return;
       }
 
       // order: 1) the old caption slides out under its mask, 2) the picture folds into the arrow, 3) it slides away while the
@@ -2934,6 +2939,7 @@
         onStart: () => { to.cap.classList.add('ws-cap--current'); to.wrap.classList.add('ws-img-wrap--current'); },
         onComplete: () => {
           busy = false;
+          nav.classList.remove("is-busy");
           from.cap.classList.remove('ws-cap--current'); from.wrap.classList.remove('ws-img-wrap--current');
           gsap.set([from.cap, from.wrap], { clearProps: 'opacity' });
           gsap.set(from.text, { yPercent: OUT });

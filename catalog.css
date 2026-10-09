@@ -431,7 +431,7 @@ body{background:#110B00;color:#CDCBC7}
    Below 961px the previous mobile cards and modal stay as they were.
    ================================================================================================================ */
 @media (min-width:961px){
-  .cat-items{position:relative;overflow:hidden;padding:60px 0 200px}
+  .cat-items{position:relative;overflow:hidden;padding:60px 0 120px}
   .cat-items .container{position:relative;z-index:1}
   .cat-bgtitle{
     position:absolute;z-index:0;left:60px;right:60px;top:70px;pointer-events:none;user-select:none;
@@ -469,12 +469,24 @@ body{background:#110B00;color:#CDCBC7}
     background:linear-gradient(180deg,rgba(17,11,0,0) 52%,rgba(17,11,0,.62) 100%);
   }
   .model-card:not(.cta-card) h3{
-    position:absolute;z-index:3;left:-22px;bottom:calc(100% - 380px * 4 / 3 + 28px);right:-60px;padding:0;pointer-events:none;
+    position:absolute;z-index:3;left:-22px;bottom:70px;right:-60px;padding:0;pointer-events:none;
     display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;line-clamp:2;overflow:hidden;   /* never more than two lines */
     font-family:'Inter',sans-serif;font-weight:300;font-size:clamp(20px,calc(1.6*var(--vw100)/100),30px);line-height:1.1;letter-spacing:.015em;
     color:#fff;text-shadow:0 2px 24px rgba(17,11,0,.55);
   }
-  .model-card:not(.cta-card) .model-btn{margin:36px 0 0;align-self:flex-start}
+  /* instead of a button: a quiet underlined line under the title, on the photo (like «See more» in the demo) */
+  .model-card:not(.cta-card) .model-details-btn{
+    position:absolute;z-index:3;left:-22px;bottom:24px;margin:0;padding:0 0 5px;align-self:auto;
+    display:inline-flex;align-items:center;gap:0;background:none;color:#fff;border:0;border-radius:0;
+    border-bottom:1px solid rgba(255,255,255,.7)!important;border-style:none none solid none!important;
+    font-family:'Inter',sans-serif;font-weight:300;font-size:18px;letter-spacing:.02em;text-shadow:0 1px 14px rgba(17,11,0,.6);
+    box-shadow:none;transform:none;transition:border-color .3s ease,gap .4s cubic-bezier(.22,1,.36,1);
+  }
+  .model-card:not(.cta-card) .model-details-btn:hover{background:none;color:#fff;box-shadow:none;transform:none;border-bottom-color:#fff!important;gap:12px}
+  .model-card:not(.cta-card) .model-details-btn .model-arrow-ico{
+    display:inline-block;width:0;overflow:hidden;opacity:0;transition:width .4s cubic-bezier(.22,1,.36,1),opacity .3s ease;
+  }
+  .model-card:not(.cta-card) .model-details-btn:hover .model-arrow-ico{width:1.2em;opacity:1}
 
   /* ---- detail view ---- */
   #modelModal{

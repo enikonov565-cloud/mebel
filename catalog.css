@@ -574,3 +574,22 @@ body{background:#110B00;color:#CDCBC7}
   .cat-tabs{gap:10px 26px}
   .cat-tabs .cat-tab{width:auto;height:auto;padding:0 0 6px}
 }
+
+/* movable tiles (catalog-gallery.js sets --px / --py / --h while the pointer is over a tile) */
+@media (min-width:961px){
+  .model-card.is-live:not(.cta-card){
+    transform-style:preserve-3d;
+    transform:perspective(1100px) rotateY(calc(var(--px,0) * 10deg)) rotateX(calc(var(--py,0) * -8deg));
+    transition:transform .45s cubic-bezier(.22,1,.36,1);
+  }
+  .model-card.is-live:not(.cta-card) .model-frame{display:block;overflow:hidden;border-radius:15px;aspect-ratio:3/4;flex:none}
+  .model-card.is-live:not(.cta-card) .model-frame .model-photo{
+    width:100%;height:100%;aspect-ratio:auto;
+    transform:translate3d(calc(var(--px,0) * -22px),calc(var(--py,0) * -22px),0) scale(calc(1 + var(--h,0) * .1));
+    transition:transform .6s cubic-bezier(.22,1,.36,1);
+  }
+  .model-card.is-live:not(.cta-card) h3{
+    transform:translate3d(calc(var(--px,0) * 14px),calc(var(--py,0) * 10px),46px);
+    transition:transform .6s cubic-bezier(.22,1,.36,1);
+  }
+}

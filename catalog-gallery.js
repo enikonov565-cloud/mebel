@@ -52,3 +52,30 @@
   });
   update();
 })();
+
+/* Movable tiles: while the pointer is over a tile it leans towards the pointer (a gentle 3D tilt), the photo inside drifts
+   the opposite way and zooms a little, the title floats forward. Mouse devices, wide screens, normal-motion only. */
+(function () {
+  'use strict';
+  var ok = window.matchMedia('(min-width:961px) and (hover:hover) and (pointer:fine)').matches &&
+           !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!ok) return;
+  document.querySelectorAll('.model-card:not(.cta-card)').forEach(function (card) {
+    card.classList.add('is-live');
+    var photo = card.querySelector('.model-photo');
+    if (photo && !photo.parentNode.classList.contains('model-frame')) {   // a clipping frame, so the zoomed photo never leaves the tile
+      var frame = document.createElement('span'); frame.className = 'model-frame';
+      photo.parentNode.insertBefore(frame, photo); frame.appendChild(photo);
+    }
+    card.addEventListener('pointermove', function (e) {
+      var r = card.getBoundingClientRect();
+      var x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5;
+      card.style.setProperty('--px', Math.max(-.5, Math.min(.5, x)).toFixed(3));
+      card.style.setProperty('--py', Math.max(-.5, Math.min(.5, y)).toFixed(3));
+      card.style.setProperty('--h', '1');
+    });
+    card.addEventListener('pointerleave', function () {
+      card.style.setProperty('--px', '0'); card.style.setProperty('--py', '0'); card.style.setProperty('--h', '0');
+    });
+  });
+})();

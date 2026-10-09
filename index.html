@@ -435,23 +435,27 @@
   .about-cta a.lk-run{--lk:#2F1F02;--lk-line:rgba(47,31,2,.28)}
   .svc-consult.lk-run{--lk:#F0ECE6;--lk-line:rgba(240,236,230,.35)}
   /* slower, calmer: the shimmer, the fade on hover, the return on press and the arrow */
-  .svc-consult.lk-run::after{animation-duration:5.5s;transition:opacity 1s ease}
-  .svc-consult.lk-run:hover::after{animation-duration:5.5s}
-  .svc-consult.lk-run:active::after,.svc-consult.lk-run.is-clicked::after,.svc-consult.lk-run.is-clicked:hover::after{transition-duration:1.6s}
-  .svc-consult.lk-run .lk-arrow{transition:transform 1s cubic-bezier(.22,1,.36,1)}
+  :is(.svc-consult,.svc-golink).lk-run::after{animation-duration:5.5s;transition:opacity 1s ease}
+  :is(.svc-consult,.svc-golink).lk-run:hover::after{animation-duration:5.5s}
+  :is(.svc-consult,.svc-golink).lk-run:active::after,:is(.svc-consult,.svc-golink).lk-run.is-clicked::after,:is(.svc-consult,.svc-golink).lk-run.is-clicked:hover::after{transition-duration:1.6s}
+  :is(.svc-consult,.svc-golink).lk-run .lk-arrow{transition:transform 1s cubic-bezier(.22,1,.36,1)}
   /* clearly visible: a brighter, thicker running line, the label turns white and the whole link drifts right on hover */
-  .svc-consult.lk-run::after{height:2px;background-size:46% 100%,100% 100%;background:linear-gradient(90deg,transparent,#fff 50%,transparent) no-repeat,rgba(240,236,230,.42);background-size:46% 100%,100% 100%}
-  .svc-consult.lk-run{transition:color .6s ease,transform .8s cubic-bezier(.22,1,.36,1)}
-  .svc-consult.lk-run:hover{--lk:#fff;transform:translateX(10px)!important}
-  .svc-consult.lk-run:hover .lk-arrow{transform:translateX(16px)}
+  :is(.svc-consult,.svc-golink).lk-run::after{height:2px;background-size:46% 100%,100% 100%;background:linear-gradient(90deg,transparent,#fff 50%,transparent) no-repeat,rgba(240,236,230,.42);background-size:46% 100%,100% 100%}
+  :is(.svc-consult,.svc-golink).lk-run{transition:color .6s ease,transform .8s cubic-bezier(.22,1,.36,1)}
+  :is(.svc-consult,.svc-golink).lk-run:hover{--lk:#fff;transform:translateX(10px)!important}
+  :is(.svc-consult,.svc-golink).lk-run:hover .lk-arrow{transform:translateX(16px)}
   /* press: the line floods across, the arrow shoots out and comes back, the label dips and rises (the window opens after it) */
-  .svc-consult.lk-run.is-pressed{--lk:#fff}
-  .svc-consult.lk-run.is-pressed::after{opacity:1!important;animation:none;height:3px;background:#fff;transform-origin:left center;animation:consultFlood .7s cubic-bezier(.65,0,.35,1) both}
-  .svc-consult.lk-run.is-pressed .lk-arrow{animation:consultArrow .7s cubic-bezier(.65,0,.35,1) both}
-  .svc-consult.lk-run.is-pressed{animation:consultDip .7s ease both}
+  :is(.svc-consult,.svc-golink).lk-run.is-pressed{--lk:#fff}
+  :is(.svc-consult,.svc-golink).lk-run.is-pressed::after{opacity:1!important;animation:none;height:3px;background:#fff;transform-origin:left center;animation:consultFlood .7s cubic-bezier(.65,0,.35,1) both}
+  :is(.svc-consult,.svc-golink).lk-run.is-pressed .lk-arrow{animation:consultArrow .7s cubic-bezier(.65,0,.35,1) both}
+  :is(.svc-consult,.svc-golink).lk-run.is-pressed{animation:consultDip .7s ease both}
   @keyframes consultFlood{0%{transform:scaleX(0)}70%{transform:scaleX(1)}100%{transform:scaleX(1)}}
   @keyframes consultArrow{0%{transform:translateX(0)}45%{transform:translateX(34px);opacity:0}55%{transform:translateX(-26px);opacity:0}100%{transform:translateX(0);opacity:1}}
   @keyframes consultDip{0%{transform:translateY(0)}35%{transform:translateY(4px)}100%{transform:translateY(0)}}
+  /* «в каталог» on the sheets: light coffee-brown words (the dark brown of the old button would vanish on the dark sheets) */
+  .svc-golink.lk-run{--lk:#D2BFA8;--lk-line:rgba(210,191,168,.4);margin-top:4px}
+  .svc-golink.lk-run:hover,.svc-golink.lk-run.is-pressed{--lk:#F3E8D8}
+  .svc-golink.lk-run::after{background:linear-gradient(90deg,transparent,#F3E8D8 50%,transparent) no-repeat,rgba(210,191,168,.42);background-size:46% 100%,100% 100%}
   .ws-link.lk-run{--lk:#fff;--lk-line:rgba(255,255,255,.38);text-shadow:0 1px 14px rgba(17,11,0,.6)}
   @media (max-width:960px){a.lk-run.lk-run{font-size:16px!important;white-space:normal!important}}
 
@@ -1794,7 +1798,7 @@
             <span class="svc-sheet-num">01</span>
             <h3>Корпусная мебель</h3>
             <p>Точная подгонка по&nbsp;размерам помещения. Проектируем и&nbsp;изготавливаем корпусную мебель под&nbsp;ваш интерьер.</p>
-            <a class="svc-sheet-link dot-btn" href="catalog-korpusnaya.html">в каталог <span aria-hidden="true">→</span></a>
+            <a class="svc-sheet-link svc-golink lk-run" href="catalog-korpusnaya.html">в каталог <span class="lk-arrow" aria-hidden="true">→</span></a>
           </div>
           <div class="svc-hint" aria-hidden="true"><span class="svc-hint-line"></span><span>листайте вниз</span></div>
         </article>
@@ -1804,7 +1808,7 @@
             <span class="svc-sheet-num">02</span>
             <h3>Эксклюзивная мебель</h3>
             <p>Изделия по&nbsp;индивидуальным чертежам и&nbsp;размерам. Каждая вещь создаётся в&nbsp;единственном экземпляре.</p>
-            <a class="svc-sheet-link dot-btn" href="catalog-eksklyuzivnaya.html">в каталог <span aria-hidden="true">→</span></a>
+            <a class="svc-sheet-link svc-golink lk-run" href="catalog-eksklyuzivnaya.html">в каталог <span class="lk-arrow" aria-hidden="true">→</span></a>
           </div>
           <div class="svc-hint" aria-hidden="true"><span class="svc-hint-line"></span><span>листайте вниз</span></div>
         </article>
@@ -1814,7 +1818,7 @@
             <span class="svc-sheet-num">03</span>
             <h3>Двери и&nbsp;порталы</h3>
             <p>Точная подгонка по&nbsp;проёму, единый стиль с&nbsp;мебелью.</p>
-            <a class="svc-sheet-link dot-btn" href="catalog-dveri.html">в каталог <span aria-hidden="true">→</span></a>
+            <a class="svc-sheet-link svc-golink lk-run" href="catalog-dveri.html">в каталог <span class="lk-arrow" aria-hidden="true">→</span></a>
           </div>
           <div class="svc-hint" aria-hidden="true"><span class="svc-hint-line"></span><span>листайте вниз</span></div>
         </article>
@@ -1824,7 +1828,7 @@
             <span class="svc-sheet-num">04</span>
             <h3>Офисная мебель</h3>
             <p>Соблюдение единого стиля в&nbsp;офисном пространстве.</p>
-            <a class="svc-sheet-link dot-btn" href="catalog-ofisnaya.html">в каталог <span aria-hidden="true">→</span></a>
+            <a class="svc-sheet-link svc-golink lk-run" href="catalog-ofisnaya.html">в каталог <span class="lk-arrow" aria-hidden="true">→</span></a>
           </div>
           <div class="svc-hint" aria-hidden="true"><span class="svc-hint-line"></span><span>листайте вниз</span></div>
         </article>
@@ -1834,7 +1838,7 @@
             <span class="svc-sheet-num">05</span>
             <h3>Коммерческая мебель</h3>
             <p>Мебель из&nbsp;износостойких материалов.</p>
-            <a class="svc-sheet-link dot-btn" href="catalog-kommercheskaya.html">в каталог <span aria-hidden="true">→</span></a>
+            <a class="svc-sheet-link svc-golink lk-run" href="catalog-kommercheskaya.html">в каталог <span class="lk-arrow" aria-hidden="true">→</span></a>
           </div>
         </article>
       </div>
@@ -3479,16 +3483,19 @@ void main() {
 <script>
   // «получить консультация»: show the press first, then open the window
   (function () {
-    const a = document.querySelector('.svc-consult');
-    if (!a) return;
-    let go = false;
-    a.addEventListener('click', e => {
-      if (go || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-      e.preventDefault(); e.stopImmediatePropagation();
-      a.classList.remove('is-pressed'); void a.offsetWidth; a.classList.add('is-pressed');
-      setTimeout(() => { go = true; a.click(); go = false; }, 620);
-      setTimeout(() => a.classList.remove('is-pressed'), 1100);
-    }, true);
+    document.querySelectorAll('.svc-consult,.svc-golink').forEach(a => {
+      let go = false;
+      a.addEventListener('click', e => {
+        if (go || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        e.preventDefault(); e.stopImmediatePropagation();
+        a.classList.remove('is-pressed'); void a.offsetWidth; a.classList.add('is-pressed');
+        setTimeout(() => {
+          if (a.classList.contains('svc-golink')) { window.location.href = a.href; return; }
+          go = true; a.click(); go = false;
+        }, 620);
+        setTimeout(() => a.classList.remove('is-pressed'), 1100);
+      }, true);
+    });
   })();
 </script>
 </body>

@@ -7,8 +7,8 @@
 <meta name="description" content="Коммерческая мебель на заказ от «Антураж интерьер»: столы-стойки с табуретами, торговые и прикассовые стойки, стеллажи для торговых залов — из износостойких материалов.">
 <script src="fit.js"></script>
 <link rel="stylesheet" href="fonts.css">
-<link rel="stylesheet" href="catalog-base.css?v=20261009q">
-<link rel="stylesheet" href="catalog.css?v=20261009q">
+<link rel="stylesheet" href="catalog-base.css?v=20261009s">
+<link rel="stylesheet" href="catalog.css?v=20261009s">
 </head>
 <body>
 
@@ -235,8 +235,8 @@
 
 <script src="typo.js"></script>
 <script src="catalog.js"></script>
-<script src="catalog-gallery.js?v=20261009q" defer></script>
-<script src="weight-hover.js?v=20261009q"></script>
+<script src="catalog-gallery.js?v=20261009s" defer></script>
+<script src="weight-hover.js?v=20261009s"></script>
 <script src="footer-underline.js"></script>
 <script>
   // Cursor Image Gallery (Originkit), adapted: fixed prev/next arrow buttons at the photo's
@@ -652,13 +652,13 @@ void main() {
 
     // Brand palette (see catalog.css / index.html accents) and a subdued intensity.
     // Less ginger/orange, more chocolate: darker, muted toffee-and-cacao tones.
-    const BG = parseColor('#180F01');      // card background
-    const C1 = parseColor('#F2E3CB');      // white-chocolate accent (pale ivory, not orange)
-    const C2 = parseColor('#3B2414');      // dark-chocolate accent (deep cacao, not ginger)
+    const BG = parseColor('#E7DCCB');      // card background — light coffee-with-milk plate
+    const C1 = parseColor('#BDB19C');      // light-coffee ribbon
+    const C2 = parseColor('#52483A');      // dark-cacao ribbon
     // The mix() between these two across the layered noise naturally passes through every
     // shade in between — including a milk-chocolate midtone — without needing a 3rd colour.
     const SPEED = 8 / 50, SIZE = 60 / 100, ANGLE = (-105 * Math.PI) / 180, HOVER = 25 / 100, REACH = 220;
-    const INTENSITY = 0.32;   // brightened back up a bit — 0.22 read as too dull/dark
+    const INTENSITY = 0.85;   // dark ribbons on the light "paper" plate
 
     let mx = 0, my = 0, vx = 0, vy = 0, on = 0, last = -1, clock = 0;
 
@@ -710,7 +710,7 @@ void main() {
       gl.uniform2f(un.uRes, bw, bh);
       gl.uniform1f(un.uTime, clock);
       gl.uniform3f(un.uBg, BG[0], BG[1], BG[2]);
-      gl.uniform1f(un.uPaper, 0);
+      gl.uniform1f(un.uPaper, 1);
       gl.uniform1f(un.uIntensity, INTENSITY);
       gl.drawArrays(gl.TRIANGLES, 0, 3);
     }

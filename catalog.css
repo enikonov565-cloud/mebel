@@ -620,3 +620,13 @@ body{background:#110B00;color:#CDCBC7}
   .mm-circle{color:#2F1F02}
   .mm-circle:disabled{color:rgba(47,31,2,.22)}
 }
+
+/* the pinned plate in light tones too (same content): a light plate with dark ribbons, dark text */
+.cta-card{background:#D9CBB6}
+.cta-card .cta-plus{color:#7a5a2f}
+.cta-card h3,.cta-card .cta-desc,.cta-card .cta-works{color:#2F1F02}
+.cta-card .model-btn{
+  background:#2F1F02;color:#EADFCB;border:2px dashed #2F1F02;
+  --reveal-bg:#EADFCB;--reveal-text:#2F1F02;--dot-shadow:#2F1F02;
+}
+.cta-card .model-btn:hover{background:#EADFCB;color:#2F1F02}

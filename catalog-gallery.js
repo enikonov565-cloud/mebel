@@ -26,17 +26,22 @@
     var b = document.createElement('button');
     b.type = 'button'; b.className = 'mm-circle mm-' + dir;
     b.setAttribute('aria-label', dir === 'prev' ? 'Предыдущая модель' : 'Следующая модель');
-    var ar = document.createElementNS(NS, 'svg'); ar.setAttribute('class', 'mm-arrow'); ar.setAttribute('viewBox', '0 0 96 24');
-    ar.innerHTML = dir === 'prev' ? '<path d="M95 12H2M13 1.5 2 12l11 10.5"/>' : '<path d="M1 12h93M83 1.5 94 12 83 22.5"/>';
+    var ar = document.createElementNS(NS, 'svg'); ar.setAttribute('class', 'mm-arrow'); ar.setAttribute('viewBox', '0 0 55 24');
+    ar.innerHTML = dir === 'prev' ? '<path d="M54 12H2M13 1.5 2 12l11 10.5"/>' : '<path d="M1 12h52M42 1.5 53 12 42 22.5"/>';
     b.appendChild(ar);
     return b;
   }
   var nav = document.createElement('div'); nav.className = 'mm-nav';
   var prev = circle('prev'), next = circle('next');
   nav.appendChild(prev); nav.appendChild(next);
+  var cnt = window.Ctl ? Ctl.counter() : null;
+  if (cnt) nav.appendChild(cnt);
   info.insertBefore(nav, info.firstChild);
 
-  function update() { prev.disabled = idx <= 0; next.disabled = idx >= btns.length - 1; }
+  function update() {
+    prev.disabled = idx <= 0; next.disabled = idx >= btns.length - 1;
+    if (cnt) { cnt.querySelector('.ctl-cur').textContent = String(idx + 1).padStart(2, '0'); cnt.querySelector('.ctl-tot').textContent = String(btns.length).padStart(2, '0'); }
+  }
   function go(d) {
     var n = idx + d;
     if (n < 0 || n >= btns.length) return;
@@ -78,4 +83,41 @@
       card.style.setProperty('--px', '0'); card.style.setProperty('--py', '0'); card.style.setProperty('--h', '0');
     });
   });
+})();
+
+
+/* The same arrow control (see ctl.css) on the photo gallery inside the model window and under the strip of tiles. */
+(function () {
+  'use strict';
+  if (!window.Ctl) return;
+  var g = document.getElementById('modelGallery');
+  if (g) {
+    var p = g.querySelector('.mgc-prev'), n = g.querySelector('.mgc-next'), dots = g.querySelector('.mgc-dots');
+    if (p && n && dots) {
+      var row = document.createElement('div'); row.className = 'ctl ctl--dark';
+      Ctl.paint(p, 'prev'); Ctl.paint(n, 'next');
+      var c = Ctl.counter(); row.appendChild(p); row.appendChild(n); row.appendChild(c); g.appendChild(row);
+      var upd = function () {
+        var ds = [].slice.call(dots.children), cur = 0;
+        ds.forEach(function (d, i) { if (d.classList.contains('active')) cur = i + 1; });
+        c.querySelector('.ctl-cur').textContent = String(cur || 1).padStart(2, '0');
+        c.querySelector('.ctl-tot').textContent = String(ds.length).padStart(2, '0');
+        row.style.display = ds.length > 1 && dots.style.display !== 'none' ? '' : 'none';
+      };
+      new MutationObserver(upd).observe(dots, { childList: true, subtree: true, attributes: true, attributeFilter: ['class', 'style'] });
+      upd();
+    }
+  }
+  var track = document.getElementById('modelTrack');
+  var gal = track && track.closest('.model-gallery');
+  if (gal) {
+    var cards = function () { return track.querySelectorAll('.model-card:not(.cta-card)'); };
+    var step = function () { var a = cards(); return a.length > 1 ? a[1].offsetLeft - a[0].offsetLeft : 1; };
+    Ctl.make({
+      prev: gal.querySelector('.model-arrow.prev'), next: gal.querySelector('.model-arrow.next'), after: gal, tone: 'light', cls: 'ctl--tiles',
+      total: function () { return cards().length; },
+      current: function () { return track.scrollLeft >= track.scrollWidth - track.clientWidth - 2 ? cards().length : Math.round(track.scrollLeft / step()) + 1; },
+      watch: function (cb) { track.addEventListener('scroll', cb, { passive: true }); window.addEventListener('resize', cb); }
+    });
+  }
 })();

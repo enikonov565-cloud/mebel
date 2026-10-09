@@ -1678,6 +1678,7 @@
   }
 }
 </style>
+<link rel="stylesheet" href="ctl.css?v=1">
 </head>
 <body>
 
@@ -3633,6 +3634,38 @@ void main() {
     };
     if (mq.matches) build();
     mq.addEventListener('change', () => { if (mq.matches) build(); else place(); });
+  })();
+</script>
+<script src="ctl.js?v=1"></script>
+<script>
+  // the same arrows + «NN — NN» counter under «Примеры наших работ» and «Отзывы»
+  (function () {
+    if (!window.Ctl) return;
+    const works = document.querySelector('.works-gallery');
+    if (works) {
+      const track = works.querySelector('.works-track');
+      const n = () => track.querySelectorAll('img').length;
+      const deck = works.classList.contains('deck-on');
+      const step = () => { const f = track.querySelectorAll('.works-item'); return f.length > 1 ? f[1].offsetLeft - f[0].offsetLeft : 1; };
+      Ctl.make({
+        prev: works.querySelector('.works-arrow.prev'), next: works.querySelector('.works-arrow.next'), after: works, tone: 'dark',
+        total: n,
+        current: () => deck && window.__deck ? ((Math.round(window.__deck.state.target * n()) % n()) + n()) % n() + 1 : Math.round(track.scrollLeft / step()) + 1,
+        watch: cb => { setInterval(cb, 200); track.addEventListener('scroll', cb, { passive: true }); }
+      });
+    }
+    const rev = document.querySelector('.reviews-gallery');
+    if (rev) {
+      const track = document.getElementById('reviewsTrack');
+      const cards = () => track.querySelectorAll('.review-card');
+      const step = () => { const c = cards(); return c.length > 1 ? c[1].offsetLeft - c[0].offsetLeft : 1; };
+      Ctl.make({
+        prev: rev.querySelector('.works-arrow.prev'), next: rev.querySelector('.works-arrow.next'), after: rev, tone: 'light',
+        total: () => cards().length,
+        current: () => (track.scrollLeft >= track.scrollWidth - track.clientWidth - 2) ? cards().length : Math.round(track.scrollLeft / step()) + 1,
+        watch: cb => { track.addEventListener('scroll', cb, { passive: true }); window.addEventListener('resize', cb); }
+      });
+    }
   })();
 </script>
 </body>

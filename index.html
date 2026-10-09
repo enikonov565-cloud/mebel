@@ -651,15 +651,16 @@
     .svc-sheets-left{display:flex;flex-direction:column}
     /* the same mechanics as «Как мы работаем»: a sheet pins, stays put while the page scrolls the spacer, and the next one
        slides up over it (opaque, in the colour the section has at that moment) — no jumps, nothing moves by itself */
-    .svc-sheet{height:var(--vh100,100vh);display:flex;align-items:center;position:sticky;top:0;background:var(--svc-bg,#110B00)}
-    .svc-sheet:nth-of-type(1){z-index:1}
-    .svc-sheet:nth-of-type(2){z-index:2}
-    .svc-sheet:nth-of-type(3){z-index:3}
-    .svc-sheet:nth-of-type(4){z-index:4}
-    .svc-sheet:nth-of-type(5){z-index:5}
+    .svc-sheet{height:var(--vh100,100vh);display:flex;align-items:center;position:sticky;top:0}
+    .svc-sheet:nth-of-type(1){z-index:1;background:#2A2623}
+    .svc-sheet:nth-of-type(2){z-index:2;background:#342E2A}
+    .svc-sheet:nth-of-type(3){z-index:3;background:#3E3731}
+    .svc-sheet:nth-of-type(4){z-index:4;background:#48413A}
+    .svc-sheet:nth-of-type(5){z-index:5;background:#524A43}
+    #services{background:#2A2623}
     .svc-sheet-spacer{flex:none;height:calc(55*var(--vh100,100vh)/100)}
     .svc-sheet-in{max-width:560px}
-    .svc-sheet-num{display:block;font-family:'Inter',sans-serif;font-weight:300;font-size:20px;letter-spacing:.02em;color:#a1794c;margin-bottom:24px}
+    .svc-sheet-num{display:block;font-family:'Inter',sans-serif;font-weight:300;font-size:20px;letter-spacing:.02em;color:rgba(205,203,199,.6);margin-bottom:24px}
     .svc-sheet h3{
       font-family:'Inter',sans-serif;font-weight:500;font-size:clamp(2.4rem,calc(4.2*var(--vw100)/100),64px);line-height:.95;
       letter-spacing:.01em;color:#CDCBC7;margin-bottom:28px;
@@ -2920,15 +2921,14 @@
     const sheets = gsap.utils.toArray('.svc-sheet', root);
     const imgs = gsap.utils.toArray('.svc-sheet-img img', root);
     const section = document.getElementById('services');
-    const tints = ['#1B1206', '#20140A', '#1A1308', '#110B00'];   // section background after each hand-over (the last returns to the page colour)
+    const browns = ["#2A2623","#342E2A","#3E3731","#48413A","#524A43"];   // one brown per category; the section background follows the sheet that is on top
 
     const mm = gsap.matchMedia();
     mm.add('(min-width:961px)', () => {
       gsap.set(imgs, { clipPath: 'inset(0)', objectPosition: '0px 0%' });
       const spacers = gsap.utils.toArray('.svc-sheet-spacer', root);
-      // the sheets cover each other with the section's current colour
-      const syncBg = () => root.style.setProperty('--svc-bg', getComputedStyle(section).backgroundColor);
-      const main = gsap.timeline({ onUpdate: syncBg, scrollTrigger: { trigger: root, start: 'top top', end: 'bottom bottom', scrub: true } });
+      gsap.set(section, { backgroundColor: browns[0] });
+      const main = gsap.timeline({ scrollTrigger: { trigger: root, start: 'top top', end: 'bottom bottom', scrub: true } });
       // one step = the pinned pause (spacer, 0.55 window) + the slide-over (1 window); the picture is wiped during the slide-over
       const HOLD = 0.55, SLIDE = 1;
       imgs.forEach((cur, i) => {
@@ -2936,7 +2936,7 @@
         if (!next) return;
         const step = gsap.timeline();
         step.to({}, { duration: HOLD + SLIDE }, 0)
-            .to(section, { backgroundColor: tints[i], duration: SLIDE, ease: 'power2.inOut' }, HOLD)
+            .to(section, { backgroundColor: browns[i + 1], duration: SLIDE, ease: 'power2.inOut' }, HOLD)
             .to(cur, { clipPath: 'inset(0px 0px 100%)', objectPosition: '0px 60%', duration: SLIDE, ease: 'none' }, HOLD)
             .to(next, { objectPosition: '0px 40%', duration: SLIDE, ease: 'none' }, HOLD);
         main.add(step);
@@ -2948,7 +2948,7 @@
         gsap.fromTo(box, { opacity: .12, y: 50 }, { opacity: 1, y: 0, ease: 'none', scrollTrigger: Object.assign({ scrub: true }, trg) });
       });
 
-      return () => { section.style.removeProperty('--svc-bg'); root.style.removeProperty('--svc-bg'); gsap.set(section, { clearProps: 'backgroundColor' }); gsap.set(imgs, { clearProps: 'clipPath,objectPosition' }); };
+      return () => { gsap.set(section, { clearProps: 'backgroundColor' }); gsap.set(imgs, { clearProps: 'clipPath,objectPosition' }); };
     });
     window.addEventListener('load', () => ScrollTrigger.refresh());
   })();

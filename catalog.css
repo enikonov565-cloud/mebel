@@ -447,7 +447,22 @@ body{background:#110B00;color:#CDCBC7}
   }
   .model-card:not(.cta-card):nth-child(even){margin-top:150px}
   .model-card.cta-card{z-index:6}
-  .model-gallery .model-arrow{z-index:7;top:70px}   /* above the photos, out of the way of the titles */   /* the pinned card covers the titles that bleed to the right */
+  /* strip arrows: the same thin long arrows as the detail view and the slider of «Почему выбирают нас», both set above the pinned
+     «Нужен другой вариант?» plate (not on the photos); dark brown and inactive when the strip cannot go further that way */
+  .model-gallery .model-arrow{
+    z-index:7;top:62px;width:96px;height:24px;border-radius:0;background:none;font-size:0;color:#fff;transform:none;
+    transition:transform .3s cubic-bezier(.22,1,.36,1),color .5s ease;
+  }
+  .model-gallery .model-arrow::after{
+    content:"";display:block;width:100%;height:100%;background:currentColor;
+    -webkit-mask:var(--ma) center/100% 100% no-repeat;mask:var(--ma) center/100% 100% no-repeat;
+  }
+  .model-gallery .model-arrow.prev{left:auto;right:120px;--ma:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 24' fill='none' stroke='black' stroke-width='1.2'><path d='M95 12H2M13 1.5 2 12l11 10.5'/></svg>")}
+  .model-gallery .model-arrow.next{right:0;--ma:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 24' fill='none' stroke='black' stroke-width='1.2'><path d='M1 12h93M83 1.5 94 12 83 22.5'/></svg>")}
+  .model-gallery .model-arrow:hover{background:none;transform:none}
+  .model-gallery .model-arrow.prev:hover{transform:translateX(-5px)}
+  .model-gallery .model-arrow.next:hover{transform:translateX(5px)}
+  .model-gallery .model-arrow:disabled,.model-gallery .model-arrow:disabled:hover{background:none;color:#2F1F02;transform:none;cursor:default}   /* the pinned card covers the titles that bleed to the right */
   .model-card:not(.cta-card) .model-photo{aspect-ratio:3/4;flex:none;height:auto;border-radius:15px}
   /* the lower part of the photo is darkened a little so the title that bleeds over it always reads */
   .model-card:not(.cta-card)::after{

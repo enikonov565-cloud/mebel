@@ -654,7 +654,13 @@
     .svc-sheets-left{display:flex;flex-direction:column}
     /* the same mechanics as «Как мы работаем»: a sheet pins, stays put while the page scrolls the spacer, and the next one
        slides up over it (opaque, in the colour the section has at that moment) — no jumps, nothing moves by itself */
-    .svc-sheet{height:var(--vh100,100vh);display:flex;align-items:center;position:sticky;top:0;box-shadow:0 0 0 100vmax var(--sc);clip-path:inset(0 -100vmax)}
+    .svc-sheet{height:var(--vh100,100vh);display:flex;align-items:center;position:sticky;top:0;clip-path:inset(-120px -100vmax 0 -100vmax)}
+    /* full-bleed band: solid colour out to both window edges and a 120px soft feather above the sheet, so while it slides up
+       over the previous one the colours blend instead of meeting in a hard line */
+    .svc-sheet::before{
+      content:"";position:absolute;z-index:-1;left:-100vmax;right:-100vmax;top:-120px;bottom:0;pointer-events:none;
+      background:linear-gradient(180deg,transparent,var(--sc)) top/100% 120px no-repeat,linear-gradient(var(--sc),var(--sc)) bottom/100% calc(100% - 119px) no-repeat;
+    }
     .svc-sheet:nth-of-type(1){z-index:1;background:#1F1B19;--sc:#1F1B19}
     .svc-sheet:nth-of-type(2){z-index:2;background:#302A26;--sc:#302A26}
     .svc-sheet:nth-of-type(3){z-index:3;background:#433B35;--sc:#433B35}
@@ -2945,11 +2951,18 @@
       imgs.forEach((cur, i) => {
         const next = imgs[i + 1];
         if (!next) return;
+        const wipe = { p: 0 };
         const step = gsap.timeline();
         step.to({}, { duration: HOLD + SLIDE }, 0)
             .to(section, { backgroundColor: browns[i + 1], duration: SLIDE, ease: 'power2.inOut' }, HOLD)
-            .to(cur, { clipPath: 'inset(0px 0px 100%)', objectPosition: '0px 60%', duration: SLIDE, ease: 'none' }, HOLD)
-            .to(next, { objectPosition: '0px 40%', duration: SLIDE, ease: 'none' }, HOLD);
+            .to(cur, { objectPosition: '0px 60%', duration: SLIDE, ease: 'none' }, HOLD)
+            .to(next, { objectPosition: '0px 40%', duration: SLIDE, ease: 'none' }, HOLD)
+            .fromTo(wipe, { p: 0 }, { p: 1, duration: SLIDE, ease: 'none', immediateRender: false, onUpdate: () => {
+              // edge of the incoming sheet (layout px from the top of the pinned window), measured to the picture frame
+              const vh = sheets[0].offsetHeight, fr = cur.parentNode, H = fr.offsetHeight, top = (vh - H) / 2;
+              const edge = vh * (1 - wipe.p) - 60;               // middle of the 120px feather
+              cur.style.clipPath = 'inset(0px 0px ' + Math.max(0, Math.min(H, H - (edge - top))) + 'px)';
+            } }, HOLD);
         main.add(step);
       });
       // each sheet's text fades up while the sheet slides over the previous one (the covered text needs no fade-out)

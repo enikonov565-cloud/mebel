@@ -2673,7 +2673,7 @@
     };
 
     const paint = () => {
-      const travel = state.current * lapPx, origin = (period - step) / 2;
+      const travel = state.current * lapPx, origin = 0;   // origin 0: card 0 — the top one of the stack — lands in the middle
       for (let i = 0; i < cards.length; i++) {
         const c = cards[i];
         const slot = wrapCentred(i * step - origin - travel, period);
@@ -2749,7 +2749,7 @@
           c.deal = 1 - ease(p);
           if (p < 1) done = false;
         });
-        if (done) { state.gather = 0; state.startAt = now; }
+        if (done) { state.gather = 0; state.startAt = now; state.current = 0; state.target = 0; }
       } else if (state.dealt) {
         const el = now - state.startAt;
         cards.forEach((c, i) => { c.deal = reduce ? 1 : ease((el - STACK_HOLD - i * DEAL_STAGGER) / DEAL_MS); });

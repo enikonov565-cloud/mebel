@@ -541,18 +541,18 @@ body{background:#110B00;color:#CDCBC7}
 
 /* running line: a faint 1px rule with a bright stretch that keeps travelling along it (tile link and «наши работы»);
    on hover it runs faster and the rule gets brighter */
-.model-card .model-details-btn::after,.cta-works::after{
+.model-card .model-details-btn::after{
   background:linear-gradient(90deg,transparent,#fff 50%,transparent) no-repeat,rgba(255,255,255,.32);
   background-size:38% 100%,100% 100%;background-position:-60% 0,0 0;
   animation:runLine 2.6s linear infinite;
 }
-.cta-works{position:relative;padding-bottom:7px}
-.cta-works::after{content:'';position:absolute;left:0;right:0;bottom:0;height:1px}
-.cta-works .model-arrow-ico{transition:transform .4s cubic-bezier(.22,1,.36,1)}
-.cta-works:hover .model-arrow-ico{transform:translateX(8px)}
-.model-card .model-details-btn:hover::after,.cta-works:hover::after{animation-duration:1.1s}
+/* «наши работы»: the letters thicken one after another on hover (weight-hover.js, same as the menu) */
+.cta-works .wh-letter{font-weight:500}
+.cta-works:hover .wh-letter{font-weight:700}
+.cta-works .model-arrow-ico{display:inline-block;margin-left:12px}
+.model-card .model-details-btn:hover::after{animation-duration:1.1s}
 @keyframes runLine{from{background-position:-60% 0,0 0}to{background-position:160% 0,0 0}}
-@media (prefers-reduced-motion:reduce){.model-card .model-details-btn::after,.cta-works::after{animation:none;background:rgba(255,255,255,.55)}}
+@media (prefers-reduced-motion:reduce){.model-card .model-details-btn::after{animation:none;background:rgba(255,255,255,.55)}}
 
 /* Section switcher as plain labels: quiet cream text with a hairline underneath; hovering turns it white and the line runs
    in from the left, the current section stays white with a full line. (Replaces the dashed buttons.) */

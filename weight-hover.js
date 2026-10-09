@@ -35,7 +35,7 @@
 */
 (function () {
   const STAGGER_MS = 28;      // per-letter delay step (source default staggerDuration: 30ms)
-  const SELECTOR = '.nav-links a, .footer-nav a, .footer-contacts .fc-label, .footer-contacts .fc-value';
+  const SELECTOR = '.nav-links a, .footer-nav a, .footer-contacts .fc-label, .footer-contacts .fc-value, .cta-works';
 
   function wrap(el) {
     if (el.dataset.whReady) return;

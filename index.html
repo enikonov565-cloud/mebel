@@ -805,26 +805,26 @@
   }
 
   /* Как мы работаем — Figma node 217:17 */
-  #process{background:#110B00;padding:52px 0}
+  #process{background:#D9CBB6;padding:52px 0}
   .process-head{
     display:flex;justify-content:space-between;align-items:center;
     gap:clamp(20px,calc(4*var(--vw100)/100),180px);flex-wrap:nowrap;margin-bottom:60px;
   }
   .process-head h2{
     font-family:'Inter',sans-serif;font-weight:500;
-    font-size:clamp(1.8rem,calc(6*var(--vw100)/100),64px);line-height:0.9;letter-spacing:.01em;color:#CDCBC7;
+    font-size:clamp(1.8rem,calc(6*var(--vw100)/100),64px);line-height:0.9;letter-spacing:.01em;color:#2F1F02;
   }
   .process-head p{
     font-family:'Inter',sans-serif;font-weight:300;
     font-size:20px;line-height:1.2;letter-spacing:.02em;
-    color:#CDCBC7;max-width:700px;text-align:right;
+    color:#2F1F02;max-width:700px;text-align:right;
   }
   .process-steps{position:relative}
   .process-spacer{height:calc(55*var(--vh100)/100)}
   .process-step{
     position:sticky;top:100px;
     display:flex;align-items:center;gap:60px;flex-wrap:wrap;
-    background:#110B00;padding:40px 0;box-shadow:0 0 0 2px #110B00;
+    background:#D9CBB6;padding:40px 0;box-shadow:0 0 0 2px #D9CBB6;
   }
   .process-step-1{z-index:1}
   .process-step-2{z-index:2}
@@ -832,21 +832,21 @@
   .process-step-4{z-index:4}
   .process-media{
     flex:1 1 480px;min-width:280px;aspect-ratio:1198/621;border-radius:15px;
-    overflow:hidden;background:#2B2620;
+    overflow:hidden;background:#C9B99F;
   }
   .process-media video{width:100%;height:100%;object-fit:cover;display:block}
   /* text block in the voice of the rest of the site: a quiet number, a large light-weight title, the points as thin ruled rows
      (like the catalogue rows of the about block) — no tick circles */
   .process-text{flex:none;width:569px;max-width:100%;display:flex;flex-direction:column}
-  .process-num{display:block;font-family:'Inter',sans-serif;font-weight:300;font-size:20px;letter-spacing:.02em;color:rgba(205,203,199,.6);margin-bottom:20px}
+  .process-num{display:block;font-family:'Inter',sans-serif;font-weight:300;font-size:20px;letter-spacing:.02em;color:rgba(47,31,2,.6);margin-bottom:20px}
   .process-text h3{
     font-family:'Inter',sans-serif;font-weight:500;font-size:clamp(2rem,calc(3.4*var(--vw100)/100),52px);line-height:1;
-    letter-spacing:.01em;color:#CDCBC7;margin-bottom:36px;
+    letter-spacing:.01em;color:#2F1F02;margin-bottom:36px;
   }
-  .process-checklist{list-style:none;display:flex;flex-direction:column;border-top:1px solid rgba(205,203,199,.22)}
+  .process-checklist{list-style:none;display:flex;flex-direction:column;border-top:1px solid rgba(47,31,2,.24)}
   .process-checklist li{
-    padding:16px 0;border-bottom:1px solid rgba(205,203,199,.22);
-    font-family:'Inter',sans-serif;font-weight:300;font-size:20px;line-height:1.3;letter-spacing:.02em;color:#CDCBC7;
+    padding:16px 0;border-bottom:1px solid rgba(47,31,2,.24);
+    font-family:'Inter',sans-serif;font-weight:300;font-size:20px;line-height:1.3;letter-spacing:.02em;color:#2F1F02;
   }
 
   /* "keep scrolling" cue under the points of steps 1-3 (same as on the sheets of «Что мы изготавливаем») */
@@ -854,16 +854,26 @@
   @media (min-width:961px){
     .process-hint{
       display:flex;align-items:center;gap:16px;margin-top:34px;
-      font-family:'Inter',sans-serif;font-weight:300;font-size:16px;letter-spacing:.02em;color:rgba(205,203,199,.7);
+      font-family:'Inter',sans-serif;font-weight:300;font-size:16px;letter-spacing:.02em;color:rgba(47,31,2,.7);
     }
-    .process-hint-line{position:relative;display:block;width:1px;height:56px;background:rgba(205,203,199,.3);overflow:hidden}
+    .process-hint-line{position:relative;display:block;width:1px;height:56px;background:rgba(47,31,2,.3);overflow:hidden}
     .process-hint-line::after{
-      content:'';position:absolute;left:-1px;top:0;width:3px;height:14px;border-radius:2px;background:#CDCBC7;
+      content:'';position:absolute;left:-1px;top:0;width:3px;height:14px;border-radius:2px;background:#2F1F02;
       animation:processHint 1.8s cubic-bezier(.65,0,.35,1) infinite;
     }
     @keyframes processHint{0%{transform:translateY(-16px)}100%{transform:translateY(58px)}}
     @media (prefers-reduced-motion:reduce){.process-hint-line::after{animation:none;top:20px}}
   }
+
+
+  /* «Как мы работаем» is light: the dark page melts into it above and it melts back into the dark «Что вы получаете» below */
+  section#process{position:relative;padding-top:150px}
+  section#process::before{content:"";position:absolute;left:0;right:0;top:0;height:150px;pointer-events:none;z-index:0;background:linear-gradient(180deg,rgb(17,11,0) 0.0%,rgb(17,11,0) 6.3%,rgb(20,14,3) 12.5%,rgb(27,20,9) 18.8%,rgb(38,31,19) 25.0%,rgb(53,46,33) 31.3%,rgb(72,64,50) 37.5%,rgb(94,85,70) 43.8%,rgb(117,107,91) 50.0%,rgb(140,129,112) 56.3%,rgb(162,150,132) 62.5%,rgb(181,168,149) 68.8%,rgb(196,183,163) 75.0%,rgb(207,194,173) 81.3%,rgb(214,200,179) 87.5%,rgb(217,203,182) 93.8%,rgb(217,203,182) 100.0%)}
+  section#process > .container{position:relative;z-index:1}
+  section#benefits{position:relative;padding-top:190px}
+  section#benefits::before{content:"";position:absolute;left:0;right:0;top:0;height:190px;pointer-events:none;z-index:0;background:linear-gradient(180deg,rgb(217,203,182) 0.0%,rgb(217,203,182) 6.3%,rgb(214,200,179) 12.5%,rgb(207,194,173) 18.8%,rgb(196,183,163) 25.0%,rgb(181,168,149) 31.3%,rgb(162,150,132) 37.5%,rgb(140,129,112) 43.8%,rgb(117,107,91) 50.0%,rgb(94,85,70) 56.3%,rgb(72,64,50) 62.5%,rgb(53,46,33) 68.8%,rgb(38,31,19) 75.0%,rgb(27,20,9) 81.3%,rgb(20,14,3) 87.5%,rgb(17,11,0) 93.8%,rgb(17,11,0) 100.0%)}
+  section#benefits > .container{position:relative;z-index:1}
+  @media (max-width:960px){section#process{padding-top:100px}section#process::before{height:100px}section#benefits{padding-top:130px}section#benefits::before{height:130px}}
 
   /* Что вы получаете — Figma node 61:80 */
   #benefits{background:#110B00;padding:52px 0}

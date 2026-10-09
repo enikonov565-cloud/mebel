@@ -446,7 +446,8 @@ body{background:#110B00;color:#CDCBC7}
     width:380px;max-width:none;aspect-ratio:auto;background:none;overflow:visible;position:relative;scroll-snap-align:start;
   }
   .model-card:not(.cta-card):nth-child(even){margin-top:150px}
-  .model-card.cta-card{z-index:6}
+  /* the pinned plate runs the whole height of the strip, so the lowered tiles never peek out under it */
+  .model-card.cta-card{z-index:6;align-self:stretch;aspect-ratio:auto;height:auto}
   /* strip arrows: the same thin long arrows as the detail view and the slider of «Почему выбирают нас», both set above the pinned
      «Нужен другой вариант?» plate (not on the photos); dark brown and inactive when the strip cannot go further that way */
   .model-gallery .model-arrow{

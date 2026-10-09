@@ -496,10 +496,10 @@ body{background:#110B00;color:#CDCBC7}
     background:#2F1F02;border:1px solid #CDCBC7;border-radius:15px;color:#CDCBC7;font-size:22px;padding:0 32px;gap:14px;
     --reveal-bg:#CDCBC7;--reveal-text:#2F1F02;--dot-shadow:#2F1F02;
   }
-  /* prev / next between models: the same thin arrows as the slider of «Почему выбирают нас» (55x24, 1px line) */
+  /* prev / next between models: thin 1px arrows like the slider of «Почему выбирают нас», but longer (96x24) */
   .mm-nav{display:flex;gap:18px;align-items:center;margin-bottom:6px}
   .mm-circle{
-    display:block;width:55px;height:24px;margin:0;padding:0;border:0;background:none;cursor:pointer;color:#fff;
+    display:block;width:96px;height:24px;margin:0;padding:0;border:0;background:none;cursor:pointer;color:#fff;
     transition:transform .3s cubic-bezier(.22,1,.36,1),color .5s ease;
   }
   .mm-circle .mm-arrow{display:block;width:100%;height:100%;fill:none;stroke:currentColor;stroke-width:1}

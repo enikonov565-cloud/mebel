@@ -26,8 +26,8 @@
     var b = document.createElement('button');
     b.type = 'button'; b.className = 'mm-circle mm-' + dir;
     b.setAttribute('aria-label', dir === 'prev' ? 'Предыдущая модель' : 'Следующая модель');
-    var ar = document.createElementNS(NS, 'svg'); ar.setAttribute('class', 'mm-arrow'); ar.setAttribute('viewBox', '0 0 55 24');
-    ar.innerHTML = dir === 'prev' ? '<path d="M54 12H2M13 1.5 2 12l11 10.5"/>' : '<path d="M1 12h52M42 1.5 53 12 42 22.5"/>';
+    var ar = document.createElementNS(NS, 'svg'); ar.setAttribute('class', 'mm-arrow'); ar.setAttribute('viewBox', '0 0 96 24');
+    ar.innerHTML = dir === 'prev' ? '<path d="M95 12H2M13 1.5 2 12l11 10.5"/>' : '<path d="M1 12h93M83 1.5 94 12 83 22.5"/>';
     b.appendChild(ar);
     return b;
   }

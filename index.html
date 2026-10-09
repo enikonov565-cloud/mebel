@@ -759,6 +759,22 @@
     font-family:'Inter',sans-serif;font-weight:300;font-size:20px;line-height:1.3;letter-spacing:.02em;color:#CDCBC7;
   }
 
+  /* "keep scrolling" cue under the points of steps 1-3 (same as on the sheets of «Что мы изготавливаем») */
+  .process-hint{display:none}
+  @media (min-width:961px){
+    .process-hint{
+      display:flex;align-items:center;gap:16px;margin-top:34px;
+      font-family:'Inter',sans-serif;font-weight:300;font-size:16px;letter-spacing:.02em;color:rgba(205,203,199,.7);
+    }
+    .process-hint-line{position:relative;display:block;width:1px;height:56px;background:rgba(205,203,199,.3);overflow:hidden}
+    .process-hint-line::after{
+      content:'';position:absolute;left:-1px;top:0;width:3px;height:14px;border-radius:2px;background:#CDCBC7;
+      animation:processHint 1.8s cubic-bezier(.65,0,.35,1) infinite;
+    }
+    @keyframes processHint{0%{transform:translateY(-16px)}100%{transform:translateY(58px)}}
+    @media (prefers-reduced-motion:reduce){.process-hint-line::after{animation:none;top:20px}}
+  }
+
   /* Что вы получаете — Figma node 61:80 */
   #benefits{background:#110B00;padding:120px 0}
   .benefits-tags-wrap{
@@ -1885,6 +1901,7 @@
             <li>Приезжаем на&nbsp;место и&nbsp;проводим все замеры</li>
             <li>Разрабатываем бесплатный дизайн-проект</li>
           </ul>
+          <div class="process-hint" aria-hidden="true"><span class="process-hint-line"></span><span>листайте вниз</span></div>
         </div>
       </div>
       <div class="process-spacer"></div>
@@ -1902,6 +1919,7 @@
             <li>Закрепляем все условия и&nbsp;сроки в&nbsp;договоре</li>
             <li>Получаем предоплату и&nbsp;запускаем производство</li>
           </ul>
+          <div class="process-hint" aria-hidden="true"><span class="process-hint-line"></span><span>листайте вниз</span></div>
         </div>
       </div>
       <div class="process-spacer"></div>
@@ -1921,6 +1939,7 @@
             <li>При&nbsp;необходимости делаем повторные замеры</li>
             <li>Присылаем фотоотчёты на&nbsp;каждом этапе производства</li>
           </ul>
+          <div class="process-hint" aria-hidden="true"><span class="process-hint-line"></span><span>листайте вниз</span></div>
         </div>
       </div>
       <div class="process-spacer"></div>

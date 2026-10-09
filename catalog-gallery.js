@@ -90,27 +90,6 @@
 (function () {
   'use strict';
   if (!window.Ctl) return;
-  // photo gallery inside the model window: no arrows or counter over the photo any more (the model switcher on the left has them);
-  // photos are changed by clicking the right / left half of the picture or by swiping
-  var g = document.getElementById('modelGallery');
-  if (g) {
-    var p = g.querySelector('.mgc-prev'), n = g.querySelector('.mgc-next');
-    if (p) p.style.display = 'none';
-    if (n) n.style.display = 'none';
-    var x0 = null;
-    g.style.cursor = 'pointer';
-    g.addEventListener('click', function (e) {
-      var r = g.getBoundingClientRect();
-      var b = (e.clientX - r.left) < r.width / 2 ? p : n;
-      if (b && !b.disabled) b.click();
-    });
-    g.addEventListener('touchstart', function (e) { x0 = e.touches[0].clientX; }, { passive: true });
-    g.addEventListener('touchend', function (e) {
-      if (x0 === null) return;
-      var dx = e.changedTouches[0].clientX - x0; x0 = null;
-      if (Math.abs(dx) > 40) { var b = dx < 0 ? n : p; if (b && !b.disabled) b.click(); }
-    }, { passive: true });
-  }
   var track = document.getElementById('modelTrack');
   var gal = track && track.closest('.model-gallery');
   if (gal) {

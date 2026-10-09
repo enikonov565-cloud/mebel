@@ -663,6 +663,3 @@ body{background:#110B00;color:#CDCBC7}
   #modelModal #modelModalCta:active::after{opacity:1}
   @media (prefers-reduced-motion:reduce){#modelModal #modelModalCta::after{animation:none;background:rgba(47,31,2,.5)}}
 }
-
-/* no controls over the model photo; the dots are gone too */
-.mgc .mgc-nav,.mgc .mgc-dots,.mgc .ctl{display:none!important}

@@ -661,6 +661,10 @@
       content:"";position:absolute;z-index:-1;left:-100vmax;right:-100vmax;top:0;bottom:0;pointer-events:none;background:var(--sc);
       -webkit-mask-image:linear-gradient(180deg,rgba(0,0,0,0) 0,rgba(0,0,0,.05) 47px,rgba(0,0,0,.2) 99px,rgba(0,0,0,.5) 151px,rgba(0,0,0,.82) 208px,#000 260px,#000 100%);mask-image:linear-gradient(180deg,rgba(0,0,0,0) 0,rgba(0,0,0,.05) 47px,rgba(0,0,0,.2) 99px,rgba(0,0,0,.5) 151px,rgba(0,0,0,.82) 208px,#000 260px,#000 100%);
     }
+    .svc-sheet::after{
+      content:"";position:absolute;z-index:-1;left:-100vmax;right:-100vmax;top:0;height:300px;pointer-events:none;background:var(--grain);
+      -webkit-mask-image:linear-gradient(180deg,#000 0,#000 40%,transparent 100%);mask-image:linear-gradient(180deg,#000 0,#000 40%,transparent 100%);
+    }
     .svc-sheet:nth-of-type(1){z-index:1;--sc:#1F1B19}
     .svc-sheet:nth-of-type(2){z-index:2;--sc:#302A26}
     .svc-sheet:nth-of-type(3){z-index:3;--sc:#433B35}
@@ -668,7 +672,14 @@
     .svc-sheet:nth-of-type(5){z-index:5;--sc:#6F645A}
     #services{background:#1F1B19;position:relative}
     /* soft seams: the section fades in from the dark page colour at the top and out to it at the bottom (no hard edges) */
+    :root{--grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .07 -.028'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
     #services::before,#services::after{content:"";position:absolute;left:0;right:0;pointer-events:none;z-index:0}
+    /* the grain lives on its own layers (they fade out at both ends, so its start is invisible) */
+    #services > .container::before,#services > .container::after{
+      content:"";position:absolute;left:calc(50% - var(--vw100,100vw)/2);width:var(--vw100,100vw);pointer-events:none;z-index:-1;background:var(--grain);
+    }
+    #services > .container::before{top:-120px;height:700px;-webkit-mask-image:linear-gradient(180deg,transparent 0,#000 200px,#000 450px,transparent 100%);mask-image:linear-gradient(180deg,transparent 0,#000 200px,#000 450px,transparent 100%)}
+    #services > .container::after{bottom:-260px;height:260px;-webkit-mask-image:linear-gradient(0deg,transparent 0,#000 90px,#000 170px,transparent 100%);mask-image:linear-gradient(0deg,transparent 0,#000 90px,#000 170px,transparent 100%)}
     #services::before{top:0;height:700px;background:linear-gradient(180deg,rgb(17,11,0) 0px,rgb(17,11,0) 50px,rgb(17,11,1) 100px,rgb(18,12,2) 150px,rgb(19,13,4) 200px,rgb(20,15,6) 250px,rgb(22,17,9) 300px,rgb(24,19,13) 350px,rgb(26,21,16) 400px,rgb(28,23,19) 450px,rgb(29,25,21) 500px,rgb(30,26,23) 550px,rgb(31,27,24) 600px,rgb(31,27,25) 650px,rgb(31,27,25) 700px)}   /* eased (smootherstep): no visible start or end */
     #services{padding-bottom:260px}
     #services::after{bottom:0;height:260px;background:linear-gradient(0deg,rgb(17,11,0) 0px,rgb(17,11,0) 22px,rgb(20,14,3) 43px,rgb(27,20,9) 65px,rgb(37,30,19) 87px,rgb(50,42,31) 108px,rgb(64,56,45) 130px,rgb(78,69,59) 152px,rgb(91,81,71) 173px,rgb(101,91,81) 195px,rgb(108,97,87) 217px,rgb(111,100,90) 238px,rgb(111,100,90) 260px)}   /* the last sheet's brown fades into the page colour across the section's bottom padding */

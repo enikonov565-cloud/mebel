@@ -23,10 +23,6 @@
 }
 @media (max-width:960px){.ctl{margin-top:20px}.ctl--tiles{display:none}.ctl-count{font-size:18px}}
 
-/* photo gallery inside the model window: the same pair over the photo, bottom left; the dots give way to the counter */
-.mgc .mgc-dots{display:none!important}
-.mgc .ctl{position:absolute;left:24px;bottom:20px;z-index:4;margin:0;justify-content:flex-start;filter:drop-shadow(0 1px 4px rgba(0,0,0,.55))}
-.mgc .ctl .ctl-btn:disabled{color:#2F1F02}
 .mm-nav{align-items:center}
 .mm-nav .ctl-count{color:#2F1F02;margin-left:1rem}
 .ctl + .reviews-cta{margin-top:24px}

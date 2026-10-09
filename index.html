@@ -2967,7 +2967,7 @@
         const step = gsap.timeline();
         step.to({}, { duration: HOLD + SLIDE }, 0)
             .to(section, { backgroundColor: browns[i + 1], duration: SLIDE, ease: 'power2.inOut' }, HOLD)
-            .fromTo(sheets[i].querySelectorAll('.svc-sheet-in,.svc-hint'), { opacity: 1 }, { opacity: 0, duration: SLIDE * 0.32, ease: 'none', immediateRender: false }, HOLD)
+            .fromTo(sheets[i].querySelectorAll('.svc-sheet-in,.svc-hint'), { opacity: 1 }, { opacity: 0, duration: SLIDE * 0.34, ease: 'none', immediateRender: false }, HOLD + SLIDE * 0.28)
             .to(cur, { objectPosition: '0px 60%', duration: SLIDE, ease: 'none' }, HOLD)
             .to(next, { objectPosition: '0px 40%', duration: SLIDE, ease: 'none' }, HOLD)
             .fromTo(wipe, { p: 0 }, { p: 1, duration: SLIDE, ease: 'none', immediateRender: false, onUpdate: () => {

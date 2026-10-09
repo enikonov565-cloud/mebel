@@ -439,6 +439,19 @@
   .svc-consult.lk-run:hover::after{animation-duration:5.5s}
   .svc-consult.lk-run:active::after,.svc-consult.lk-run.is-clicked::after,.svc-consult.lk-run.is-clicked:hover::after{transition-duration:1.6s}
   .svc-consult.lk-run .lk-arrow{transition:transform 1s cubic-bezier(.22,1,.36,1)}
+  /* clearly visible: a brighter, thicker running line, the label turns white and the whole link drifts right on hover */
+  .svc-consult.lk-run::after{height:2px;background-size:46% 100%,100% 100%;background:linear-gradient(90deg,transparent,#fff 50%,transparent) no-repeat,rgba(240,236,230,.42);background-size:46% 100%,100% 100%}
+  .svc-consult.lk-run{transition:color .6s ease,transform .8s cubic-bezier(.22,1,.36,1)}
+  .svc-consult.lk-run:hover{--lk:#fff;transform:translateX(10px)!important}
+  .svc-consult.lk-run:hover .lk-arrow{transform:translateX(16px)}
+  /* press: the line floods across, the arrow shoots out and comes back, the label dips and rises (the window opens after it) */
+  .svc-consult.lk-run.is-pressed{--lk:#fff}
+  .svc-consult.lk-run.is-pressed::after{opacity:1!important;animation:none;height:3px;background:#fff;transform-origin:left center;animation:consultFlood .7s cubic-bezier(.65,0,.35,1) both}
+  .svc-consult.lk-run.is-pressed .lk-arrow{animation:consultArrow .7s cubic-bezier(.65,0,.35,1) both}
+  .svc-consult.lk-run.is-pressed{animation:consultDip .7s ease both}
+  @keyframes consultFlood{0%{transform:scaleX(0)}70%{transform:scaleX(1)}100%{transform:scaleX(1)}}
+  @keyframes consultArrow{0%{transform:translateX(0)}45%{transform:translateX(34px);opacity:0}55%{transform:translateX(-26px);opacity:0}100%{transform:translateX(0);opacity:1}}
+  @keyframes consultDip{0%{transform:translateY(0)}35%{transform:translateY(4px)}100%{transform:translateY(0)}}
   .ws-link.lk-run{--lk:#fff;--lk-line:rgba(255,255,255,.38);text-shadow:0 1px 14px rgba(17,11,0,.6)}
   @media (max-width:960px){a.lk-run.lk-run{font-size:16px!important;white-space:normal!important}}
 
@@ -3462,6 +3475,21 @@ void main() {
     a.addEventListener('click', () => a.classList.add('is-clicked'));
     ['mouseleave', 'blur'].forEach(ev => a.addEventListener(ev, () => a.classList.remove('is-clicked')));
   });
+</script>
+<script>
+  // «получить консультация»: show the press first, then open the window
+  (function () {
+    const a = document.querySelector('.svc-consult');
+    if (!a) return;
+    let go = false;
+    a.addEventListener('click', e => {
+      if (go || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      e.preventDefault(); e.stopImmediatePropagation();
+      a.classList.remove('is-pressed'); void a.offsetWidth; a.classList.add('is-pressed');
+      setTimeout(() => { go = true; a.click(); go = false; }, 620);
+      setTimeout(() => a.classList.remove('is-pressed'), 1100);
+    }, true);
+  })();
 </script>
 </body>
 </html>

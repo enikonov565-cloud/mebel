@@ -857,18 +857,24 @@
     overflow:hidden;transform-origin:center center;transform-style:preserve-3d;backface-visibility:visible;will-change:transform;
   }
   .deck-card img{width:100%;height:100%;object-fit:cover;display:block;user-select:none;-webkit-user-drag:none;backface-visibility:hidden}
+  /* gallery / reviews arrows: thin long arrows (as in the slider of «Почему выбирают нас» and the catalogue), no plates;
+     dark brown and inactive when the row cannot go further that way */
   .works-arrow{
     position:absolute;top:50%;transform:translateY(-50%);z-index:3;
-    width:50px;height:52px;border:none;background:#2F1F02;border-radius:50%;
-    display:flex;align-items:center;justify-content:center;cursor:pointer;
-    color:#CDCBC7;font-size:20px;line-height:1;transition:transform .15s ease,background .2s ease;
+    width:96px;height:24px;padding:0;border:none;background:none;border-radius:0;cursor:pointer;
+    color:#fff;font-size:0;line-height:0;filter:drop-shadow(0 1px 6px rgba(17,11,0,.55));
+    transition:transform .3s cubic-bezier(.22,1,.36,1),color .5s ease;
   }
-  .works-arrow:hover{background:#432c03;transform:translateY(-50%) scale(1.06)}
-  .works-arrow.prev{left:-25px}
-  .works-arrow.next{right:-25px}
-  /* Dims once the row can't scroll further that way (reviews-track; works-track only when not deck-driven) */
-  .works-arrow:disabled{background:rgba(47,31,2,.45);color:rgba(205,203,199,.35);cursor:default}
-  .works-arrow:disabled:hover{background:rgba(47,31,2,.45);transform:translateY(-50%)}
+  .works-arrow::after{
+    content:"";display:block;width:100%;height:100%;background:currentColor;
+    -webkit-mask:var(--wa) center/100% 100% no-repeat;mask:var(--wa) center/100% 100% no-repeat;
+  }
+  .works-arrow.prev{left:28px;--wa:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 24' fill='none' stroke='black' stroke-width='1.2'><path d='M95 12H2M13 1.5 2 12l11 10.5'/></svg>")}
+  .works-arrow.next{right:28px;--wa:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 24' fill='none' stroke='black' stroke-width='1.2'><path d='M1 12h93M83 1.5 94 12 83 22.5'/></svg>")}
+  .works-arrow:hover{background:none}
+  .works-arrow.prev:hover{transform:translate(-5px,-50%)}
+  .works-arrow.next:hover{transform:translate(5px,-50%)}
+  .works-arrow:disabled,.works-arrow:disabled:hover{background:none;color:#2F1F02;cursor:default;transform:translateY(-50%);filter:none}
 
   .works-cta{display:flex;justify-content:flex-end;margin-top:60px}
   .works-cta a{
@@ -1460,9 +1466,9 @@
     .benefits-list li.open .bn-toggle{transform:rotate(45deg);background:#CDCBC7;color:#180F01}
     @media (prefers-reduced-motion:reduce){.benefits-list li.open p{animation:none}.bn-toggle{transition:none}}
     .cards,.reviews-grid{grid-template-columns:1fr}
-    .works-arrow{width:38px;height:40px;font-size:16px}
-    .works-arrow.prev{left:8px}
-    .works-arrow.next{right:8px}
+    .works-arrow{width:60px;height:16px}
+    .works-arrow.prev{left:12px}
+    .works-arrow.next{right:12px}
     .material{flex:1 1 140px}
     .material img{height:200px}
     .material h3{font-size:32px}

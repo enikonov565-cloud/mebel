@@ -90,23 +90,26 @@
 (function () {
   'use strict';
   if (!window.Ctl) return;
+  // photo gallery inside the model window: no arrows or counter over the photo any more (the model switcher on the left has them);
+  // photos are changed by clicking the right / left half of the picture or by swiping
   var g = document.getElementById('modelGallery');
   if (g) {
-    var p = g.querySelector('.mgc-prev'), n = g.querySelector('.mgc-next'), dots = g.querySelector('.mgc-dots');
-    if (p && n && dots) {
-      var row = document.createElement('div'); row.className = 'ctl ctl--dark';
-      Ctl.paint(p, 'prev'); Ctl.paint(n, 'next');
-      var c = Ctl.counter(); row.appendChild(p); row.appendChild(n); row.appendChild(c); g.appendChild(row);
-      var upd = function () {
-        var ds = [].slice.call(dots.children), cur = 0;
-        ds.forEach(function (d, i) { if (d.classList.contains('active')) cur = i + 1; });
-        c.querySelector('.ctl-cur').textContent = String(cur || 1).padStart(2, '0');
-        c.querySelector('.ctl-tot').textContent = String(ds.length).padStart(2, '0');
-        row.style.display = ds.length > 1 && dots.style.display !== 'none' ? '' : 'none';
-      };
-      new MutationObserver(upd).observe(dots, { childList: true, subtree: true, attributes: true, attributeFilter: ['class', 'style'] });
-      upd();
-    }
+    var p = g.querySelector('.mgc-prev'), n = g.querySelector('.mgc-next');
+    if (p) p.style.display = 'none';
+    if (n) n.style.display = 'none';
+    var x0 = null;
+    g.style.cursor = 'pointer';
+    g.addEventListener('click', function (e) {
+      var r = g.getBoundingClientRect();
+      var b = (e.clientX - r.left) < r.width / 2 ? p : n;
+      if (b && !b.disabled) b.click();
+    });
+    g.addEventListener('touchstart', function (e) { x0 = e.touches[0].clientX; }, { passive: true });
+    g.addEventListener('touchend', function (e) {
+      if (x0 === null) return;
+      var dx = e.changedTouches[0].clientX - x0; x0 = null;
+      if (Math.abs(dx) > 40) { var b = dx < 0 ? n : p; if (b && !b.disabled) b.click(); }
+    }, { passive: true });
   }
   var track = document.getElementById('modelTrack');
   var gal = track && track.closest('.model-gallery');

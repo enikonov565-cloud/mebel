@@ -642,7 +642,7 @@
       margin-top:calc(40px - max(70px, (var(--vh100,100vh) - 760px) / 2));
       position:relative;z-index:10;   /* above the (opaque, pinned) last sheet it is pulled up under */flex-wrap:wrap;align-items:center;justify-content:space-between;gap:24px 40px;
     }
-    .svc-grid .svc-cta p{flex:0 1 430px;width:auto}
+    .svc-grid .svc-cta p{flex:0 1 430px;width:auto;color:#F0ECE6}
     .svc-grid .svc-cta .svc-btn{flex:0 1 430px}
     .svc-sheets{
       display:grid;grid-template-columns:minmax(0,1fr) minmax(320px,46%);gap:96px;align-items:start;
@@ -652,12 +652,14 @@
     /* the same mechanics as «Как мы работаем»: a sheet pins, stays put while the page scrolls the spacer, and the next one
        slides up over it (opaque, in the colour the section has at that moment) — no jumps, nothing moves by itself */
     .svc-sheet{height:var(--vh100,100vh);display:flex;align-items:center;position:sticky;top:0}
-    .svc-sheet:nth-of-type(1){z-index:1;background:#2A2623}
-    .svc-sheet:nth-of-type(2){z-index:2;background:#342E2A}
-    .svc-sheet:nth-of-type(3){z-index:3;background:#3E3731}
-    .svc-sheet:nth-of-type(4){z-index:4;background:#48413A}
-    .svc-sheet:nth-of-type(5){z-index:5;background:#524A43}
-    #services{background:#2A2623}
+    .svc-sheet:nth-of-type(1){z-index:1;background:#1F1B19}
+    .svc-sheet:nth-of-type(2){z-index:2;background:#302A26}
+    .svc-sheet:nth-of-type(3){z-index:3;background:#433B35}
+    .svc-sheet:nth-of-type(4){z-index:4;background:#594F47}
+    .svc-sheet:nth-of-type(5){z-index:5;background:#6F645A}
+    #services{background:#1F1B19}
+    .svc-sheet:nth-of-type(n+4) h3,.svc-sheet:nth-of-type(n+4) p{color:#F0ECE6}
+    .svc-sheet:nth-of-type(n+4) .svc-sheet-num,.svc-sheet:nth-of-type(n+4) .svc-hint{color:rgba(240,236,230,.7)}
     .svc-sheet-spacer{flex:none;height:calc(55*var(--vh100,100vh)/100)}
     .svc-sheet-in{max-width:560px}
     .svc-sheet-num{display:block;font-family:'Inter',sans-serif;font-weight:300;font-size:20px;letter-spacing:.02em;color:rgba(205,203,199,.6);margin-bottom:24px}
@@ -2921,7 +2923,7 @@
     const sheets = gsap.utils.toArray('.svc-sheet', root);
     const imgs = gsap.utils.toArray('.svc-sheet-img img', root);
     const section = document.getElementById('services');
-    const browns = ["#2A2623","#342E2A","#3E3731","#48413A","#524A43"];   // one brown per category; the section background follows the sheet that is on top
+    const browns = ["#1F1B19","#302A26","#433B35","#594F47","#6F645A"];   // one brown per category; the section background follows the sheet that is on top
 
     const mm = gsap.matchMedia();
     mm.add('(min-width:961px)', () => {

@@ -125,7 +125,10 @@
     transition:background-color .25s ease;
   }
   /* once the hero is scrolled away the header is a solid bar in the page colour: nothing shows through it, no seam */
-  header.solid{background:#110B00}
+  header.solid{background:rgba(17,11,0,.58)}
+  /* the blur sits on a pseudo-element so the header itself keeps no backdrop-filter (that would trap the fixed mobile menu inside it) */
+  header::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;-webkit-backdrop-filter:blur(0);backdrop-filter:blur(0);transition:backdrop-filter .25s ease,-webkit-backdrop-filter .25s ease}
+  header.solid::before{-webkit-backdrop-filter:blur(12px) saturate(1.1);backdrop-filter:blur(12px) saturate(1.1)}
   .nav{display:flex;align-items:center;justify-content:space-between;min-height:72px;padding:10px 60px}
   .nav-left{display:flex;align-items:center;gap:40px;flex:none}
   .nav-cta{

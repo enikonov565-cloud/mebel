@@ -431,14 +431,14 @@ body{background:#110B00;color:#CDCBC7}
    Below 961px the previous mobile cards and modal stay as they were.
    ================================================================================================================ */
 @media (min-width:961px){
-  .cat-items{position:relative;overflow:hidden;padding:60px 0 120px}
+  .cat-items{position:relative;overflow:hidden;padding:60px 0 40px}
   .cat-items .container{position:relative;z-index:1}
   .cat-bgtitle{
     position:absolute;z-index:0;left:60px;right:60px;top:70px;pointer-events:none;user-select:none;
     font-family:'Inter',sans-serif;font-weight:500;line-height:.9;letter-spacing:.01em;text-transform:uppercase;
     font-size:clamp(70px,calc(9.2*var(--vw100)/100),176px);color:rgba(205,203,199,.055);
   }
-  .model-track{align-items:flex-start;gap:clamp(130px,calc(9*var(--vw100)/100),190px);padding:130px 0 110px 56px;margin-left:-56px;scroll-padding-left:56px;scroll-snap-type:x proximity}   /* the left padding leaves room for the titles that bleed past the first photo */
+  .model-track{align-items:flex-start;gap:clamp(130px,calc(9*var(--vw100)/100),190px);padding:130px 0 60px 56px;margin-left:-56px;scroll-padding-left:56px;scroll-snap-type:x proximity}   /* the left padding leaves room for the titles that bleed past the first photo */
   .model-card:not(.cta-card){
     position:relative;width:380px;max-width:none;aspect-ratio:auto;background:none;overflow:visible;position:relative;scroll-snap-align:start;
   }
@@ -630,3 +630,9 @@ body{background:#110B00;color:#CDCBC7}
   --reveal-bg:#EADFCB;--reveal-text:#2F1F02;--dot-shadow:#2F1F02;
 }
 .cta-card .model-btn:hover{background:#EADFCB;color:#2F1F02}
+
+/* the link stays above the photo in the 3D stack while the tile tilts (otherwise the tilted photo covered it and the click missed) */
+@media (min-width:961px){
+  .model-card.is-live:not(.cta-card) .model-details-btn,
+  .model-card.is-live:not(.cta-card) .model-details-btn:hover{transform:translate3d(0,0,60px)!important}
+}

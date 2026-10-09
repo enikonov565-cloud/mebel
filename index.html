@@ -945,19 +945,25 @@
     .bn-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
     .bn-stage::after{content:"";position:absolute;inset:0;pointer-events:none;
       background:linear-gradient(180deg,rgba(17,11,0,.38) 0,rgba(17,11,0,0) 24%,rgba(17,11,0,0) 38%,rgba(17,11,0,.72) 100%)}
-    .bn-fan{position:absolute;left:0;right:0;bottom:168px;height:170px;z-index:2}
+    .bn-fan{position:absolute;left:0;right:0;bottom:164px;height:192px;z-index:2}
+    /* every plate has the same grid: a fixed title zone (two lines, text centred in it), a rule at the same height, a fixed two-line
+       subtitle zone — so all texts sit at the same places whatever their length */
     .bn-card{
-      position:absolute;left:50%;bottom:0;width:334px;height:176px;margin-left:-167px;box-sizing:border-box;padding:20px 24px;display:flex;flex-direction:column;
+      position:absolute;left:50%;bottom:0;width:360px;height:190px;margin-left:-180px;box-sizing:border-box;padding:22px 22px 0;display:flex;flex-direction:column;
       border-radius:15px;cursor:pointer;overflow:hidden;transform-origin:50% 50%;will-change:transform,opacity;
-      background:rgba(17,11,0,.5);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
-      border:1px solid rgba(205,203,199,.28);color:#CDCBC7;
+      background:rgba(17,11,0,.55);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
+      border:1px solid rgba(205,203,199,.28);color:#E4DED3;
       transition:background-color .9s ease,color .9s ease,border-color .9s ease,box-shadow .9s ease;
     }
-    .bn-card h3{font-family:'Inter',sans-serif;font-weight:500;font-size:18px;line-height:1.22;letter-spacing:.01em;margin:0;color:inherit;flex:none;
-      display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;line-clamp:2;overflow:hidden}
-    .bn-sep{display:block;flex:none;height:1px;margin:12px 0;background:currentColor;opacity:.28}
-    .bn-card p{font-family:'Inter',sans-serif;font-weight:300;font-size:13px;line-height:1.4;letter-spacing:.02em;margin:0;color:inherit;
-      display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;line-clamp:2;overflow:hidden}
+    .bn-card h3{
+      display:flex;align-items:center;flex:none;height:52px;margin:0;overflow:hidden;
+      font-family:'Inter',sans-serif;font-weight:500;font-size:20px;line-height:1.22;letter-spacing:.01em;color:inherit;
+    }
+    .bn-sep{display:block;flex:none;height:1px;margin:14px 0;background:currentColor;opacity:.3}
+    .bn-card p{
+      flex:none;height:42px;margin:0;overflow:hidden;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;line-clamp:2;
+      font-family:'Inter',sans-serif;font-weight:400;font-size:15px;line-height:1.4;letter-spacing:0;color:inherit;
+    }
     .bn-card.is-center{background:#E7DCCB;color:#2F1F02;border-color:#E7DCCB;box-shadow:0 18px 50px rgba(17,11,0,.45)}
     .bn-stage .benefits-consult{
       position:absolute;left:0;right:0;bottom:30px;z-index:3;margin:0;padding:0;border:0;flex:none;
@@ -3604,7 +3610,7 @@ void main() {
     };
     const layout = () => {
       // the plates sit on one circular arc (radius R) and each is turned to follow it, so tilt and drop always agree
-      const W = stage.offsetWidth || 1440, step = Math.min(362, W / 5.1), R = 2600, k = step / R;
+      const W = stage.offsetWidth || 1440, step = Math.min(376, W / 5.2), R = 2600, k = step / R;
       cards.forEach((c, i) => {
         let p = (((i - t) % N) + N) % N; if (p > N / 2) p -= N;
         const a = Math.abs(p), th = p * k;

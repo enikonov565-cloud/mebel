@@ -636,3 +636,30 @@ body{background:#110B00;color:#CDCBC7}
   .model-card.is-live:not(.cta-card) .model-details-btn,
   .model-card.is-live:not(.cta-card) .model-details-btn:hover{transform:translate3d(0,0,60px)!important}
 }
+
+/* detail view (>=961px): the close mark without its circle, and «заказать подобную» as a label with a running line */
+@media (min-width:961px){
+  #modelModal .model-modal-card .modal-close,
+  #modelModal .model-modal-card .modal-close:hover{border:0!important;border-radius:0;background:none;width:auto;height:auto;padding:6px 10px;font-size:40px;line-height:1;color:#2F1F02;transition:transform .5s cubic-bezier(.22,1,.36,1),opacity .3s ease}
+  #modelModal .model-modal-card .modal-close:hover{transform:rotate(90deg);color:#2F1F02}
+
+  #modelModal #modelModalCta.model-modal-cta{
+    position:relative;width:auto;max-width:100%;height:auto;margin-top:auto;padding:0 0 10px;
+    background:none;border:0;border-radius:0;box-shadow:none;transform:none;
+    display:inline-flex;align-items:center;justify-content:flex-start;gap:16px;
+    font-family:'Inter',sans-serif;font-weight:500;font-size:26px;letter-spacing:.02em;line-height:1.2;color:#2F1F02;
+    transition:color .5s ease;
+  }
+  #modelModal #modelModalCta.model-modal-cta:hover{background:none;color:#120A04}
+  #modelModal #modelModalCta::after{
+    content:"";position:absolute;left:0;right:0;bottom:0;height:2px;
+    background:linear-gradient(90deg,transparent,#2F1F02 50%,transparent) no-repeat,rgba(47,31,2,.3);
+    background-size:46% 100%,100% 100%;background-position:-60% 0,0 0;
+    animation:runLine 5s linear infinite;transition:opacity .8s ease;
+  }
+  #modelModal #modelModalCta:hover::after{opacity:0}
+  #modelModal #modelModalCta .model-arrow-ico{display:inline-block;transition:transform .9s cubic-bezier(.22,1,.36,1)}
+  #modelModal #modelModalCta:hover .model-arrow-ico{transform:translateX(14px)}
+  #modelModal #modelModalCta:active::after{opacity:1}
+  @media (prefers-reduced-motion:reduce){#modelModal #modelModalCta::after{animation:none;background:rgba(47,31,2,.5)}}
+}

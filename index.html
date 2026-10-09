@@ -452,10 +452,12 @@
   @keyframes consultFlood{0%{transform:scaleX(0)}70%{transform:scaleX(1)}100%{transform:scaleX(1)}}
   @keyframes consultArrow{0%{transform:translateX(0)}45%{transform:translateX(34px);opacity:0}55%{transform:translateX(-26px);opacity:0}100%{transform:translateX(0);opacity:1}}
   @keyframes consultDip{0%{transform:translateY(0)}35%{transform:translateY(4px)}100%{transform:translateY(0)}}
-  /* «в каталог» on the sheets: light coffee-brown words (the dark brown of the old button would vanish on the dark sheets) */
-  .svc-golink.lk-run{--lk:#D2BFA8;--lk-line:rgba(210,191,168,.4);margin-top:4px}
-  .svc-golink.lk-run:hover,.svc-golink.lk-run.is-pressed{--lk:#F3E8D8}
-  .svc-golink.lk-run::after{background:linear-gradient(90deg,transparent,#F3E8D8 50%,transparent) no-repeat,rgba(210,191,168,.42);background-size:46% 100%,100% 100%}
+  /* «в каталог» on the sheets: brown words. Light caramel-brown on the dark sheets (1-3), deep brown on the lighter ones (4-5),
+     so the words stay brown everywhere and stay readable */
+  a.svc-golink.lk-run.lk-run{--lk:#B08A66;--lk-line:rgba(176,138,102,.45);--lk-hi:#D4AE88;margin-top:4px}
+  .svc-sheet:nth-of-type(n+4) a.svc-golink.lk-run.lk-run{--lk:#2B1B0F;--lk-line:rgba(43,27,15,.4);--lk-hi:#120A04}
+  a.svc-golink.lk-run.lk-run:hover,a.svc-golink.lk-run.lk-run.is-pressed{--lk:var(--lk-hi)}
+  .svc-golink.lk-run::after{background:linear-gradient(90deg,transparent,var(--lk-hi) 50%,transparent) no-repeat,var(--lk-line);background-size:46% 100%,100% 100%}
   .ws-link.lk-run{--lk:#fff;--lk-line:rgba(255,255,255,.38);text-shadow:0 1px 14px rgba(17,11,0,.6)}
   @media (max-width:960px){a.lk-run.lk-run{font-size:16px!important;white-space:normal!important}}
 

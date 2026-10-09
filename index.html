@@ -919,6 +919,39 @@
   .benefits-photo{flex:1 1 0;min-width:280px;width:auto;height:730px;border-radius:15px;overflow:hidden}
   .benefits-photo img,.benefits-photo video{width:100%;height:100%;object-fit:cover;display:block}
 
+  /* «Что вы получаете» (>=961px): a full-width video with a fan of small plates at the bottom, one per point of the list; the
+     plates slowly trade places and the one in the middle turns light. Below 961px the list + photo + accordion stay as they were. */
+  .bn-stage{display:none}
+  @media (min-width:961px){
+    .bn-built .benefits-wrap{display:none}
+    .bn-stage{
+      display:block;position:relative;overflow:hidden;background:#110B00;
+      width:var(--vw100,100vw);margin-left:calc(50% - var(--vw100,100vw)/2);
+      height:clamp(640px,calc(var(--vh100,100vh) - 40px),940px);
+    }
+    .bn-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+    .bn-stage::after{content:"";position:absolute;inset:0;pointer-events:none;
+      background:linear-gradient(180deg,rgba(17,11,0,.38) 0,rgba(17,11,0,0) 24%,rgba(17,11,0,0) 38%,rgba(17,11,0,.72) 100%)}
+    .bn-fan{position:absolute;left:0;right:0;bottom:104px;height:250px;z-index:2;perspective:1400px}
+    .bn-card{
+      position:absolute;left:50%;bottom:0;width:318px;height:206px;margin-left:-159px;box-sizing:border-box;padding:22px 24px;
+      border-radius:15px;cursor:pointer;overflow:hidden;transform-origin:50% 130%;will-change:transform,opacity;
+      background:rgba(17,11,0,.5);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
+      border:1px solid rgba(205,203,199,.28);color:#CDCBC7;
+      transition:background-color .9s ease,color .9s ease,border-color .9s ease,box-shadow .9s ease;
+    }
+    .bn-card h3{font-family:'Inter',sans-serif;font-weight:500;font-size:19px;line-height:1.2;letter-spacing:.01em;margin:0 0 10px;color:inherit}
+    .bn-card p{font-family:'Inter',sans-serif;font-weight:300;font-size:13.5px;line-height:1.38;letter-spacing:.02em;margin:0;color:inherit;
+      display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:4;line-clamp:4;overflow:hidden}
+    .bn-card.is-center{background:#E7DCCB;color:#2F1F02;border-color:#E7DCCB;box-shadow:0 18px 50px rgba(17,11,0,.45)}
+    .bn-stage .benefits-consult{
+      position:absolute;left:0;right:0;bottom:30px;z-index:3;margin:0;padding:0;border:0;flex:none;
+      display:flex;align-items:center;justify-content:center;gap:28px;flex-wrap:nowrap;
+    }
+    .bn-stage .benefits-consult p{color:#F0ECE6}
+  }
+
+
   /* Примеры наших работ — Figma node 155:5 */
   #portfolio{background:#110B00;padding:90px 0}
   .works-head{
@@ -3505,6 +3538,87 @@ void main() {
         setTimeout(() => a.classList.remove('is-pressed'), 1100);
       }, true);
     });
+  })();
+</script>
+<script>
+  // «Что вы получаете»: video stage + a fan of plates that slowly trade places (built on wide screens only)
+  (function () {
+    const mq = window.matchMedia('(min-width:961px)');
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const section = document.getElementById('benefits');
+    const wrap = section && section.querySelector('.benefits-wrap');
+    if (!wrap) return;
+    const consult = section.querySelector('.benefits-consult');
+    const left = section.querySelector('.benefits-left');
+    const srcVideo = section.querySelector('.benefits-photo video');
+    let built = false, stage, fan, cards, N = 0, t = 0, target = 0, anim = null, timer = 0, visible = false, hover = false;
+
+    const place = () => {   // the «Остались вопросы?» row lives in the stage on wide screens and goes home below 961px
+      if (!consult) return;
+      if (mq.matches && stage) stage.appendChild(consult); else if (left) left.appendChild(consult);
+    };
+    const layout = () => {
+      const W = stage.offsetWidth || 1440, step = Math.min(300, W / 5.3);
+      cards.forEach((c, i) => {
+        let p = (((i - t) % N) + N) % N; if (p > N / 2) p -= N;
+        const a = Math.abs(p), fade = a <= 2 ? 1 : Math.max(0, 1 - (a - 2) / 0.7);
+        c.style.transform = 'translate3d(' + (p * step).toFixed(1) + 'px,' + (a * a * 15 - (a < 0.5 ? (0.5 - a) * 0 : 0)).toFixed(1) + 'px,' + (-a * 40).toFixed(1) + 'px) rotate(' + (p * 7.5).toFixed(2) + 'deg) scale(' + (1 - Math.min(a, 3) * 0.055).toFixed(3) + ')';
+        c.style.opacity = fade.toFixed(3);
+        c.style.zIndex = String(20 - Math.round(a * 4));
+        c.style.pointerEvents = fade < 0.2 ? 'none' : '';
+        c.classList.toggle('is-center', a < 0.5);
+      });
+    };
+    const ease = x => x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+    const move = (delta, dur) => {
+      cancelAnimationFrame(anim); const from = t, to = t + delta, t0 = performance.now();
+      const tick = now => {
+        const k = Math.min(1, (now - t0) / dur); t = from + (to - from) * ease(k); layout();
+        if (k < 1) anim = requestAnimationFrame(tick); else { t = to; target = Math.round(t); schedule(); }
+      };
+      anim = requestAnimationFrame(tick);
+    };
+    const schedule = () => {
+      clearTimeout(timer);
+      if (reduce || !visible || hover) return;
+      timer = setTimeout(() => move(1, 2200), 3800);   // a slow, long glide every few seconds
+    };
+    const build = () => {
+      if (built) { place(); return; }
+      const lis = [...section.querySelectorAll('.benefits-list li')];
+      if (!lis.length) return;
+      built = true; N = lis.length;
+      stage = document.createElement('div'); stage.className = 'bn-stage';
+      if (srcVideo) {
+        const v = srcVideo.cloneNode(true); v.className = 'bn-video'; v.removeAttribute('aria-label'); v.setAttribute('aria-hidden', 'true');
+        v.muted = true; stage.appendChild(v);
+      }
+      fan = document.createElement('div'); fan.className = 'bn-fan'; fan.setAttribute('role', 'list');
+      cards = lis.map((li, i) => {
+        const c = document.createElement('div'); c.className = 'bn-card'; c.setAttribute('role', 'listitem');
+        c.innerHTML = '<h3>' + li.querySelector('h3').innerHTML + '</h3><p>' + li.querySelector('p').innerHTML + '</p>';
+        c.addEventListener('click', () => {
+          let d = i - t; d = ((d % N) + N) % N; if (d > N / 2) d -= N;
+          if (Math.abs(d) > 0.01) move(d, 1400);
+        });
+        fan.appendChild(c); return c;
+      });
+      stage.appendChild(fan);
+      wrap.parentNode.insertBefore(stage, wrap);
+      section.classList.add('bn-built');
+      place(); layout();
+      fan.addEventListener('mouseenter', () => { hover = true; clearTimeout(timer); });
+      fan.addEventListener('mouseleave', () => { hover = false; schedule(); });
+      window.addEventListener('resize', layout);
+      new IntersectionObserver(es => {
+        visible = es[0].isIntersecting;
+        const v = stage.querySelector('video');
+        if (v) { if (visible) { const p = v.play(); if (p && p.catch) p.catch(() => {}); } else v.pause(); }
+        if (visible) schedule(); else clearTimeout(timer);
+      }, { threshold: 0.25 }).observe(stage);
+    };
+    if (mq.matches) build();
+    mq.addEventListener('change', () => { if (mq.matches) build(); else place(); });
   })();
 </script>
 </body>

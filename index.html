@@ -463,10 +463,12 @@
 
   /* soft hand-over from the light «Собственное производство» block to the dark «Почему выбирают нас»: the top of the dark
      section is an eased gradient from the light colour to the page colour (the heading starts below it) */
-  section#why-us{position:relative;padding-top:320px}
-  section#why-us::before{content:"";position:absolute;left:0;right:0;top:0;height:300px;pointer-events:none;z-index:0;background:linear-gradient(180deg,rgb(217,203,182) 0.0%,rgb(217,203,182) 6.3%,rgb(214,200,179) 12.5%,rgb(207,194,173) 18.8%,rgb(196,183,163) 25.0%,rgb(181,168,149) 31.3%,rgb(162,150,132) 37.5%,rgb(140,129,112) 43.8%,rgb(117,107,91) 50.0%,rgb(94,85,70) 56.3%,rgb(72,64,50) 62.5%,rgb(53,46,33) 68.8%,rgb(38,31,19) 75.0%,rgb(27,20,9) 81.3%,rgb(20,14,3) 87.5%,rgb(17,11,0) 93.8%,rgb(17,11,0) 100.0%)}
+  section#why-us{position:relative;padding-top:190px;padding-bottom:56px}
+  section#about{padding-bottom:40px}
+  section#services{padding-top:56px}
+  section#why-us::before{content:"";position:absolute;left:0;right:0;top:0;height:190px;pointer-events:none;z-index:0;background:linear-gradient(180deg,rgb(217,203,182) 0.0%,rgb(217,203,182) 6.3%,rgb(214,200,179) 12.5%,rgb(207,194,173) 18.8%,rgb(196,183,163) 25.0%,rgb(181,168,149) 31.3%,rgb(162,150,132) 37.5%,rgb(140,129,112) 43.8%,rgb(117,107,91) 50.0%,rgb(94,85,70) 56.3%,rgb(72,64,50) 62.5%,rgb(53,46,33) 68.8%,rgb(38,31,19) 75.0%,rgb(27,20,9) 81.3%,rgb(20,14,3) 87.5%,rgb(17,11,0) 93.8%,rgb(17,11,0) 100.0%)}
   section#why-us > .container{position:relative;z-index:1}
-  @media (max-width:960px){section#why-us{padding-top:200px}section#why-us::before{height:190px}}
+  @media (max-width:960px){section#why-us{padding-top:130px}section#why-us::before{height:130px}}
 
   /* Почему выбирают нас — Figma node 272:547 */
   #why-us{background:#110B00;padding:120px 0}
@@ -711,10 +713,10 @@
       content:"";position:absolute;left:calc(50% - var(--vw100,100vw)/2);width:var(--vw100,100vw);pointer-events:none;z-index:-1;background:var(--grain);
     }
     #services > .container::before{top:-120px;height:700px;-webkit-mask-image:linear-gradient(180deg,transparent 0,#000 200px,#000 450px,transparent 100%);mask-image:linear-gradient(180deg,transparent 0,#000 200px,#000 450px,transparent 100%)}
-    #services > .container::after{bottom:-260px;height:260px;-webkit-mask-image:linear-gradient(0deg,transparent 0,#000 90px,#000 170px,transparent 100%);mask-image:linear-gradient(0deg,transparent 0,#000 90px,#000 170px,transparent 100%)}
+    #services > .container::after{bottom:-170px;height:170px;-webkit-mask-image:linear-gradient(0deg,transparent 0,#000 60px,#000 110px,transparent 100%);mask-image:linear-gradient(0deg,transparent 0,#000 60px,#000 110px,transparent 100%)}
     #services::before{top:0;height:700px;background:linear-gradient(180deg,rgb(17,11,0) 0px,rgb(17,11,0) 50px,rgb(17,11,1) 100px,rgb(18,12,2) 150px,rgb(19,13,4) 200px,rgb(20,15,6) 250px,rgb(22,17,9) 300px,rgb(24,19,13) 350px,rgb(26,21,16) 400px,rgb(28,23,19) 450px,rgb(29,25,21) 500px,rgb(30,26,23) 550px,rgb(31,27,24) 600px,rgb(31,27,25) 650px,rgb(31,27,25) 700px)}   /* eased (smootherstep): no visible start or end */
-    #services{padding-bottom:260px}
-    #services::after{bottom:0;height:260px;background:linear-gradient(0deg,rgb(17,11,0) 0px,rgb(17,11,0) 22px,rgb(20,14,3) 43px,rgb(27,20,9) 65px,rgb(37,30,19) 87px,rgb(50,42,31) 108px,rgb(64,56,45) 130px,rgb(78,69,59) 152px,rgb(91,81,71) 173px,rgb(101,91,81) 195px,rgb(108,97,87) 217px,rgb(111,100,90) 238px,rgb(111,100,90) 260px)}   /* the last sheet's brown fades into the page colour across the section's bottom padding */
+    #services{padding-bottom:170px}
+    #services::after{bottom:0;height:170px;background:linear-gradient(0deg,rgb(17,11,0) 0px,rgb(17,11,0) 12px,rgb(19,13,2) 24px,rgb(24,17,6) 36px,rgb(31,24,13) 49px,rgb(40,33,22) 61px,rgb(52,44,33) 73px,rgb(64,56,45) 85px,rgb(76,67,57) 97px,rgb(88,78,68) 109px,rgb(97,87,77) 121px,rgb(104,94,84) 134px,rgb(109,98,88) 146px,rgb(111,100,90) 158px,rgb(111,100,90) 170px)}
     #services > .container{position:relative;z-index:1}
     .svc-sheet:nth-of-type(n+4) h3,.svc-sheet:nth-of-type(n+4) p{color:#F0ECE6}
     .svc-sheet:nth-of-type(n+4) .svc-sheet-num,.svc-sheet:nth-of-type(n+4) .svc-hint{color:rgba(240,236,230,.7)}
@@ -759,7 +761,7 @@
   .lenis.lenis-stopped{overflow:hidden}
 
   /* Материалы — Figma node 208:166 */
-  #materials{background:#110B00;padding:72px 0}
+  #materials{background:#110B00;padding:52px 0}
   .mat-head{
     display:flex;justify-content:space-between;align-items:center;
     gap:clamp(20px,calc(4*var(--vw100)/100),180px);flex-wrap:nowrap;margin-bottom:60px;
@@ -803,7 +805,7 @@
   }
 
   /* Как мы работаем — Figma node 217:17 */
-  #process{background:#110B00;padding:72px 0}
+  #process{background:#110B00;padding:52px 0}
   .process-head{
     display:flex;justify-content:space-between;align-items:center;
     gap:clamp(20px,calc(4*var(--vw100)/100),180px);flex-wrap:nowrap;margin-bottom:60px;
@@ -864,7 +866,7 @@
   }
 
   /* Что вы получаете — Figma node 61:80 */
-  #benefits{background:#110B00;padding:72px 0}
+  #benefits{background:#110B00;padding:52px 0}
   .benefits-tags-wrap{
     overflow:hidden;margin-bottom:65px;
     -webkit-mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent);
@@ -955,7 +957,7 @@
 
 
   /* Примеры наших работ — Figma node 155:5 */
-  #portfolio{background:#110B00;padding:56px 0}
+  #portfolio{background:#110B00;padding:40px 0}
   .works-head{
     display:flex;justify-content:space-between;align-items:center;
     gap:clamp(20px,calc(4*var(--vw100)/100),180px);flex-wrap:nowrap;margin-bottom:60px;
@@ -1029,7 +1031,7 @@
   }
 
   /* Отзывы наших клиентов — Figma node 202:77 */
-  #reviews{background:#110B00;padding:72px 0}
+  #reviews{background:#110B00;padding:52px 0}
   .reviews-head{
     display:flex;justify-content:space-between;align-items:center;
     gap:clamp(20px,calc(4*var(--vw100)/100),180px);flex-wrap:nowrap;margin-bottom:60px;
@@ -1089,7 +1091,7 @@
   .dot-btn.leave-review-btn:hover{background:var(--reveal-bg);color:var(--reveal-text)}
 
   /* Спрашиваете - отвечаем — Figma node 160:79 */
-  #faq{background:#110B00;padding:72px 0}
+  #faq{background:#110B00;padding:52px 0}
   .faq-head{
     display:flex;justify-content:space-between;align-items:center;
     gap:clamp(20px,calc(4*var(--vw100)/100),180px);flex-wrap:nowrap;margin-bottom:60px;
@@ -1161,7 +1163,7 @@
   }
 
   /* Как нас найти + футер — Figma node 176:183 */
-  #contact{background:#110B00;padding:72px 0}
+  #contact{background:#110B00;padding:52px 0}
   .contact-head{
     display:flex;justify-content:space-between;align-items:center;
     gap:clamp(20px,calc(4*var(--vw100)/100),180px);flex-wrap:nowrap;margin-bottom:60px;
@@ -1222,7 +1224,7 @@
      (justify-content:flex-end on .footer-nav/.footer-contacts, space-between on .footer-brand)
      was specific to an earlier, different request and is superseded by this more conventional
      layout, which is what the reference itself uses (nothing in it is bottom-anchored either). */
-  footer{background:#110B00;color:#CDCBC7;padding:120px 0 0;font-size:.9rem;border-top:1px solid rgba(205,203,199,.14)}
+  footer{background:#110B00;color:#CDCBC7;padding:72px 0 0;font-size:.9rem;border-top:1px solid rgba(205,203,199,.14)}
   .footer-grid{display:flex;align-items:flex-start;justify-content:space-between;gap:40px;flex-wrap:wrap}
   .footer-brand{text-align:left;max-width:487px;display:flex;flex-direction:column;gap:26px}
   .footer-logo2{display:inline-flex;flex-direction:column;align-items:flex-start;margin-bottom:18px}

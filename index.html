@@ -660,7 +660,13 @@
     .svc-sheet:nth-of-type(3){z-index:3;background:#433B35;--sc:#433B35}
     .svc-sheet:nth-of-type(4){z-index:4;background:#594F47;--sc:#594F47}
     .svc-sheet:nth-of-type(5){z-index:5;background:#6F645A;--sc:#6F645A}
-    #services{background:#1F1B19}
+    #services{background:#1F1B19;position:relative}
+    /* soft seams: the section fades in from the dark page colour at the top and out to it at the bottom (no hard edges) */
+    #services::before,#services::after{content:"";position:absolute;left:0;right:0;height:240px;pointer-events:none;z-index:0}
+    #services::before{top:0;background:linear-gradient(180deg,#110B00,rgba(17,11,0,0))}
+    #services{padding-bottom:260px}
+    #services::after{bottom:0;height:260px;background:linear-gradient(0deg,#110B00,#6F645A)}   /* the last sheet's brown fades into the page colour across the section's bottom padding */
+    #services > .container{position:relative;z-index:1}
     .svc-sheet:nth-of-type(n+4) h3,.svc-sheet:nth-of-type(n+4) p{color:#F0ECE6}
     .svc-sheet:nth-of-type(n+4) .svc-sheet-num,.svc-sheet:nth-of-type(n+4) .svc-hint{color:rgba(240,236,230,.7)}
     .svc-sheet-spacer{flex:none;height:calc(55*var(--vh100,100vh)/100)}

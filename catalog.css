@@ -425,3 +425,93 @@ body{background:#110B00;color:#CDCBC7}
     font-family:'Inter',sans-serif;font-weight:700;font-size:14px;padding:9px 18px;white-space:nowrap;
   }
 }
+
+/* ================================================================================================================
+   New catalogue layout (>=961px) after «Gooey Hover Effects» (Codrops): a horizontal strip of tall photo tiles set in a
+   chess order, big titles that bleed over the photo's edge, a huge faint heading behind them; "рассмотреть подробнее"
+   opens a full-screen detail view — circular prev/next on the left, a large title, ruled specs, the order button and a
+   large rounded photo gallery on the right. Everything in the site's own fonts, colours and dashed buttons.
+   Below 961px the previous mobile cards and modal stay as they were.
+   ================================================================================================================ */
+@media (min-width:961px){
+  .cat-items{position:relative;overflow:hidden;padding:40px 0 140px}
+  .cat-items .container{position:relative;z-index:1}
+  .cat-bgtitle{
+    position:absolute;z-index:0;left:60px;right:60px;top:70px;pointer-events:none;user-select:none;
+    font-family:'Inter',sans-serif;font-weight:500;line-height:.9;letter-spacing:.01em;text-transform:uppercase;
+    font-size:clamp(70px,calc(9.2*var(--vw100)/100),176px);color:rgba(205,203,199,.055);
+  }
+  .model-track{align-items:flex-start;gap:84px;padding:90px 0 40px 56px;margin-left:-56px;scroll-padding-left:56px;scroll-snap-type:x proximity}   /* the left padding leaves room for the titles that bleed past the first photo */
+  .model-card:not(.cta-card){
+    width:380px;max-width:none;aspect-ratio:auto;background:none;overflow:visible;position:relative;scroll-snap-align:start;
+  }
+  .model-card:not(.cta-card):nth-child(even){margin-top:110px}
+  .model-card.cta-card{z-index:6}
+  .model-gallery .model-arrow{z-index:7}   /* the pinned card covers the titles that bleed to the right */
+  .model-card:not(.cta-card) .model-photo{aspect-ratio:3/4;flex:none;height:auto;border-radius:15px}
+  /* the lower part of the photo is darkened a little so the title that bleeds over it always reads */
+  .model-card:not(.cta-card)::after{
+    content:'';position:absolute;left:0;right:0;top:0;aspect-ratio:3/4;border-radius:15px;pointer-events:none;z-index:2;
+    background:linear-gradient(180deg,rgba(17,11,0,0) 52%,rgba(17,11,0,.62) 100%);
+  }
+  .model-card:not(.cta-card) h3{
+    position:absolute;z-index:3;left:-40px;bottom:calc(100% - 380px * 4 / 3 + 30px);right:-28px;padding:0;pointer-events:none;
+    font-family:'Inter',sans-serif;font-weight:500;font-size:clamp(26px,calc(2.5*var(--vw100)/100),46px);line-height:1;letter-spacing:.01em;
+    color:#CDCBC7;text-shadow:0 2px 28px rgba(17,11,0,.5);
+  }
+  .model-card:not(.cta-card) .model-btn{margin:30px 0 0;align-self:flex-start}
+
+  /* ---- detail view ---- */
+  #modelModal{
+    background:#110B00;backdrop-filter:none;padding:0;align-items:stretch;justify-content:stretch;
+  }
+  #modelModal .model-modal-card{
+    width:100%;height:100%;max-width:none;aspect-ratio:auto;border-radius:0;box-shadow:none;transform:none;
+    background:#110B00;color:#CDCBC7;overflow:hidden;container-type:normal;
+    display:grid;grid-template-columns:minmax(0,1fr) minmax(0,47%);gap:clamp(30px,5vw,96px);
+    padding:100px 60px 56px max(60px,calc((var(--vw100,1920px) - 1800px)/2 + 60px));
+    box-sizing:border-box;
+  }
+  #modelModal .model-modal-card .modal-close{
+    position:absolute;top:34px;right:max(60px,calc((var(--vw100,1920px) - 1800px)/2 + 60px));width:48px;height:48px;
+    border:1px dashed #CDCBC7;border-radius:50%;color:#CDCBC7;font-size:30px;z-index:5;transition:background-color .2s ease,color .2s ease;
+  }
+  #modelModal .model-modal-card .modal-close:hover{background:#CDCBC7;color:#2F1F02}
+  #modelModal .model-modal-photo{order:2;flex:none;height:calc(var(--vh100) - 190px);align-self:center;border-radius:15px;overflow:hidden}
+  #modelModal .mgc{min-height:0;border-radius:15px}
+  #modelModal .model-modal-info{
+    order:1;padding:0;justify-content:flex-start;gap:34px;overflow:visible;position:relative;
+  }
+  #modelModal .model-modal-text{gap:30px}
+  #modelModal .model-modal-info h3{
+    font-family:'Inter',sans-serif;font-weight:500;font-size:clamp(2.6rem,calc(5.2*var(--vw100)/100),88px);line-height:.95;letter-spacing:.01em;color:#CDCBC7;
+  }
+  #modelModal .model-modal-specs{
+    gap:0;max-width:640px;border-top:1px solid rgba(205,203,199,.22);
+    font-family:'Inter',sans-serif;font-weight:300;font-size:20px;line-height:1.3;letter-spacing:.02em;color:#CDCBC7;
+  }
+  #modelModal .model-modal-specs li{padding:14px 0;border-bottom:1px solid rgba(205,203,199,.22)}
+  #modelModal .model-modal-cta{
+    margin-top:auto;align-self:flex-start;width:505px;max-width:100%;height:78px;box-sizing:border-box;justify-content:center;
+    background:#2F1F02;border:1px solid #CDCBC7;border-radius:15px;color:#CDCBC7;font-size:22px;padding:0 32px;gap:14px;
+    --reveal-bg:#CDCBC7;--reveal-text:#2F1F02;--dot-shadow:#2F1F02;
+  }
+  /* circular prev / next between models (built by catalog-gallery.js) */
+  .mm-nav{display:flex;gap:22px;align-items:center;margin-bottom:6px}
+  .mm-circle{
+    position:relative;width:104px;height:104px;border:0;padding:0;background:none;cursor:pointer;color:#CDCBC7;
+    transition:opacity .3s ease,transform .5s cubic-bezier(.22,1,.36,1),color .4s ease;
+  }
+  .mm-circle svg.ring{position:absolute;inset:0;width:100%;height:100%;animation:mmSpin 24s linear infinite}
+  .mm-circle svg.ring text{font-family:'Inter',sans-serif;font-weight:500;font-size:11px;letter-spacing:.3em;fill:currentColor}
+  .mm-circle .mm-arrow{position:absolute;left:50%;top:50%;width:34px;height:14px;transform:translate(-50%,-50%);fill:none;stroke:currentColor;stroke-width:1.2}
+  .mm-circle::before{content:'';position:absolute;inset:6px;border:1px dashed currentColor;border-radius:50%;opacity:.5;transition:opacity .3s ease}
+  .mm-circle:hover::before{opacity:1}
+  .mm-circle:hover{transform:scale(1.05)}
+  .mm-circle:disabled{color:#2F1F02;cursor:default;pointer-events:none}
+  @keyframes mmSpin{to{transform:rotate(360deg)}}
+  #modelModal.is-swap .model-modal-info{animation:mmSwap .7s cubic-bezier(.22,1,.36,1)}
+  @keyframes mmSwap{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+  @media (prefers-reduced-motion:reduce){.mm-circle svg.ring{animation:none}#modelModal.is-swap .model-modal-info{animation:none}}
+}
+@media (max-width:960px){.mm-nav{display:none}.cat-bgtitle{display:none}}

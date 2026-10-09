@@ -2,8 +2,9 @@
    The idea and the shader come from «Gooey Hover Effects on Images with Three.js» (Codrops, Aqro/gooey-hover-codrops):
    under the pointer a noisy, gooey blob opens and reveals the second photo of the model through the first one while the
    first one slowly zooms. Here it is a small standalone WebGL (no Three.js), tinted in the site's warm brown instead of
-   the demo's blue. The plain <img> stays underneath: touch screens, "reduce motion", a missing WebGL or a blocked texture
-   (e.g. a page opened straight from disk) simply keep the ordinary photo. Clicks still go to the card's own button. */
+   the demo's blue. The plain <img> stays underneath: touch screens and "reduce motion" keep the ordinary photo. A page
+   opened straight from disk (file://) cannot feed pictures to WebGL, so there (and where WebGL is missing) the same effect
+   is drawn with the 2D canvas instead (soft balls thresholded on a small mask). Clicks still go to the card's own button. */
 (function () {
   'use strict';
   if (!window.matchMedia('(hover:hover) and (pointer:fine)').matches) return;
@@ -175,6 +176,71 @@
     gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
   };
 
+
+  // ---- 2D-canvas twin of the effect (used where WebGL may not read the pictures: pages opened from disk) ----
+  function Soft(card, img) {
+    this.card = card; this.img = img;
+    this.hoverSrc = img.getAttribute('data-hover') || img.currentSrc || img.src;
+    this.ph = 0; this.target = 0; this.mouse = [.5, .5]; this.mouseT = [.5, .5];
+    this.time = Math.random() * 100; this.ready = false;
+    var c = this.canvas = document.createElement('canvas');
+    c.className = 'gooey-canvas'; c.setAttribute('aria-hidden', 'true');
+    this.ctx = c.getContext('2d');
+    if (!this.ctx) throw new Error('no 2d');
+    this.mask = document.createElement('canvas'); this.mctx = this.mask.getContext('2d', { willReadFrequently: true });
+    card.appendChild(c);
+    var self = this, im = this.hover = new Image();
+    im.onload = function () { self.ready = true; self.place(); };
+    im.onerror = function () { self.broken = true; };
+    im.src = this.hoverSrc;
+    this.place();
+  }
+  Soft.prototype.place = function () {
+    var img = this.img, c = this.canvas, w = img.offsetWidth, h = img.offsetHeight;
+    if (!w || !h) return;
+    c.style.left = img.offsetLeft + 'px'; c.style.top = img.offsetTop + 'px';
+    c.style.width = w + 'px'; c.style.height = h + 'px';
+    var rect = c.getBoundingClientRect(), dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var bw = Math.max(2, Math.round(rect.width * dpr)), bh = Math.max(2, Math.round(rect.height * dpr));
+    if (c.width !== bw || c.height !== bh) { c.width = bw; c.height = bh; }
+    var mw = Math.max(16, Math.round(rect.width / 5)), mh = Math.max(16, Math.round(rect.height / 5));
+    if (this.mask.width !== mw || this.mask.height !== mh) { this.mask.width = mw; this.mask.height = mh; }
+  };
+  Soft.prototype.draw = function () {
+    var ph = this.ph, t = this.time, mc = this.mctx, mw = this.mask.width, mh = this.mask.height, ctx = this.ctx, cw = this.canvas.width, ch = this.canvas.height;
+    var mx = this.mouse[0] * mw, my = this.mouse[1] * mh;
+    // metaballs: a main drop under the pointer and a few satellites drifting round it
+    mc.globalCompositeOperation = 'source-over'; mc.clearRect(0, 0, mw, mh);
+    mc.globalCompositeOperation = 'lighter';
+    var ball = function (x, y, r) {
+      if (r < .5) return;
+      var g = mc.createRadialGradient(x, y, 0, x, y, r);
+      g.addColorStop(0, 'rgba(255,255,255,1)'); g.addColorStop(1, 'rgba(255,255,255,0)');
+      mc.fillStyle = g; mc.fillRect(x - r, y - r, r * 2, r * 2);
+    };
+    ball(mx, my, mh * .2 * ph);
+    for (var k = 0; k < 6; k++) {
+      var a = t * (.018 + k * .004) + k * 1.05, d = mh * (.1 + .05 * Math.sin(t * .03 + k * 2)) * ph;
+      ball(mx + Math.cos(a) * d * 1.2, my + Math.sin(a) * d, mh * (.06 + .02 * Math.sin(t * .05 + k)) * ph);
+    }
+    var id = mc.getImageData(0, 0, mw, mh), p = id.data;
+    for (var i = 3; i < p.length; i += 4) {      // threshold: the sum of the soft balls becomes one gooey shape
+      var v = (p[i] / 255 - .42) / .2; v = v < 0 ? 0 : v > 1 ? 1 : v; p[i] = v * v * (3 - 2 * v) * 255;
+    }
+    mc.globalCompositeOperation = 'source-over'; mc.putImageData(id, 0, 0);
+    // the second photo (cover-fit, warm tint) cut out by that shape
+    ctx.globalCompositeOperation = 'source-over'; ctx.clearRect(0, 0, cw, ch);
+    var hw = this.hover.naturalWidth, hh = this.hover.naturalHeight, s = Math.max(cw / hw, ch / hh) * (1.06 - ph * .06);
+    var dw = hw * s, dh = hh * s;
+    ctx.drawImage(this.hover, (cw - dw) / 2 + (this.mouse[0] - .5) * -cw * .02, (ch - dh) / 2, dw, dh);
+    ctx.globalCompositeOperation = 'source-atop'; ctx.fillStyle = 'rgba(150,96,36,.2)'; ctx.fillRect(0, 0, cw, ch);
+    ctx.globalCompositeOperation = 'destination-in'; ctx.imageSmoothingEnabled = true; ctx.imageSmoothingQuality = 'high';
+    ctx.drawImage(this.mask, 0, 0, cw, ch);
+    ctx.globalCompositeOperation = 'source-over';
+    this.img.style.transform = 'scale(' + (1 + ph * .06) + ')';     // the first photo zooms slowly, as in the demo
+  };
+  Soft.prototype.reset = function () { this.img.style.transform = ''; };
+
   var list = [], running = false, last = 0;
 
   function frame(now) {
@@ -183,7 +249,7 @@
     list.forEach(function (g) {
       if (!g.ready || g.broken) return;
       if (g.target === 0 && g.ph < 0.002) {            // idle: give the plain photo back
-        if (g.ph !== 0) { g.ph = 0; g.canvas.style.opacity = 0; }
+        if (g.ph !== 0) { g.ph = 0; g.canvas.style.opacity = 0; if (g.reset) g.reset(); }
         return;
       }
       busy = true;
@@ -218,7 +284,10 @@
     document.querySelectorAll('.model-card:not(.cta-card)').forEach(function (card) {
       var img = card.querySelector('.model-photo');
       if (!img) return;
-      try { var g = new Gooey(card, img); list.push(g); bind(g); } catch (e) { /* no WebGL: ordinary photo */ }
+      var g = null;
+      try { g = location.protocol === 'file:' ? new Soft(card, img) : new Gooey(card, img); }
+      catch (e) { try { g = new Soft(card, img); } catch (e2) { g = null; } }   // no WebGL: 2D twin; no canvas: ordinary photo
+      if (g) { list.push(g); bind(g); }
     });
     var t;
     window.addEventListener('resize', function () { clearTimeout(t); t = setTimeout(function () { list.forEach(function (g) { g.place(); }); }, 120); });

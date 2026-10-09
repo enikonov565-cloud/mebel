@@ -20,14 +20,15 @@
 .footer-watermark{font-family:'Inter',sans-serif;font-weight:300;text-transform:none;letter-spacing:-.025em;font-size:clamp(56px,15vw,240px)}
 .footer-watermark-sub{margin-top:-.04em;font-size:.2em;letter-spacing:.3em;font-weight:300}
 
-/* Header: the dark fade now reaches below the logo (so «интерьер» sits on a dark ground) and the page behind it is blurred, the
-   blur fading out together with the dark. Lives on a pseudo-element: the header itself has no backdrop-filter, which would trap
-   the fixed mobile menu. */
+/* Header: a soft, eased dark veil with a light blur that thins out towards the bottom — no visible edge. The veil reaches a little
+   below the bar so «интерьер» stays readable. Both layers are pseudo-elements: the header itself has no backdrop-filter, which would
+   trap the fixed mobile menu. */
 header,header.solid{background:none}
-header::before{
-  content:"";position:absolute;left:0;right:0;top:0;height:calc(100% + 44px);z-index:-1;pointer-events:none;
-  background:linear-gradient(180deg,rgba(17,11,0,.94) 0%,rgba(17,11,0,.86) 55%,rgba(17,11,0,.45) 82%,rgba(17,11,0,0) 100%);
-  -webkit-backdrop-filter:blur(9px);backdrop-filter:blur(9px);
-  -webkit-mask-image:linear-gradient(180deg,#000 0,#000 62%,transparent 100%);mask-image:linear-gradient(180deg,#000 0,#000 62%,transparent 100%);
+header::before,header::after{content:"";position:absolute;left:0;right:0;top:0;height:calc(100% + 28px);z-index:-1;pointer-events:none}
+header::before{background:linear-gradient(180deg,rgba(17,11,0,0.660) 0.0%,rgba(17,11,0,0.658) 7.1%,rgba(17,11,0,0.645) 14.3%,rgba(17,11,0,0.614) 21.4%,rgba(17,11,0,0.564) 28.6%,rgba(17,11,0,0.497) 35.7%,rgba(17,11,0,0.417) 42.9%,rgba(17,11,0,0.330) 50.0%,rgba(17,11,0,0.243) 57.1%,rgba(17,11,0,0.163) 64.3%,rgba(17,11,0,0.096) 71.4%,rgba(17,11,0,0.046) 78.6%,rgba(17,11,0,0.015) 85.7%,rgba(17,11,0,0.002) 92.9%,rgba(17,11,0,0.000) 100.0%)}
+header::after{
+  -webkit-backdrop-filter:blur(5px);backdrop-filter:blur(5px);
+  -webkit-mask-image:linear-gradient(180deg,rgba(0,0,0,1.000) 0.0%,rgba(0,0,0,0.997) 7.1%,rgba(0,0,0,0.977) 14.3%,rgba(0,0,0,0.931) 21.4%,rgba(0,0,0,0.855) 28.6%,rgba(0,0,0,0.754) 35.7%,rgba(0,0,0,0.632) 42.9%,rgba(0,0,0,0.500) 50.0%,rgba(0,0,0,0.368) 57.1%,rgba(0,0,0,0.246) 64.3%,rgba(0,0,0,0.145) 71.4%,rgba(0,0,0,0.069) 78.6%,rgba(0,0,0,0.023) 85.7%,rgba(0,0,0,0.003) 92.9%,rgba(0,0,0,0.000) 100.0%);mask-image:linear-gradient(180deg,rgba(0,0,0,1.000) 0.0%,rgba(0,0,0,0.997) 7.1%,rgba(0,0,0,0.977) 14.3%,rgba(0,0,0,0.931) 21.4%,rgba(0,0,0,0.855) 28.6%,rgba(0,0,0,0.754) 35.7%,rgba(0,0,0,0.632) 42.9%,rgba(0,0,0,0.500) 50.0%,rgba(0,0,0,0.368) 57.1%,rgba(0,0,0,0.246) 64.3%,rgba(0,0,0,0.145) 71.4%,rgba(0,0,0,0.069) 78.6%,rgba(0,0,0,0.023) 85.7%,rgba(0,0,0,0.003) 92.9%,rgba(0,0,0,0.000) 100.0%);
 }
+.logo{text-shadow:0 1px 10px rgba(17,11,0,.55)}
 .logo .lk-sub{opacity:1;font-weight:400;font-size:.3em;color:#E4DED3}

@@ -2999,7 +2999,7 @@
       // each sheet's text fades up while the sheet slides over the previous one (the covered text needs no fade-out)
       sheets.forEach((s, i) => {
         const box = s.querySelector('.svc-sheet-in');
-        const trg = i === 0 ? { trigger: root, start: 'top 85%', end: 'top top' } : { trigger: spacers[i - 1], start: 'bottom 52%', end: 'bottom 22%' };
+        const trg = i === 0 ? { trigger: root, start: 'top 50%', end: 'top 20%' } : { trigger: spacers[i - 1], start: 'bottom 52%', end: 'bottom 22%' };
         gsap.fromTo(box, { opacity: .12, y: 50 }, { opacity: 1, y: 0, ease: 'none', scrollTrigger: Object.assign({ scrub: true }, trg) });
       });
 

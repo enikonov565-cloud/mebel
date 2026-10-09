@@ -206,7 +206,7 @@
   .footer-col{display:flex;flex-direction:column}
   .footer-col-label{
     display:block;margin-bottom:22px;
-    font-family:'Inter',sans-serif;font-weight:700;font-size:9px;
+    font-family:'Inter',sans-serif;font-weight:700;font-size:14px;
     letter-spacing:.14em;text-transform:uppercase;color:var(--accent);
   }
   .footer-nav{list-style:none;display:flex;flex-direction:column;gap:10px;font-family:'Inter',sans-serif;font-weight:300;font-size:16px;letter-spacing:0.4px;color:#CDCBC7}

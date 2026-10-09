@@ -1678,7 +1678,7 @@
   }
 }
 </style>
-<link rel="stylesheet" href="ctl.css?v=1">
+<link rel="stylesheet" href="ctl.css?v=2">
 <style>
   /* the section numbers use the same figures as the carousel counters: «NN — NN», Inter Medium 22px */
   .svc-sheet .svc-sheet-num.ctl-count{--ctl:#F0ECE6;color:#F0ECE6!important;margin:0 0 24px}
@@ -1692,6 +1692,15 @@
     .works-cta > .ctl{grid-column:3;grid-row:1;margin:0;justify-self:end}
   }
   @media (max-width:960px){.works-cta.works-cta{flex-direction:column;align-items:center;gap:20px}.works-cta > .ctl{margin:0}}
+</style>
+<style>
+  @media (min-width:961px){
+    .reviews-cta.reviews-cta{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;margin-top:28px}
+    .reviews-cta > .ctl{grid-column:1;grid-row:1;margin:0 0 0 -.6rem;justify-self:start;justify-content:flex-start}
+    .reviews-cta .leave-review-btn{grid-column:2;grid-row:1}
+    .reviews-cta a.lk-run{grid-column:3;grid-row:1;justify-self:end}
+  }
+  @media (max-width:960px){.reviews-cta > .ctl{order:3;margin:0;justify-content:center}}
 </style>
 </head>
 <body>
@@ -3676,12 +3685,15 @@ void main() {
       const track = document.getElementById('reviewsTrack');
       const cards = () => track.querySelectorAll('.review-card');
       const step = () => { const c = cards(); return c.length > 1 ? c[1].offsetLeft - c[0].offsetLeft : 1; };
-      Ctl.make({
+      const madeRev = Ctl.make({
         prev: rev.querySelector('.works-arrow.prev'), next: rev.querySelector('.works-arrow.next'), after: rev, tone: 'light',
         total: () => cards().length,
         current: () => (track.scrollLeft >= track.scrollWidth - track.clientWidth - 2) ? cards().length : Math.round(track.scrollLeft / step()) + 1,
         watch: cb => { track.addEventListener('scroll', cb, { passive: true }); window.addEventListener('resize', cb); }
       });
+      // one row: arrows + counter on the left, «оставить отзыв» exactly in the middle, «перейти в каталог» on the right
+      const rcta = document.querySelector('.reviews-cta');
+      if (madeRev && rcta) rcta.insertBefore(madeRev.row, rcta.firstChild);
     }
   })();
 </script>

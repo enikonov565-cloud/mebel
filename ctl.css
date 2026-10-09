@@ -8,8 +8,8 @@
 .ctl--dark{--ctl:#fff;--ctl-off:#2F1F02}
 .ctl .ctl-btn{
   position:static!important;left:auto!important;right:auto!important;top:auto!important;
-  display:block;flex:none;width:55px;height:24px;margin:0 .6rem;padding:0;border:0;border-radius:0;background:none!important;
-  color:var(--ctl);font-size:0;line-height:0;opacity:1;filter:none;box-shadow:none;cursor:pointer;
+  display:block;flex:none;box-sizing:border-box;width:55px!important;height:24px!important;margin:0 .6rem;padding:0!important;border:0!important;border-radius:0;background:none!important;
+  color:var(--ctl);font-size:0!important;line-height:0;opacity:1;filter:none;box-shadow:none;cursor:pointer;
   transform:none;transition:transform .3s cubic-bezier(.22,1,.36,1),color .5s ease;
 }
 .ctl .ctl-btn::after{content:none!important;display:none!important}

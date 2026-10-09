@@ -22,21 +22,17 @@
   btns.forEach(function (b, i) { b.addEventListener('click', function () { idx = i; update(); }, true); });
 
   var NS = 'http://www.w3.org/2000/svg';
-  function circle(dir, label) {
+  function circle(dir) {
     var b = document.createElement('button');
     b.type = 'button'; b.className = 'mm-circle mm-' + dir;
     b.setAttribute('aria-label', dir === 'prev' ? 'Предыдущая модель' : 'Следующая модель');
-    var ring = document.createElementNS(NS, 'svg'); ring.setAttribute('class', 'ring'); ring.setAttribute('viewBox', '0 0 104 104');
-    var id = 'mmRing' + dir;
-    ring.innerHTML = '<defs><path id="' + id + '" d="M52,52 m-41,0 a41,41 0 1,1 82,0 a41,41 0 1,1 -82,0"/></defs>' +
-      '<text><textPath href="#' + id + '">' + (label + ' — ').repeat(4) + '</textPath></text>';
-    var ar = document.createElementNS(NS, 'svg'); ar.setAttribute('class', 'mm-arrow'); ar.setAttribute('viewBox', '0 0 34 14');
-    ar.innerHTML = dir === 'prev' ? '<path d="M33 7H2M8 1 2 7l6 6"/>' : '<path d="M1 7h31M26 1l6 6-6 6"/>';
-    b.appendChild(ring); b.appendChild(ar);
+    var ar = document.createElementNS(NS, 'svg'); ar.setAttribute('class', 'mm-arrow'); ar.setAttribute('viewBox', '0 0 55 24');
+    ar.innerHTML = dir === 'prev' ? '<path d="M54 12H2M13 1.5 2 12l11 10.5"/>' : '<path d="M1 12h52M42 1.5 53 12 42 22.5"/>';
+    b.appendChild(ar);
     return b;
   }
   var nav = document.createElement('div'); nav.className = 'mm-nav';
-  var prev = circle('prev', 'НАЗАД'), next = circle('next', 'ДАЛЕЕ');
+  var prev = circle('prev'), next = circle('next');
   nav.appendChild(prev); nav.appendChild(next);
   info.insertBefore(nav, info.firstChild);
 

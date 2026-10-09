@@ -484,7 +484,7 @@ body{background:#110B00;color:#CDCBC7}
   }
   #modelModal .model-modal-text{gap:30px}
   #modelModal .model-modal-info h3{
-    font-family:'Inter',sans-serif;font-weight:500;font-size:clamp(2.6rem,calc(5.2*var(--vw100)/100),88px);line-height:.95;letter-spacing:.01em;color:#CDCBC7;
+    font-family:'Inter',sans-serif;font-weight:500;font-size:clamp(2rem,calc(3.3*var(--vw100)/100),56px);line-height:1;letter-spacing:.01em;color:#CDCBC7;
   }
   #modelModal .model-modal-specs{
     gap:0;max-width:640px;border-top:1px solid rgba(205,203,199,.22);
@@ -496,22 +496,18 @@ body{background:#110B00;color:#CDCBC7}
     background:#2F1F02;border:1px solid #CDCBC7;border-radius:15px;color:#CDCBC7;font-size:22px;padding:0 32px;gap:14px;
     --reveal-bg:#CDCBC7;--reveal-text:#2F1F02;--dot-shadow:#2F1F02;
   }
-  /* circular prev / next between models (built by catalog-gallery.js) */
-  .mm-nav{display:flex;gap:22px;align-items:center;margin-bottom:6px}
+  /* prev / next between models: the same thin arrows as the slider of «Почему выбирают нас» (55x24, 1px line) */
+  .mm-nav{display:flex;gap:18px;align-items:center;margin-bottom:6px}
   .mm-circle{
-    position:relative;width:104px;height:104px;border:0;padding:0;background:none;cursor:pointer;color:#CDCBC7;
-    transition:opacity .3s ease,transform .5s cubic-bezier(.22,1,.36,1),color .4s ease;
+    display:block;width:55px;height:24px;margin:0;padding:0;border:0;background:none;cursor:pointer;color:#fff;
+    transition:transform .3s cubic-bezier(.22,1,.36,1),color .5s ease;
   }
-  .mm-circle svg.ring{position:absolute;inset:0;width:100%;height:100%;animation:mmSpin 24s linear infinite}
-  .mm-circle svg.ring text{font-family:'Inter',sans-serif;font-weight:500;font-size:11px;letter-spacing:.3em;fill:currentColor}
-  .mm-circle .mm-arrow{position:absolute;left:50%;top:50%;width:34px;height:14px;transform:translate(-50%,-50%);fill:none;stroke:currentColor;stroke-width:1.2}
-  .mm-circle::before{content:'';position:absolute;inset:6px;border:1px dashed currentColor;border-radius:50%;opacity:.5;transition:opacity .3s ease}
-  .mm-circle:hover::before{opacity:1}
-  .mm-circle:hover{transform:scale(1.05)}
+  .mm-circle .mm-arrow{display:block;width:100%;height:100%;fill:none;stroke:currentColor;stroke-width:1}
+  .mm-circle.mm-prev:hover{transform:translateX(-5px)}
+  .mm-circle.mm-next:hover{transform:translateX(5px)}
   .mm-circle:disabled{color:#2F1F02;cursor:default;pointer-events:none}
-  @keyframes mmSpin{to{transform:rotate(360deg)}}
   #modelModal.is-swap .model-modal-info{animation:mmSwap .7s cubic-bezier(.22,1,.36,1)}
   @keyframes mmSwap{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
-  @media (prefers-reduced-motion:reduce){.mm-circle svg.ring{animation:none}#modelModal.is-swap .model-modal-info{animation:none}}
+  @media (prefers-reduced-motion:reduce){#modelModal.is-swap .model-modal-info{animation:none}}
 }
 @media (max-width:960px){.mm-nav{display:none}.cat-bgtitle{display:none}}

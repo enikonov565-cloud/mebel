@@ -19,3 +19,15 @@
 /* the hollow repeat of the word in the footer */
 .footer-watermark{font-family:'Inter',sans-serif;font-weight:300;text-transform:none;letter-spacing:-.025em;font-size:clamp(56px,15vw,240px)}
 .footer-watermark-sub{margin-top:-.04em;font-size:.2em;letter-spacing:.3em;font-weight:300}
+
+/* Header: the dark fade now reaches below the logo (so «интерьер» sits on a dark ground) and the page behind it is blurred, the
+   blur fading out together with the dark. Lives on a pseudo-element: the header itself has no backdrop-filter, which would trap
+   the fixed mobile menu. */
+header,header.solid{background:none}
+header::before{
+  content:"";position:absolute;left:0;right:0;top:0;height:calc(100% + 44px);z-index:-1;pointer-events:none;
+  background:linear-gradient(180deg,rgba(17,11,0,.94) 0%,rgba(17,11,0,.86) 55%,rgba(17,11,0,.45) 82%,rgba(17,11,0,0) 100%);
+  -webkit-backdrop-filter:blur(9px);backdrop-filter:blur(9px);
+  -webkit-mask-image:linear-gradient(180deg,#000 0,#000 62%,transparent 100%);mask-image:linear-gradient(180deg,#000 0,#000 62%,transparent 100%);
+}
+.logo .lk-sub{opacity:1;font-weight:400;font-size:.3em;color:#E4DED3}

@@ -424,7 +424,10 @@
     background-size:38% 100%,100% 100%;background-position:-60% 0,0 0;
     animation:lkRun 2.6s linear infinite;
   }
-  a.lk-run:hover::after{animation-duration:1.1s}
+  /* the shimmering line fades away on hover and comes back smoothly when the link is pressed (and stays until the pointer leaves) */
+  a.lk-run::after{transition:opacity .45s ease}
+  a.lk-run:hover::after{opacity:0}
+  a.lk-run:active::after,a.lk-run.is-clicked::after,a.lk-run.is-clicked:hover::after{opacity:1;transition-duration:.8s}
   a.lk-run .lk-arrow{display:inline-block;transition:transform .4s cubic-bezier(.22,1,.36,1)}
   a.lk-run:hover .lk-arrow{transform:translateX(8px)}
   @keyframes lkRun{from{background-position:-60% 0,0 0}to{background-position:160% 0,0 0}}
@@ -3416,6 +3419,12 @@ void main() {
     }
     requestAnimationFrame(render);
   })();
+</script>
+<script>
+  document.querySelectorAll('a.lk-run').forEach(a => {
+    a.addEventListener('click', () => a.classList.add('is-clicked'));
+    ['mouseleave', 'blur'].forEach(ev => a.addEventListener(ev, () => a.classList.remove('is-clicked')));
+  });
 </script>
 </body>
 </html>

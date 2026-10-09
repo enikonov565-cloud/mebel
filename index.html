@@ -654,18 +654,19 @@
     .svc-sheets-left{display:flex;flex-direction:column}
     /* the same mechanics as «Как мы работаем»: a sheet pins, stays put while the page scrolls the spacer, and the next one
        slides up over it (opaque, in the colour the section has at that moment) — no jumps, nothing moves by itself */
-    .svc-sheet{height:var(--vh100,100vh);display:flex;align-items:center;position:sticky;top:0;clip-path:inset(-120px -100vmax 0 -100vmax)}
-    /* full-bleed band: solid colour out to both window edges and a 120px soft feather above the sheet, so while it slides up
-       over the previous one the colours blend instead of meeting in a hard line */
+    .svc-sheet{height:var(--vh100,100vh);display:flex;align-items:center;position:sticky;top:0;clip-path:inset(0 -100vmax)}
+    /* the colour is a full-bleed layer whose upper 260px fade out to transparent (eased), so the incoming sheet melts into the
+       previous one instead of meeting it in a line; the text and buttons stay above the layer */
     .svc-sheet::before{
-      content:"";position:absolute;z-index:-1;left:-100vmax;right:-100vmax;top:-120px;bottom:0;pointer-events:none;
-      background:linear-gradient(180deg,transparent,var(--sc)) top/100% 120px no-repeat,linear-gradient(var(--sc),var(--sc)) bottom/100% calc(100% - 119px) no-repeat;
+      content:"";position:absolute;z-index:-1;left:-100vmax;right:-100vmax;top:0;bottom:0;pointer-events:none;background:var(--sc);
+      -webkit-mask-image:linear-gradient(180deg,rgba(0,0,0,0) 0,rgba(0,0,0,.05) 47px,rgba(0,0,0,.2) 99px,rgba(0,0,0,.5) 151px,rgba(0,0,0,.82) 208px,#000 260px,#000 100%);mask-image:linear-gradient(180deg,rgba(0,0,0,0) 0,rgba(0,0,0,.05) 47px,rgba(0,0,0,.2) 99px,rgba(0,0,0,.5) 151px,rgba(0,0,0,.82) 208px,#000 260px,#000 100%);
     }
-    .svc-sheet:nth-of-type(1){z-index:1;background:#1F1B19;--sc:#1F1B19}
-    .svc-sheet:nth-of-type(2){z-index:2;background:#302A26;--sc:#302A26}
-    .svc-sheet:nth-of-type(3){z-index:3;background:#433B35;--sc:#433B35}
-    .svc-sheet:nth-of-type(4){z-index:4;background:#594F47;--sc:#594F47}
-    .svc-sheet:nth-of-type(5){z-index:5;background:#6F645A;--sc:#6F645A}
+    .svc-sheet:nth-of-type(1)::before{-webkit-mask-image:none;mask-image:none}
+    .svc-sheet:nth-of-type(1){z-index:1;--sc:#1F1B19}
+    .svc-sheet:nth-of-type(2){z-index:2;--sc:#302A26}
+    .svc-sheet:nth-of-type(3){z-index:3;--sc:#433B35}
+    .svc-sheet:nth-of-type(4){z-index:4;--sc:#594F47}
+    .svc-sheet:nth-of-type(5){z-index:5;--sc:#6F645A}
     #services{background:#1F1B19;position:relative}
     /* soft seams: the section fades in from the dark page colour at the top and out to it at the bottom (no hard edges) */
     #services::before,#services::after{content:"";position:absolute;left:0;right:0;height:240px;pointer-events:none;z-index:0}
@@ -2955,12 +2956,13 @@
         const step = gsap.timeline();
         step.to({}, { duration: HOLD + SLIDE }, 0)
             .to(section, { backgroundColor: browns[i + 1], duration: SLIDE, ease: 'power2.inOut' }, HOLD)
+            .fromTo(sheets[i].querySelectorAll('.svc-sheet-in,.svc-hint'), { opacity: 1 }, { opacity: 0, duration: SLIDE * 0.5, ease: 'none', immediateRender: false }, HOLD)
             .to(cur, { objectPosition: '0px 60%', duration: SLIDE, ease: 'none' }, HOLD)
             .to(next, { objectPosition: '0px 40%', duration: SLIDE, ease: 'none' }, HOLD)
             .fromTo(wipe, { p: 0 }, { p: 1, duration: SLIDE, ease: 'none', immediateRender: false, onUpdate: () => {
               // edge of the incoming sheet (layout px from the top of the pinned window), measured to the picture frame
               const vh = sheets[0].offsetHeight, fr = cur.parentNode, H = fr.offsetHeight, top = (vh - H) / 2;
-              const edge = vh * (1 - wipe.p) - 60;               // middle of the 120px feather
+              const edge = vh * (1 - wipe.p) + 145;              // where the colour layer is half transparent
               cur.style.clipPath = 'inset(0px 0px ' + Math.max(0, Math.min(H, H - (edge - top))) + 'px)';
             } }, HOLD);
         main.add(step);

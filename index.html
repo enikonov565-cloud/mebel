@@ -110,7 +110,8 @@
     .dot-btn:hover{transform:none;box-shadow:none}
   }
 
-  .nav-cta,.about-cta a,.svc-btn.dark{--reveal-bg:#CDCBC7;--reveal-text:#2F1F02;--dot-shadow:#2F1F02}
+  .nav-cta,.svc-btn.dark{--reveal-bg:#CDCBC7;--reveal-text:#2F1F02;--dot-shadow:#2F1F02}
+  .about-cta a{--reveal-bg:#EADFCB;--reveal-text:#2F1F02;--dot-shadow:#2F1F02}
   .hero-cta a,.svc-btn.light{--reveal-bg:#2F1F02;--reveal-text:#CDCBC7;--dot-shadow:#CDCBC7}
   .mat-cta a,.benefits-consult a{--reveal-bg:#CDCBC7;--reveal-text:#450A03;--dot-shadow:#450A03}
   .btn.dot-btn:not(.outline){--reveal-bg:var(--accent-dark);--reveal-text:#fff;--dot-shadow:var(--accent)}
@@ -283,7 +284,7 @@
   }
 
   /* Собственное производство полного цикла — Figma node 270:439 */
-  #about{background:#110B00;padding:120px 0 132px}
+  #about{background:#D9CBB6;padding:120px 0 132px}
   .about-inner{display:flex;flex-direction:column;gap:60px}
   .about-headline{
     display:flex;justify-content:space-between;align-items:center;
@@ -292,12 +293,12 @@
   .about-headline h2{
     font-family:'Inter',sans-serif;font-weight:500;
     font-size:clamp(1.8rem,calc(6*var(--vw100)/100),64px);line-height:0.9;letter-spacing:.01em;
-    color:#CDCBC7;white-space:normal;
+    color:#2F1F02;white-space:normal;
   }
   .about-headline p{
     font-family:'Inter',sans-serif;font-weight:300;
     font-size:20px;line-height:1.2;letter-spacing:.02em;
-    color:#CDCBC7;max-width:539px;text-transform:lowercase;
+    color:#2F1F02;max-width:539px;text-transform:lowercase;
   }
 
   .about-row2{display:flex;align-items:flex-end;justify-content:space-between;gap:56px;flex-wrap:wrap}
@@ -324,10 +325,10 @@
     /* Light weight: the design's Medium read heavy next to the photo */
     .about-links a{
       position:relative;display:block;height:calc(36px*var(--af,1));font-family:'Inter',sans-serif;font-weight:300;
-      font-size:calc(36px*var(--af,1));line-height:1;letter-spacing:.02em;color:#CDCBC7;
+      font-size:calc(36px*var(--af,1));line-height:1;letter-spacing:.02em;color:#2F1F02;
     }
     /* thin rules between the rows (flex items, so space-between keeps them centred in each gap) */
-    .about-links .al-line{display:block;flex:none;height:1px;width:505px;margin-left:-16px;background:rgba(205,203,199,.22)}
+    .about-links .al-line{display:block;flex:none;height:1px;width:505px;margin-left:-16px;background:rgba(47,31,2,.22)}
     /* category preview that opens at the right end of a row on hover (animated by gsap, see script): portrait, taller
        than the row (it may stick out above/below), lying UNDER the text; letters over it switch colour (script) */
     .about-links a{isolation:isolate}
@@ -346,14 +347,15 @@
     .about-links .char{display:inline-block}
     /* no gsap / SplitType (offline, blocked): plain CSS hover instead */
     html:not(.al-js) .about-links a{transition:color .2s ease}
-    html:not(.al-js) .about-links a:hover{color:#fff}
+    html:not(.al-js) .about-links a:hover{color:#110B00}
     .about-cta{align-self:flex-start}
     .about-row2 > .about-photo-img{grid-column:3;margin-top:calc(12px*var(--ak,1));height:calc(862px*var(--ak,1))}
     .about-panel{
-      grid-column:5;width:468px;height:calc(874px*var(--ak,1));border-radius:20px;background:rgba(50,31,1,.2);
+      grid-column:5;width:468px;height:calc(874px*var(--ak,1));border-radius:20px;background:#E7DCCB;position:relative;overflow:hidden;isolation:isolate;
       /* figures spread over the whole plate: 20pt in from every edge, equal gaps, centred on the plate */
       padding:20pt;display:flex;flex-direction:column;
     }
+    .about-panel .panel-glow{display:block;position:absolute;inset:0;width:100%;height:100%;z-index:-1;border-radius:20px}
     .about-panel .stats-grid{display:flex;flex-direction:column;justify-content:space-between;gap:0;flex:1;width:100%}
     .about-panel .stats-grid::before,.about-panel .stats-grid::after{display:none}
     .about-panel .stat-box{min-height:calc(92px*var(--af,1));justify-content:flex-start;gap:calc(10px*var(--af,1))}
@@ -370,12 +372,13 @@
   }
   /* cross lines as drawn in the design: horizontal 852px wide (10px past the grid each side) 187px from its top,
      vertical 500px tall running 63px above the grid */
-  .stats-grid::before{content:'';position:absolute;left:-10px;right:-10px;top:187px;height:1px;background:#CDCBC7;opacity:.35}
-  .stats-grid::after{content:'';position:absolute;top:-63px;height:500px;left:50%;width:1px;background:#CDCBC7;opacity:.35}
+  .stats-grid::before{content:'';position:absolute;left:-10px;right:-10px;top:187px;height:1px;background:#2F1F02;opacity:.3}
+  .stats-grid::after{content:'';position:absolute;top:-63px;height:500px;left:50%;width:1px;background:#2F1F02;opacity:.3}
+  .panel-glow{display:none}
   .stat-box{display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center}
   .stat-box b{
     font-family:'Inter',sans-serif;font-weight:500;
-    font-size:clamp(1.8rem,calc(6*var(--vw100)/100),64px);line-height:0.9;letter-spacing:.01em;color:#CDCBC7;
+    font-size:clamp(1.8rem,calc(6*var(--vw100)/100),64px);line-height:0.9;letter-spacing:.01em;color:#2F1F02;
   }
   /* the design gives "3 года" a 62px-tall box (the others 58px), which makes the first row 96px tall */
   @media (min-width:961px){.stat-box:nth-child(2) b{min-height:62px}}
@@ -386,7 +389,7 @@
   .sweep-done .sw-c{opacity:1;will-change:auto}
   .stat-box span{
     font-family:'Inter',sans-serif;font-weight:300;
-    font-size:20px;line-height:1.2;letter-spacing:.02em;text-transform:lowercase;color:#CDCBC7;
+    font-size:20px;line-height:1.2;letter-spacing:.02em;text-transform:lowercase;color:#2F1F02;
   }
   .nowrap-line{white-space:nowrap}
 
@@ -397,9 +400,9 @@
 
   .about-cta a{
     display:flex;align-items:center;justify-content:center;
-    background:#2F1F02;border:1px solid #CDCBC7;border-radius:15px;
+    background:#2F1F02;border:1px solid #2F1F02;border-radius:15px;
     width:505px;max-width:100%;height:78px;
-    font-family:'Inter',sans-serif;font-weight:700;font-size:26px;color:#CDCBC7;
+    font-family:'Inter',sans-serif;font-weight:700;font-size:26px;color:#EADFCB;
     text-align:center;
   }
 
@@ -1618,7 +1621,8 @@
         <source src="about-video.mp4">
       </video>
 
-      <div class="about-panel">
+      <div class="about-panel" id="aboutPanel">
+        <canvas class="panel-glow" id="aboutGlow" aria-hidden="true"></canvas>
         <div class="stats-grid">
           <div class="stat-box"><b>12+</b><span>лет на&nbsp;рынке</span></div>
           <div class="stat-box"><b>3 года</b><span>гарантии на&nbsp;изделия</span></div>
@@ -2792,7 +2796,7 @@
     const list = document.querySelector('.about-links');
     if (!list || !window.gsap || !window.SplitType) return;
     const links = [...list.querySelectorAll('a')];
-    const GOLD = '#ffffff', BASE = '#CDCBC7', WHITE = '#ffffff';   // hovered row: white (no accent colour), the others dim
+    const GOLD = '#110B00', BASE = '#2F1F02', WHITE = '#ffffff';   // hovered row: white (no accent colour), the others dim
     const zoom = () => parseFloat(document.documentElement.style.zoom) || 1;
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     document.documentElement.classList.add('al-js');
@@ -3106,5 +3110,264 @@
 
 </script>
 
+<script>
+  // Ribbon Glow (Originkit, ported from React/WebGL2 to plain JS) — the same floating light-ribbon backdrop as the plate of the catalogue pages, behind the stats of «Собственное производство полного цикла».
+  // Brand palette (amber/bronze accents already used across the site) instead of the original
+  // orange/pink preset, and a uIntensity uniform (not in the original) added to the finish pass
+  // to tone the glow down so it stays a quiet backdrop, not the focal point of the card.
+  (function () {
+    const canvas = document.getElementById('aboutGlow');
+    const root = document.getElementById('aboutPanel');
+    if (!canvas || !root || window.matchMedia('(prefers-reduced-motion: reduce)').matches || !window.matchMedia('(min-width:1280px)').matches) return;
+    const gl = canvas.getContext('webgl2', { antialias: false, alpha: false, depth: false, stencil: false });
+    if (!gl) return;
+
+    const MAX_DPR = 2;
+    const VERT_SRC = `#version 300 es
+const vec2 P[3] = vec2[3](vec2(-1.0, -1.0), vec2(3.0, -1.0), vec2(-1.0, 3.0));
+void main() { gl_Position = vec4(P[gl_VertexID], 0.0, 1.0); }
+`;
+    const FIELD_SRC = `#version 300 es
+precision highp float;
+uniform vec2 uRes;
+uniform float uTime;
+uniform vec3 uC1;
+uniform vec3 uC2;
+uniform float uSize;
+uniform float uAngle;
+uniform vec2 uMouse;
+uniform float uOn;
+uniform float uReach;
+uniform vec2 uVel;
+out vec4 o;
+
+const float TAU = 6.28318530718;
+const float LAYERS = 84.0;
+const float TWIST = 1.250;
+const float DRAG = 0.180;
+const float GAIN = 0.62;
+const vec2 CENTRE = vec2(-0.62, 0.24);
+const float TILT = 0.6;
+const float ZOOM = 1.05;
+const float THETA = 2.13;
+const float SHEAR = 0.963;
+const float SHRINK = 0.953;
+const vec2 WARP_FREQ = vec2(0.42, 2.4);
+const vec2 WARP_AMP = vec2(0.13, 0.027);
+const vec2 ASPECT = vec2(2.1, 0.17);
+const float OFFSET = 0.36;
+const float GLOW = 0.0021;
+const float SOFT = 0.0019;
+const float FALLOFF = 0.37;
+const float PHASE = 12.0;
+const float CYCLE = 0.16;
+const float HUE_TRAVEL = 2.0;
+
+mat2 rot(float a) { float c = cos(a), s = sin(a); return mat2(c, s, -s, c); }
+
+void main() {
+  vec2 R = uRes;
+  vec2 pos = (gl_FragCoord.xy - 0.5 * R) / R.y;
+
+  vec2 d = pos - uMouse;
+  float w = uOn * exp(-dot(d, d) / (uReach * uReach));
+  if (w > 1e-4) pos = uMouse + rot(w * TWIST) * d * (1.0 - 0.3 * min(w, 1.0)) - uVel * min(w, 1.0) * DRAG;
+
+  pos = rot(uAngle) * pos / uSize;
+  float t = uTime * 0.49 + PHASE;
+  float breath = (-sin(uTime * 0.735) + sin(uTime * 0.49 + 1.0)) * 0.25 + 0.5;
+  vec2 u = rot(TILT) * ((pos - CENTRE) * (ZOOM - breath * 0.085));
+  mat2 fold = mat2(cos(THETA), sin(THETA), -SHEAR, cos(THETA));
+
+  vec3 col = vec3(0.0);
+  for (float i = 1.0; i <= LAYERS; i += 1.0) {
+    u.x -= sin(u.y * WARP_FREQ.x + t + i * 0.007) * WARP_AMP.x;
+    u.y -= sin(u.x * WARP_FREQ.y - t + i * 0.02) * WARP_AMP.y;
+    u = fold * u * SHRINK;
+    vec2 q = (u - vec2(OFFSET + breath * 0.1, 0.0)) * ASPECT;
+    float g = GLOW / (dot(q, q) + SOFT) * (0.25 + breath * 0.4);
+    float r = length(u);
+    float k = sin(i * CYCLE + t * 1.2 + r * HUE_TRAVEL) * 0.5 + 0.5;
+    col += g * mix(uC1, uC2, k) * (0.62 + 0.5 * k) * exp2(-r * FALLOFF);
+  }
+  vec3 x = max(col * GAIN, 0.0);
+  col = (x * (2.51 * x + 0.03)) / (x * (2.43 * x + 0.59) + 0.14);
+  col = pow(clamp(col, 0.0, 1.0), vec3(0.85, 0.92, 0.98));
+  col *= 1.0 - smoothstep(0.5, 1.6, length(pos)) * 0.07;
+  o = vec4(col, 1.0);
+}
+`;
+    const FINISH_SRC = `#version 300 es
+precision highp float;
+uniform sampler2D uField;
+uniform vec2 uRes;
+uniform float uTime;
+uniform vec3 uBg;
+uniform float uPaper;
+uniform float uIntensity;
+out vec4 o;
+
+float ign(vec2 p, float f) { p += 5.588238 * mod(f, 64.0); return fract(52.9829189 * fract(0.06711056 * p.x + 0.00583715 * p.y)); }
+
+void main() {
+  vec2 frag = gl_FragCoord.xy;
+  vec3 L = max(texture(uField, frag / uRes).rgb, 0.0) * uIntensity;
+
+  vec3 dark = uBg + L * (1.0 - uBg);
+  float strength = clamp(max(L.r, max(L.g, L.b)), 0.0, 1.0);
+  vec3 paper = uBg * (1.0 - strength) + L * 0.96;
+  vec3 col = mix(dark, paper, uPaper);
+  col += (ign(frag, floor(uTime * 24.0)) - 0.5) / 255.0;
+  o = vec4(clamp(col, 0.0, 1.0), 1.0);
+}
+`;
+
+    function parseColor(hex) {
+      let h = hex.replace('#', '');
+      if (h.length === 3) h = h[0] + h[0] + h[1] + h[1] + h[2] + h[2];
+      return [parseInt(h.slice(0, 2), 16) / 255, parseInt(h.slice(2, 4), 16) / 255, parseInt(h.slice(4, 6), 16) / 255];
+    }
+    function clampN(v, lo, hi) { return v < lo ? lo : v > hi ? hi : v; }
+
+    function link(frag, label) {
+      const shader = (type, src) => {
+        const sh = gl.createShader(type);
+        gl.shaderSource(sh, src);
+        gl.compileShader(sh);
+        if (!gl.getShaderParameter(sh, gl.COMPILE_STATUS)) { console.error('RibbonGlow ' + label + ' shader:', gl.getShaderInfoLog(sh)); gl.deleteShader(sh); return null; }
+        return sh;
+      };
+      const vs = shader(gl.VERTEX_SHADER, VERT_SRC);
+      const fs = shader(gl.FRAGMENT_SHADER, frag);
+      if (!vs || !fs) return null;
+      const prog = gl.createProgram();
+      gl.attachShader(prog, vs); gl.attachShader(prog, fs); gl.linkProgram(prog);
+      gl.deleteShader(vs); gl.deleteShader(fs);
+      if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) { console.error('RibbonGlow ' + label + ' link:', gl.getProgramInfoLog(prog)); gl.deleteProgram(prog); return null; }
+      return prog;
+    }
+    function locations(prog, names) { const out = {}; names.forEach(n => out[n] = gl.getUniformLocation(prog, n)); return out; }
+
+    function fieldTarget() {
+      const fbo = gl.createFramebuffer();
+      let tex = null, w = 0, h = 0, half = !!gl.getExtension('EXT_color_buffer_float');
+      return {
+        fbo, texture: () => tex, width: () => w, height: () => h,
+        resize(nw, nh) {
+          if (nw === w && nh === h && tex) return;
+          for (let attempt = 0; attempt < 2; attempt++) {
+            if (tex) gl.deleteTexture(tex);
+            tex = gl.createTexture();
+            gl.bindTexture(gl.TEXTURE_2D, tex);
+            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+            gl.texImage2D(gl.TEXTURE_2D, 0, half ? gl.RGBA16F : gl.RGBA8, nw, nh, 0, gl.RGBA, half ? gl.HALF_FLOAT : gl.UNSIGNED_BYTE, null);
+            gl.bindFramebuffer(gl.FRAMEBUFFER, fbo);
+            gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, tex, 0);
+            const ok = gl.checkFramebufferStatus(gl.FRAMEBUFFER) === gl.FRAMEBUFFER_COMPLETE;
+            gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+            if (ok || !half) break;
+            half = false;
+          }
+          w = nw; h = nh;
+        },
+        dispose() { if (tex) gl.deleteTexture(tex); gl.deleteFramebuffer(fbo); }
+      };
+    }
+
+    function trackPointer() {
+      const p = { tx: 0, ty: 0, inside: false };
+      const read = (e) => {
+        const r = root.getBoundingClientRect();
+        const sx = root.offsetWidth / (r.width || 1), sy = root.offsetHeight / (r.height || 1);
+        p.tx = (e.clientX - r.left) * sx; p.ty = (e.clientY - r.top) * sy;
+        p.inside = e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.bottom;
+      };
+      const out = (e) => { if (!e.relatedTarget) p.inside = false; };
+      window.addEventListener('pointermove', read, { passive: true });
+      window.addEventListener('pointerdown', read, { passive: true });
+      document.addEventListener('pointerout', out);
+      return p;
+    }
+
+    const field = link(FIELD_SRC, 'field');
+    const finish = link(FINISH_SRC, 'finish');
+    if (!field || !finish) return;
+    const uf = locations(field, ['uRes', 'uTime', 'uC1', 'uC2', 'uSize', 'uAngle', 'uMouse', 'uOn', 'uReach', 'uVel']);
+    const un = locations(finish, ['uField', 'uRes', 'uTime', 'uBg', 'uPaper', 'uIntensity']);
+    const vao = gl.createVertexArray();
+    gl.bindVertexArray(vao);
+    const target = fieldTarget();
+    const ptr = trackPointer();
+
+    // Brand palette (see catalog.css / index.html accents) and a subdued intensity.
+    // Less ginger/orange, more chocolate: darker, muted toffee-and-cacao tones.
+    const BG = parseColor('#E7DCCB');      // card background — light coffee-with-milk plate
+    const C1 = parseColor('#BDB19C');      // light-coffee ribbon
+    const C2 = parseColor('#52483A');      // dark-cacao ribbon
+    // The mix() between these two across the layered noise naturally passes through every
+    // shade in between — including a milk-chocolate midtone — without needing a 3rd colour.
+    const SPEED = 8 / 50, SIZE = 60 / 100, ANGLE = (-105 * Math.PI) / 180, HOVER = 25 / 100, REACH = 220;
+    const INTENSITY = 0.85;   // dark ribbons on the light "paper" plate
+
+    let mx = 0, my = 0, vx = 0, vy = 0, on = 0, last = -1, clock = 0;
+
+    function render(now) {
+      requestAnimationFrame(render);
+      const dt = last < 0 ? 0 : clampN((now - last) / 1000, 0, 0.05);
+      last = now;
+      clock = (clock + dt * SPEED) % 3600;
+
+      const dpr = Math.min(window.devicePixelRatio || 1, MAX_DPR);
+      const cw = canvas.clientWidth || 1, ch = canvas.clientHeight || 1;
+      const bw = Math.max(1, Math.round(cw * dpr)), bh = Math.max(1, Math.round(ch * dpr));
+      if (canvas.width !== bw || canvas.height !== bh) { canvas.width = bw; canvas.height = bh; }
+      target.resize(Math.max(1, Math.round(bw / 2)), Math.max(1, Math.round(bh / 2)));
+
+      const present = ptr.inside ? 1 : 0;
+      if (present && on < 0.02) { mx = ptr.tx; my = ptr.ty; }
+      on += (present - on) * (1 - Math.exp(-dt * 5));
+      const k = 1 - Math.exp(-dt * 16);
+      const nx = mx + (ptr.tx - mx) * k, ny = my + (ptr.ty - my) * k;
+      if (dt > 0) {
+        const kv = 1 - Math.exp(-dt * 8);
+        vx += ((nx - mx) / dt - vx) * kv; vy += ((ny - my) / dt - vy) * kv;
+      }
+      mx = nx; my = ny;
+      const vLen = Math.hypot(vx, vy) / ch, vCap = vLen > 3 ? 3 / vLen : 1;
+
+      gl.bindFramebuffer(gl.FRAMEBUFFER, target.fbo);
+      gl.viewport(0, 0, target.width(), target.height());
+      gl.useProgram(field);
+      gl.uniform2f(uf.uRes, target.width(), target.height());
+      gl.uniform1f(uf.uTime, clock);
+      gl.uniform3f(uf.uC1, C1[0], C1[1], C1[2]);
+      gl.uniform3f(uf.uC2, C2[0], C2[1], C2[2]);
+      gl.uniform1f(uf.uSize, SIZE);
+      gl.uniform1f(uf.uAngle, ANGLE);
+      gl.uniform2f(uf.uMouse, (mx - cw / 2) / ch, (ch / 2 - my) / ch);
+      gl.uniform1f(uf.uOn, on * HOVER);
+      gl.uniform1f(uf.uReach, REACH / ch);
+      gl.uniform2f(uf.uVel, (vx / ch) * vCap, (-vy / ch) * vCap);
+      gl.drawArrays(gl.TRIANGLES, 0, 3);
+
+      gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+      gl.viewport(0, 0, bw, bh);
+      gl.useProgram(finish);
+      gl.activeTexture(gl.TEXTURE0);
+      gl.bindTexture(gl.TEXTURE_2D, target.texture());
+      gl.uniform1i(un.uField, 0);
+      gl.uniform2f(un.uRes, bw, bh);
+      gl.uniform1f(un.uTime, clock);
+      gl.uniform3f(un.uBg, BG[0], BG[1], BG[2]);
+      gl.uniform1f(un.uPaper, 1);
+      gl.uniform1f(un.uIntensity, INTENSITY);
+      gl.drawArrays(gl.TRIANGLES, 0, 3);
+    }
+    requestAnimationFrame(render);
+  })();
+</script>
 </body>
 </html>

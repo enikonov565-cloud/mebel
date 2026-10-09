@@ -461,6 +461,13 @@
   .ws-link.lk-run{--lk:#fff;--lk-line:rgba(255,255,255,.38);text-shadow:0 1px 14px rgba(17,11,0,.6)}
   @media (max-width:960px){a.lk-run.lk-run{font-size:16px!important;white-space:normal!important}}
 
+  /* soft hand-over from the light «Собственное производство» block to the dark «Почему выбирают нас»: the top of the dark
+     section is an eased gradient from the light colour to the page colour (the heading starts below it) */
+  section#why-us{position:relative;padding-top:320px}
+  section#why-us::before{content:"";position:absolute;left:0;right:0;top:0;height:300px;pointer-events:none;z-index:0;background:linear-gradient(180deg,rgb(217,203,182) 0.0%,rgb(217,203,182) 6.3%,rgb(214,200,179) 12.5%,rgb(207,194,173) 18.8%,rgb(196,183,163) 25.0%,rgb(181,168,149) 31.3%,rgb(162,150,132) 37.5%,rgb(140,129,112) 43.8%,rgb(117,107,91) 50.0%,rgb(94,85,70) 56.3%,rgb(72,64,50) 62.5%,rgb(53,46,33) 68.8%,rgb(38,31,19) 75.0%,rgb(27,20,9) 81.3%,rgb(20,14,3) 87.5%,rgb(17,11,0) 93.8%,rgb(17,11,0) 100.0%)}
+  section#why-us > .container{position:relative;z-index:1}
+  @media (max-width:960px){section#why-us{padding-top:200px}section#why-us::before{height:190px}}
+
   /* Почему выбирают нас — Figma node 272:547 */
   #why-us{background:#110B00;padding:120px 0}
   .why-inner{display:flex;flex-direction:column;gap:100px}

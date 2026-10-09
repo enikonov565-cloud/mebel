@@ -2961,7 +2961,7 @@
             .fromTo(wipe, { p: 0 }, { p: 1, duration: SLIDE, ease: 'none', immediateRender: false, onUpdate: () => {
               // edge of the incoming sheet (layout px from the top of the pinned window), measured to the picture frame
               const vh = sheets[0].offsetHeight, fr = cur.parentNode, H = fr.offsetHeight, top = (vh - H) / 2;
-              const edge = vh * (1 - wipe.p) + 145;              // where the colour layer is half transparent
+              const edge = (vh + 145) + (top - 2 - (vh + 145)) * wipe.p;   // follows the half-transparent line of the colour layer, and is guaranteed to clear the picture completely at the end
               cur.style.clipPath = 'inset(0px 0px ' + Math.max(0, Math.min(H, H - (edge - top))) + 'px)';
             } }, HOLD);
         main.add(step);

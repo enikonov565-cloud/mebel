@@ -1685,6 +1685,14 @@
   .process-step .process-num.ctl-count{--ctl:#2F1F02;color:#2F1F02!important;margin:0 0 20px}
   @media (max-width:640px){.process-num.ctl-count{font-size:18px}}
 </style>
+<style>
+  @media (min-width:961px){
+    .works-cta.works-cta{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;justify-content:stretch;margin-top:0}
+    .works-cta > a{grid-column:2;grid-row:1;justify-self:center}
+    .works-cta > .ctl{grid-column:3;grid-row:1;margin:0;justify-self:end}
+  }
+  @media (max-width:960px){.works-cta.works-cta{flex-direction:column;align-items:center;gap:20px}.works-cta > .ctl{margin:0}}
+</style>
 </head>
 <body>
 
@@ -3653,12 +3661,15 @@ void main() {
       const n = () => track.querySelectorAll('img').length;
       const deck = works.classList.contains('deck-on');
       const step = () => { const f = track.querySelectorAll('.works-item'); return f.length > 1 ? f[1].offsetLeft - f[0].offsetLeft : 1; };
-      Ctl.make({
+      const made = Ctl.make({
         prev: works.querySelector('.works-arrow.prev'), next: works.querySelector('.works-arrow.next'), after: works, tone: 'dark',
         total: n,
         current: () => deck && window.__deck ? ((Math.round(window.__deck.state.target * n()) % n()) + n()) % n() + 1 : Math.round(track.scrollLeft / step()) + 1,
         watch: cb => { setInterval(cb, 200); track.addEventListener('scroll', cb, { passive: true }); }
       });
+      // one row with the «рассчитать стоимость проекта» button: the button in the middle, the arrows + counter on the right
+      const wcta = works.parentNode.querySelector('.works-cta');
+      if (made && wcta) wcta.appendChild(made.row);
     }
     const rev = document.querySelector('.reviews-gallery');
     if (rev) {

@@ -220,9 +220,6 @@ body{background:#110B00;color:#CDCBC7}
   background:#180F01;border-radius:15px;display:flex;flex-direction:column;overflow:hidden;
 }
 .model-photo{width:100%;flex:1 1 auto;min-height:0;object-fit:cover;display:block;border-radius:15px}
-/* gooey hover (gooey.js): a canvas laid exactly over the photo; invisible until the pointer is on the card */
-.model-card:not(.cta-card){position:relative}
-.gooey-canvas{position:absolute;display:block;border-radius:15px;opacity:0;pointer-events:none;z-index:1}
 .model-card h3{
   padding:28px 22px 0;font-family:'Inter',sans-serif;font-weight:700;font-size:23px;line-height:1.15;
   color:#CDCBC7;flex:none;
@@ -443,11 +440,12 @@ body{background:#110B00;color:#CDCBC7}
   }
   .model-track{align-items:flex-start;gap:clamp(130px,calc(9*var(--vw100)/100),190px);padding:130px 0 110px 56px;margin-left:-56px;scroll-padding-left:56px;scroll-snap-type:x proximity}   /* the left padding leaves room for the titles that bleed past the first photo */
   .model-card:not(.cta-card){
-    width:380px;max-width:none;aspect-ratio:auto;background:none;overflow:visible;position:relative;scroll-snap-align:start;
+    position:relative;width:380px;max-width:none;aspect-ratio:auto;background:none;overflow:visible;position:relative;scroll-snap-align:start;
   }
   .model-card:not(.cta-card):nth-child(even){margin-top:150px}
   /* the pinned plate runs the whole height of the strip, so the lowered tiles never peek out under it */
-  .model-card.cta-card{z-index:6;align-self:stretch;aspect-ratio:auto;height:auto}
+  .model-card.cta-card{z-index:6;align-self:stretch;aspect-ratio:auto;height:auto;margin-bottom:-14px;border-radius:15px;clip-path:inset(0 round 15px)}   /* -14px: the offset plate of a lowered tile's button reaches a little below the row */
+  .model-card.cta-card .cta-glow{clip-path:inset(0 round 15px)}
   /* strip arrows: the same thin long arrows as the detail view and the slider of «Почему выбирают нас», both set above the pinned
      «Нужен другой вариант?» plate (not on the photos); dark brown and inactive when the strip cannot go further that way */
   .model-gallery .model-arrow{

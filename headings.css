@@ -2,12 +2,12 @@
    One typeface and weight everywhere: Inter Medium, default letter-spacing (no tracking: letters neither stick together nor drift apart). Four levels that differ only in size and leading.
    Colours are not set here (they follow the background of each block).
      1  page / section title (h1, h2) ....... --hs1  line-height .9   tracking 0
-     2  title of a pinned screen / step ..... --hs2  line-height .9   tracking 0
+     2  title of a pinned screen / step ..... --hs2 = --hs1 (same size as level 1)  line-height .9
      3  card title ......................... --hs3  line-height 1.1  tracking 0
      4  item / dialog title ................ --hs4  line-height 1.2  tracking 0 */
 :root{
-  --hs1:clamp(1.75rem,calc(6*var(--vw100,100vw)/100),64px);
-  --hs2:clamp(1.5rem,calc(3.4*var(--vw100,100vw)/100),52px);
+  --hs1:clamp(1.75rem,calc(4.2*var(--vw100,100vw)/100),64px);
+  --hs2:var(--hs1);
   --hs3:clamp(1.5rem,calc(2.2*var(--vw100,100vw)/100),30px);
   --hs4:20px;
 }
@@ -19,9 +19,9 @@ html body .benefits-head h2,html body .works-head h2,html body .reviews-head h2,
 html body .cat-head h1{
   font-family:'Inter',sans-serif;font-weight:500;font-size:var(--hs1);line-height:.9;letter-spacing:0;
 }
-/* the headline of the first screen: same style; its size is set by its own layout (it shares the row with the figures) */
+/* the headline of the first screen is the model for all the others: the very same size, weight and leading */
 html body .hero-headline h1,html body .hero-headline .hero-sub{
-  font-family:'Inter',sans-serif;font-weight:500;line-height:.9;letter-spacing:0;
+  font-family:'Inter',sans-serif;font-weight:500;font-size:var(--hs1);line-height:.9;letter-spacing:0;
 }
 
 /* 2 — titles of pinned screens and steps */

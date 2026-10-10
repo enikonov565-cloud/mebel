@@ -1548,6 +1548,13 @@
     .hero-eyebrow br{display:none}
   }
   @media (max-width:640px){
+    /* the headline has the same size as every other title (see headings.css), so it no longer shares a row with the figures:
+       it takes the full width, the three figures follow in one row under it */
+    .hero-top-row{flex-direction:column;align-items:flex-start;gap:22px}
+    .hero-headline{width:100%;flex:none}
+    .hero-stats2{flex-direction:row;align-items:flex-start;justify-content:space-between;width:100%;gap:10px}
+    .hero-stat2{flex:1 1 0;min-width:0}
+    .hero-stat-divider{flex:none;width:1px;max-width:none;height:46px;align-self:center;margin:0;background:rgba(205,203,199,.3)}
     .container{padding:0 20pt}
     /* below ~553px the popup's own max-width calc shrinks it under its 460px default, splitting
        each 2-column half to ~100px of usable text width — too narrow for labels like "Эксклюзивная
@@ -1673,7 +1680,7 @@
 <link rel="stylesheet" href="logo.css?v=3">
 <link rel="stylesheet" href="menu.css?v=2">
 <link rel="stylesheet" href="light.css?v=6">
-<link rel="stylesheet" href="headings.css?v=3">
+<link rel="stylesheet" href="headings.css?v=5">
 </head>
 <body>
 

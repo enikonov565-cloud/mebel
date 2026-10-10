@@ -32,7 +32,7 @@
   function run() {
     textNodes(document.body).forEach(function (n) { n.nodeValue = bind(n.nodeValue); });
     // no single word alone on the last line of a paragraph / list item / description
-    document.querySelectorAll('p, li, .wc-text, .cat-desc').forEach(function (el) {
+    document.querySelectorAll('p, li').forEach(function (el) {
       var nodes = textNodes(el);
       if (!nodes.length) return;
       var all = el.textContent.trim().split(/\s+/);

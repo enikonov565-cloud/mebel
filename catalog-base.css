@@ -44,7 +44,6 @@
     padding:9px 28px;border-radius:15pt;font-weight:600;font-size:1rem;
     border:2px solid var(--accent);cursor:pointer;
   }
-  .btn.outline{background:transparent;border:1.5px solid var(--accent);color:var(--accent)}
 
   /* Dotted Offset Button (Originkit) — dashed border, shifts up-left on hover, brand-color shadow plate */
   .dot-btn{
@@ -69,7 +68,6 @@
   .hero-cta a,.svc-btn.light{--reveal-bg:#2F1F02;--reveal-text:#CDCBC7;--dot-shadow:#CDCBC7}
   .mat-cta a,.benefits-consult a{--reveal-bg:#CDCBC7;--reveal-text:#450A03;--dot-shadow:#450A03}
   .btn.dot-btn:not(.outline){--reveal-bg:var(--accent-dark);--reveal-text:#fff;--dot-shadow:var(--accent)}
-  .btn.outline.dot-btn{--reveal-bg:var(--accent);--reveal-text:#fff;--dot-shadow:var(--accent-dark)}
   .nav-cta{--dot-off:6px}
 
   /* Header — floats over every section so pages scroll under it (Figma node 20:353) */
@@ -133,9 +131,6 @@
     transition:max-height .3s ease,opacity .25s ease,transform .25s ease;
   }
   .nav-links.open{max-height:calc(80*var(--vh100)/100);opacity:1;transform:translateY(0);overflow-y:auto}
-  .nav-links-col{flex:1 1 0;min-width:0;display:flex;flex-direction:column}
-  .nav-links-col+.nav-links-col{border-left:1px solid var(--line)}
-  .nav-links-col a:first-child{border-top:none}
   .nav-links a{
     padding:14px 20px;border-top:1px solid var(--line);
     font-weight:500;color:var(--muted);transition:color .2s;

@@ -89,7 +89,6 @@
     padding:9px 28px;border-radius:15pt;font-weight:600;font-size:1rem;
     border:2px solid var(--accent);cursor:pointer;
   }
-  .btn.outline{background:transparent;border:1.5px solid var(--accent);color:var(--accent)}
 
   /* Dotted Offset Button (Originkit) — dashed border, shifts up-left on hover, brand-color shadow plate */
   .dot-btn{
@@ -115,7 +114,6 @@
   .hero-cta a,.svc-btn.light{--reveal-bg:#2F1F02;--reveal-text:#CDCBC7;--dot-shadow:#CDCBC7}
   .mat-cta a,.benefits-consult a{--reveal-bg:#CDCBC7;--reveal-text:#450A03;--dot-shadow:#450A03}
   .btn.dot-btn:not(.outline){--reveal-bg:var(--accent-dark);--reveal-text:#fff;--dot-shadow:var(--accent)}
-  .btn.outline.dot-btn{--reveal-bg:var(--accent);--reveal-text:#fff;--dot-shadow:var(--accent-dark)}
   .nav-cta{--dot-off:6px}
 
   /* Header — floats over every section so pages scroll under it (Figma node 20:353) */
@@ -179,9 +177,6 @@
     transition:max-height .3s ease,opacity .25s ease,transform .25s ease;
   }
   .nav-links.open{max-height:calc(80*var(--vh100)/100);opacity:1;transform:translateY(0);overflow-y:auto}
-  .nav-links-col{flex:1 1 0;min-width:0;display:flex;flex-direction:column}
-  .nav-links-col+.nav-links-col{border-left:1px solid var(--line)}
-  .nav-links-col a:first-child{border-top:none}
   .nav-links a{
     padding:14px 20px;border-top:1px solid var(--line);
     font-weight:500;color:var(--muted);transition:color .2s;
@@ -487,21 +482,6 @@
     font-family:'Inter',sans-serif;font-weight:300;
     font-size:20px;line-height:1.2;letter-spacing:.02em;
     color:#CDCBC7;max-width:700px;
-  }
-
-  .why-grid{
-    position:relative;display:grid;grid-template-columns:repeat(4,1fr);
-    grid-template-rows:repeat(2,420px);gap:55px 43px;
-  }
-  .why-vline{position:absolute;top:0;bottom:0;width:1px;background:#CDCBC7;opacity:.3}
-  .why-hline{position:absolute;left:0;right:0;height:1px;background:#CDCBC7;opacity:.3}
-  .why-cell{border-radius:15px;overflow:hidden;min-width:0;min-height:0}
-  .why-cell img,.why-cell video{width:100%;height:100%;object-fit:cover;display:block;object-position:center 25%}
-  .why-cell img.portrait,.why-cell video.portrait{object-position:top}
-  .why-cell.text{display:flex;align-items:center;justify-content:center;padding:10px;text-align:left}
-  .why-cell.text p{
-    font-family:'Inter',sans-serif;font-weight:300;
-    font-size:32px;line-height:1.2;letter-spacing:.02em;color:#CDCBC7;max-width:370px;
   }
 
   /* Почему выбирают нас — Shapes Slideshow (Codrops, демо 3) во всю ширину экрана, как в оригинале: фото/видео на весь
@@ -878,22 +858,6 @@
 
   /* Что вы получаете — Figma node 61:80 */
   #benefits{background:#110B00;padding:52px 0}
-  .benefits-tags-wrap{
-    overflow:hidden;margin-bottom:65px;
-    -webkit-mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent);
-    mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent);
-  }
-  .benefits-tags{display:flex;gap:16px;width:max-content;animation:tagScroll 26s linear infinite}
-  .benefits-tags-wrap:hover .benefits-tags{animation-play-state:paused}
-  @keyframes tagScroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-  @media (prefers-reduced-motion:reduce){.benefits-tags{animation:none}}
-  .benefits-tag{
-    flex:none;border:1px solid #2F1F02;border-radius:10px;padding:10px 30px;
-    font-family:'Inter',sans-serif;font-weight:300;font-size:20px;letter-spacing:.02em;
-    background:#CDCBC7;color:#2F1F02;white-space:nowrap;
-    transition:background-color .25s ease,color .25s ease,border-color .25s ease;
-  }
-  .benefits-tag:hover{background:#2F1F02;color:#CDCBC7;border-color:#CDCBC7}
 
   .benefits-head{
     display:flex;justify-content:space-between;align-items:center;
@@ -1407,11 +1371,6 @@
     /* same forced-<br>-fights-text-wrap:balance issue as the services intro: drop it here and
        let balance pick its own break points instead of wrapping two fixed halves separately. */
     .why-head p br{display:none}
-    .why-grid{grid-template-columns:repeat(2,1fr);grid-template-rows:none;grid-auto-rows:auto}
-    .why-cell{position:relative;aspect-ratio:4/3}
-    .why-cell img,.why-cell video{position:absolute;inset:0}
-    .why-cell img.nightstand{object-position:center 48% !important}
-    .why-vline,.why-hline{display:none}
     .svc-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:40px 25px}
     .svc-card{flex-direction:column;align-items:flex-start;height:auto;gap:20px}
     .svc-card-photo-wrap{width:100%;height:auto;aspect-ratio:3/4}
@@ -1436,7 +1395,7 @@
 
   /* Tablet */
   @media (max-width:960px){
-    .cards,.reviews-grid{grid-template-columns:repeat(2,1fr)}
+    .cards{grid-template-columns:repeat(2,1fr)}
     .works-head{justify-content:flex-start;flex-wrap:wrap;gap:16px;margin-bottom:16px}
     .works-head p{text-align:left}
     /* On a real iPhone the heading shrank to its longest word ("Примеры / наших / работ") and the
@@ -1480,23 +1439,6 @@
     .stats-grid{grid-template-columns:1fr;column-gap:40px;row-gap:24px}
     .stats-grid::after{display:none}
     .stats-grid::before{display:none}
-    .why-grid{grid-template-columns:1fr;grid-template-rows:none;gap:24px}
-    /* Single column puts cell 4 (text) and cell 5 (text) directly back to back — on the 4-col
-       desktop grid they sit in different rows with a divider line between them, so the collision
-       only exists once everything collapses to one column. Swap each with its media neighbour so
-       photo/video and text keep alternating instead of stacking two empty-feeling text squares. */
-    .why-cell:nth-child(9){order:5}
-    .why-cell:nth-child(10){order:4}
-    .why-cell:nth-child(11){order:7}
-    .why-cell:nth-child(12){order:6}
-    .why-cell{aspect-ratio:1/1}
-    .why-cell img.nightstand{object-position:center 30% !important}
-    .why-cell.text p{font-size:24px;max-width:100%;width:100%}
-    /* the "Быстрая доставка..." cell is the only one with hard-coded <br> line breaks (sized for
-       its desktop position) — at this breakpoint every cell is the same square, so let it wrap
-       naturally like its siblings instead of shrink-wrapping to its shortest forced line and
-       looking off-centre next to them. */
-    .why-cell.text p br{display:none}
     .why-inner{gap:56px}
     #about,#why-us,#services,#materials,#process,#benefits,#portfolio,#reviews,#faq,#contact{padding:72px 0;scroll-margin-top:88px}
     footer{padding:72px 0 0}
@@ -1600,7 +1542,6 @@
        мебель", which wrapped to 2 lines. Stack the two link groups instead of sitting them
        side by side, so every link gets the popup's full width. */
     .nav-links{flex-direction:column}
-    .nav-links-col+.nav-links-col{border-left:none;border-top:1px solid var(--line)}
     .nav{padding:10px 20pt}
     .nav-left{gap:16px}
     .logo .word{font-size:1.35rem}
@@ -1613,7 +1554,6 @@
     .about-headline p,.why-head p{font-size:13px}
     .stat-box span{font-size:14px}
     .stats-grid{column-gap:24px;row-gap:28px}
-    .why-cell.text p{font-size:18px}
     .svc-head p,.benefits-head p,.mat-head p,.process-head p,.works-head p,.reviews-head p,.faq-head p,.contact-head p{font-size:13px}
     .faq-list summary{font-size:19px;gap:12px}
     .faq-toggle{width:32px;height:32px;font-size:16px;flex:none}
@@ -1621,7 +1561,6 @@
     .svc-head,.mat-head,.process-head,.benefits-head,.works-head,.reviews-head,.faq-head,.contact-head{margin-bottom:24px}
     .svc-card h3{font-size:26px}
     .svc-btn{font-size:18px;height:60px;padding:5px 20px}
-    .benefits-tag{font-size:14px;padding:8px 18px}
     .benefits-list h3{font-size:20px;line-height:28.6px}
     .benefits-list p{font-size:14px;line-height:26.4px}
     /* Accordion, like the FAQ: only the headline shows, the small-print line opens with the round
@@ -1641,7 +1580,7 @@
     }
     .benefits-list li.open .bn-toggle{transform:rotate(45deg);background:#CDCBC7;color:#180F01}
     @media (prefers-reduced-motion:reduce){.benefits-list li.open p{animation:none}.bn-toggle{transition:none}}
-    .cards,.reviews-grid{grid-template-columns:1fr}
+    .cards{grid-template-columns:1fr}
     .works-arrow{width:60px;height:16px}
     .works-arrow.prev{left:12px}
     .works-arrow.next{right:12px}

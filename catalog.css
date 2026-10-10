@@ -39,107 +39,20 @@ body{background:#110B00;color:#CDCBC7}
 
 /* Items */
 .cat-items{background:#110B00;padding:40px 0 120px}
-.cat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:27px 25px}
-.cat-card{
-  display:flex;flex-direction:column;gap:22px;min-width:0;
-  background:#CDCBC7;color:#180F01;border-radius:15px;padding:36px 34px 34px;
-  transition:transform .35s cubic-bezier(.22,1,.36,1),box-shadow .35s cubic-bezier(.22,1,.36,1);
-}
-.cat-card:hover{transform:translateY(-6px);box-shadow:0 14px 0 -4px rgba(205,203,199,.12)}
-.cat-num{
-  font-family:'GOST','Inter',sans-serif;font-weight:400;font-size:64px;line-height:.9;
-  letter-spacing:-.04em;color:#6b4420;
-}
-.cat-card h2{font-family:'Inter',sans-serif;font-weight:500;font-size:34px;line-height:1.08;letter-spacing:.68px}
-.cat-desc{font-family:'Inter',sans-serif;font-weight:300;font-size:19px;line-height:1.4;letter-spacing:.2px}
-.cat-list{
-  list-style:none;display:flex;flex-direction:column;gap:0;
-  border-top:1px solid rgba(24,15,1,.25);margin-top:auto;
-}
-.cat-list li{
-  position:relative;padding:11px 0 11px 30px;border-bottom:1px solid rgba(24,15,1,.25);
-  font-family:'Inter',sans-serif;font-weight:400;font-size:16px;line-height:1.35;
-}
-.cat-list li::before{
-  content:'';position:absolute;left:2px;top:50%;width:14px;height:14px;margin-top:-7px;
-  border:1.5px solid #2F1F02;border-radius:50%;
-}
-.cat-list li::after{
-  content:'';position:absolute;left:6px;top:50%;width:4px;height:7px;margin-top:-6px;
-  border:solid #2F1F02;border-width:0 1.5px 1.5px 0;transform:rotate(45deg);
-}
-.cat-ask{
-  --dot-off:6px;
-  align-self:flex-start;display:inline-flex;align-items:center;justify-content:center;
-  height:44px;padding:0 24px;border-radius:15px;cursor:pointer;
-  background:#2F1F02;border:2px solid #2F1F02;color:#CDCBC7;
-  font-family:'Inter',sans-serif;font-weight:700;font-size:16px;
-  --reveal-bg:#CDCBC7;--reveal-text:#2F1F02;--dot-shadow:#2F1F02;
-}
-
-/* How to order */
-.cat-how{background:#110B00;padding:0 0 120px}
-.cat-how-head{
-  display:flex;justify-content:space-between;align-items:flex-end;
-  gap:clamp(20px,calc(4*var(--vw100)/100),180px);margin-bottom:44px;
-}
-.cat-how-head h2{
-  font-family:'Inter',sans-serif;font-weight:500;
-  font-size:clamp(1.9rem,calc(4*var(--vw100)/100),46px);line-height:1;letter-spacing:1px;color:#CDCBC7;
-}
-.cat-how-head p{
-  font-family:'Inter',sans-serif;font-weight:300;font-size:20px;line-height:1.3;letter-spacing:.02em;
-  max-width:560px;text-align:right;
-}
-.cat-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:25px;list-style:none}
-.cat-step{
-  border:2px dashed rgba(205,203,199,.35);border-radius:15px;padding:28px 26px 30px;
-  display:flex;flex-direction:column;gap:14px;
-}
-.cat-step b{font-family:'GOST','Inter',sans-serif;font-weight:400;font-size:44px;line-height:.9;color:#a1794c;letter-spacing:-.03em}
-.cat-step h3{font-family:'Inter',sans-serif;font-weight:500;font-size:24px;line-height:1.15;letter-spacing:.4px}
-.cat-step p{font-family:'Inter',sans-serif;font-weight:300;font-size:17px;line-height:1.4}
-
-/* Bottom CTA */
-.cat-cta{background:#110B00;padding:0 0 120px}
-.cat-cta-box{
-  display:flex;justify-content:space-between;align-items:center;gap:40px;flex-wrap:wrap;
-  background:#2F1F02;border-radius:15px;padding:56px 60px;
-}
-.cat-cta-box p{
-  font-family:'Inter',sans-serif;font-weight:700;font-size:30px;line-height:1.3;color:#CDCBC7;max-width:640px;
-}
-.cat-cta-btns{display:flex;flex-direction:column;gap:20px}
-.cat-cta-btns .svc-btn{width:430px}
 .svc-btn{
   height:68px;border-radius:15px;font-family:'Inter',sans-serif;font-weight:700;font-size:26px;
   display:flex;align-items:center;justify-content:center;text-align:center;padding:0 20px;max-width:100%;cursor:pointer;
 }
 .svc-btn.dark{background:#110B00;border:2px solid #CDCBC7;color:#CDCBC7;--reveal-bg:#CDCBC7;--reveal-text:#2F1F02;--dot-shadow:#110B00}
 .svc-btn.light{background:#CDCBC7;border:2px solid #CDCBC7;color:#2F1F02;--reveal-bg:#110B00;--reveal-text:#CDCBC7;--dot-shadow:#CDCBC7}
-
-/* Tablet / narrow desktop */
-@media (max-width:1279px){
-  .cat-grid{grid-template-columns:repeat(2,1fr)}
-  .cat-steps{grid-template-columns:repeat(2,1fr)}
-}
 @media (max-width:960px){
   .cat-hero{padding:150px 0 40px}
-  .cat-head,.cat-how-head{flex-direction:column;align-items:flex-start;gap:18px}
-  .cat-head p,.cat-how-head p{text-align:left}
+  .cat-head{flex-direction:column;align-items:flex-start;gap:18px}
+  .cat-head p{text-align:left}
   .cat-tabs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px 8px}
   .cat-tab{width:100%;flex:none;height:32px;padding:0 14px;min-width:0}
   .cat-tabs .cat-tab{font-size:14px!important}
-  .cat-cta-box{padding:40px 30px}
-  .cat-cta-btns,.cat-cta-btns .svc-btn{width:100%}
   .footer-grid{flex-direction:column;gap:40px}
-  /* .footer-nav-contacts is a nowrap row with Figma-exact fixed gaps on desktop (needed so the
-     291px nav-to-contacts gap and 338px brand-to-group gap can differ) — at this width nowrap
-     would force nav+contacts into one row wider than the viewport, which footer's own
-     overflow-x:clip (added to contain the watermark) then silently clipped instead of letting it
-     scroll, making the contacts column effectively disappear. Stack them instead, same as the
-     other columns. */
-  .footer-nav-contacts{flex-direction:column;flex-wrap:wrap;gap:40px}
   .footer-cta-btn{width:290px;font-size:20px;height:44px}
   .nav-cta{width:auto;height:auto;font-size:11px;border-radius:15pt}
   /* Logo lockup scaled as a unit: word 7.5rem -> 4rem, sub keeps the desktop 1.875rem:7.5rem ratio
@@ -153,7 +66,6 @@ body{background:#110B00;color:#CDCBC7}
      работаем", "Эксклюзивная мебель" etc., which wrapped to 2 lines. Stack the columns instead,
      same fix already applied on index.html's own nav-links. */
   .nav-links{flex-direction:column}
-  .nav-links-col+.nav-links-col{border-left:none;border-top:1px solid var(--line)}
   .nav{padding:10px 20pt}
   .nav-left{gap:16px}
   .logo .word{font-size:1.35rem}
@@ -164,34 +76,19 @@ body{background:#110B00;color:#CDCBC7}
     white-space:normal;text-align:center;border-radius:15pt;
   }
   .cat-hero{padding:120px 0 30px}
-  .cat-head p,.cat-how-head p{font-size:15px}
+  .cat-head p{font-size:15px}
   .cat-tab{height:28px;padding:0 8px}
   .cat-tabs .cat-tab{font-size:12px!important}
-  .cat-grid,.cat-steps{grid-template-columns:1fr}
-  .cat-card{padding:28px 24px}
-  .cat-num{font-size:52px}
-  .cat-card h2{font-size:28px}
-  .cat-desc{font-size:17px}
-  .cat-cta-box p{font-size:22px}
   .svc-btn{font-size:18px;height:60px}
   .footer-logo2 .word{font-size:3rem}
   /* .sub ("интерьер") keeps the desktop 1.875rem:7.5rem (1:4) ratio to the word, as in the logo lockup. */
   .footer-logo2 .sub{font-size:.75rem}
   .modal-card{padding:28px 20px 22px}
-  .cat-how,.cat-cta,.cat-items{padding-bottom:80px}
+  .cat-items{padding-bottom:80px}
 }
-
-/* One screen per section: tighter paddings and denser grid on wide windows (see fit.js) */
-.cat-card-cta{background:transparent;border:2px dashed rgba(205,203,199,.35);color:#CDCBC7}
-.cat-card-cta .cat-num{color:#a1794c}
-.cat-card-cta .cat-ask{margin-top:auto;background:#CDCBC7;border-color:#CDCBC7;color:#2F1F02;--reveal-bg:#2F1F02;--reveal-text:#CDCBC7;--dot-shadow:#CDCBC7}
-.cat-card-cta:hover{transform:none;box-shadow:none}
-/* CTA card fills the last grid cell */
-
 /* hover colours must beat the base colours of the same specificity */
 .svc-btn.dark:hover{background:#CDCBC7;color:#2F1F02}
 .svc-btn.light:hover{background:#110B00;color:#CDCBC7}
-.cat-card-cta .cat-ask:hover{background:#2F1F02;color:#CDCBC7}
 
 /* Button labels: one font size and equal side padding so the longest label ("рассчитать стоимость проекта") fits a 430px button on one line */
 @media (min-width:961px){
@@ -201,14 +98,14 @@ body{background:#110B00;color:#CDCBC7}
 }
 
 /* One font size for every button (header button excepted) */
-.svc-btn,.cat-tab,.cat-ask,.cat-card-cta .cat-ask,.footer-cta-btn,.btn,.success-ok-btn,.directions-link{font-size:22px!important}
+.svc-btn, .cat-tab, .footer-cta-btn, .btn, .success-ok-btn, .directions-link{font-size:22px!important}
 @media (max-width:960px){
-  .svc-btn,.cat-tab,.cat-ask,.cat-card-cta .cat-ask,.footer-cta-btn,.btn,.success-ok-btn,.directions-link{font-size:16px!important;white-space:normal!important}
+  .svc-btn, .cat-tab, .footer-cta-btn, .btn, .success-ok-btn, .directions-link{font-size:16px!important;white-space:normal!important}
 }
 
 /* Product model cards (Figma node 419:34) — used only on catalog-korpusnaya.html; a horizontal
    scroll strip of real photos + model name + short description + "рассмотреть подробнее" button.
-   New class names, so the other catalog pages (which still use .cat-grid) are unaffected. */
+   Own class names (model-*). */
 .model-gallery{position:relative}
 .model-track{
   display:flex;gap:36px;overflow-x:auto;scroll-snap-type:x mandatory;

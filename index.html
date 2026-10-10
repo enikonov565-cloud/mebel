@@ -1416,6 +1416,9 @@
     .svc-card{flex-direction:column;align-items:flex-start;height:auto;gap:20px}
     .svc-card-photo-wrap{width:100%;height:auto;aspect-ratio:3/4}
     .svc-card h3{white-space:normal;padding-left:20pt}
+    /* column layout: the «в каталог» pill sits under the photo, so on hover it opens to its full width instead of the
+       "room left of the photo" cap (which on a narrow card shrank to a few px and cut the label off) */
+    @media (hover:hover){a.svc-card:hover .svc-card-arrow{max-width:190px}}
     .svc-head p{white-space:normal}
     /* the forced <br> was authored for the desktop one-line/nowrap layout; here it only chops
        the balanced 3-line wrap (see global `p,li{text-wrap:balance}`) into 4 lines instead, so

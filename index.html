@@ -896,10 +896,11 @@
   .benefits-photo{flex:1 1 0;min-width:280px;width:auto;height:730px;border-radius:15px;overflow:hidden}
   .benefits-photo img,.benefits-photo video{width:100%;height:100%;object-fit:cover;display:block}
 
-  /* «Что вы получаете» (>=961px): a full-width video with a fan of small plates at the bottom, one per point of the list; the
-     plates slowly trade places and the one in the middle turns light. Below 961px the list + photo + accordion stay as they were. */
+  /* «Что вы получаете»: a full-width video with a fan of small plates at the bottom, one per point of the list; the
+     plates slowly trade places and the one in the middle turns light. The same stage on every screen (smaller plates under 961px, see
+     below); the plain list + photo + accordion stay only as a fallback while the script has not built the stage. */
   .bn-stage{display:none}
-  @media (min-width:961px){
+  @media all{
     .bn-built .benefits-wrap{display:none}
     .bn-stage{
       display:block;position:relative;overflow:hidden;background:#110B00;
@@ -934,6 +935,17 @@
       display:flex;align-items:center;justify-content:center;gap:28px;flex-wrap:nowrap;
     }
     .bn-stage .benefits-consult p{color:#F0ECE6}
+  }
+  /* phones and tablets: shorter stage, smaller plates (same grid: title zone, rule, two-line subtitle), the «Остались вопросы?» row stacks */
+  @media (max-width:960px){
+    .bn-stage{height:clamp(480px,calc(var(--vh100,100vh)*.78),620px);touch-action:pan-y}
+    .bn-fan{bottom:112px;height:158px}
+    .bn-card{width:304px;height:154px;margin-left:-152px;padding:16px 18px 0}
+    .bn-card h3{height:44px;font-size:17px;line-height:1.2}
+    .bn-sep{margin:10px 0}
+    .bn-card p{height:36px;font-size:12px;line-height:1.5;letter-spacing:.03em}
+    .bn-stage .benefits-consult{bottom:26px;flex-direction:column;gap:8px;padding:0 20px;text-align:center}
+    .bn-stage .benefits-consult p{margin:0;font-size:16px}
   }
 
 
@@ -3538,25 +3550,25 @@ void main() {
   })();
 </script>
 <script>
-  // «Что вы получаете»: video stage + a fan of plates that slowly trade places (built on wide screens only)
+  // «Что вы получаете»: video stage + a fan of plates that slowly trade places (every screen; smaller plates and a swipe on phones)
   (function () {
-    const mq = window.matchMedia('(min-width:961px)');
+    const mq = window.matchMedia('(max-width:960px)');   // phones / tablets: smaller plates, closer together
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const section = document.getElementById('benefits');
     const wrap = section && section.querySelector('.benefits-wrap');
     if (!wrap) return;
     const consult = section.querySelector('.benefits-consult');
-    const left = section.querySelector('.benefits-left');
     const srcVideo = section.querySelector('.benefits-photo video');
     let built = false, stage, fan, cards, N = 0, t = 0, target = 0, anim = null, timer = 0, visible = false, hover = false;
 
     const place = () => {   // the «Остались вопросы?» row lives in the stage on wide screens and goes home below 961px
       if (!consult) return;
-      if (mq.matches && stage) stage.appendChild(consult); else if (left) left.appendChild(consult);
+      if (stage) stage.appendChild(consult);
     };
     const layout = () => {
       // the plates sit on one circular arc (radius R) and each is turned to follow it, so tilt and drop always agree
-      const W = stage.offsetWidth || 1440, step = Math.min(376, W / 5.2), R = 2600, k = step / R;
+      const W = stage.offsetWidth || 1440, R = 2600;
+      const step = mq.matches ? Math.min(230, (cards[0].offsetWidth || 304) * 0.78) : Math.min(376, W / 5.2), k = step / R;
       cards.forEach((c, i) => {
         let p = (((i - t) % N) + N) % N; if (p > N / 2) p -= N;
         const a = Math.abs(p), th = p * k;
@@ -3592,6 +3604,7 @@ void main() {
       if (srcVideo) {
         const v = srcVideo.cloneNode(true); v.className = 'bn-video'; v.removeAttribute('aria-label'); v.setAttribute('aria-hidden', 'true');
         v.muted = true; stage.appendChild(v);
+        srcVideo.removeAttribute('autoplay'); srcVideo.preload = 'none'; srcVideo.pause();   // the copy in the hidden list stays idle (no double download)
       }
       fan = document.createElement('div'); fan.className = 'bn-fan'; fan.setAttribute('role', 'list');
       cards = lis.map((li, i) => {
@@ -3609,7 +3622,20 @@ void main() {
       place(); layout();
       fan.addEventListener('mouseenter', () => { hover = true; clearTimeout(timer); });
       fan.addEventListener('mouseleave', () => { hover = false; schedule(); });
+      // swipe on touch screens: a horizontal flick moves the plates by one (vertical moves still scroll the page)
+      let sx = null, sy = 0;
+      stage.addEventListener('touchstart', e => { const p = e.touches[0]; sx = p ? p.clientX : null; sy = p ? p.clientY : 0; hover = true; clearTimeout(timer); }, { passive: true });
+      stage.addEventListener('touchend', e => {
+        const p = e.changedTouches[0];
+        if (sx != null && p) {
+          const dx = p.clientX - sx, dy = p.clientY - sy;
+          if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) { cancelAnimationFrame(anim); t = Math.round(t); move(dx < 0 ? 1 : -1, 900); }
+        }
+        sx = null; hover = false; schedule();
+      }, { passive: true });
+      stage.addEventListener('touchcancel', () => { sx = null; hover = false; schedule(); }, { passive: true });
       window.addEventListener('resize', layout);
+      mq.addEventListener('change', layout);
       new IntersectionObserver(es => {
         visible = es[0].isIntersecting;
         const v = stage.querySelector('video');
@@ -3617,8 +3643,7 @@ void main() {
         if (visible) schedule(); else clearTimeout(timer);
       }, { threshold: 0.25 }).observe(stage);
     };
-    if (mq.matches) build();
-    mq.addEventListener('change', () => { if (mq.matches) build(); else place(); });
+    build();
   })();
 </script>
 <script src="ctl.js?v=1"></script>

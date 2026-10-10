@@ -19,3 +19,17 @@
   .nav-links .nm-pair{grid-template-columns:1fr}
   .nav-links .nm-pair a:nth-child(even){border-left:0}
 }
+
+/* Phones: the whole list (3 groups, 15 links) has to be reachable. The popup may use almost the full screen height under the
+   header, rows tighten with the screen height so every link fits on tall phones, and on short ones the popup scrolls on its
+   own (touch scroll stays inside it, never moves the page behind). */
+@media (max-width:640px){
+  nav.nav-links.open{
+    max-height:calc(100*var(--vh100)/100 - 100px);
+    overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;touch-action:pan-y;
+  }
+  .nav-links .nm-group > a:not(.nm-label),.nav-links .nm-pair a{
+    padding-top:clamp(8px,calc((100*var(--vh100)/100 - 520px)/30),13px);
+    padding-bottom:clamp(8px,calc((100*var(--vh100)/100 - 520px)/30),13px);
+  }
+}

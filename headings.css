@@ -1,10 +1,10 @@
 /* Heading system — the one place where the look of every heading on every page is decided (loaded last, wins over the per-section rules).
-   One typeface and weight everywhere: Inter Medium, default letter-spacing (no tracking: letters neither stick together nor drift apart). Four levels that differ only in size and leading.
+   One typeface and weight everywhere: Inter Medium, letter-spacing 1% (.01em) on every level. Four levels that differ only in size and leading.
    Colours are not set here (they follow the background of each block).
-     1  page / section title (h1, h2) ....... --hs1  line-height .9   tracking 0
+     1  page / section title (h1, h2) ....... --hs1  line-height .9   tracking .01em
      2  title of a pinned screen / step ..... --hs2 = --hs1 (same size as level 1)  line-height .9
-     3  card title ......................... --hs3  line-height 1.1  tracking 0
-     4  item / dialog title ................ --hs4  line-height 1.2  tracking 0 */
+     3  card title ......................... --hs3  line-height 1.1  tracking .01em
+     4  item / dialog title ................ --hs4  line-height 1.2  tracking .01em */
 :root{
   --hs1:clamp(1.75rem,calc(4.2*var(--vw100,100vw)/100),64px);
   --hs2:var(--hs1);
@@ -17,30 +17,30 @@
 html body .about-headline h2,html body .why-head h2,html body .svc-head h2,html body .mat-head h2,html body .process-head h2,
 html body .benefits-head h2,html body .works-head h2,html body .reviews-head h2,html body .faq-head h2,html body .contact-head h2,
 html body .cat-head h1{
-  font-family:'Inter',sans-serif;font-weight:500;font-size:var(--hs1);line-height:.9;letter-spacing:0;
+  font-family:'Inter',sans-serif;font-weight:500;font-size:var(--hs1);line-height:.9;letter-spacing:.01em;
 }
 /* the headline of the first screen is the model for all the others: the very same size, weight and leading */
 html body .hero-headline h1,html body .hero-headline .hero-sub{
-  font-family:'Inter',sans-serif;font-weight:500;font-size:var(--hs1);line-height:.9;letter-spacing:0;
+  font-family:'Inter',sans-serif;font-weight:500;font-size:var(--hs1);line-height:.9;letter-spacing:.01em;
 }
 
 /* 2 — titles of pinned screens and steps */
 html body .ws-title,html body .svc-sheet h3,html body .process-text h3{
-  font-family:'Inter',sans-serif;font-weight:500;font-size:var(--hs2);line-height:.9;letter-spacing:0;
+  font-family:'Inter',sans-serif;font-weight:500;font-size:var(--hs2);line-height:.9;letter-spacing:.01em;
 }
 
 /* 3 — card titles */
 html body .svc-card h3,html body .material h3,html body .model-card h3,html body .model-card:not(.cta-card) h3,html body .cta-card h3{
-  font-family:'Inter',sans-serif;font-weight:500;font-size:var(--hs3);line-height:1.1;letter-spacing:0;
+  font-family:'Inter',sans-serif;font-weight:500;font-size:var(--hs3);line-height:1.1;letter-spacing:.01em;
 }
 
 /* 4 — item and dialog titles */
 html body .benefits-list h3,html body .bn-card h3{
-  font-family:'Inter',sans-serif;font-weight:500;font-size:var(--hs4);line-height:1.2;letter-spacing:0;
+  font-family:'Inter',sans-serif;font-weight:500;font-size:var(--hs4);line-height:1.2;letter-spacing:.01em;
 }
 html body .modal-card h3{
-  font-family:'Inter',sans-serif;font-weight:500;font-size:1.5rem;line-height:1.15;letter-spacing:0;
+  font-family:'Inter',sans-serif;font-weight:500;font-size:1.5rem;line-height:1.15;letter-spacing:.01em;
 }
 html body .model-modal-info h3,html body #modelModal .model-modal-info h3{   /* the size of this one follows the dialog's own scale */
-  font-family:'Inter',sans-serif;font-weight:500;letter-spacing:0;
+  font-family:'Inter',sans-serif;font-weight:500;letter-spacing:.01em;
 }

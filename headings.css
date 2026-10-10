@@ -2,7 +2,7 @@
    One typeface and weight everywhere: Inter Medium, letter-spacing 1% (.01em) on every level. Four levels that differ only in size and leading.
    Colours are not set here (they follow the background of each block).
      1  page / section title (h1, h2) ....... --hs1  line-height .9   tracking .01em
-     2  title of a pinned screen / step ..... --hs2 = --hs1 (same size as level 1)  line-height .9
+     2  title of a pinned screen ........... --hs2 = --hs1 (same size as level 1)  line-height .9   (the step names of «Как мы работаем» are sub-headings: they keep their own, smaller size in index.html)
      3  card title ......................... --hs3  line-height 1.1  tracking .01em
      4  item / dialog title ................ --hs4  line-height 1.2  tracking .01em */
 :root{
@@ -25,7 +25,7 @@ html body .hero-headline h1,html body .hero-headline .hero-sub{
 }
 
 /* 2 — titles of pinned screens and steps */
-html body .ws-title,html body .svc-sheet h3,html body .process-text h3{
+html body .ws-title,html body .svc-sheet h3{
   font-family:'Inter',sans-serif;font-weight:500;font-size:var(--hs2);line-height:.9;letter-spacing:.01em;
 }
 

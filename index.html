@@ -1658,7 +1658,8 @@
     .works-cta > a{grid-column:2;grid-row:1;justify-self:center}
     .works-cta > .ctl{grid-column:3;grid-row:1;margin:0;justify-self:end}
   }
-  @media (max-width:960px){.works-cta.works-cta{flex-direction:column;align-items:center;gap:20px}.works-cta > .ctl{margin:0}}
+  /* phones: arrows + counter sit right under the photos (they belong to the carousel), the button comes last */
+  @media (max-width:960px){.works-cta.works-cta{flex-direction:column;align-items:center;gap:20px}.works-cta > .ctl{margin:0;order:-1}}
 </style>
 <style>
   @media (min-width:961px){
@@ -1667,11 +1668,11 @@
     .reviews-cta .leave-review-btn{grid-column:2;grid-row:1}
     .reviews-cta a.lk-run{grid-column:3;grid-row:1;justify-self:end}
   }
-  @media (max-width:960px){.reviews-cta > .ctl{order:3;margin:0;justify-content:center}}
+  @media (max-width:960px){.reviews-cta > .ctl{order:-1;margin:0;justify-content:center}}
 </style>
 <link rel="stylesheet" href="logo.css?v=3">
 <link rel="stylesheet" href="menu.css?v=2">
-<link rel="stylesheet" href="light.css?v=5">
+<link rel="stylesheet" href="light.css?v=6">
 </head>
 <body>
 

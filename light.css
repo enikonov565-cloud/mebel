@@ -107,3 +107,9 @@ html body footer{border-top:0}
   html body #services::after{height:72px;background:linear-gradient(0deg,rgb(217,203,182) 0%,rgb(216,202,181) 5%,rgb(211,198,177) 10%,rgb(205,191,171) 15%,rgb(196,183,163) 20%,rgb(186,173,154) 25%,rgb(174,162,143) 30%,rgb(161,149,131) 35%,rgb(147,135,118) 40%,rgb(132,121,105) 45%,rgb(117,107,91) 50%,rgb(102,93,77) 55%,rgb(87,79,64) 60%,rgb(73,65,51) 65%,rgb(60,52,39) 70%,rgb(48,41,28) 75%,rgb(38,31,19) 80%,rgb(29,23,11) 85%,rgb(23,16,5) 90%,rgb(18,12,1) 95%,rgb(17,11,0) 100%)}
   html body section#materials{padding-top:40px}
 }
+
+/* phones: the «рассчитать стоимость проекта» button under «Примеры наших работ» looks exactly like the same button on the first screen
+   and in «Что мы изготавливаем» (light plate, dark dashed rim, dark text); only the hover plate is dark, since the page here is light */
+@media (max-width:960px){
+  html body .works-cta a{background:#CDCBC7;border-color:#2F1F02;color:#2F1F02;--reveal-bg:#2F1F02;--reveal-text:#CDCBC7;--dot-shadow:#2F1F02}
+}

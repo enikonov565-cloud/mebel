@@ -94,3 +94,9 @@ html body .reviews-cta .ctl,html body .ctl--light{--ctl:#2F1F02;--ctl-off:rgba(4
   html body #contact{padding-bottom:110px}
   html body #contact::after{height:110px}
 }
+
+/* footer: a clean, sharp edge — the light page ends and the dark footer begins, no fade */
+html body #contact::after{content:none;display:none}
+html body #contact{padding-bottom:64px}
+html body footer{border-top:0}
+@media (max-width:960px){html body #contact{padding-bottom:56px}}

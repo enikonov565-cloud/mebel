@@ -1,0 +1,66 @@
+/* ================================================================================================================
+   Light page: every section except «Что мы изготавливаем» and the footer is on the coffee-with-milk ground (#D9CBB6) with the
+   site's dark brown text. The dark ones are joined to it with long eased fades (no visible edge).
+   ================================================================================================================ */
+
+/* sections */
+html body #about,html body #why-us,html body #materials,html body #process,html body #benefits,html body #portfolio,html body #reviews,html body #faq,html body #contact{background:#D9CBB6}
+html body section#why-us,html body section#process,html body section#benefits,html body section#reviews,html body section#faq{padding-top:52px}
+html body section#why-us{padding-bottom:56px}
+html body section#why-us::before,html body section#process::before,html body section#benefits::before,html body section#reviews::before,html body section#faq::before{content:none;display:none}
+html body section#materials{padding-top:56px}
+
+/* headings and texts */
+html body .why-head h2,html body .why-head p,html body .mat-head h2,html body .mat-head p,html body .benefits-head h2,html body .benefits-head p,
+html body .works-head h2,html body .works-head p,html body .faq-head h2,html body .faq-head p,html body .contact-head h2,html body .contact-head p,
+html body .material h3,html body .material p{color:#2F1F02}
+html body .hc-c.on-photo{color:#180F01}
+
+/* «Что вы получаете»: the list used on small screens */
+html body .benefits-list li{border-bottom-color:rgba(47,31,2,.25)}
+html body .benefits-list h3,html body .benefits-list p{color:#2F1F02}
+html body .benefits-left .benefits-consult{border-top-color:rgba(47,31,2,.25)}
+html body .benefits-left .benefits-consult p{color:#2F1F02}
+html body .bn-toggle{color:#2F1F02;border-color:#2F1F02}
+html body .benefits-list li.open .bn-toggle{background:#2F1F02;color:#D9CBB6}
+
+/* consult links that now lie on the light ground */
+html body .mat-cta .svc-consult.lk-run,html body .benefits-left .svc-consult.lk-run{--lk:#2F1F02;--lk-line:rgba(47,31,2,.3);color:#2F1F02}
+html body .mat-cta .svc-consult.lk-run:hover,html body .benefits-left .svc-consult.lk-run:hover,html body .mat-cta .svc-consult.lk-run.is-pressed,html body .benefits-left .svc-consult.lk-run.is-pressed{--lk:#120A04}
+html body .mat-cta .svc-consult.lk-run::after,html body .benefits-left .svc-consult.lk-run::after{background:linear-gradient(90deg,transparent,#2F1F02 50%,transparent) no-repeat,rgba(47,31,2,.3);background-size:46% 100%,100% 100%}
+html body .mat-cta .svc-consult.lk-run.is-pressed::after{background:#2F1F02}
+
+/* FAQ */
+html body .faq-list details{border-bottom-color:rgba(47,31,2,.3)}
+html body .faq-list summary,html body .faq-list details p{color:#2F1F02}
+html body .faq-list summary:hover .faq-q{color:#120A04}
+html body .faq-toggle{border-color:#2F1F02;color:#2F1F02;box-shadow:0 0 0 0 #2F1F02}
+html body .faq-list summary:hover .faq-toggle{background:#2F1F02;color:#D9CBB6;box-shadow:var(--dot-off) var(--dot-off) 0 0 #2F1F02}
+
+/* contacts */
+html body .contact-cta button{background:#2F1F02;border-color:#2F1F02;color:#EADFCB;--reveal-bg:#EADFCB;--reveal-text:#2F1F02;--dot-shadow:#2F1F02}
+html body .directions-trigger{border-color:rgba(47,31,2,.45)!important;color:rgba(47,31,2,.85)!important;--reveal-bg:rgba(47,31,2,.12);--reveal-text:#2F1F02;--dot-shadow:rgba(47,31,2,.3)}
+html body .directions-trigger:hover{border-color:rgba(47,31,2,.8)!important;background:rgba(47,31,2,.1)!important;color:#2F1F02!important}
+
+/* seams to the dark «Что мы изготавливаем» (desktop sheets) and to the footer */
+@media (min-width:961px){
+  html body #services::before{height:330px;background:linear-gradient(180deg,rgb(217,203,182) 0px,rgb(216,202,181) 24px,rgb(213,199,178) 47px,rgb(204,191,171) 71px,rgb(190,178,159) 94px,rgb(171,160,143) 118px,rgb(149,138,124) 141px,rgb(124,115,104) 165px,rgb(99,92,83) 189px,rgb(77,70,64) 212px,rgb(58,52,48) 236px,rgb(44,39,36) 259px,rgb(35,31,29) 283px,rgb(32,28,26) 306px,rgb(31,27,25) 330px)}
+  html body section#services{padding-top:340px}
+  html body #services{padding-bottom:230px}
+  html body #services::after{height:230px;background:linear-gradient(0deg,rgb(217,203,182) 0px,rgb(217,203,182) 16px,rgb(215,201,180) 33px,rgb(210,196,176) 49px,rgb(202,188,169) 66px,rgb(191,178,159) 82px,rgb(178,165,148) 99px,rgb(164,152,136) 115px,rgb(150,138,124) 131px,rgb(137,125,113) 148px,rgb(126,115,103) 164px,rgb(118,107,96) 181px,rgb(113,102,92) 197px,rgb(111,100,90) 214px,rgb(111,100,90) 230px)}
+}
+html body #contact{position:relative;padding-bottom:230px}
+html body #contact::after{content:"";position:absolute;left:0;right:0;bottom:0;height:230px;pointer-events:none;z-index:0;background:linear-gradient(0deg,rgb(17,11,0) 0px,rgb(18,12,1) 16px,rgb(22,15,4) 33px,rgb(31,24,13) 49px,rgb(46,39,26) 66px,rgb(66,58,45) 82px,rgb(91,82,67) 99px,rgb(117,107,91) 115px,rgb(143,132,115) 131px,rgb(168,156,137) 148px,rgb(188,175,156) 164px,rgb(203,190,169) 181px,rgb(212,199,178) 197px,rgb(216,202,181) 214px,rgb(217,203,182) 230px)}
+html body #contact > .container{position:relative;z-index:1}
+html body footer{border-top:0}
+
+/* phones / tablets: «Что мы изготавливаем» is a plain dark block between two light ones */
+@media (max-width:960px){
+  html body #services{position:relative;background:#110B00;padding-top:170px;padding-bottom:170px}
+  html body #services::before,html body #services::after{content:"";position:absolute;left:0;right:0;height:150px;pointer-events:none;z-index:0}
+  html body #services::before{top:0;background:linear-gradient(180deg,rgb(217,203,182) 0px,rgb(216,202,181) 11px,rgb(212,199,178) 21px,rgb(203,190,169) 32px,rgb(188,175,156) 43px,rgb(168,156,137) 54px,rgb(143,132,115) 64px,rgb(117,107,91) 75px,rgb(91,82,67) 86px,rgb(66,58,45) 96px,rgb(46,39,26) 107px,rgb(31,24,13) 118px,rgb(22,15,4) 129px,rgb(18,12,1) 139px,rgb(17,11,0) 150px)}
+  html body #services::after{bottom:0;background:linear-gradient(0deg,rgb(217,203,182) 0px,rgb(216,202,181) 11px,rgb(212,199,178) 21px,rgb(203,190,169) 32px,rgb(188,175,156) 43px,rgb(168,156,137) 54px,rgb(143,132,115) 64px,rgb(117,107,91) 75px,rgb(91,82,67) 86px,rgb(66,58,45) 96px,rgb(46,39,26) 107px,rgb(31,24,13) 118px,rgb(22,15,4) 129px,rgb(18,12,1) 139px,rgb(17,11,0) 150px)}
+  html body #services > .container{position:relative;z-index:1}
+  html body #contact{padding-bottom:150px}
+  html body #contact::after{height:150px}
+}

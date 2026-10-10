@@ -228,10 +228,10 @@
     line-height:1.2;letter-spacing:.02em;color:#CDCBC7;
   }
   .hero-headline{position:absolute;z-index:2;left:3.13%;bottom:12%;width:38%;min-width:260px}
-  /* One heading style for the whole site (hero, section titles, sheet titles, steps, catalogue): Inter Medium / line-height 90% / -0.02em — tight enough to read as one word at large sizes */
+  /* One heading style for the whole site (see headings.css): Inter Medium, line-height 90%, default letter-spacing */
   .hero-headline h1,.hero-headline .hero-sub{
     font-family:'Inter',sans-serif;font-weight:500;
-    font-size:clamp(1.6rem,calc(4.2*var(--vw100)/100),64px);line-height:0.9;letter-spacing:-.02em;
+    font-size:clamp(1.6rem,calc(4.2*var(--vw100)/100),64px);line-height:0.9;letter-spacing:0;
     color:#CDCBC7;margin:0;
   }
   .hero-stats2{
@@ -288,7 +288,7 @@
   }
   .about-headline h2{
     font-family:'Inter',sans-serif;font-weight:500;
-    font-size:clamp(1.75rem,calc(6*var(--vw100)/100),64px);line-height:0.9;letter-spacing:-.02em;
+    font-size:clamp(1.75rem,calc(6*var(--vw100)/100),64px);line-height:0.9;letter-spacing:0;
     color:#2F1F02;white-space:normal;
   }
   .about-headline p{
@@ -451,7 +451,7 @@
   /* «в каталог» on the sheets: brown words. Light caramel-brown on the dark sheets (1-3), deep brown on the lighter ones (4-5),
      so the words stay brown everywhere and stay readable */
   a.svc-golink.lk-run.lk-run{--lk:#B08A66;--lk-line:rgba(176,138,102,.45);--lk-hi:#D4AE88;margin-top:4px}
-  .svc-sheet:nth-of-type(n+4) a.svc-golink.lk-run.lk-run{--lk:#2B1B0F;--lk-line:rgba(43,27,15,.4);--lk-hi:#120A04}
+  .svc-sheet:nth-of-type(n+4) a.svc-golink.lk-run.lk-run{--lk:#F0ECE6;--lk-line:rgba(240,236,230,.45);--lk-hi:#fff}
   a.svc-golink.lk-run.lk-run:hover,a.svc-golink.lk-run.lk-run.is-pressed{--lk:var(--lk-hi)}
   .svc-golink.lk-run::after{background:linear-gradient(90deg,transparent,var(--lk-hi) 50%,transparent) no-repeat,var(--lk-line);background-size:46% 100%,100% 100%}
   .ws-link.lk-run{--lk:#fff;--lk-line:rgba(255,255,255,.38);text-shadow:0 1px 14px rgba(17,11,0,.6)}
@@ -475,7 +475,7 @@
   }
   .why-head h2{
     font-family:'Inter',sans-serif;font-weight:500;
-    font-size:clamp(1.75rem,calc(6*var(--vw100)/100),64px);line-height:0.9;letter-spacing:-.02em;
+    font-size:clamp(1.75rem,calc(6*var(--vw100)/100),64px);line-height:0.9;letter-spacing:0;
     color:#CDCBC7;white-space:normal;
   }
   .why-head p{
@@ -510,7 +510,7 @@
   .ws-cap--current .ws-link{pointer-events:auto}
   .ws-title{
     margin:0;font-family:'Inter',sans-serif;font-weight:500;font-size:clamp(2rem,calc(2.7 * var(--vw100,100vw) / 100),52px);
-    line-height:.9;letter-spacing:-.02em;color:#fff;
+    line-height:.9;letter-spacing:0;color:#fff;
   }
   .text-row{position:relative;display:block;overflow:hidden;white-space:nowrap}
   .text-row > span{display:block;position:relative;padding:.3rem 0}
@@ -559,7 +559,7 @@
   }
   .svc-head h2{
     font-family:'Inter',sans-serif;font-weight:500;white-space:nowrap;
-    font-size:clamp(1.75rem,calc(6*var(--vw100)/100),64px);line-height:0.9;letter-spacing:-.02em;color:#CDCBC7;
+    font-size:clamp(1.75rem,calc(6*var(--vw100)/100),64px);line-height:0.9;letter-spacing:0;color:#CDCBC7;
   }
   .svc-head p{
     font-family:'Inter',sans-serif;font-weight:300;
@@ -706,7 +706,7 @@
     .svc-sheet-num{display:block;font-family:'Inter',sans-serif;font-weight:300;font-size:20px;letter-spacing:.02em;color:rgba(205,203,199,.6);margin-bottom:24px}
     .svc-sheet h3{
       font-family:'Inter',sans-serif;font-weight:500;font-size:clamp(2.4rem,calc(4.2*var(--vw100)/100),64px);line-height:.9;
-      letter-spacing:-.02em;color:#CDCBC7;margin-bottom:28px;
+      letter-spacing:0;color:#CDCBC7;margin-bottom:28px;
     }
     .svc-sheet p{font-family:'Inter',sans-serif;font-weight:300;font-size:20px;line-height:1.3;letter-spacing:.02em;color:#CDCBC7;max-width:460px;margin-bottom:40px}
     /* same button as everywhere on the site: .dot-btn (dashed border, offset plate on hover) */
@@ -749,7 +749,7 @@
   }
   .mat-head h2{
     font-family:'Inter',sans-serif;font-weight:500;
-    font-size:clamp(1.75rem,calc(6*var(--vw100)/100),64px);line-height:0.9;letter-spacing:-.02em;color:#CDCBC7;
+    font-size:clamp(1.75rem,calc(6*var(--vw100)/100),64px);line-height:0.9;letter-spacing:0;color:#CDCBC7;
   }
   .mat-head p{
     font-family:'Inter',sans-serif;font-weight:300;
@@ -793,7 +793,7 @@
   }
   .process-head h2{
     font-family:'Inter',sans-serif;font-weight:500;
-    font-size:clamp(1.75rem,calc(6*var(--vw100)/100),64px);line-height:0.9;letter-spacing:-.02em;color:#2F1F02;
+    font-size:clamp(1.75rem,calc(6*var(--vw100)/100),64px);line-height:0.9;letter-spacing:0;color:#2F1F02;
   }
   .process-head p{
     font-family:'Inter',sans-serif;font-weight:300;
@@ -822,7 +822,7 @@
   .process-num{display:block;font-family:'Inter',sans-serif;font-weight:300;font-size:20px;letter-spacing:.02em;color:rgba(47,31,2,.6);margin-bottom:20px}
   .process-text h3{
     font-family:'Inter',sans-serif;font-weight:500;font-size:clamp(2rem,calc(3.4*var(--vw100)/100),52px);line-height:.9;
-    letter-spacing:-.02em;color:#2F1F02;margin-bottom:36px;
+    letter-spacing:0;color:#2F1F02;margin-bottom:36px;
   }
   .process-checklist{list-style:none;display:flex;flex-direction:column;border-top:1px solid rgba(47,31,2,.24)}
   .process-checklist li{
@@ -865,7 +865,7 @@
   }
   .benefits-head h2{
     font-family:'Inter',sans-serif;font-weight:500;
-    font-size:clamp(1.75rem,calc(6*var(--vw100)/100),64px);line-height:0.9;letter-spacing:-.02em;color:#CDCBC7;
+    font-size:clamp(1.75rem,calc(6*var(--vw100)/100),64px);line-height:0.9;letter-spacing:0;color:#CDCBC7;
   }
   .benefits-head p{
     font-family:'Inter',sans-serif;font-weight:300;
@@ -957,7 +957,7 @@
   }
   .works-head h2{
     font-family:'Inter',sans-serif;font-weight:500;
-    font-size:clamp(1.75rem,calc(6*var(--vw100)/100),64px);line-height:0.9;letter-spacing:-.02em;color:#CDCBC7;
+    font-size:clamp(1.75rem,calc(6*var(--vw100)/100),64px);line-height:0.9;letter-spacing:0;color:#CDCBC7;
   }
   .works-head p{
     font-family:'Inter',sans-serif;font-weight:300;
@@ -1031,7 +1031,7 @@
   }
   .reviews-head h2{
     font-family:'Inter',sans-serif;font-weight:500;
-    font-size:clamp(1.75rem,calc(6*var(--vw100)/100),64px);line-height:0.9;letter-spacing:-.02em;color:#2F1F02;
+    font-size:clamp(1.75rem,calc(6*var(--vw100)/100),64px);line-height:0.9;letter-spacing:0;color:#2F1F02;
   }
   .reviews-head p{
     font-family:'Inter',sans-serif;font-weight:300;
@@ -1103,7 +1103,7 @@
   }
   .faq-head h2{
     font-family:'Inter',sans-serif;font-weight:500;
-    font-size:clamp(1.75rem,calc(6*var(--vw100)/100),64px);line-height:0.9;letter-spacing:-.02em;color:#CDCBC7;
+    font-size:clamp(1.75rem,calc(6*var(--vw100)/100),64px);line-height:0.9;letter-spacing:0;color:#CDCBC7;
   }
   .faq-head p{
     font-family:'Inter',sans-serif;font-weight:300;
@@ -1175,7 +1175,7 @@
   }
   .contact-head h2{
     font-family:'Inter',sans-serif;font-weight:500;
-    font-size:clamp(1.75rem,calc(6*var(--vw100)/100),64px);line-height:0.9;letter-spacing:-.02em;color:#CDCBC7;
+    font-size:clamp(1.75rem,calc(6*var(--vw100)/100),64px);line-height:0.9;letter-spacing:0;color:#CDCBC7;
   }
   .contact-head p{
     font-family:'Inter',sans-serif;font-weight:300;
@@ -1673,6 +1673,7 @@
 <link rel="stylesheet" href="logo.css?v=3">
 <link rel="stylesheet" href="menu.css?v=2">
 <link rel="stylesheet" href="light.css?v=6">
+<link rel="stylesheet" href="headings.css?v=3">
 </head>
 <body>
 

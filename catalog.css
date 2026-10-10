@@ -17,7 +17,7 @@ body{background:#110B00;color:#CDCBC7}
 }
 .cat-head h1{
   font-family:'Inter',sans-serif;font-weight:500;
-  font-size:clamp(1.75rem,calc(6*var(--vw100)/100),64px);line-height:.9;letter-spacing:-.02em;color:#CDCBC7;
+  font-size:clamp(1.75rem,calc(6*var(--vw100)/100),64px);line-height:.9;letter-spacing:0;color:#CDCBC7;
 }
 .cat-head p{
   font-family:'Inter',sans-serif;font-weight:300;

@@ -64,3 +64,8 @@ html body footer{border-top:0}
   html body #contact{padding-bottom:150px}
   html body #contact::after{height:150px}
 }
+
+/* buttons and arrows follow the light ground (colours only — every animation stays as it was) */
+html body .works-cta a{background:#2F1F02;border-color:#2F1F02;color:#EADFCB;--reveal-bg:#EADFCB;--reveal-text:#2F1F02;--dot-shadow:#2F1F02}
+html body .works-cta .ctl,html body .works-cta .ctl--dark{--ctl:#2F1F02;--ctl-off:rgba(47,31,2,.22)}
+html body .reviews-cta .ctl,html body .ctl--light{--ctl:#2F1F02;--ctl-off:rgba(47,31,2,.22)}

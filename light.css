@@ -69,3 +69,28 @@ html body footer{border-top:0}
 html body .works-cta a{background:#2F1F02;border-color:#2F1F02;color:#EADFCB;--reveal-bg:#EADFCB;--reveal-text:#2F1F02;--dot-shadow:#2F1F02}
 html body .works-cta .ctl,html body .works-cta .ctl--dark{--ctl:#2F1F02;--ctl-off:rgba(47,31,2,.22)}
 html body .reviews-cta .ctl,html body .ctl--light{--ctl:#2F1F02;--ctl-off:rgba(47,31,2,.22)}
+
+/* one rhythm between all screens: the dark slideshow meets the dark «Что мы изготавливаем» directly (no light strip, no fade) and
+   every other joint has the same short spacing */
+@media (min-width:961px){
+  html body section#about{padding-bottom:52px}
+  html body section#why-us{padding-bottom:0}
+  html body #services::before{content:none;display:none}
+  html body #services > .container::before{content:none;display:none}
+  html body section#services{padding-top:96px}
+  html body #services{padding-bottom:130px}
+  html body #services::after{height:130px;background:linear-gradient(0deg,rgb(217,203,182) 0px,rgb(217,203,182) 9px,rgb(215,201,180) 19px,rgb(210,196,176) 28px,rgb(202,188,169) 37px,rgb(191,178,159) 46px,rgb(178,165,148) 56px,rgb(164,152,136) 65px,rgb(150,138,124) 74px,rgb(137,125,113) 84px,rgb(126,115,103) 93px,rgb(118,107,96) 102px,rgb(113,102,92) 111px,rgb(111,100,90) 121px,rgb(111,100,90) 130px)}
+  html body #services > .container::after{bottom:-130px;height:130px}
+  html body section#materials{padding-top:52px}
+  html body #contact{padding-bottom:130px}
+  html body #contact::after{height:130px;background:linear-gradient(0deg,rgb(17,11,0) 0px,rgb(18,12,1) 9px,rgb(22,15,4) 19px,rgb(31,24,13) 28px,rgb(46,39,26) 37px,rgb(66,58,45) 46px,rgb(91,82,67) 56px,rgb(117,107,91) 65px,rgb(143,132,115) 74px,rgb(168,156,137) 84px,rgb(188,175,156) 93px,rgb(203,190,169) 102px,rgb(212,199,178) 111px,rgb(216,202,181) 121px,rgb(217,203,182) 130px)}
+}
+@media (max-width:960px){
+  html body section#why-us{padding-bottom:0}
+  html body #services::before{content:none;display:none}
+  html body section#services{padding-top:72px;padding-bottom:110px}
+  html body #services::after{height:110px;background:linear-gradient(0deg,rgb(217,203,182) 0px,rgb(216,202,181) 8px,rgb(212,199,178) 16px,rgb(203,190,169) 24px,rgb(188,175,156) 31px,rgb(168,156,137) 39px,rgb(143,132,115) 47px,rgb(117,107,91) 55px,rgb(91,82,67) 63px,rgb(66,58,45) 71px,rgb(46,39,26) 79px,rgb(31,24,13) 86px,rgb(22,15,4) 94px,rgb(18,12,1) 102px,rgb(17,11,0) 110px)}
+  html body section#materials{padding-top:52px}
+  html body #contact{padding-bottom:110px}
+  html body #contact::after{height:110px}
+}

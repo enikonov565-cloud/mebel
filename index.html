@@ -2667,7 +2667,9 @@
     const GATHER_MS = 5500, GATHER_STAGGER = 200;         // slow, smooth gathering of the cards into the stack before every repeat
     const REPEAT_MIN = 12000, REPEAT_MAX = 15000;        // pause between deals, ms
     const onScreen = () => { const r = deck.getBoundingClientRect(); return r.top < window.innerHeight * 0.85 && r.bottom > 0; };
-    const restart = now => { state.gather = now; state.finished = false; };   // gather into a stack first, then deal again
+    // PINNED: after every deal the middle card is card 0 — the photo that lay on top of the closed stack. Wheel / swipe / arrows
+    // stay locked (ready = false) from the moment the cards gather until the last card has landed, and the offset is zeroed.
+    const restart = now => { state.gather = now; state.finished = false; state.ready = false; };   // gather into a stack first, then deal again
 
     const build = () => {
       const w = deck.clientWidth || 1;
@@ -2794,7 +2796,7 @@
       } else if (state.dealt) {
         const el = now - state.startAt;
         cards.forEach((c, i) => { c.deal = reduce ? 1 : ease((el - STACK_HOLD - i * DEAL_STAGGER) / DEAL_MS); });
-        if (!state.ready && (reduce || el - STACK_HOLD - (cards.length - 1) * DEAL_STAGGER > 0)) state.ready = true;
+        if (!state.ready && cards.every(c => c.deal >= 1)) state.ready = true;     // input unlocks only once every card has landed
         if (!reduce) {
           if (!state.finished && cards.every(c => c.deal >= 1)) { state.finished = true; state.nextAt = now + REPEAT_MIN + Math.random() * (REPEAT_MAX - REPEAT_MIN); }
           else if (state.finished && now >= state.nextAt && onScreen()) restart(now);     // deal again every 12-15 s while on screen
@@ -2833,7 +2835,7 @@
     }, { passive: true });
     deck.addEventListener('touchmove', e => {
       const t = e.touches[0];
-      if (!t || tx == null) return;
+      if (!t || tx == null || !state.ready) return;
       const dx = tx - t.clientX, dy = ty - t.clientY;
       if (Math.abs(dx) <= Math.abs(dy)) return;          // vertical swipe scrolls the page as usual
       tx = t.clientX;
@@ -2860,6 +2862,7 @@
     deck.addEventListener('pointerup', e => { if (e.pointerType !== 'mouse') unflip(); });
 
     gallery.querySelectorAll('.works-arrow').forEach(btn => btn.addEventListener('click', () => {
+      if (!state.ready) return;
       state.target += (btn.classList.contains('prev') ? -1 : 1) / count;
     }));
 

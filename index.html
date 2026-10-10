@@ -1598,8 +1598,14 @@
     .works-arrow.next{right:12px}
     .material{flex:1 1 140px}
     .material img{height:200px}
-    .material h3{font-size:32px}
-    .material p{font-size:15px}
+    /* one card per row, identical for all five: photo on top, title + description below on the full width.
+       (Two columns of ~150px cannot hold the glued word groups — «изогнутые элементы» — without cutting or breaking words.) */
+    .materials-grid{flex-direction:column;gap:28px}
+    .material{flex:none;flex-direction:column}
+    .material img{height:190px}
+    .material-body{justify-content:flex-start;min-height:0;gap:10px;padding-top:16px}
+    .material h3{font-size:30px;line-height:1.15}
+    .material p{font-size:15px;line-height:1.35;letter-spacing:0}
     .process-steps{gap:36px}
     .process-num{font-size:16px;margin-bottom:12px}
     .process-text h3{font-size:24px;margin-bottom:20px}

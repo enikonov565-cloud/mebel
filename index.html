@@ -2696,6 +2696,7 @@
         const x = slot * c.deal + c.jx * scatter;
         const y = c.jy * scatter - hop;
         const spin = c.jr * STACK_TILT * (1 - settle);
+        c.px = x; c.py = y; c.spin = spin;
         nodes[i].style.transform = 'perspective(' + PERSPECTIVE + 'px) translate3d(' + x + 'px,' + y + 'px,0) rotate(' + spin + 'deg) rotateY(' + c.rot + 'deg)';
       }
     };
@@ -2721,29 +2722,45 @@
     });
     let anyDark = false;
     const PROBE = [[0.5, 0.5], [0.2, 0.25], [0.8, 0.25], [0.2, 0.75], [0.8, 0.75]];   // points inside a letter box
-    const photoAt = (x, y) => document.elementsFromPoint(x, y).some(e => e.closest && e.closest('.deck-card'));
+    // The letters' boxes are measured once (relative to the deck's top-left corner, so they stay valid while the page scrolls)
+    // and re-measured on resize / font load. Whether a letter lies on a photo is then pure arithmetic on the cards' own
+    // geometry (centre, tilt, flip) — no hit-testing through 3D layers, which is what made the dealing animation stutter.
+    let letterGeo = null, contrastDue = false, lastContrast = 0;
+    const measureLetters = () => {
+      const D = deck.getBoundingClientRect(), z = zoom();
+      letterGeo = headChars.map(c => {
+        const q = c.getBoundingClientRect();
+        return { el: c, l: (q.left - D.left) / z, t: (q.top - D.top) / z, w: q.width / z, h: q.height / z, on: c.classList.contains('on-photo') };
+      });
+    };
     const contrast = () => {
       if (!headChars.length) return;
-      const D = deck.getBoundingClientRect();
-      const boxes = [];
-      nodes.forEach(n => {
-        const b = n.getBoundingClientRect();
-        const l = Math.max(b.left, D.left), r = Math.min(b.right, D.right), t = Math.max(b.top, D.top), bt = Math.min(b.bottom, D.bottom);   // only the visible part (the frame clips)
-        if (r > l && bt > t) boxes.push({ l, r, t, b: bt });
-      });
-      if (!boxes.length) { if (anyDark) { headChars.forEach(c => c.classList.remove('on-photo')); anyDark = false; } return; }
+      if (!letterGeo) measureLetters();
+      const W = deck.offsetWidth, H = deck.offsetHeight;
+      const s0 = (TOP_ROOM + CARD_H / 2) * baseScale, hw = CARD_W * baseScale / 2, hh = CARD_H * baseScale / 2;
+      const quads = [];
+      for (let i = 0; i < cards.length; i++) {
+        const c = cards[i];
+        const x = W / 2 + (c.px || 0) * baseScale, y = s0 + (c.py || 0) * baseScale;
+        if (x + hw * 1.25 < 0 || x - hw * 1.25 > W) continue;   // outside the deck frame
+        const ang = (c.spin || 0) * Math.PI / 180, sx = Math.max(0.05, Math.abs(Math.cos(c.rot * Math.PI / 180)));
+        quads.push({ x, y, cos: Math.cos(ang), sin: Math.sin(ang), hw: hw * sx, hh });
+      }
       let dark = false;
-      headChars.forEach(c => {
-        const q = c.getBoundingClientRect();
-        let hit = boxes.some(o => q.right > o.l && q.left < o.r && q.bottom > o.t && q.top < o.b);   // cheap pre-check
-        if (hit) {   // exact check: a tilted card leaves empty corners in its bounding box, so ask what is really under the letter
-          let n = 0;
-          for (const [fx, fy] of PROBE) if (photoAt(q.left + q.width * fx, q.top + q.height * fy)) n++;
-          hit = n >= 3;   // majority of the probe points
+      for (const g of letterGeo) {
+        let n = 0;
+        if (quads.length) for (const [fx, fy] of PROBE) {
+          const px = g.l + g.w * fx, py = g.t + g.h * fy;
+          if (px < 0 || px > W || py < 0 || py > H) continue;   // the frame clips the cards
+          for (const q of quads) {
+            const dx = px - q.x, dy = py - q.y;
+            if (Math.abs(dx * q.cos + dy * q.sin) <= q.hw && Math.abs(-dx * q.sin + dy * q.cos) <= q.hh) { n++; break; }
+          }
         }
-        if (hit !== c.classList.contains('on-photo')) c.classList.toggle('on-photo', hit);
+        const hit = n >= 3;   // majority of the probe points
+        if (hit !== g.on) { g.on = hit; g.el.classList.toggle('on-photo', hit); }
         if (hit) dark = true;
-      });
+      }
       anyDark = dark;
     };
 
@@ -2784,7 +2801,8 @@
         else c.rot = aim;
         if (c.deal !== 1) moving = true;
       });
-      if (moving || state.dirty) { state.dirty = false; paint(); contrast(); }
+      if (moving || state.dirty) { state.dirty = false; paint(); contrastDue = true; }
+      if (contrastDue && now - lastContrast >= 50) { contrastDue = false; lastContrast = now; contrast(); }
     };
 
     const zoom = () => parseFloat(document.documentElement.style.zoom) || 1;
@@ -2845,8 +2863,9 @@
       } else if (!v && state.inView) state.inView = false;
     };
     window.addEventListener('scroll', check, { passive: true });
-    window.addEventListener('resize', () => { build(); check(); });
-    window.addEventListener('load', () => { build(); check(); });
+    window.addEventListener('resize', () => { build(); letterGeo = null; contrastDue = true; check(); });
+    window.addEventListener('load', () => { build(); letterGeo = null; contrastDue = true; check(); });
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { letterGeo = null; contrastDue = true; });
     build();
     check();
     requestAnimationFrame(tick);

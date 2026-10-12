@@ -1,8 +1,8 @@
 /* Heading system — the one place where the look of every heading on every page is decided (loaded last, wins over the per-section rules).
-   One typeface and weight everywhere: Inter Medium. Four levels: 1 = display titles (-1.5% tracking, 90% leading), 2 = the H2 of the design (Inter 500 / 50px / 130% / -0.5px), 3-4 = card and item titles (-1% tracking).
+   One typeface and weight everywhere: Inter Medium. Four levels: 1 = display titles (-1.5% tracking, 90% leading), 2 = the H2 of the design (Inter 500 / 50px / 95% / -0.5px), 3-4 = card and item titles (-1% tracking).
    Colours are not set here (they follow the background of each block).
      1  page / section title (h1, h2) ....... --hs1  line-height .9   tracking -.015em
-     2  H2: slide titles of «Почему выбирают нас» and step names of «Как мы работаем» .... --hs2 = 50px at the 1920 frame  line-height 1.3  tracking -.5px (-.01em)
+     2  H2: slide titles of «Почему выбирают нас» and step names of «Как мы работаем» .... --hs2 = 50px at the 1920 frame  line-height .95  tracking -.5px (-.01em)
      3  card title ......................... --hs3  line-height 1.1  tracking -.01em
      4  item / dialog title ................ --hs4  line-height 1.2  tracking -.01em */
 :root{
@@ -28,9 +28,9 @@ html body .hero-headline h1,html body .hero-headline .hero-sub{
   html body .hero-headline h1,html body .hero-headline .hero-sub{font-size:var(--hs1);line-height:.9}
 }
 
-/* 2 — H2 (design spec: Inter / 50px / weight 500 / line-height 130% / letter-spacing -0.5px) */
+/* 2 — H2 (design spec: Inter / 50px / weight 500 / letter-spacing -0.5px; line-height 95% by later decision) */
 html body .ws-title,html body .process-text h3{
-  font-family:'Inter',sans-serif;font-weight:500;font-size:var(--hs2);line-height:1.3;letter-spacing:-.01em;
+  font-family:'Inter',sans-serif;font-weight:500;font-size:var(--hs2);line-height:.95;letter-spacing:-.01em;
 }
 
 /* 3 — card titles */

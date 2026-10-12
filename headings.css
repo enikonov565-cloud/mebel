@@ -56,3 +56,6 @@ html body .benefits-head p,html body .works-head p,html body .reviews-head p,htm
 html body .cat-head p,html body .hero-eyebrow{
   text-align:left;
 }
+
+/* No lonely last word: titles and FAQ questions break into lines of similar length (the last two words of the questions are also tied, see typo.js). */
+html body h1,html body h2,html body h3,html body .faq-q{text-wrap:balance}

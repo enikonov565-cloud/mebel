@@ -1,8 +1,8 @@
 /* Heading system — the one place where the look of every heading on every page is decided (loaded last, wins over the per-section rules).
-   One typeface and weight everywhere: Inter Medium, letter-spacing -1% (-.01em) on every level. Four levels that differ only in size and leading.
+   One typeface and weight everywhere: Inter Medium, letter-spacing -1.5% (-.015em) on titles (levels 1-2), -1% (-.01em) on card and item titles (levels 3-4). Four levels that differ only in size and leading.
    Colours are not set here (they follow the background of each block).
-     1  page / section title (h1, h2) ....... --hs1  line-height .9   tracking -.01em
-     2  title of a pinned screen ........... --hs2 = --hs1 (same size as level 1)  line-height .9   (the step names of «Как мы работаем» are sub-headings: they keep their own, smaller size in index.html)
+     1  page / section title (h1, h2) ....... --hs1  line-height .9   tracking -.015em
+     2  title of a pinned screen ........... --hs2 = --hs1 (same size as level 1)  line-height .9   tracking -.015em   (the step names of «Как мы работаем» are sub-headings: they keep their own, smaller size in index.html)
      3  card title ......................... --hs3  line-height 1.1  tracking -.01em
      4  item / dialog title ................ --hs4  line-height 1.2  tracking -.01em */
 :root{
@@ -17,16 +17,16 @@
 html body .about-headline h2,html body .why-head h2,html body .svc-head h2,html body .mat-head h2,html body .process-head h2,
 html body .benefits-head h2,html body .works-head h2,html body .reviews-head h2,html body .faq-head h2,html body .contact-head h2,
 html body .cat-head h1{
-  font-family:'Inter',sans-serif;font-weight:500;font-size:var(--hs1);line-height:.9;letter-spacing:-.01em;
+  font-family:'Inter',sans-serif;font-weight:500;font-size:var(--hs1);line-height:.9;letter-spacing:-.015em;
 }
 /* the headline of the first screen is the model for all the others: the very same size, weight and leading */
 html body .hero-headline h1,html body .hero-headline .hero-sub{
-  font-family:'Inter',sans-serif;font-weight:500;font-size:var(--hs1);line-height:.9;letter-spacing:-.01em;
+  font-family:'Inter',sans-serif;font-weight:500;font-size:var(--hs1);line-height:.9;letter-spacing:-.015em;
 }
 
 /* 2 — titles of pinned screens and steps */
 html body .ws-title,html body .svc-sheet h3{
-  font-family:'Inter',sans-serif;font-weight:500;font-size:var(--hs2);line-height:.9;letter-spacing:-.01em;
+  font-family:'Inter',sans-serif;font-weight:500;font-size:var(--hs2);line-height:.9;letter-spacing:-.015em;
 }
 
 /* 3 — card titles */

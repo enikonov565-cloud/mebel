@@ -1548,6 +1548,8 @@
     .hero-eyebrow br{display:none}
   }
   @media (max-width:640px){
+    /* «Вопросы и ответы» on phones: every text of the section (subtitle, questions, answers) has line-height 90% */
+    #faq .faq-head p,#faq .faq-q,#faq .faq-list details p{line-height:.9}
     .container{padding:0 20pt}
     /* below ~553px the popup's own max-width calc shrinks it under its 460px default, splitting
        each 2-column half to ~100px of usable text width — too narrow for labels like "Эксклюзивная

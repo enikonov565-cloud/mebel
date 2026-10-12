@@ -48,3 +48,11 @@ html body .modal-card h3{
 html body .model-modal-info h3,html body #modelModal .model-modal-info h3{   /* the size of this one follows the dialog's own scale */
   font-family:'Inter',sans-serif;font-weight:500;letter-spacing:-.01em;
 }
+
+/* Small subtitles under / next to the titles: always aligned to the left (they used to be right-aligned whenever they stood beside the
+   title, which left the lines starting at different points — «Точная подгонка…» / «и изготавливаем…»). */
+html body .about-headline p,html body .why-head p,html body .svc-head p,html body .mat-head p,html body .process-head p,
+html body .benefits-head p,html body .works-head p,html body .reviews-head p,html body .faq-head p,html body .contact-head p,
+html body .cat-head p,html body .hero-eyebrow{
+  text-align:left;
+}

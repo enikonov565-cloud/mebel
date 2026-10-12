@@ -19,9 +19,13 @@ html body .benefits-head h2,html body .works-head h2,html body .reviews-head h2,
 html body .cat-head h1,html body .svc-sheet h3{
   font-family:'Inter',sans-serif;font-weight:500;font-size:var(--hs1);line-height:.9;letter-spacing:-.015em;
 }
-/* the headline of the first screen is the model for all the others: the very same size, weight and leading */
+/* the headline of the first screen is the model for all the others: the very same weight and tracking; from tablet width up also the same size and leading.
+   On phones its size and leading stay as laid out in index.html (it shares the row with the figures). */
 html body .hero-headline h1,html body .hero-headline .hero-sub{
-  font-family:'Inter',sans-serif;font-weight:500;font-size:var(--hs1);line-height:.9;letter-spacing:-.015em;
+  font-family:'Inter',sans-serif;font-weight:500;letter-spacing:-.015em;
+}
+@media (min-width:641px){
+  html body .hero-headline h1,html body .hero-headline .hero-sub{font-size:var(--hs1);line-height:.9}
 }
 
 /* 2 — H2 (design spec: Inter / 50px / weight 500 / line-height 130% / letter-spacing -0.5px) */

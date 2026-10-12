@@ -1212,15 +1212,17 @@
     --reveal-bg:#2B2620;--reveal-text:#CDCBC7;--dot-shadow:#CDCBC7;
   }
 
-  .map-embed{position:relative;height:530px;border-radius:15px;overflow:hidden;background:#2B2620}
-  .map-embed iframe{width:100%;height:100%;border:0;display:block}
+  /* the map and the address bar are one block with the same edges and the same rounded corners; the bar sits UNDER the map, so it never
+     covers the map's own controls (placemark, zoom, ruler, traffic, scale, copyright) */
+  .map-embed{position:relative;display:flex;flex-direction:column;border-radius:15px;overflow:hidden;background:#CDCBC7}
+  .map-embed iframe{width:100%;height:530px;flex:none;border:0;display:block;background:#2B2620}
   .map-embed-link{
-    position:absolute;left:20px;bottom:20px;z-index:2;
-    background:#CDCBC7;border-radius:10px;
-    padding:12px 18px;font-size:.85rem;color:#180F01;font-weight:600;
-    box-shadow:0 4px 14px rgba(0,0,0,.35);transition:transform .15s ease;
+    display:block;flex:none;
+    background:#CDCBC7;
+    padding:16px 22px;font-size:.95rem;line-height:1.3;color:#180F01;font-weight:600;text-align:left;
+    transition:background-color .2s ease;
   }
-  .map-embed-link:hover{transform:translateY(-2px)}
+  .map-embed-link:hover{background:#D9D6D0}
 
   /* Footer — restyled after a reference screenshot the client supplied (another studio's site):
      a thin rule above the columns, small accent-coloured uppercase labels naming each column,
@@ -1445,7 +1447,7 @@
     .faq-head p{text-align:left}
     .faq-head p br{display:none}
     .faq-list summary{font-size:24px}
-    .map-embed{height:auto;aspect-ratio:16/9}
+    .map-embed iframe{height:auto;aspect-ratio:4/3}
     .footer-grid{flex-direction:column;gap:40px}
     .about-photo-img{max-width:560px}
     .stats-grid{grid-template-columns:1fr;column-gap:40px;row-gap:24px}
@@ -1548,8 +1550,8 @@
     .hero-eyebrow br{display:none}
   }
   @media (max-width:640px){
-    /* «Вопросы и ответы» on phones: every text of the section (subtitle, questions, answers) has line-height 90% */
-    #faq .faq-head p,#faq .faq-q,#faq .faq-list details p{line-height:.9}
+    /* «Вопросы и ответы» on phones: every text of the section (subtitle, questions, answers) has line-height 105% */
+    #faq .faq-head p,#faq .faq-q,#faq .faq-list details p{line-height:1.05}
     .container{padding:0 20pt}
     /* below ~553px the popup's own max-width calc shrinks it under its 460px default, splitting
        each 2-column half to ~100px of usable text width — too narrow for labels like "Эксклюзивная

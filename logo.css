@@ -32,3 +32,9 @@ header::after{
 }
 .logo{text-shadow:0 1px 10px rgba(17,11,0,.55)}
 .logo .lk-sub{opacity:1;font-weight:400;font-size:.3em;color:#E4DED3}
+
+/* Footer lockup: it shrink-wraps the word and sits on the left edge of the column, so the wave, the first letter «к», the text and the
+   button below it all start on one vertical line (the lockup used to stretch over the whole column and centre the word inside it).
+   .08em is the left side-bearing of the letter «к» (measured), pulled out so the visible edge of the letter — not its box — is on the line. */
+.footer-logo2{align-self:flex-start}
+.footer-logo2 .lk-word{margin-left:-.08em}

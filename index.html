@@ -1677,7 +1677,7 @@
   }
   @media (max-width:960px){.reviews-cta > .ctl{order:-1;margin:0;justify-content:center}}
 </style>
-<link rel="stylesheet" href="logo.css?v=3">
+<link rel="stylesheet" href="logo.css?v=4">
 <link rel="stylesheet" href="menu.css?v=2">
 <link rel="stylesheet" href="light.css?v=6">
 <link rel="stylesheet" href="headings.css?v=9">
@@ -3074,7 +3074,6 @@
         const step = gsap.timeline();
         step.to({}, { duration: HOLD + SLIDE }, 0)
             .to(section, { backgroundColor: browns[i + 1], duration: SLIDE, ease: 'power2.inOut' }, HOLD)
-            .fromTo(sheets[i].querySelectorAll('.svc-sheet-in,.svc-hint'), { opacity: 1 }, { opacity: 0, duration: SLIDE * 0.06, ease: 'none', immediateRender: false }, HOLD + SLIDE * 0.36)
             .to(cur, { objectPosition: '0px 60%', duration: SLIDE, ease: 'none' }, HOLD)
             .to(next, { objectPosition: '0px 40%', duration: SLIDE, ease: 'none' }, HOLD)
             .fromTo(wipe, { p: 0 }, { p: 1, duration: SLIDE, ease: 'none', immediateRender: false, onUpdate: () => {
@@ -3085,14 +3084,21 @@
             } }, HOLD);
         main.add(step);
       });
-      // each sheet's text fades up while the sheet slides over the previous one (the covered text needs no fade-out)
-      sheets.forEach((s, i) => {
-        const box = s.querySelector('.svc-sheet-in');
-        const trg = i === 0 ? { trigger: root, start: 'top 92%', end: 'top 48%' } : { trigger: spacers[i - 1], start: 'bottom 54%', end: 'bottom 48%' };
-        gsap.fromTo(box, { opacity: .12, y: 50 }, { opacity: 1, y: 0, ease: 'none', scrollTrigger: Object.assign({ scrub: true }, trg) });
+      // The text of a sheet is ON while that sheet is the one on the screen and OFF otherwise. The switch happens at a scroll
+      // position (the incoming sheet's edge crossing 58% / 52% of the window) but the fade itself runs on TIME (0.3 s), so
+      // wherever the scroll stops the text is either fully there or fully gone — never stuck half-transparent, in either direction.
+      sheets.forEach((sh, i) => {
+        const parts = sh.querySelectorAll('.svc-sheet-in,.svc-hint');
+        const first = i === 0, last = i === sheets.length - 1;
+        ScrollTrigger.create({
+          trigger: first ? root : spacers[i - 1], start: first ? 'top 92%' : 'bottom 52%',
+          endTrigger: last ? root : spacers[i], end: last ? 'bottom top' : 'bottom 58%',
+          onToggle: self => gsap.to(parts, { opacity: self.isActive ? 1 : 0, duration: 0.3, ease: 'power1.out', overwrite: true }),
+          onRefresh: self => gsap.set(parts, { opacity: self.isActive ? 1 : 0 })
+        });
       });
 
-      return () => { gsap.set(section, { clearProps: 'backgroundColor' }); gsap.set(imgs, { clearProps: 'clipPath,objectPosition' }); };
+      return () => { gsap.set(section, { clearProps: 'backgroundColor' }); gsap.set(imgs, { clearProps: 'clipPath,objectPosition' }); gsap.set(root.querySelectorAll('.svc-sheet-in,.svc-hint'), { clearProps: 'opacity,transform' }); };
     });
     window.addEventListener('load', () => ScrollTrigger.refresh());
   })();

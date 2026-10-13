@@ -103,3 +103,20 @@
     });
   }
 })();
+
+
+/* «Примеры наших работ» on the home page link here as catalog-….html#model-<name>: open that model's window (description and the
+   whole photo) and bring its tile into view behind it. */
+(function () {
+  'use strict';
+  var m = /^#model-([\w-]+)$/.exec(location.hash);
+  if (!m) return;
+  var btn = document.querySelector('.model-details-btn[data-model="' + m[1] + '"]');
+  if (!btn) return;
+  var go = function () {
+    var card = btn.closest('.model-card'), track = document.getElementById('modelTrack');
+    if (card && track) track.scrollLeft = Math.max(0, card.offsetLeft - (track.clientWidth - card.offsetWidth) / 2);
+    btn.click();
+  };
+  if (document.readyState === 'complete') setTimeout(go, 200); else window.addEventListener('load', function () { setTimeout(go, 200); });
+})();

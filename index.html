@@ -785,26 +785,29 @@
   .mt-glare{position:absolute;inset:0;pointer-events:none;opacity:var(--go,0);
     background:radial-gradient(circle at var(--gx,50%) var(--gy,50%),rgba(255,255,255,.34),rgba(255,255,255,0) 52%)}
   .mt-desc{position:absolute;right:0;top:100%;margin:16px 0 0;width:78%;font-family:'Inter',sans-serif;font-weight:300;font-size:15px;line-height:1.3;letter-spacing:0;color:#2F1F02;text-align:left}
-  .mt .ctl{padding:0 var(--mt-edge);margin-top:22px}
   /* opening: the frames open from the left, the names rise out of their line */
   .mt.js .mt-ph{clip-path:inset(0 100% 0 0 round 15px)}
+  .mt.js .mt-in{transform:translate3d(70px,0,0)}
   .mt.js .mt-title,.mt.js .mt-idx,.mt.js .mt-desc{opacity:0}
-  .mt.js .mt-title{transform:translateY(46%)}
-  .mt.js.is-in .mt-ph{clip-path:inset(-90px -90px -90px -90px round 15px);transition:clip-path 1.25s cubic-bezier(.87,0,.13,1) calc(var(--i)*.09s),box-shadow .5s ease}
-  .mt.js.is-in .mt-title{opacity:1;transform:none;transition:opacity .6s ease calc(.45s + var(--i)*.09s),transform 1s cubic-bezier(.16,1,.3,1) calc(.45s + var(--i)*.09s)}
-  .mt.js.is-in .mt-idx,.mt.js.is-in .mt-desc{opacity:1;transition:opacity .8s ease calc(.7s + var(--i)*.09s)}
+  .mt.js .mt-title{transform:translateY(40%)}
+  /* slow and soft: every card opens and glides in 2+ seconds, one after another (0.2 s apart), then its name and captions follow */
+  .mt.js.is-in .mt-in{transform:none;transition:transform 2.6s cubic-bezier(.22,.8,.3,1) calc(var(--i)*.2s)}
+  .mt.js.is-in .mt-ph{clip-path:inset(-90px -90px -90px -90px round 15px);transition:clip-path 2.4s cubic-bezier(.5,0,.15,1) calc(var(--i)*.2s),box-shadow .5s ease}
+  .mt.js.is-in .mt-title{opacity:1;transform:none;transition:opacity 1.3s ease calc(1s + var(--i)*.2s),transform 1.8s cubic-bezier(.22,.8,.3,1) calc(1s + var(--i)*.2s)}
+  .mt.js.is-in .mt-idx,.mt.js.is-in .mt-desc{opacity:1;transition:opacity 1.3s ease calc(1.4s + var(--i)*.2s)}
   @media (prefers-reduced-motion:reduce){
-    .mt.js .mt-ph{clip-path:none}.mt.js .mt-title,.mt.js .mt-idx,.mt.js .mt-desc{opacity:1;transform:none}
+    .mt.js .mt-ph{clip-path:none}.mt.js .mt-in,.mt.js .mt-title{transform:none}.mt.js .mt-title,.mt.js .mt-idx,.mt.js .mt-desc{opacity:1}
   }
   @media (max-width:640px){
     .mt-desc{font-size:14px;width:84%}
   }
 
-  /* closing block — the same as the one under the catalogue: text on the left, the button in the middle, the consultation link on the right */
-  .mat-cta{display:flex;align-items:center;justify-content:space-between;gap:24px 40px;flex-wrap:wrap;margin-top:44px}
-  .mat-cta p{flex:0 1 430px;margin:0;font-family:'Inter',sans-serif;font-weight:300;font-size:20px;line-height:1.2;letter-spacing:.02em;color:#2F1F02}
-  .mat-cta .svc-btn{flex:0 1 430px;--dot-shadow:#2F1F02}
-  @media (max-width:960px){.mat-cta{flex-direction:column;align-items:flex-start;gap:28px}.mat-cta .svc-btn{flex:none;width:100%}}
+  /* closing row: the question on the left, the consultation link in the middle, the arrows with the counter on the right — one line */
+  .mat-cta{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;gap:24px 40px;margin-top:30px}
+  .mat-cta p{margin:0;max-width:430px;font-family:'Inter',sans-serif;font-weight:300;font-size:20px;line-height:1.2;letter-spacing:.02em;color:#2F1F02;justify-self:start}
+  .mat-cta .svc-consult{justify-self:center}
+  .mat-cta .ctl{margin:0;padding:0;justify-self:end}
+  @media (max-width:960px){.mat-cta{grid-template-columns:1fr;justify-items:start;gap:26px}.mat-cta .ctl{order:-1;justify-self:center;margin-bottom:6px}.mat-cta p,.mat-cta .svc-consult{justify-self:start}}
   .mat-cta a,.benefits-consult a{
     display:flex;align-items:center;justify-content:center;flex:none;
     width:430px;max-width:100%;height:68px;
@@ -2079,9 +2082,6 @@
     </div>
     <div class="mat-cta">
       <p>Не&nbsp;знаете, какая порода<br>подойдёт для&nbsp;вашего проекта?<br>Подберём под&nbsp;задачу и&nbsp;бюджет.</p>
-      <a href="#contact" class="svc-btn light dot-btn calc-cta">
-        рассчитать стоимость проекта
-      </a>
       <a href="#contact" class="svc-consult lk-run calc-cta consult-cta">
         получить консультацию <span class="lk-arrow" aria-hidden="true">→</span>
       </a>
@@ -3890,7 +3890,9 @@ void main() {
     // the same arrows + «NN — NN» counter as under «Примеры работ» and «Отзывы»
     const prev = root.querySelector('.works-arrow.prev'), next = root.querySelector('.works-arrow.next');
     prev.addEventListener('click', () => go(index() - 1)); next.addEventListener('click', () => go(index() + 1));
-    if (window.Ctl) Ctl.make({ prev, next, after: scene, tone: 'light', total: () => N, current: () => index() + 1, watch: cb => { setInterval(cb, 160); } });
+    const made = window.Ctl ? Ctl.make({ prev, next, after: scene, tone: 'light', total: () => N, current: () => index() + 1, watch: cb => { setInterval(cb, 160); } }) : null;
+    const cta = document.querySelector('#materials .mat-cta');
+    if (made && cta) cta.appendChild(made.row);                                  // arrows + counter sit in the same line as the question and the link
 
     // opening animation when the block first comes into view
     const open = () => root.classList.add('is-in');

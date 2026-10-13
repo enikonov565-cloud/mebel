@@ -1013,14 +1013,17 @@
   .pf-slide{position:absolute;inset:0;visibility:hidden;pointer-events:none}
   .pf-slide.is-current{visibility:visible;pointer-events:auto}
   .pf-shapes{position:absolute;inset:0}
-  .pf-fig{position:absolute;margin:0;min-width:0}
+  /* the same life as the wood photos under «Материалы»: a photo leans towards the cursor, the picture drifts the other way and zooms a little,
+     a soft shadow grows under it; the photos open from the left */
+  .pf-fig{position:absolute;margin:0;min-width:0;transform:perspective(1000px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) translateZ(0) scale(var(--sc,1));
+    filter:drop-shadow(0 0 0 rgba(47,31,2,0));transition:filter .5s ease;will-change:transform}
+  .pf-fig.is-hot{filter:drop-shadow(0 26px 27px rgba(47,31,2,.30))}
+  .pf-js .pf-fig{clip-path:inset(0 100% 0 0)}
   .pf-fig-inner{position:absolute;inset:0;overflow:hidden;border-radius:15px}
-  .pf-fig-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;will-change:transform;-webkit-user-drag:none;user-select:none}
+  .pf-fig-img{position:absolute;left:-7%;top:-6%;width:114%;height:112%;max-width:none;object-fit:cover;display:block;will-change:transform;-webkit-user-drag:none;user-select:none;
+    transform:translate3d(var(--ix,0px),var(--iy,0px),0) scale(var(--is,1))}
   a.pf-fig-inner{display:block;color:inherit;text-decoration:none;cursor:pointer;-webkit-tap-highlight-color:transparent}
-  .pf-fig-img{transition:scale 1s cubic-bezier(.16,1,.3,1)}
-  @media (hover:hover){a.pf-fig-inner:hover .pf-fig-img{scale:1.06}}
   a.pf-fig-inner:focus-visible{outline:2px solid rgba(47,31,2,.55);outline-offset:3px}
-  .pf-reveal{position:absolute;top:-1px;left:-1px;width:calc(100% + 2px);height:calc(100% + 2px);background:var(--pf-bg);z-index:2;will-change:transform}
   .pf-cap{position:absolute;left:0;bottom:0;z-index:5;width:28%;display:flex;flex-direction:column;gap:14px;pointer-events:none}
   .pf-cap-title{margin:0;font-family:'Inter',sans-serif;font-weight:500;font-size:clamp(30px,calc(3.5*var(--vw100,100vw)/100),56px);line-height:.95;letter-spacing:-.015em;color:var(--pf-ink);text-wrap:balance}
   .pf-cap-desc{margin:0;font-family:'Inter',sans-serif;font-weight:300;font-size:clamp(14px,calc(1.1*var(--vw100,100vw)/100),18px);line-height:1.3;color:rgba(24,15,1,.75);max-width:24em}
@@ -2297,25 +2300,21 @@
           <figure class="pf-fig">
             <a class="pf-fig-inner" href="catalog-korpusnaya.html#model-kitchen" draggable="false">
               <img class="pf-fig-img" src="pf-k1.jpg" alt="Угловая кухня в классическом стиле. Кухня цвета слоновой кости" loading="lazy" decoding="async" draggable="false">
-              <span class="pf-reveal"></span>
             </a>
           </figure>
           <figure class="pf-fig">
             <a class="pf-fig-inner" href="catalog-korpusnaya.html#model-vanity" draggable="false">
               <img class="pf-fig-img" src="pf-k3.jpg" alt="Комплект в ванную комнату. Тумба под раковину с зеркалом" loading="lazy" decoding="async" draggable="false">
-              <span class="pf-reveal"></span>
             </a>
           </figure>
           <figure class="pf-fig">
             <a class="pf-fig-inner" href="catalog-korpusnaya.html#model-wardrobe-white" draggable="false">
               <img class="pf-fig-img" src="pf-k2.jpg" alt="Встроенный шкаф-купе. От пола до потолка" loading="lazy" decoding="async" draggable="false">
-              <span class="pf-reveal"></span>
             </a>
           </figure>
           <figure class="pf-fig">
             <a class="pf-fig-inner" href="catalog-korpusnaya.html#model-bunkbed" draggable="false">
               <img class="pf-fig-img" src="pf-k4.jpg" alt="Двухъярусная кровать со шкафом. Встроенный шкаф в детской" loading="lazy" decoding="async" draggable="false">
-              <span class="pf-reveal"></span>
             </a>
           </figure>
           </div>
@@ -2326,25 +2325,21 @@
           <figure class="pf-fig">
             <a class="pf-fig-inner" href="catalog-eksklyuzivnaya.html#model-painted-buffet" draggable="false">
               <img class="pf-fig-img" src="pf-e1.jpg" alt="Буфет с ручной росписью. Художественная роспись" loading="lazy" decoding="async" draggable="false">
-              <span class="pf-reveal"></span>
             </a>
           </figure>
           <figure class="pf-fig">
             <a class="pf-fig-inner" href="catalog-eksklyuzivnaya.html#model-mirror-panel" draggable="false">
               <img class="pf-fig-img" src="pf-e2.jpg" alt="Зеркальное панно. В латунной раме" loading="lazy" decoding="async" draggable="false">
-              <span class="pf-reveal"></span>
             </a>
           </figure>
           <figure class="pf-fig">
             <a class="pf-fig-inner" href="catalog-eksklyuzivnaya.html#model-bar" draggable="false">
               <img class="pf-fig-img" src="pf-e3.jpg" alt="Барный шкаф. С винным холодильником" loading="lazy" decoding="async" draggable="false">
-              <span class="pf-reveal"></span>
             </a>
           </figure>
           <figure class="pf-fig">
             <a class="pf-fig-inner" href="catalog-eksklyuzivnaya.html#model-tumba-serebro" draggable="false">
               <img class="pf-fig-img" src="pf-e4.jpg" alt="Тумба с серебрением. Прикроватная, на заказ" loading="lazy" decoding="async" draggable="false">
-              <span class="pf-reveal"></span>
             </a>
           </figure>
           </div>
@@ -2355,19 +2350,16 @@
           <figure class="pf-fig">
             <a class="pf-fig-inner" href="catalog-dveri.html#model-mirror-portal" draggable="false">
               <img class="pf-fig-img" src="pf-d1.jpg" alt="Портал с зеркальными дверями. Гранёные зеркала" loading="lazy" decoding="async" draggable="false">
-              <span class="pf-reveal"></span>
             </a>
           </figure>
           <figure class="pf-fig">
             <a class="pf-fig-inner" href="catalog-dveri.html#model-vinny-stellazh-portal" draggable="false">
               <img class="pf-fig-img" src="pf-d2.jpg" alt="Винный стеллаж-портал. Модульная конструкция" loading="lazy" decoding="async" draggable="false">
-              <span class="pf-reveal"></span>
             </a>
           </figure>
           <figure class="pf-fig">
             <a class="pf-fig-inner" href="catalog-dveri.html#model-door" draggable="false">
               <img class="pf-fig-img" src="pf-d3.jpg" alt="Межкомнатная дверь. С диагональным рисунком" loading="lazy" decoding="async" draggable="false">
-              <span class="pf-reveal"></span>
             </a>
           </figure>
           </div>
@@ -2378,19 +2370,16 @@
           <figure class="pf-fig">
             <a class="pf-fig-inner" href="catalog-ofisnaya.html#model-ostrov" draggable="false">
               <img class="pf-fig-img" src="pf-o1.jpg" alt="Стойка-остров. С рифлёным фасадом" loading="lazy" decoding="async" draggable="false">
-              <span class="pf-reveal"></span>
             </a>
           </figure>
           <figure class="pf-fig">
             <a class="pf-fig-inner" href="catalog-ofisnaya.html#model-pereg-stol" draggable="false">
               <img class="pf-fig-img" src="pf-o2.jpg" alt="Переговорный стол. Радиальный наборный рисунок" loading="lazy" decoding="async" draggable="false">
-              <span class="pf-reveal"></span>
             </a>
           </figure>
           <figure class="pf-fig">
             <a class="pf-fig-inner" href="catalog-ofisnaya.html#model-stol-soveshch" draggable="false">
               <img class="pf-fig-img" src="pf-o3.jpg" alt="Стол для совещаний. Стулья с синей обивкой" loading="lazy" decoding="async" draggable="false">
-              <span class="pf-reveal"></span>
             </a>
           </figure>
           </div>
@@ -2401,25 +2390,21 @@
           <figure class="pf-fig">
             <a class="pf-fig-inner" href="catalog-kommercheskaya.html#model-stellazh-vinoteka" draggable="false">
               <img class="pf-fig-img" src="pf-c2.jpg" alt="Стеллаж для винотеки. Для торгового зала" loading="lazy" decoding="async" draggable="false">
-              <span class="pf-reveal"></span>
             </a>
           </figure>
           <figure class="pf-fig">
             <a class="pf-fig-inner" href="catalog-kommercheskaya.html#model-stellazh-vinoteka" draggable="false">
               <img class="pf-fig-img" src="pf-c4.jpg" alt="Торговый зал винотеки. Стеллажи по периметру" loading="lazy" decoding="async" draggable="false">
-              <span class="pf-reveal"></span>
             </a>
           </figure>
           <figure class="pf-fig">
             <a class="pf-fig-inner" href="catalog-kommercheskaya.html#model-stoyka-kassa" draggable="false">
               <img class="pf-fig-img" src="pf-c1.jpg" alt="Торговая стойка с кассой. Прикассовая зона" loading="lazy" decoding="async" draggable="false">
-              <span class="pf-reveal"></span>
             </a>
           </figure>
           <figure class="pf-fig">
             <a class="pf-fig-inner" href="catalog-kommercheskaya.html#model-bar-stoyka" draggable="false">
               <img class="pf-fig-img" src="pf-c3.jpg" alt="Стол-стойка с табуретами. Для фудкорта" loading="lazy" decoding="async" draggable="false">
-              <span class="pf-reveal"></span>
             </a>
           </figure>
           </div>
@@ -3769,8 +3754,8 @@ void main() {
 </script>
 <script>
   // «Примеры наших работ»: one category = one row of photos. The arrows, the tabs, a swipe and the arrow keys switch the category:
-  // a mask of the section's colour sweeps across the photos (one after another), the next category is swapped in while they are
-  // covered, and the mask keeps going and uncovers the new photos. Written with the Web Animations API, so it needs no library.
+  // the photos fold away towards the right (one after another), the next category is swapped in and its photos open from the left,
+  // like the wood photos under «Материалы». Written with the Web Animations API, so it needs no library.
   (function () {
     const root = document.getElementById('pf');
     if (!root) return;
@@ -3787,24 +3772,60 @@ void main() {
       const a = el.animate([from, to], { duration: Math.max(1, o.d * 1000 * SPEED), delay: (o.delay || 0) * 1000 * SPEED, easing: o.ease || 'linear', fill: 'both' });
       return a.finished.then(() => { try { a.commitStyles(); } catch (_) {} a.cancel(); }).catch(() => {});
     };
-    const tr = (x) => 'translate3d(' + x + '%,0,0)';
-
     const slides = slideEls.map(el => ({
       el, href: el.dataset.href, cap: el.querySelector('.pf-cap'),
-      items: [...el.querySelectorAll('.pf-fig')].map(f => ({
-        img: f.querySelector('.pf-fig-img'), mask: f.querySelector('.pf-reveal')
-      }))
+      items: [...el.querySelectorAll('.pf-fig')].map(f => ({ fig: f, img: f.querySelector('.pf-fig-img') }))
     }));
-    const ordered = (slide, dir) => dir === 'next' ? slide.items : slide.items.slice().reverse();
-    const STEP = 0.08;
-    const cover = (slide, dir) => Promise.all([tween(slide.cap, { opacity: 1 }, { opacity: 0 }, { d: 0.3 })].concat(ordered(slide, dir).map((it, i) =>
-      tween(it.mask, { transform: tr(dir === 'next' ? 100 : -100) }, { transform: tr(0) }, { d: 0.6, delay: i * STEP, ease: EASE.quint }))));
-    const uncover = (slide, dir) => (slide.items.forEach(it => { it.img.style.visibility = ''; }), Promise.all([tween(slide.cap, { opacity: 0, transform: 'translate3d(0,12px,0)' }, { opacity: 1, transform: 'translate3d(0,0,0)' }, { d: 0.8, delay: 0.4, ease: EASE.quart })].concat(ordered(slide, dir).flatMap((it, i) => [
-      tween(it.mask, { transform: tr(0) }, { transform: tr(dir === 'next' ? -100 : 100) }, { d: 0.9, delay: i * STEP, ease: EASE.quint }),
-      tween(it.img, { transform: 'scale(1.25)' }, { transform: 'scale(1)' }, { d: 1.2, delay: i * STEP, ease: EASE.expo })
-    ]))));
-    const hide = slide => { slide.cap.style.opacity = 0; slide.items.forEach(it => { it.mask.style.transform = 'none'; it.img.style.transform = ''; it.img.style.visibility = 'hidden'; }); };
+    const CLOSED = 'inset(0 100% 0 0)', OPEN = 'inset(-90px -90px -90px -90px)', GONE = 'inset(0 0 0 100%)';
+    const byLeft = slide => slide.items.slice().sort((p, q) => p.fig.offsetLeft - q.fig.offsetLeft);   // always left to right
+    // out: the photos fold away towards the right, one after another; in: they open from the left and glide in (like under «Материалы»)
+    const cover = slide => Promise.all([tween(slide.cap, { opacity: 1 }, { opacity: 0 }, { d: 0.4 })].concat(byLeft(slide).flatMap((it, i) => [
+      tween(it.fig, { clipPath: OPEN }, { clipPath: GONE }, { d: 0.9, delay: i * 0.08, ease: EASE.quint }),
+      tween(it.fig, { translate: '0px 0px' }, { translate: '40px 0px' }, { d: 0.9, delay: i * 0.08, ease: EASE.quint })
+    ])));
+    const uncover = slide => Promise.all([tween(slide.cap, { opacity: 0, transform: 'translate3d(0,12px,0)' }, { opacity: 1, transform: 'translate3d(0,0,0)' }, { d: 0.9, delay: 0.7, ease: EASE.quart })].concat(byLeft(slide).flatMap((it, i) => [
+      tween(it.fig, { clipPath: CLOSED }, { clipPath: OPEN }, { d: 1.7, delay: i * 0.16, ease: 'cubic-bezier(.5,0,.15,1)' }),
+      tween(it.fig, { translate: '70px 0px' }, { translate: '0px 0px' }, { d: 1.9, delay: i * 0.16, ease: 'cubic-bezier(.22,.8,.3,1)' })
+    ])));
+    const hide = slide => { slide.cap.style.opacity = 0; slide.items.forEach(it => { it.fig.style.clipPath = CLOSED; it.fig.style.translate = '70px 0px'; }); };
     slides.forEach(hide);
+
+    // hover (mouse only): the photo under the pointer leans towards it, its picture drifts the other way and zooms, a shadow grows
+    const eased = new Map();
+    let running = false;
+    const clampv = (v, lo, hi) => Math.min(hi, Math.max(lo, v));
+    const frame = () => {
+      let busy = false;
+      eased.forEach((h, it) => {
+        h.x += (h.tx - h.x) * 0.12; h.y += (h.ty - h.y) * 0.12; h.z += (h.tz - h.z) * 0.1;
+        if (Math.abs(h.tx - h.x) > 0.002 || Math.abs(h.ty - h.y) > 0.002 || Math.abs(h.tz - h.z) > 0.002) busy = true; else { h.x = h.tx; h.y = h.ty; h.z = h.tz; }
+        const f = it.fig;
+        f.style.setProperty('--ry', (h.x * 7).toFixed(3) + 'deg');
+        f.style.setProperty('--rx', (-h.y * 6).toFixed(3) + 'deg');
+        f.style.setProperty('--sc', (1 + h.z * 0.035).toFixed(4));
+        f.style.setProperty('--ix', (-h.x * 22).toFixed(2) + 'px');
+        f.style.setProperty('--iy', (-h.y * 16).toFixed(2) + 'px');
+        f.style.setProperty('--is', (1 + h.z * 0.09).toFixed(4));
+      });
+      if (busy) requestAnimationFrame(frame); else running = false;
+    };
+    const kick = () => { if (!running) { running = true; requestAnimationFrame(frame); } };
+    slides.forEach(sl => sl.items.forEach(it => eased.set(it, { tx: 0, ty: 0, tz: 0, x: 0, y: 0, z: 0 })));
+    const calm = () => { eased.forEach((h, it) => { h.tx = h.ty = h.tz = 0; it.fig.classList.remove('is-hot'); }); kick(); };
+    bookEl.addEventListener('pointermove', e => {
+      if (e.pointerType !== 'mouse' || reduce || busy) return;
+      const fig = e.target.closest ? e.target.closest('.pf-fig') : null;
+      slides[current].items.forEach(it => {
+        const h = eased.get(it);
+        if (it.fig === fig) {
+          const r = fig.getBoundingClientRect();
+          h.tx = (clampv((e.clientX - r.left) / r.width, 0, 1) - 0.5) * 2; h.ty = (clampv((e.clientY - r.top) / r.height, 0, 1) - 0.5) * 2; h.tz = 1;
+          fig.classList.add('is-hot');
+        } else { h.tx = h.ty = h.tz = 0; it.fig.classList.remove('is-hot'); }
+      });
+      kick();
+    });
+    bookEl.addEventListener('pointerleave', e => { if (e.pointerType === 'mouse') calm(); });
 
     // chrome: tabs, link, arrows with the counter (the same control as under «Отзывы»)
     const tabs = [...root.querySelectorAll('.pf-tab')], more = document.querySelector('#portfolio .pf-more');
@@ -3827,10 +3848,11 @@ void main() {
       dir = dir || (pos > current ? 'next' : 'prev');
       const from = slides[current], to = slides[pos];
       current = pos; paint();
-      cover(from, dir).then(() => {
+      calm();
+      cover(from).then(() => {
         from.el.classList.remove('is-current'); hide(from);
         hide(to); to.el.classList.add('is-current');
-        return uncover(to, dir);
+        return uncover(to);
       }).then(() => { busy = false; });
     };
     prev.addEventListener('click', () => go((current + N - 1) % N, 'prev'));
@@ -3855,7 +3877,7 @@ void main() {
     const open = () => {
       const imgs = slides[0].items.map(it => it.img);
       const ready = Promise.race([Promise.all(imgs.map(im => im.decode ? im.decode().catch(() => {}) : Promise.resolve())), new Promise(r => setTimeout(r, 2500))]);
-      ready.then(() => { busy = true; uncover(slides[0], 'next').then(() => { busy = false; }); });
+      ready.then(() => { busy = true; uncover(slides[0]).then(() => { busy = false; }); });
     };
     if ('IntersectionObserver' in window) {
       new IntersectionObserver((es, o) => { if (es[0].isIntersecting) { open(); o.disconnect(); } }, { threshold: 0.2 }).observe(bookEl);

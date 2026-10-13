@@ -1008,19 +1008,46 @@
   .pf-tab:focus-visible,.pf-more:focus-visible{outline:2px solid rgba(47,31,2,.45);outline-offset:4px;border-radius:4px}
   .pf-more{font-weight:500;font-size:clamp(14px,calc(1.05*var(--vw100,100vw)/100),18px);line-height:1.1;color:#2F1F02;text-decoration:none;border-bottom:1px solid rgba(47,31,2,.4);transition:border-color .2s}
   .pf-more:hover{border-color:#2F1F02}
-  .pf-book{position:relative;display:grid;outline:none;touch-action:pan-y;-webkit-tap-highlight-color:transparent}
-  .pf-slide{grid-area:1/1;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px;min-width:0;align-content:start;visibility:hidden;pointer-events:none}
-  .pf-slide[data-n="3"]{grid-template-columns:repeat(3,minmax(0,1fr))}
+  /* the stage: every category has its own arrangement of shapes (overlapping panels, circles, slanted strips, mosaics); the title sits bottom left */
+  .pf-book{position:relative;outline:none;touch-action:pan-y;-webkit-tap-highlight-color:transparent;
+    --sh:clamp(380px,min(calc(var(--vw100,100vw)*.37),calc(var(--vh100,100vh) - 330px)),680px);height:var(--sh)}
+  .pf-slide{position:absolute;inset:0;visibility:hidden;pointer-events:none}
   .pf-slide.is-current{visibility:visible;pointer-events:auto}
-  .pf-fig{display:flex;flex-direction:column;min-width:0;margin:0}
-  .pf-fig-inner{position:relative;overflow:hidden;border-radius:15px;background:#CDBDA3;
-    height:clamp(250px,min(calc(var(--vw100,100vw)*.27),calc(var(--vh100,100vh) - 440px)),480px)}
+  .pf-shapes{position:absolute;inset:0}
+  .pf-fig{position:absolute;margin:0;min-width:0}
+  .pf-fig-inner{position:absolute;inset:0;overflow:hidden;border-radius:15px}
   .pf-fig-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;will-change:transform;-webkit-user-drag:none;user-select:none}
   .pf-reveal{position:absolute;top:-1px;left:-1px;width:calc(100% + 2px);height:calc(100% + 2px);background:var(--pf-bg);z-index:2;will-change:transform}
-  .pf-fig figcaption{padding-top:14px}
-  .pf-fig-title{margin:0;font-family:'Inter',sans-serif;font-weight:500;font-size:clamp(15px,calc(1.2*var(--vw100,100vw)/100),20px);line-height:1.15;letter-spacing:-.01em;color:var(--pf-ink)}
-  .pf-fig-desc{margin:4px 0 0;font-family:'Inter',sans-serif;font-weight:300;font-size:clamp(13px,calc(1*var(--vw100,100vw)/100),16px);line-height:1.25;color:rgba(24,15,1,.68)}
-  .pf-js .pf-fig figcaption{opacity:0}                               /* the script shows them; without it everything just shows */
+  .pf-cap{position:absolute;left:0;bottom:0;z-index:5;width:28%;display:flex;flex-direction:column;gap:14px;pointer-events:none}
+  .pf-cap-title{margin:0;font-family:'Inter',sans-serif;font-weight:500;font-size:clamp(30px,calc(3.5*var(--vw100,100vw)/100),56px);line-height:.95;letter-spacing:-.015em;color:var(--pf-ink);text-wrap:balance}
+  .pf-cap-desc{margin:0;font-family:'Inter',sans-serif;font-weight:300;font-size:clamp(14px,calc(1.1*var(--vw100,100vw)/100),18px);line-height:1.3;color:rgba(24,15,1,.75);max-width:24em}
+  .pf-js .pf-cap{opacity:0}                                         /* the script shows it; without it everything just shows */
+
+  /* Корпусная: a wide panel with three photos laid over it */
+  .pf-l-a .pf-fig:nth-child(1){left:30%;top:34%;width:50%;height:58%;z-index:1}
+  .pf-l-a .pf-fig:nth-child(2){left:38%;top:0;width:31%;height:54%;z-index:2}
+  .pf-l-a .pf-fig:nth-child(3){left:70%;top:42%;width:25%;height:50%;z-index:3}
+  .pf-l-a .pf-fig:nth-child(4){left:7%;top:3%;width:27%;height:50%;z-index:2}
+  /* Эксклюзивная: overlapping circles */
+  .pf-l-b .pf-fig{aspect-ratio:1}
+  .pf-l-b .pf-fig-inner{border-radius:50%}
+  .pf-l-b .pf-fig:nth-child(1){left:21%;top:2%;width:25%;z-index:2}
+  .pf-l-b .pf-fig:nth-child(2){left:82%;top:2%;width:15%;z-index:2}
+  .pf-l-b .pf-fig:nth-child(3){left:37%;top:2%;width:35%;z-index:3}
+  .pf-l-b .pf-fig:nth-child(4){left:63%;top:40%;width:22%;z-index:4}
+  /* Двери и порталы: three slanted strips */
+  .pf-l-c .pf-fig{top:0;width:26%;height:100%}
+  .pf-l-c .pf-fig-inner{border-radius:0;clip-path:polygon(26% 0,100% 0,74% 100%,0 100%)}
+  .pf-l-c .pf-fig:nth-child(1){left:31%}.pf-l-c .pf-fig:nth-child(2){left:52.2%}.pf-l-c .pf-fig:nth-child(3){left:73.4%}
+  /* Офисная: one tall photo and two stacked */
+  .pf-l-d .pf-fig:nth-child(1){left:31%;top:0;width:34%;height:100%}
+  .pf-l-d .pf-fig:nth-child(2){left:66.5%;top:0;width:33.5%;height:48.5%}
+  .pf-l-d .pf-fig:nth-child(3){left:66.5%;top:51.5%;width:33.5%;height:48.5%}
+  /* Коммерческая: a tall photo, a wide one and two small */
+  .pf-l-e .pf-fig:nth-child(1){left:30%;top:0;width:27%;height:100%}
+  .pf-l-e .pf-fig:nth-child(2){left:58.5%;top:0;width:41.5%;height:48.5%}
+  .pf-l-e .pf-fig:nth-child(3){left:58.5%;top:51.5%;width:20%;height:48.5%}
+  .pf-l-e .pf-fig:nth-child(4){left:80%;top:51.5%;width:20%;height:48.5%}
   .works-cta{display:flex;justify-content:center;margin-top:44px}
   #pfPrev,#pfNext{display:none}
   .works-cta .ctl #pfPrev,.works-cta .ctl #pfNext{display:block}
@@ -1030,12 +1057,29 @@
     .pf-tabs::-webkit-scrollbar{display:none}
     .pf-tab{flex:none;white-space:nowrap;font-size:16px}
     .pf-more{display:inline-block;margin-top:16px;font-size:15px}
-    .pf-slide,.pf-slide[data-n="3"]{grid-template-columns:repeat(2,minmax(0,1fr));gap:20px 12px}
-    .pf-slide[data-n="3"] .pf-fig:nth-child(3){grid-column:1/-1}
-    .pf-fig-inner{height:clamp(170px,calc(var(--vw100,100vw)*.5),320px)}
-    .pf-fig figcaption{padding-top:9px}
-    .pf-fig-title{font-size:15px}
-    .pf-fig-desc{font-size:13px;margin-top:3px}
+    .pf-book{display:grid;height:auto}
+    .pf-slide{position:relative;inset:auto;grid-area:1/1;display:flex;flex-direction:column;gap:20px}
+    .pf-shapes{position:relative;inset:auto;aspect-ratio:1/.95}
+    .pf-cap{position:static;width:auto;gap:10px}
+    .pf-cap-title{font-size:30px}
+    .pf-cap-desc{font-size:14px}
+    .pf-l-a .pf-fig:nth-child(1){left:14%;top:38%;width:72%;height:58%}
+    .pf-l-a .pf-fig:nth-child(2){left:36%;top:0;width:40%;height:46%}
+    .pf-l-a .pf-fig:nth-child(3){left:66%;top:46%;width:34%;height:46%}
+    .pf-l-a .pf-fig:nth-child(4){left:0;top:6%;width:34%;height:44%}
+    .pf-l-b .pf-fig:nth-child(1){left:0;top:10%;width:40%}
+    .pf-l-b .pf-fig:nth-child(2){left:6%;top:55%;width:34%}
+    .pf-l-b .pf-fig:nth-child(3){left:28%;top:0;width:56%}
+    .pf-l-b .pf-fig:nth-child(4){left:58%;top:48%;width:40%}
+    .pf-l-c .pf-fig{width:38%}
+    .pf-l-c .pf-fig:nth-child(1){left:0}.pf-l-c .pf-fig:nth-child(2){left:31%}.pf-l-c .pf-fig:nth-child(3){left:62%}
+    .pf-l-d .pf-fig:nth-child(1){left:0;top:0;width:49%;height:100%}
+    .pf-l-d .pf-fig:nth-child(2){left:51%;top:0;width:49%;height:49%}
+    .pf-l-d .pf-fig:nth-child(3){left:51%;top:51%;width:49%;height:49%}
+    .pf-l-e .pf-fig:nth-child(1){left:0;top:0;width:49%;height:49%}
+    .pf-l-e .pf-fig:nth-child(2){left:51%;top:0;width:49%;height:49%}
+    .pf-l-e .pf-fig:nth-child(3){left:0;top:51%;width:49%;height:49%}
+    .pf-l-e .pf-fig:nth-child(4){left:51%;top:51%;width:49%;height:49%}
   }
 
   /* gallery / reviews arrows: thin long arrows (as in the slider of «Почему выбирают нас» and the catalogue), no plates;
@@ -2247,140 +2291,137 @@
       </nav>
       <div class="pf-book" tabindex="0" role="region" aria-label="Примеры наших работ по категориям — листайте стрелками или свайпом">
         <div class="pf-slide pf-l-a is-current" data-title="Корпусная мебель" data-href="catalog-korpusnaya.html" data-n="4" role="group" aria-label="Корпусная мебель">
+          <div class="pf-shapes">
           <figure class="pf-fig">
             <div class="pf-fig-inner">
               <img class="pf-fig-img" src="pf-k1.jpg" alt="Угловая кухня в классическом стиле. Кухня цвета слоновой кости" loading="lazy" decoding="async" draggable="false">
               <span class="pf-reveal"></span>
             </div>
-            <figcaption><h3 class="pf-fig-title">Угловая кухня в&nbsp;классическом стиле</h3><p class="pf-fig-desc">Кухня цвета слоновой кости</p></figcaption>
           </figure>
           <figure class="pf-fig">
             <div class="pf-fig-inner">
               <img class="pf-fig-img" src="pf-k2.jpg" alt="Встроенный шкаф-купе. От пола до потолка" loading="lazy" decoding="async" draggable="false">
               <span class="pf-reveal"></span>
             </div>
-            <figcaption><h3 class="pf-fig-title">Встроенный шкаф-купе</h3><p class="pf-fig-desc">От пола до&nbsp;потолка</p></figcaption>
           </figure>
           <figure class="pf-fig">
             <div class="pf-fig-inner">
               <img class="pf-fig-img" src="pf-k3.jpg" alt="Комплект в ванную комнату. Тумба под раковину с зеркалом" loading="lazy" decoding="async" draggable="false">
               <span class="pf-reveal"></span>
             </div>
-            <figcaption><h3 class="pf-fig-title">Комплект в&nbsp;ванную комнату</h3><p class="pf-fig-desc">Тумба под раковину с&nbsp;зеркалом</p></figcaption>
           </figure>
           <figure class="pf-fig">
             <div class="pf-fig-inner">
               <img class="pf-fig-img" src="pf-k4.jpg" alt="Двухъярусная кровать со шкафом. Встроенный шкаф в детской" loading="lazy" decoding="async" draggable="false">
               <span class="pf-reveal"></span>
             </div>
-            <figcaption><h3 class="pf-fig-title">Двухъярусная кровать со&nbsp;шкафом</h3><p class="pf-fig-desc">Встроенный шкаф в&nbsp;детской</p></figcaption>
           </figure>
+          </div>
+          <div class="pf-cap"><h3 class="pf-cap-title">Корпусная мебель</h3><p class="pf-cap-desc">Кухни, шкафы-купе, детские и&nbsp;ванные комнаты по&nbsp;вашим размерам, с&nbsp;продуманной начинкой.</p></div>
         </div>
         <div class="pf-slide pf-l-b" data-title="Эксклюзивная мебель" data-href="catalog-eksklyuzivnaya.html" data-n="4" role="group" aria-label="Эксклюзивная мебель">
+          <div class="pf-shapes">
           <figure class="pf-fig">
             <div class="pf-fig-inner">
               <img class="pf-fig-img" src="pf-e1.jpg" alt="Буфет с ручной росписью. Художественная роспись" loading="lazy" decoding="async" draggable="false">
               <span class="pf-reveal"></span>
             </div>
-            <figcaption><h3 class="pf-fig-title">Буфет с&nbsp;ручной росписью</h3><p class="pf-fig-desc">Художественная роспись</p></figcaption>
           </figure>
           <figure class="pf-fig">
             <div class="pf-fig-inner">
               <img class="pf-fig-img" src="pf-e2.jpg" alt="Зеркальное панно. В латунной раме" loading="lazy" decoding="async" draggable="false">
               <span class="pf-reveal"></span>
             </div>
-            <figcaption><h3 class="pf-fig-title">Зеркальное панно</h3><p class="pf-fig-desc">В латунной раме</p></figcaption>
           </figure>
           <figure class="pf-fig">
             <div class="pf-fig-inner">
               <img class="pf-fig-img" src="pf-e3.jpg" alt="Барный шкаф. С винным холодильником" loading="lazy" decoding="async" draggable="false">
               <span class="pf-reveal"></span>
             </div>
-            <figcaption><h3 class="pf-fig-title">Барный шкаф</h3><p class="pf-fig-desc">С винным холодильником</p></figcaption>
           </figure>
           <figure class="pf-fig">
             <div class="pf-fig-inner">
               <img class="pf-fig-img" src="pf-e4.jpg" alt="Тумба с серебрением. Прикроватная, на заказ" loading="lazy" decoding="async" draggable="false">
               <span class="pf-reveal"></span>
             </div>
-            <figcaption><h3 class="pf-fig-title">Тумба с&nbsp;серебрением</h3><p class="pf-fig-desc">Прикроватная, на&nbsp;заказ</p></figcaption>
           </figure>
+          </div>
+          <div class="pf-cap"><h3 class="pf-cap-title">Эксклюзивная мебель</h3><p class="pf-cap-desc">Авторские вещи в&nbsp;единственном экземпляре: роспись, зеркала, серебрение и&nbsp;латунь.</p></div>
         </div>
         <div class="pf-slide pf-l-c" data-title="Двери и порталы" data-href="catalog-dveri.html" data-n="3" role="group" aria-label="Двери и порталы">
+          <div class="pf-shapes">
           <figure class="pf-fig">
             <div class="pf-fig-inner">
               <img class="pf-fig-img" src="pf-d1.jpg" alt="Портал с зеркальными дверями. Гранёные зеркала" loading="lazy" decoding="async" draggable="false">
               <span class="pf-reveal"></span>
             </div>
-            <figcaption><h3 class="pf-fig-title">Портал с&nbsp;зеркальными дверями</h3><p class="pf-fig-desc">Гранёные зеркала</p></figcaption>
           </figure>
           <figure class="pf-fig">
             <div class="pf-fig-inner">
               <img class="pf-fig-img" src="pf-d2.jpg" alt="Винный стеллаж-портал. Модульная конструкция" loading="lazy" decoding="async" draggable="false">
               <span class="pf-reveal"></span>
             </div>
-            <figcaption><h3 class="pf-fig-title">Винный стеллаж-портал</h3><p class="pf-fig-desc">Модульная конструкция</p></figcaption>
           </figure>
           <figure class="pf-fig">
             <div class="pf-fig-inner">
               <img class="pf-fig-img" src="pf-d3.jpg" alt="Межкомнатная дверь. С диагональным рисунком" loading="lazy" decoding="async" draggable="false">
               <span class="pf-reveal"></span>
             </div>
-            <figcaption><h3 class="pf-fig-title">Межкомнатная дверь</h3><p class="pf-fig-desc">С диагональным рисунком</p></figcaption>
           </figure>
+          </div>
+          <div class="pf-cap"><h3 class="pf-cap-title">Двери и порталы</h3><p class="pf-cap-desc">Межкомнатные двери, порталы и&nbsp;перегородки с&nbsp;зеркалами, стеклом и&nbsp;рисунком.</p></div>
         </div>
         <div class="pf-slide pf-l-d" data-title="Офисная мебель" data-href="catalog-ofisnaya.html" data-n="3" role="group" aria-label="Офисная мебель">
+          <div class="pf-shapes">
           <figure class="pf-fig">
             <div class="pf-fig-inner">
               <img class="pf-fig-img" src="pf-o1.jpg" alt="Стойка-остров. С рифлёным фасадом" loading="lazy" decoding="async" draggable="false">
               <span class="pf-reveal"></span>
             </div>
-            <figcaption><h3 class="pf-fig-title">Стойка-остров</h3><p class="pf-fig-desc">С рифлёным фасадом</p></figcaption>
           </figure>
           <figure class="pf-fig">
             <div class="pf-fig-inner">
               <img class="pf-fig-img" src="pf-o2.jpg" alt="Переговорный стол. Радиальный наборный рисунок" loading="lazy" decoding="async" draggable="false">
               <span class="pf-reveal"></span>
             </div>
-            <figcaption><h3 class="pf-fig-title">Переговорный стол</h3><p class="pf-fig-desc">Радиальный наборный рисунок</p></figcaption>
           </figure>
           <figure class="pf-fig">
             <div class="pf-fig-inner">
               <img class="pf-fig-img" src="pf-o3.jpg" alt="Стол для совещаний. Стулья с синей обивкой" loading="lazy" decoding="async" draggable="false">
               <span class="pf-reveal"></span>
             </div>
-            <figcaption><h3 class="pf-fig-title">Стол для&nbsp;совещаний</h3><p class="pf-fig-desc">Стулья с&nbsp;синей обивкой</p></figcaption>
           </figure>
+          </div>
+          <div class="pf-cap"><h3 class="pf-cap-title">Офисная мебель</h3><p class="pf-cap-desc">Стойки, переговорные и&nbsp;рабочие столы для офисов: удобно в&nbsp;работе и&nbsp;выглядит достойно.</p></div>
         </div>
         <div class="pf-slide pf-l-e" data-title="Коммерческая мебель" data-href="catalog-kommercheskaya.html" data-n="4" role="group" aria-label="Коммерческая мебель">
+          <div class="pf-shapes">
           <figure class="pf-fig">
             <div class="pf-fig-inner">
               <img class="pf-fig-img" src="pf-c2.jpg" alt="Стеллаж для винотеки. Для торгового зала" loading="lazy" decoding="async" draggable="false">
               <span class="pf-reveal"></span>
             </div>
-            <figcaption><h3 class="pf-fig-title">Стеллаж для&nbsp;винотеки</h3><p class="pf-fig-desc">Для торгового зала</p></figcaption>
           </figure>
           <figure class="pf-fig">
             <div class="pf-fig-inner">
               <img class="pf-fig-img" src="pf-c4.jpg" alt="Торговый зал винотеки. Стеллажи по периметру" loading="lazy" decoding="async" draggable="false">
               <span class="pf-reveal"></span>
             </div>
-            <figcaption><h3 class="pf-fig-title">Торговый зал винотеки</h3><p class="pf-fig-desc">Стеллажи по&nbsp;периметру</p></figcaption>
           </figure>
           <figure class="pf-fig">
             <div class="pf-fig-inner">
               <img class="pf-fig-img" src="pf-c1.jpg" alt="Торговая стойка с кассой. Прикассовая зона" loading="lazy" decoding="async" draggable="false">
               <span class="pf-reveal"></span>
             </div>
-            <figcaption><h3 class="pf-fig-title">Торговая стойка с&nbsp;кассой</h3><p class="pf-fig-desc">Прикассовая зона</p></figcaption>
           </figure>
           <figure class="pf-fig">
             <div class="pf-fig-inner">
               <img class="pf-fig-img" src="pf-c3.jpg" alt="Стол-стойка с табуретами. Для фудкорта" loading="lazy" decoding="async" draggable="false">
               <span class="pf-reveal"></span>
             </div>
-            <figcaption><h3 class="pf-fig-title">Стол-стойка с&nbsp;табуретами</h3><p class="pf-fig-desc">Для фудкорта</p></figcaption>
           </figure>
+          </div>
+          <div class="pf-cap"><h3 class="pf-cap-title">Коммерческая мебель</h3><p class="pf-cap-desc">Торговое оборудование для магазинов и&nbsp;винотек: стойки, стеллажи, кассовые зоны.</p></div>
         </div>
         </div>
     </div>
@@ -3746,23 +3787,20 @@ void main() {
     const tr = (x) => 'translate3d(' + x + '%,0,0)';
 
     const slides = slideEls.map(el => ({
-      el, href: el.dataset.href,
+      el, href: el.dataset.href, cap: el.querySelector('.pf-cap'),
       items: [...el.querySelectorAll('.pf-fig')].map(f => ({
-        img: f.querySelector('.pf-fig-img'), mask: f.querySelector('.pf-reveal'), cap: f.querySelector('figcaption')
+        img: f.querySelector('.pf-fig-img'), mask: f.querySelector('.pf-reveal')
       }))
     }));
     const ordered = (slide, dir) => dir === 'next' ? slide.items : slide.items.slice().reverse();
     const STEP = 0.08;
-    const cover = (slide, dir) => Promise.all(ordered(slide, dir).flatMap((it, i) => [
-      tween(it.mask, { transform: tr(dir === 'next' ? 100 : -100) }, { transform: tr(0) }, { d: 0.6, delay: i * STEP, ease: EASE.quint }),
-      tween(it.cap, { opacity: 1 }, { opacity: 0 }, { d: 0.3, delay: i * STEP })
-    ]));
-    const uncover = (slide, dir) => Promise.all(ordered(slide, dir).flatMap((it, i) => [
+    const cover = (slide, dir) => Promise.all([tween(slide.cap, { opacity: 1 }, { opacity: 0 }, { d: 0.3 })].concat(ordered(slide, dir).map((it, i) =>
+      tween(it.mask, { transform: tr(dir === 'next' ? 100 : -100) }, { transform: tr(0) }, { d: 0.6, delay: i * STEP, ease: EASE.quint }))));
+    const uncover = (slide, dir) => (slide.items.forEach(it => { it.img.style.visibility = ''; }), Promise.all([tween(slide.cap, { opacity: 0, transform: 'translate3d(0,12px,0)' }, { opacity: 1, transform: 'translate3d(0,0,0)' }, { d: 0.8, delay: 0.4, ease: EASE.quart })].concat(ordered(slide, dir).flatMap((it, i) => [
       tween(it.mask, { transform: tr(0) }, { transform: tr(dir === 'next' ? -100 : 100) }, { d: 0.9, delay: i * STEP, ease: EASE.quint }),
-      tween(it.img, { transform: 'scale(1.25)' }, { transform: 'scale(1)' }, { d: 1.2, delay: i * STEP, ease: EASE.expo }),
-      tween(it.cap, { opacity: 0, transform: 'translate3d(0,10px,0)' }, { opacity: 1, transform: 'translate3d(0,0,0)' }, { d: 0.7, delay: 0.35 + i * STEP, ease: EASE.quart })
-    ]));
-    const hide = slide => slide.items.forEach(it => { it.mask.style.transform = 'none'; it.cap.style.opacity = 0; it.img.style.transform = ''; });
+      tween(it.img, { transform: 'scale(1.25)' }, { transform: 'scale(1)' }, { d: 1.2, delay: i * STEP, ease: EASE.expo })
+    ]))));
+    const hide = slide => { slide.cap.style.opacity = 0; slide.items.forEach(it => { it.mask.style.transform = 'none'; it.img.style.transform = ''; it.img.style.visibility = 'hidden'; }); };
     slides.forEach(hide);
 
     // chrome: tabs, link, arrows with the counter (the same control as under «Отзывы»)
@@ -3775,6 +3813,8 @@ void main() {
     const paint = () => {
       tabs.forEach((t, i) => { t.classList.toggle('is-current', i === current); t.setAttribute('aria-selected', String(i === current)); });
       more.setAttribute('href', slides[current].href);
+      const tb = tabs[current].parentNode;   // on a phone the row of tabs scrolls: keep the chosen one in view
+      if (tb.scrollWidth > tb.clientWidth) tb.scrollTo({ left: tabs[current].offsetLeft - 20, behavior: 'smooth' });
       if (onChange) onChange();
     };
 

@@ -116,11 +116,22 @@
   var m = /^#model-([\w-]+)$/.exec(location.hash);
   if (!m) return;
   var btn = document.querySelector('.model-details-btn[data-model="' + m[1] + '"]');
-  if (!btn) return;
+  if (!btn) { document.documentElement.classList.remove('is-deeplink'); return; }
   var go = function () {
     var card = btn.closest('.model-card'), track = document.getElementById('modelTrack');
     if (card && track) track.scrollLeft = Math.max(0, card.offsetLeft - (track.clientWidth - card.offsetWidth) / 2);
     btn.click();
+    requestAnimationFrame(function () { document.documentElement.classList.remove('is-deeplink'); });
+    // closing the window leaves the visitor at the tiles, not at the top of the page
+    var win = document.getElementById('modelModal'), gal = document.querySelector('.model-gallery');
+    if (win && gal && window.MutationObserver) {
+      var mo = new MutationObserver(function () {
+        if (win.classList.contains('open')) return;
+        mo.disconnect();
+        window.scrollTo(0, Math.max(0, gal.getBoundingClientRect().top + window.pageYOffset - 140));
+      });
+      mo.observe(win, { attributes: true, attributeFilter: ['class'] });
+    }
   };
   if (document.readyState === 'complete') setTimeout(go, 200); else window.addEventListener('load', function () { setTimeout(go, 200); });
 })();

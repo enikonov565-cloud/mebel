@@ -995,85 +995,48 @@
     color:#CDCBC7;max-width:480px;text-align:right;
   }
 
-  /* Примеры наших работ — a book of category spreads with a flat page flip (idea and layout: Codrops «Page Flip Layout»).
-     Every category is one spread (two pages) of photos on a 20 x 20 grid; the next spread arrives behind a stack of turning pages. */
-  .pf{position:relative;--pf-paper:#E8DDCA;--pf-ink:#2F1F02}
-  .pf-book{position:relative;overflow:hidden;border-radius:15px;background:var(--pf-paper);outline:none;
-    height:clamp(520px,min(calc(var(--vw100,100vw)*.47),calc(var(--vh100,100vh) - 150px)),900px);
-    box-shadow:0 30px 70px rgba(47,31,2,.14),0 0 0 1px rgba(47,31,2,.06);touch-action:pan-y;-webkit-tap-highlight-color:transparent}
-  .pf-book:focus-visible{box-shadow:0 30px 70px rgba(47,31,2,.14),0 0 0 2px rgba(47,31,2,.4)}
-  .pf-slide{position:absolute;inset:0;display:grid;grid-template-columns:repeat(20,minmax(0,1fr));grid-template-rows:repeat(20,minmax(0,1fr));gap:14px;padding:26px 22px;
-    pointer-events:none;background:var(--pf-paper)}
-  .pf-slide.is-current{pointer-events:auto;z-index:100}
-  .pf-fig{display:flex;flex-direction:column;min-width:0;min-height:0;margin:0;perspective:1000px;will-change:transform}
-  .pf-fig-inner{position:relative;flex:1;min-height:0;overflow:hidden;border-radius:15px;transform:rotate3d(0,1,0,.1deg);will-change:transform;background:#CDBDA3}
+  /* Примеры наших работ — one row of photos per category on the section's own background; the arrows, the tabs, a swipe or the
+     arrow keys switch the category: a mask sweeps over the photos, the next category is swapped in underneath and the mask moves on. */
+  .pf{position:relative;--pf-bg:#D9CBB6;--pf-ink:#180F01}
+  .pf-nav{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:12px 40px;margin-bottom:30px;font-family:'Inter',sans-serif}
+  .pf-tabs{display:flex;flex-wrap:wrap;gap:6px clamp(20px,calc(2.2*var(--vw100,100vw)/100),34px)}
+  .pf-tab{position:relative;border:0;margin:0;padding:0 0 9px;background:none;cursor:pointer;
+    font:500 clamp(15px,calc(1.25*var(--vw100,100vw)/100),22px)/1.1 'Inter',sans-serif;letter-spacing:-.01em;color:rgba(24,15,1,.42);transition:color .3s ease}
+  .pf-tab::after{content:'';position:absolute;left:0;right:0;bottom:0;height:2px;background:#2F1F02;transform:scaleX(0);transform-origin:0 50%;transition:transform .55s cubic-bezier(.16,1,.3,1)}
+  .pf-tab:hover,.pf-tab.is-current{color:var(--pf-ink)}
+  .pf-tab.is-current::after{transform:scaleX(1)}
+  .pf-tab:focus-visible,.pf-more:focus-visible{outline:2px solid rgba(47,31,2,.45);outline-offset:4px;border-radius:4px}
+  .pf-more{font-weight:500;font-size:clamp(14px,calc(1.05*var(--vw100,100vw)/100),18px);line-height:1.1;color:#2F1F02;text-decoration:none;border-bottom:1px solid rgba(47,31,2,.4);transition:border-color .2s}
+  .pf-more:hover{border-color:#2F1F02}
+  .pf-book{position:relative;display:grid;outline:none;touch-action:pan-y;-webkit-tap-highlight-color:transparent}
+  .pf-slide{grid-area:1/1;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px;min-width:0;align-content:start;visibility:hidden;pointer-events:none}
+  .pf-slide[data-n="3"]{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .pf-slide.is-current{visibility:visible;pointer-events:auto}
+  .pf-fig{display:flex;flex-direction:column;min-width:0;margin:0}
+  .pf-fig-inner{position:relative;overflow:hidden;border-radius:15px;background:#CDBDA3;
+    height:clamp(250px,min(calc(var(--vw100,100vw)*.27),calc(var(--vh100,100vh) - 440px)),480px)}
   .pf-fig-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;will-change:transform;-webkit-user-drag:none;user-select:none}
-  .pf-reveal{position:absolute;top:-1px;left:-1px;width:calc(100% + 2px);height:calc(100% + 2px);background:var(--pf-paper);z-index:2;will-change:transform}
-  .pf-fig figcaption{flex:none;padding-top:9px;min-height:46px}
-  .pf-fig-title{margin:0;font-family:'Inter',sans-serif;font-weight:500;font-size:clamp(12px,calc(.9*var(--vw100,100vw)/100),17px);line-height:1.2;letter-spacing:-.01em;color:var(--pf-ink)}
-  .pf-fig-desc{margin:2px 0 0;font-family:'Inter',sans-serif;font-weight:300;font-size:clamp(11px,calc(.73*var(--vw100,100vw)/100),14px);line-height:1.25;color:rgba(47,31,2,.7)}
-  .pf-js .pf-fig{opacity:0}                                           /* the script reveals them; without it everything just shows */
-  .pf-num{position:absolute;bottom:9px;font-family:'Inter',sans-serif;font-weight:400;font-size:12px;letter-spacing:.04em;color:rgba(47,31,2,.45)}
-  .pf-num--l{left:24px}.pf-num--r{right:24px}
-  /* the spreads: grid-area = row-start / column-start / row-end / column-end; the left page is columns 1-10, the right one 11-20 */
-  .pf-l-a .pf-fig:nth-child(1){grid-area:2/2/15/6}.pf-l-a .pf-fig:nth-child(2){grid-area:8/7/21/11}.pf-l-a .pf-fig:nth-child(3){grid-area:3/12/16/16}.pf-l-a .pf-fig:nth-child(4){grid-area:9/17/21/20}
-  .pf-l-b .pf-fig:nth-child(1){grid-area:5/2/18/6}.pf-l-b .pf-fig:nth-child(2){grid-area:2/7/14/11}.pf-l-b .pf-fig:nth-child(3){grid-area:8/12/21/16}.pf-l-b .pf-fig:nth-child(4){grid-area:3/17/16/20}
-  .pf-l-c .pf-fig:nth-child(1){grid-area:2/2/19/8}.pf-l-c .pf-fig:nth-child(2){grid-area:4/12/17/16}.pf-l-c .pf-fig:nth-child(3){grid-area:9/17/21/20}
-  .pf-l-d .pf-fig:nth-child(1){grid-area:2/2/15/6}.pf-l-d .pf-fig:nth-child(2){grid-area:8/7/21/11}.pf-l-d .pf-fig:nth-child(3){grid-area:5/12/18/20}
-  .pf-l-e .pf-fig:nth-child(1){grid-area:3/2/17/6}.pf-l-e .pf-fig:nth-child(2){grid-area:9/7/21/11}.pf-l-e .pf-fig:nth-child(3){grid-area:2/12/12/20}.pf-l-e .pf-fig:nth-child(4){grid-area:13/15/21/19}
-  /* the page-turn stack */
-  .pf-rev{position:absolute;inset:0;display:flex;z-index:200;pointer-events:none}
-  .pf-rev-half{position:relative;width:50%;height:100%;overflow:hidden}
-  .pf-rev-half--l{border-right:1px solid rgba(47,31,2,.07)}
-  .pf-rev-page{position:absolute;top:0;left:0;width:100%;height:100%;transform:translate3d(100%,0,0);will-change:transform}
-  /* the edges of the book: its thickness shows where we are */
-  .pf-side{position:absolute;top:0;bottom:0;left:0;width:7px;background:var(--pf-ink);z-index:300;transform-origin:0 50%;pointer-events:none}
-  .pf-side--r{left:auto;right:0;transform-origin:100% 50%;transform:scaleX(0)}
-  /* contents + chapter, arrows */
-  .pf-nav{position:absolute;top:14px;left:24px;z-index:400;display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 16px;font-family:'Inter',sans-serif;color:var(--pf-ink);max-width:calc(100% - 48px)}
-  .pf-nav-btn{border:0;margin:0;padding:0 14px 0 0;background:none;font:400 13px/1 'Inter',sans-serif;color:var(--pf-ink);cursor:pointer;position:relative}
-  .pf-nav-btn::before,.pf-nav-btn::after{content:'';position:absolute;right:0;top:50%;width:7px;height:1px;background:currentColor;transition:transform .2s,opacity .2s}
-  .pf-nav-btn::before{transform:rotate(90deg)}
-  .pf-nav.is-open .pf-nav-btn::before{transform:rotate(0)}
-  .pf-nav.is-open .pf-nav-btn::after{opacity:0;transform:rotate(90deg)}
-  .pf-nav-btn:hover{opacity:.7}
-  .pf-chapter{font-weight:500;font-size:16px;line-height:1;transition:opacity .25s ease}
-  .pf-nav.is-open .pf-chapter,.pf-nav.is-open .pf-more{opacity:0}
-  .pf-more{font-weight:500;font-size:14px;line-height:1;color:var(--pf-ink);text-decoration:none;border-bottom:1px solid rgba(47,31,2,.4);transition:opacity .25s ease,border-color .2s}
-  .pf-more:hover{border-color:var(--pf-ink)}
-  .pf-toc{position:absolute;top:100%;left:0;margin-top:8px;display:none;flex-direction:column;gap:2px;min-width:260px;padding:12px 18px 10px;border-radius:12px;background:rgba(232,221,202,.97);box-shadow:0 18px 40px rgba(47,31,2,.18)}
-  .pf-nav.is-open .pf-toc{display:flex}
-  .pf-toc-item{display:flex;gap:12px;padding:6px 0;font-size:15px;line-height:1.2;color:rgba(47,31,2,.62);text-decoration:none;opacity:0}
-  .pf-toc-page{width:1.7em;color:rgba(47,31,2,.4)}
-  .pf-toc-item:hover,.pf-toc-item.is-current{color:var(--pf-ink)}
-  .pf-controls{position:absolute;inset:0;pointer-events:none;z-index:350}
-  .pf-count{display:none}
-  .pf-arrow{position:absolute;top:50%;width:50px;height:24px;margin-top:-12px;padding:0;border:0;background:none;color:var(--pf-ink);cursor:pointer;pointer-events:auto;transition:transform .25s cubic-bezier(.22,1,.36,1),opacity .2s}
-  .pf-arrow svg{display:block;width:100%;height:100%;fill:none;stroke:currentColor;stroke-width:1.1}
-  .pf-arrow--prev{left:18px;visibility:hidden}
-  .pf-arrow--next{right:18px}
-  .pf-arrow--prev:hover{transform:translateX(-4px)}.pf-arrow--next:hover{transform:translateX(4px)}
-  .pf-arrow:focus-visible{outline:2px solid rgba(47,31,2,.4);outline-offset:4px}
+  .pf-reveal{position:absolute;top:-1px;left:-1px;width:calc(100% + 2px);height:calc(100% + 2px);background:var(--pf-bg);z-index:2;will-change:transform}
+  .pf-fig figcaption{padding-top:14px}
+  .pf-fig-title{margin:0;font-family:'Inter',sans-serif;font-weight:500;font-size:clamp(15px,calc(1.2*var(--vw100,100vw)/100),20px);line-height:1.15;letter-spacing:-.01em;color:var(--pf-ink)}
+  .pf-fig-desc{margin:4px 0 0;font-family:'Inter',sans-serif;font-weight:300;font-size:clamp(13px,calc(1*var(--vw100,100vw)/100),16px);line-height:1.25;color:rgba(24,15,1,.68)}
+  .pf-js .pf-fig figcaption{opacity:0}                               /* the script shows them; without it everything just shows */
+  .works-cta{display:flex;justify-content:center;margin-top:44px}
+  #pfPrev,#pfNext{display:none}
+  .works-cta .ctl #pfPrev,.works-cta .ctl #pfNext{display:block}
   @media (max-width:960px){
-    /* phones and tablets: the contents bar above the book, the arrows with a counter below it; spreads become a 2-column mosaic */
-    .pf-book{height:clamp(430px,calc(var(--vw100,100vw)*1.42),640px)}
-    .pf-slide{grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(2,minmax(0,1fr));gap:10px;padding:12px}
-    .pf-slide .pf-fig:nth-child(n){grid-area:auto}
-    .pf-slide[data-n="3"] .pf-fig:nth-child(1){grid-row:1/3}
-    .pf-slide[data-n="3"] .pf-fig:nth-child(2),.pf-slide[data-n="3"] .pf-fig:nth-child(3){grid-column:2}
-    .pf-fig figcaption{padding-top:6px;min-height:34px}
-    .pf-fig-title{font-size:13px}   /* (the clamp above is for the wide book) */
-    .pf-fig-desc{display:none}
-    .pf-num{display:none}
-    .pf-side{width:5px}
-    .pf-nav{position:relative;top:auto;left:auto;max-width:none;margin-bottom:14px}
-    .pf-controls{position:static;inset:auto;display:flex;align-items:center;justify-content:space-between;gap:18px;margin-top:18px;pointer-events:auto}
-    .pf-count{display:block;font-family:'Inter',sans-serif;font-weight:500;font-size:18px;letter-spacing:.02em;color:var(--pf-ink);white-space:nowrap}
-    .pf-arrow{position:static;margin:0}
-    .pf-arrow--prev,.pf-arrow--next{left:auto;right:auto}
-    .pf-arrow--prev{visibility:hidden}
+    .pf-nav{display:block;margin-bottom:22px}
+    .pf-tabs{flex-wrap:nowrap;overflow-x:auto;gap:26px;margin:0 -20px;padding:0 20px;scrollbar-width:none;-ms-overflow-style:none}
+    .pf-tabs::-webkit-scrollbar{display:none}
+    .pf-tab{flex:none;white-space:nowrap;font-size:16px}
+    .pf-more{display:inline-block;margin-top:16px;font-size:15px}
+    .pf-slide,.pf-slide[data-n="3"]{grid-template-columns:repeat(2,minmax(0,1fr));gap:20px 12px}
+    .pf-slide[data-n="3"] .pf-fig:nth-child(3){grid-column:1/-1}
+    .pf-fig-inner{height:clamp(170px,calc(var(--vw100,100vw)*.5),320px)}
+    .pf-fig figcaption{padding-top:9px}
+    .pf-fig-title{font-size:15px}
+    .pf-fig-desc{font-size:13px;margin-top:3px}
   }
-  @media (prefers-reduced-motion:reduce){.pf-toc-item{opacity:1}}
 
   /* gallery / reviews arrows: thin long arrows (as in the slider of «Почему выбирают нас» and the catalogue), no plates;
      dark brown and inactive when the row cannot go further that way */
@@ -1094,7 +1057,6 @@
   .works-arrow.next:hover{transform:translate(5px,-50%)}
   .works-arrow:disabled,.works-arrow:disabled:hover{background:none;color:#2F1F02;cursor:default;transform:translateY(-50%);filter:none}
 
-  .works-cta{display:flex;justify-content:center;margin-top:44px}
   .works-cta a{
     display:flex;align-items:center;justify-content:center;
     width:430px;max-width:100%;height:68px;
@@ -1732,6 +1694,15 @@
   }
   @media (max-width:960px){.reviews-cta > .ctl{order:-1;margin:0;justify-content:center}}
 </style>
+<style>
+  @media (min-width:961px){
+    .works-cta.works-cta{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;margin-top:28px}
+    .works-cta > .ctl{grid-column:1;grid-row:1;margin:0 0 0 -.6rem;justify-self:start;justify-content:flex-start}
+    .works-cta > a{grid-column:2;grid-row:1}
+  }
+  @media (min-width:961px) and (max-width:1279px){.works-cta.works-cta{grid-template-columns:auto 1fr}.works-cta > a{grid-column:2;justify-self:end}}
+  @media (max-width:960px){.works-cta{flex-direction:column;align-items:flex-start;gap:26px;margin-top:22px}.works-cta > .ctl{order:-1;margin:0;align-self:center;justify-content:center}.works-cta > a{align-self:stretch;width:auto}}
+</style>
 <link rel="stylesheet" href="logo.css?v=4">
 <link rel="stylesheet" href="menu.css?v=2">
 <link rel="stylesheet" href="light.css?v=9">
@@ -2265,16 +2236,14 @@
     </div>
     <div class="pf" id="pf">
       <nav class="pf-nav" aria-label="Категории работ">
-        <button type="button" class="pf-nav-btn" aria-expanded="false" aria-controls="pfToc"><span>содержание</span></button>
-        <span class="pf-chapter">Корпусная мебель</span>
-        <a class="pf-more" href="catalog-korpusnaya.html">в каталог <span aria-hidden="true">→</span></a>
-        <div class="pf-toc" id="pfToc">
-          <a class="pf-toc-item" href="catalog-korpusnaya.html"><span class="pf-toc-page">01</span><span class="pf-toc-title">Корпусная мебель</span></a>
-          <a class="pf-toc-item" href="catalog-eksklyuzivnaya.html"><span class="pf-toc-page">03</span><span class="pf-toc-title">Эксклюзивная мебель</span></a>
-          <a class="pf-toc-item" href="catalog-dveri.html"><span class="pf-toc-page">05</span><span class="pf-toc-title">Двери и порталы</span></a>
-          <a class="pf-toc-item" href="catalog-ofisnaya.html"><span class="pf-toc-page">07</span><span class="pf-toc-title">Офисная мебель</span></a>
-          <a class="pf-toc-item" href="catalog-kommercheskaya.html"><span class="pf-toc-page">09</span><span class="pf-toc-title">Коммерческая мебель</span></a>
+        <div class="pf-tabs" role="tablist">
+          <button type="button" class="pf-tab is-current" role="tab" aria-selected="true">Корпусная&nbsp;мебель</button>
+          <button type="button" class="pf-tab" role="tab" aria-selected="false">Эксклюзивная&nbsp;мебель</button>
+          <button type="button" class="pf-tab" role="tab" aria-selected="false">Двери&nbsp;и порталы</button>
+          <button type="button" class="pf-tab" role="tab" aria-selected="false">Офисная&nbsp;мебель</button>
+          <button type="button" class="pf-tab" role="tab" aria-selected="false">Коммерческая&nbsp;мебель</button>
         </div>
+        <a class="pf-more" href="catalog-korpusnaya.html">в&nbsp;каталог&nbsp;<span aria-hidden="true">→</span></a>
       </nav>
       <div class="pf-book" tabindex="0" role="region" aria-label="Примеры наших работ по категориям — листайте стрелками или свайпом">
         <div class="pf-slide pf-l-a is-current" data-title="Корпусная мебель" data-href="catalog-korpusnaya.html" data-n="4" role="group" aria-label="Корпусная мебель">
@@ -2306,7 +2275,6 @@
             </div>
             <figcaption><h3 class="pf-fig-title">Двухъярусная кровать со&nbsp;шкафом</h3><p class="pf-fig-desc">Встроенный шкаф в&nbsp;детской</p></figcaption>
           </figure>
-          <span class="pf-num pf-num--l">01</span><span class="pf-num pf-num--r">02</span>
         </div>
         <div class="pf-slide pf-l-b" data-title="Эксклюзивная мебель" data-href="catalog-eksklyuzivnaya.html" data-n="4" role="group" aria-label="Эксклюзивная мебель">
           <figure class="pf-fig">
@@ -2337,7 +2305,6 @@
             </div>
             <figcaption><h3 class="pf-fig-title">Тумба с&nbsp;серебрением</h3><p class="pf-fig-desc">Прикроватная, на&nbsp;заказ</p></figcaption>
           </figure>
-          <span class="pf-num pf-num--l">03</span><span class="pf-num pf-num--r">04</span>
         </div>
         <div class="pf-slide pf-l-c" data-title="Двери и порталы" data-href="catalog-dveri.html" data-n="3" role="group" aria-label="Двери и порталы">
           <figure class="pf-fig">
@@ -2361,7 +2328,6 @@
             </div>
             <figcaption><h3 class="pf-fig-title">Межкомнатная дверь</h3><p class="pf-fig-desc">С диагональным рисунком</p></figcaption>
           </figure>
-          <span class="pf-num pf-num--l">05</span><span class="pf-num pf-num--r">06</span>
         </div>
         <div class="pf-slide pf-l-d" data-title="Офисная мебель" data-href="catalog-ofisnaya.html" data-n="3" role="group" aria-label="Офисная мебель">
           <figure class="pf-fig">
@@ -2385,7 +2351,6 @@
             </div>
             <figcaption><h3 class="pf-fig-title">Стол для&nbsp;совещаний</h3><p class="pf-fig-desc">Стулья с&nbsp;синей обивкой</p></figcaption>
           </figure>
-          <span class="pf-num pf-num--l">07</span><span class="pf-num pf-num--r">08</span>
         </div>
         <div class="pf-slide pf-l-e" data-title="Коммерческая мебель" data-href="catalog-kommercheskaya.html" data-n="4" role="group" aria-label="Коммерческая мебель">
           <figure class="pf-fig">
@@ -2416,18 +2381,12 @@
             </div>
             <figcaption><h3 class="pf-fig-title">Стол-стойка с&nbsp;табуретами</h3><p class="pf-fig-desc">Для фудкорта</p></figcaption>
           </figure>
-          <span class="pf-num pf-num--l">09</span><span class="pf-num pf-num--r">10</span>
         </div>
-        <div class="pf-rev" aria-hidden="true"><div class="pf-rev-half pf-rev-half--l"></div><div class="pf-rev-half pf-rev-half--r"></div></div>
-        <span class="pf-side pf-side--l" aria-hidden="true"></span><span class="pf-side pf-side--r" aria-hidden="true"></span>
-      </div>
-      <div class="pf-controls">
-        <button type="button" class="pf-arrow pf-arrow--prev" aria-label="Предыдущая категория"><svg viewBox="0 0 55 24" aria-hidden="true"><path d="M54 12H2M13 1.5 2 12l11 10.5"/></svg></button>
-        <span class="pf-count" aria-live="polite"><span class="pf-count-cur">01</span> — <span>05</span></span>
-        <button type="button" class="pf-arrow pf-arrow--next" aria-label="Следующая категория"><svg viewBox="0 0 55 24" aria-hidden="true"><path d="M1 12h52M42 1.5 53 12 42 22.5"/></svg></button>
-      </div>
+        </div>
     </div>
     <div class="works-cta">
+      <button type="button" id="pfPrev" aria-label="Предыдущая категория"></button>
+      <button type="button" id="pfNext" aria-label="Следующая категория"></button>
       <a href="#contact" class="dot-btn calc-cta">
         рассчитать стоимость проекта
       </a>
@@ -3765,17 +3724,16 @@ void main() {
   })();
 </script>
 <script>
-  // «Примеры наших работ»: a book of category spreads with a flat page flip (idea and layout: Codrops «Page Flip Layout»;
-  // here written with the Web Animations API, so it needs no library). One category = one spread; the arrows, a swipe, the arrow keys
-  // and the table of contents turn the pages: a stack of paper sheets sweeps across both halves, and in the middle of the sweep the
-  // next spread takes the place of the current one and its photos open out of their masks.
+  // «Примеры наших работ»: one category = one row of photos. The arrows, the tabs, a swipe and the arrow keys switch the category:
+  // a mask of the section's colour sweeps across the photos (one after another), the next category is swapped in while they are
+  // covered, and the mask keeps going and uncovers the new photos. Written with the Web Animations API, so it needs no library.
   (function () {
     const root = document.getElementById('pf');
     if (!root) return;
     const bookEl = root.querySelector('.pf-book');
     const slideEls = [...root.querySelectorAll('.pf-slide')];
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const N = slideEls.length, clamp = (v, a, b) => Math.min(b, Math.max(a, v));
+    const N = slideEls.length;
     const EASE = { quint: 'cubic-bezier(.86,0,.07,1)', expo: 'cubic-bezier(.16,1,.3,1)', quart: 'cubic-bezier(.25,1,.5,1)' };
     const SPEED = reduce ? 0.001 : 1;
     root.classList.add('pf-js');
@@ -3785,119 +3743,76 @@ void main() {
       const a = el.animate([from, to], { duration: Math.max(1, o.d * 1000 * SPEED), delay: (o.delay || 0) * 1000 * SPEED, easing: o.ease || 'linear', fill: 'both' });
       return a.finished.then(() => { try { a.commitStyles(); } catch (_) {} a.cancel(); }).catch(() => {});
     };
-    const tr = (x, unit) => 'translate3d(' + x + (unit || 'px') + ',0,0)';
+    const tr = (x) => 'translate3d(' + x + '%,0,0)';
 
-    // the stack of turning pages (lighter to darker), one half per side
-    const COLORS = ['#EFE6D6', '#E8DDCA', '#E0D3BD', '#D8CAB2', '#D0C0A6'];
-    const halves = { l: root.querySelector('.pf-rev-half--l'), r: root.querySelector('.pf-rev-half--r') };
-    let pages = '';
-    for (let i = 0; i <= N; i++) pages += '<div class="pf-rev-page" style="background:' + (COLORS[i] || COLORS[0]) + '"></div>';
-    halves.l.innerHTML = halves.r.innerHTML = pages;
-    const sheets = { l: [...halves.l.children], r: [...halves.r.children] };
-    const DUR = 1.6, GAP = 0.15;
-    const turn = (dir, count, middle) => {
-      const jobs = [];
-      for (const side of ['l', 'r']) {
-        for (let i = 0; i < count; i++) {
-          jobs.push(tween(sheets[side][i], { transform: tr(dir === 'next' ? 100 : -100, '%') }, { transform: tr(dir === 'next' ? -100 : 100, '%') }, { d: DUR, delay: i * GAP, ease: EASE.quint }));
-        }
-      }
-      setTimeout(middle, ((DUR + (count - 1) * GAP) / 2) * 1000 * SPEED);
-      return Promise.all(jobs);
-    };
-
-    // a spread and its photos
     const slides = slideEls.map(el => ({
-      el, title: el.dataset.title, href: el.dataset.href,
+      el, href: el.dataset.href,
       items: [...el.querySelectorAll('.pf-fig')].map(f => ({
-        el: f, inner: f.querySelector('.pf-fig-inner'), img: f.querySelector('.pf-fig-img'), reveal: f.querySelector('.pf-reveal'),
-        title: f.querySelector('.pf-fig-title'), desc: f.querySelector('.pf-fig-desc')
+        img: f.querySelector('.pf-fig-img'), mask: f.querySelector('.pf-reveal'), cap: f.querySelector('figcaption')
       }))
     }));
-    const sideOf = (slide, it) => (it.el.offsetLeft + it.el.offsetWidth / 2) >= slide.el.clientWidth / 2 ? 'right' : 'left';
-    const showItems = (slide, dir) => {
-      const next = dir === 'next', jobs = [];
-      for (const it of slide.items) {
-        jobs.push(tween(it.el, { opacity: 1, transform: tr(next ? 60 : -60) }, { opacity: 1, transform: tr(0) }, { d: 1, ease: EASE.expo }));
-        if ((next && sideOf(slide, it) === 'left') || (!next && sideOf(slide, it) === 'right')) {   // the photos on the turning side swing in
-          it.inner.style.transformOrigin = next ? '100% 50%' : '0% 50%';
-          jobs.push(tween(it.inner, { transform: 'rotateY(' + (next ? 30 : -30) + 'deg)' }, { transform: 'rotateY(0.1deg)' }, { d: 1, ease: EASE.expo }));
-        }
-        jobs.push(tween(it.reveal, { transform: tr(0) }, { transform: tr(next ? -100 : 100, '%') }, { d: 1, ease: EASE.expo }));
-        jobs.push(tween(it.img, { transform: 'scale(1.5)' }, { transform: 'scale(1)' }, { d: 1, ease: EASE.expo }));
-        jobs.push(tween(it.title, { opacity: 0, transform: tr(next ? 15 : -15) }, { opacity: 1, transform: tr(0) }, { d: 0.8, delay: 0.25, ease: EASE.quart }));
-        jobs.push(tween(it.desc, { opacity: 0, transform: tr(next ? 20 : -20) }, { opacity: 1, transform: tr(0) }, { d: 0.8, delay: 0.3, ease: EASE.quart }));
-      }
-      return Promise.all(jobs);
-    };
-    const hideItems = slide => slide.items.forEach(it => { it.el.style.opacity = 0; it.title.style.opacity = 0; it.desc.style.opacity = 0; });
-    slides.forEach(hideItems);
+    const ordered = (slide, dir) => dir === 'next' ? slide.items : slide.items.slice().reverse();
+    const STEP = 0.08;
+    const cover = (slide, dir) => Promise.all(ordered(slide, dir).flatMap((it, i) => [
+      tween(it.mask, { transform: tr(dir === 'next' ? 100 : -100) }, { transform: tr(0) }, { d: 0.6, delay: i * STEP, ease: EASE.quint }),
+      tween(it.cap, { opacity: 1 }, { opacity: 0 }, { d: 0.3, delay: i * STEP })
+    ]));
+    const uncover = (slide, dir) => Promise.all(ordered(slide, dir).flatMap((it, i) => [
+      tween(it.mask, { transform: tr(0) }, { transform: tr(dir === 'next' ? -100 : 100) }, { d: 0.9, delay: i * STEP, ease: EASE.quint }),
+      tween(it.img, { transform: 'scale(1.25)' }, { transform: 'scale(1)' }, { d: 1.2, delay: i * STEP, ease: EASE.expo }),
+      tween(it.cap, { opacity: 0, transform: 'translate3d(0,10px,0)' }, { opacity: 1, transform: 'translate3d(0,0,0)' }, { d: 0.7, delay: 0.35 + i * STEP, ease: EASE.quart })
+    ]));
+    const hide = slide => slide.items.forEach(it => { it.mask.style.transform = 'none'; it.cap.style.opacity = 0; it.img.style.transform = ''; });
+    slides.forEach(hide);
 
-    // chrome: arrows, counter, chapter, edges
-    const prev = root.querySelector('.pf-arrow--prev'), nextBtn = root.querySelector('.pf-arrow--next');
-    const chapter = root.querySelector('.pf-chapter'), more = root.querySelector('.pf-more'), count = root.querySelector('.pf-count-cur');
-    const nav = root.querySelector('.pf-nav'), navBtn = root.querySelector('.pf-nav-btn'), tocItems = [...root.querySelectorAll('.pf-toc-item')];
-    const sideL = root.querySelector('.pf-side--l'), sideR = root.querySelector('.pf-side--r');
-    sideR.style.transform = 'scaleX(0)';
-    let current = 0, busy = false, tocOpen = false, eL = 1, eR = 0;   // eL / eR: the edge indicators' current scale
-    const paintChrome = () => {
-      prev.style.visibility = current === 0 ? 'hidden' : 'visible';
-      nextBtn.style.visibility = current === N - 1 ? 'hidden' : 'visible';
-      chapter.textContent = slides[current].title; more.setAttribute('href', slides[current].href);
-      count.textContent = String(current + 1).padStart(2, '0');
-      tocItems.forEach((t, i) => t.classList.toggle('is-current', i === current));
-      const p = N > 1 ? current / (N - 1) : 0;
-      tween(sideL, { transform: 'scaleX(' + eL + ')' }, { transform: 'scaleX(' + (1 - p) + ')' }, { d: 0.5, ease: EASE.expo });
-      tween(sideR, { transform: 'scaleX(' + eR + ')' }, { transform: 'scaleX(' + p + ')' }, { d: 0.5, ease: EASE.expo });
-      eL = 1 - p; eR = p;
-    };
-    const toggleToc = force => {
-      tocOpen = force === undefined ? !tocOpen : force;
-      nav.classList.toggle('is-open', tocOpen);
-      navBtn.setAttribute('aria-expanded', String(tocOpen));
-      if (tocOpen) tocItems.forEach((t, i) => tween(t, { opacity: 0, transform: 'translate3d(0,10px,0)' }, { opacity: 1, transform: 'translate3d(0,0,0)' }, { d: 0.9, delay: i * 0.03, ease: EASE.expo }));
-      else tocItems.forEach(t => { t.style.opacity = 0; });
+    // chrome: tabs, link, arrows with the counter (the same control as under «Отзывы»)
+    const tabs = [...root.querySelectorAll('.pf-tab')], more = root.querySelector('.pf-more');
+    const prev = document.getElementById('pfPrev'), nextBtn = document.getElementById('pfNext');
+    let current = 0, busy = false, onChange = null;
+    const made = window.Ctl ? Ctl.make({ prev, next: nextBtn, after: bookEl, tone: 'light', total: () => N, current: () => current + 1, watch: cb => { onChange = cb; } }) : null;
+    const cta = document.querySelector('#portfolio .works-cta');
+    if (made && cta) cta.insertBefore(made.row, cta.firstChild);
+    const paint = () => {
+      tabs.forEach((t, i) => { t.classList.toggle('is-current', i === current); t.setAttribute('aria-selected', String(i === current)); });
+      more.setAttribute('href', slides[current].href);
+      if (onChange) onChange();
     };
 
-    // turning
-    const switchPage = (pos, dir) => {
-      const from = slides[current], to = slides[pos];
-      from.el.classList.remove('is-current'); hideItems(from);
-      to.el.style.zIndex = 100;
-      showItems(to, dir).then(() => { to.el.classList.add('is-current'); to.el.style.zIndex = ''; busy = false; });
-      current = pos; paintChrome();
-    };
-    const go = pos => {
+    const go = (pos, dir) => {
       if (busy || pos === current || pos < 0 || pos >= N) return;
-      busy = true; toggleToc(false);
-      const dir = pos > current ? 'next' : 'prev';
-      turn(dir, Math.abs(pos - current), () => switchPage(pos, dir));
+      busy = true;
+      dir = dir || (pos > current ? 'next' : 'prev');
+      const from = slides[current], to = slides[pos];
+      current = pos; paint();
+      cover(from, dir).then(() => {
+        from.el.classList.remove('is-current'); hide(from);
+        hide(to); to.el.classList.add('is-current');
+        return uncover(to, dir);
+      }).then(() => { busy = false; });
     };
-    prev.addEventListener('click', () => go(current - 1));
-    nextBtn.addEventListener('click', () => go(current + 1));
-    navBtn.addEventListener('click', () => toggleToc());
-    tocItems.forEach((t, i) => t.addEventListener('click', e => { e.preventDefault(); go(i); }));
-    document.addEventListener('click', e => { if (tocOpen && !nav.contains(e.target)) toggleToc(false); });
+    prev.addEventListener('click', () => go((current + N - 1) % N, 'prev'));
+    nextBtn.addEventListener('click', () => go((current + 1) % N, 'next'));
+    tabs.forEach((t, i) => t.addEventListener('click', () => go(i)));
     bookEl.addEventListener('keydown', e => {
-      if (e.key === 'ArrowRight') { e.preventDefault(); go(current + 1); }
-      else if (e.key === 'ArrowLeft') { e.preventDefault(); go(current - 1); }
+      if (e.key === 'ArrowRight') { e.preventDefault(); go((current + 1) % N, 'next'); }
+      else if (e.key === 'ArrowLeft') { e.preventDefault(); go((current + N - 1) % N, 'prev'); }
     });
-    // a swipe turns the page too (a vertical swipe still scrolls the page)
+    // a swipe switches the category too (a vertical swipe still scrolls the page)
     let sx = null, sy = 0;
     bookEl.addEventListener('pointerdown', e => { if (e.pointerType !== 'mouse') { sx = e.clientX; sy = e.clientY; } });
     bookEl.addEventListener('pointerup', e => {
       if (sx === null) return;
       const dx = e.clientX - sx, dy = e.clientY - sy; sx = null;
-      if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.4) go(current + (dx < 0 ? 1 : -1));
+      if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.4) go((current + (dx < 0 ? 1 : N - 1)) % N, dx < 0 ? 'next' : 'prev');
     });
     bookEl.addEventListener('pointercancel', () => { sx = null; });
 
-    // the first spread opens when the block comes into view (and its pictures are in)
-    paintChrome();
+    // the first category opens when the block comes into view (and its pictures are in)
+    paint();
     const open = () => {
       const imgs = slides[0].items.map(it => it.img);
       const ready = Promise.race([Promise.all(imgs.map(im => im.decode ? im.decode().catch(() => {}) : Promise.resolve())), new Promise(r => setTimeout(r, 2500))]);
-      ready.then(() => { busy = true; showItems(slides[0], 'next').then(() => { busy = false; }); });
+      ready.then(() => { busy = true; uncover(slides[0], 'next').then(() => { busy = false; }); });
     };
     if ('IntersectionObserver' in window) {
       new IntersectionObserver((es, o) => { if (es[0].isIntersecting) { open(); o.disconnect(); } }, { threshold: 0.2 }).observe(bookEl);

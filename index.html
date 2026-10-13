@@ -763,19 +763,20 @@
      toward it, its picture slides and grows a little, a soft highlight follows the cursor and the photo lifts off the page. */
   .mt{position:relative;margin:0 calc(50% - var(--vw100,100vw)/2);--mt-w:clamp(240px,calc(26*var(--vw100,100vw)/100),500px);--mt-edge:60px}
   @media (max-width:640px){.mt{--mt-edge:20pt}}
-  .mt-scene{position:relative;overflow:hidden;height:calc(var(--mt-w)*.8 + 300px);cursor:grab;touch-action:pan-y;
+  .mt-scene{position:relative;overflow:hidden;height:calc(var(--mt-w)*.8 + 300px);cursor:default;touch-action:pan-y;
     -webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent;outline:none}
-  .mt-scene.is-drag{cursor:grabbing}
+  .mt-scene.is-drag{cursor:default}   /* the plain arrow everywhere, no hand */
   .mt-scene:focus-visible{box-shadow:inset 0 0 0 2px rgba(47,31,2,.35)}
   .mt-track{display:flex;height:100%;width:max-content;padding-left:calc(var(--mt-edge) + var(--mt-w)*.1);padding-right:var(--mt-edge);will-change:transform}
-  .mt-slide{flex:none;width:calc(var(--mt-w)*1.4);height:100%;display:flex;padding:calc(var(--hs1)*.95 + 52px) 0 118px}
+  .mt-slide{flex:none;width:calc(var(--mt-w)*1.4);height:100%;display:flex;padding:56px 0 118px}
   .mt-slide:last-child{width:var(--mt-w)}
   .mt-slide--a{align-items:flex-start}
   .mt-slide--b{align-items:flex-end}
   .mt-slide--c{align-items:center}
   .mt-in{position:relative;width:var(--mt-w)}
-  .mt-idx{position:absolute;left:calc(var(--mt-w)*-.02);top:calc(var(--hs1)*-.95 - 30px);font-family:'Inter',sans-serif;font-weight:400;font-size:13px;letter-spacing:.02em;color:rgba(47,31,2,.62);white-space:nowrap}
-  .mt-title{position:absolute;z-index:3;left:calc(var(--mt-w)*-.08);bottom:100%;margin:0 0 .06em;white-space:nowrap;color:#2F1F02;pointer-events:none}
+  .mt-idx{position:absolute;left:calc(var(--mt-w)*-.02);top:-28px;font-family:'Inter',sans-serif;font-weight:400;font-size:13px;letter-spacing:.02em;color:rgba(47,31,2,.62);white-space:nowrap}
+  /* the name sits two thirds of the way down the photo; it hangs out over the photo's left edge, the colour does not change */
+  .mt-title{position:absolute;z-index:3;left:calc(var(--mt-w)*-.08);top:66.67%;margin:0;white-space:nowrap;color:#2F1F02;pointer-events:none}
   .mt-ph{position:relative;margin:0;aspect-ratio:5/4;border-radius:15px;overflow:hidden;background:#C9B79B;
     transform:perspective(1000px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) translateZ(0) scale(var(--sc,1));
     box-shadow:0 0 0 rgba(47,31,2,0);transition:box-shadow .5s ease;will-change:transform}

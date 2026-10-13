@@ -759,36 +759,35 @@
 
 
   /* Материалы — a draggable row of wood photos (idea: CodePen «Horizontal scroll, drag, transition, bounce» by ReGGae).
-     Photos and names alternate top / bottom / middle; the row follows the pointer with inertia, leans (skew) and squashes (bounce)
-     with its speed, the picture inside every frame slides against the movement, the captions lag a little behind, and at rest the
-     photos keep drifting slowly. */
+     Photos and names alternate top / bottom / middle. The row follows the pointer with inertia, leans (skew) and squashes (bounce) with its
+     speed; the picture inside every frame slides against the movement; the captions lag behind. It is alive without being touched, too: the
+     cards float, the photos drift and follow the cursor, the row follows the page scroll and moves on by itself when nobody touches it. */
   .mt{position:relative;margin:0 calc(50% - var(--vw100,100vw)/2);--mt-w:clamp(240px,calc(26*var(--vw100,100vw)/100),500px);--mt-edge:60px}
   @media (max-width:640px){.mt{--mt-edge:20pt}}
   .mt-scene{position:relative;overflow:hidden;height:calc(var(--mt-w)*.8 + 300px);cursor:grab;touch-action:pan-y;
     -webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent;outline:none}
   .mt-scene.is-drag{cursor:grabbing}
   .mt-scene:focus-visible{box-shadow:inset 0 0 0 2px rgba(47,31,2,.35)}
-  .mt-track{display:flex;height:100%;width:max-content;padding-left:calc(var(--mt-edge) + var(--mt-w)*.12);padding-right:calc(var(--mt-edge) + var(--mt-w)*.3);will-change:transform;transform-origin:50% 50%}
-  .mt-slide{flex:none;width:calc(var(--mt-w)*1.4);height:100%;display:flex;padding:calc(var(--hs1)*.52 + 46px) 0 118px}
+  .mt-track{display:flex;height:100%;width:max-content;padding-left:calc(var(--mt-edge) + var(--mt-w)*.1);padding-right:var(--mt-edge);will-change:transform;transform-origin:50% 50%}
+  .mt-slide{flex:none;width:calc(var(--mt-w)*1.4);height:100%;display:flex;padding:calc(var(--hs1)*.95 + 52px) 0 118px}
+  .mt-slide:last-child{width:var(--mt-w)}
   .mt-slide--a{align-items:flex-start}
   .mt-slide--b{align-items:flex-end}
   .mt-slide--c{align-items:center}
   .mt-in{position:relative;width:var(--mt-w)}
-  .mt-idx{position:absolute;left:calc(var(--mt-w)*-.02);top:calc(var(--hs1)*-.52 - 32px);font-family:'Inter',sans-serif;font-weight:400;font-size:13px;letter-spacing:.02em;color:rgba(47,31,2,.62);white-space:nowrap;will-change:transform}
+  /* every card floats a little, each on its own beat */
+  .mt-fl{position:relative;animation:mtFloat 8s ease-in-out infinite alternate;animation-delay:calc(var(--i)*-1.7s)}
+  @keyframes mtFloat{from{transform:translate3d(0,-9px,0)}to{transform:translate3d(0,9px,0)}}
+  .mt-idx{position:absolute;left:calc(var(--mt-w)*-.02);top:calc(var(--hs1)*-.95 - 30px);font-family:'Inter',sans-serif;font-weight:400;font-size:13px;letter-spacing:.02em;color:rgba(47,31,2,.62);white-space:nowrap;will-change:transform}
   .mt-g{position:relative;transform-origin:50% 50%;will-change:transform}
-  /* the name stands half over the photo: the dark copy sits UNDER the photo (visible only outside it), the white copy lives INSIDE the photo frame
-     (visible only over it) — so the letters change colour exactly at the photo's edge */
-  .mt-title{position:absolute;left:calc(var(--mt-w)*-.1);top:-.52em;margin:0;white-space:nowrap;color:#2F1F02;pointer-events:none}
-  .mt-title--on{color:#fff;text-shadow:0 2px 22px rgba(0,0,0,.35)}
-  .mt-ph{position:relative;margin:0;aspect-ratio:5/4;border-radius:15px;overflow:hidden;background:#C9B79B}
+  .mt-title{position:absolute;left:calc(var(--mt-w)*-.08);bottom:100%;margin:0 0 .06em;white-space:nowrap;color:#2F1F02;pointer-events:none}
+  .mt-ph{position:relative;margin:0;aspect-ratio:5/4;border-radius:15px;overflow:hidden;background:#C9B79B;will-change:transform}
   .mt-drift{position:absolute;inset:0;animation:mtDrift 24s ease-in-out infinite alternate;animation-delay:calc(var(--i)*-4s)}
   .mt-ph img{position:absolute;left:-9%;top:-7%;width:118%;height:114%;max-width:none;object-fit:cover;display:block;-webkit-user-drag:none;will-change:transform}
   @keyframes mtDrift{from{transform:scale(1.02) translate3d(-1.6%,-1.2%,0)}to{transform:scale(1.10) translate3d(1.6%,1.2%,0)}}
   .mt-desc{position:absolute;right:0;top:100%;margin:16px 0 0;width:78%;font-family:'Inter',sans-serif;font-weight:300;font-size:15px;line-height:1.3;letter-spacing:0;color:#2F1F02;text-align:left;will-change:transform}
   .mt .ctl{padding:0 var(--mt-edge);margin-top:22px}
-  .mt-bar{position:absolute;left:var(--mt-edge);right:var(--mt-edge);bottom:10px;height:1px;background:rgba(47,31,2,.22);pointer-events:none}
-  .mt-bar-handle{position:absolute;inset:0;background:#2F1F02;transform:scaleX(0);transform-origin:left}
-  /* opening: the frames open from the left (the photo slides against its frame), the names rise out of their line */
+  /* opening: the frames open from the left, the names rise out of their line */
   .mt.js .mt-ph{clip-path:inset(0 100% 0 0 round 15px)}
   .mt.js .mt-title,.mt.js .mt-idx,.mt.js .mt-desc{opacity:0}
   .mt.js .mt-title{transform:translateY(46%)}
@@ -796,15 +795,16 @@
   .mt.js.is-in .mt-title{opacity:1;transform:none;transition:opacity .6s ease calc(.45s + var(--i)*.09s),transform 1s cubic-bezier(.16,1,.3,1) calc(.45s + var(--i)*.09s)}
   .mt.js.is-in .mt-idx,.mt.js.is-in .mt-desc{opacity:1;transition:opacity .8s ease calc(.7s + var(--i)*.09s)}
   @media (prefers-reduced-motion:reduce){
-    .mt-drift{animation:none}
+    .mt-drift,.mt-fl{animation:none}
     .mt.js .mt-ph{clip-path:none}.mt.js .mt-title,.mt.js .mt-idx,.mt.js .mt-desc{opacity:1;transform:none}
   }
   @media (max-width:640px){
-    .mt-slide{padding:calc(var(--hs1)*.52 + 46px) 0 112px}
     .mt-desc{font-size:14px;width:84%}
   }
 
-  .mat-cta{display:flex;justify-content:center;margin-top:49px}
+  /* the question that leads to the button */
+  .mat-cta{display:flex;align-items:center;justify-content:space-between;gap:18px 24px;flex-wrap:wrap;margin-top:49px}
+  .mat-cta p{margin:0;font-family:'Inter',sans-serif;font-weight:300;font-size:22px;line-height:1.2;color:#2F1F02}
   .mat-cta a,.benefits-consult a{
     display:flex;align-items:center;justify-content:center;flex:none;
     width:430px;max-width:100%;height:68px;
@@ -2007,90 +2007,84 @@
       <div class="mt-scene" tabindex="0" role="region" aria-label="Породы дерева — перетащите, пролистайте или используйте стрелки">
         <div class="mt-track">
         <article class="mt-slide mt-slide--a" style="--i:0">
-          <div class="mt-in">
+          <div class="mt-in"><div class="mt-fl">
             <span class="mt-idx">Порода 01</span>
             <div class="mt-g">
               <h3 class="mt-title">Дуб</h3>
               <figure class="mt-ph">
                 <div class="mt-drift"><img src="mat-oak.jpg" alt="Дуб" draggable="false"></div>
-                <span class="mt-title mt-title--on" aria-hidden="true">Дуб</span>
               </figure>
             </div>
             <p class="mt-desc">Твёрдый, с&nbsp;выразительной текстурой. Столешницы, кухни, барные&nbsp;стойки.</p>
-          </div>
+          </div></div>
         </article>
         <article class="mt-slide mt-slide--b" style="--i:1">
-          <div class="mt-in">
+          <div class="mt-in"><div class="mt-fl">
             <span class="mt-idx">Порода 02</span>
             <div class="mt-g">
               <h3 class="mt-title">Бук</h3>
               <figure class="mt-ph">
                 <div class="mt-drift"><img src="mat-beech.jpg" alt="Бук" draggable="false"></div>
-                <span class="mt-title mt-title--on" aria-hidden="true">Бук</span>
               </figure>
             </div>
             <p class="mt-desc">Плотный, ровный тон. Корпусная мебель, стулья, лестничные&nbsp;ступени.</p>
-          </div>
+          </div></div>
         </article>
         <article class="mt-slide mt-slide--c" style="--i:2">
-          <div class="mt-in">
+          <div class="mt-in"><div class="mt-fl">
             <span class="mt-idx">Порода 03</span>
             <div class="mt-g">
               <h3 class="mt-title">Орех</h3>
               <figure class="mt-ph">
                 <div class="mt-drift"><img src="mat-walnut.jpg" alt="Орех" draggable="false"></div>
-                <span class="mt-title mt-title--on" aria-hidden="true">Орех</span>
               </figure>
             </div>
             <p class="mt-desc">Глубокий тёмный оттенок. Эксклюзивные изделия, кабинеты, барные&nbsp;зоны.</p>
-          </div>
+          </div></div>
         </article>
         <article class="mt-slide mt-slide--a" style="--i:3">
-          <div class="mt-in">
+          <div class="mt-in"><div class="mt-fl">
             <span class="mt-idx">Порода 04</span>
             <div class="mt-g">
               <h3 class="mt-title">Ясень</h3>
               <figure class="mt-ph">
                 <div class="mt-drift"><img src="mat-ash.jpg" alt="Ясень" draggable="false"></div>
-                <span class="mt-title mt-title--on" aria-hidden="true">Ясень</span>
               </figure>
             </div>
             <p class="mt-desc">Светлый и&nbsp;упругий, хорошо гнётся. Двери, фасады, изогнутые&nbsp;элементы.</p>
-          </div>
+          </div></div>
         </article>
         <article class="mt-slide mt-slide--b" style="--i:4">
-          <div class="mt-in">
+          <div class="mt-in"><div class="mt-fl">
             <span class="mt-idx">Порода 05</span>
             <div class="mt-g">
               <h3 class="mt-title">Лиственница</h3>
               <figure class="mt-ph">
                 <div class="mt-drift"><img src="mat-larch.jpg" alt="Лиственница" draggable="false"></div>
-                <span class="mt-title mt-title--on" aria-hidden="true">Лиственница</span>
               </figure>
             </div>
             <p class="mt-desc">Устойчива к&nbsp;влаге. Входные двери, изделия для&nbsp;кухонь и&nbsp;санузлов.</p>
-          </div>
+          </div></div>
         </article>
         <article class="mt-slide mt-slide--c" style="--i:5">
-          <div class="mt-in">
+          <div class="mt-in"><div class="mt-fl">
             <span class="mt-idx">Порода 06</span>
             <div class="mt-g">
               <h3 class="mt-title">Вишня</h3>
               <figure class="mt-ph">
                 <div class="mt-drift"><img src="mat-cherry.jpg" alt="Вишня" draggable="false"></div>
-                <span class="mt-title mt-title--on" aria-hidden="true">Вишня</span>
               </figure>
             </div>
             <p class="mt-desc">Тёплый красноватый оттенок, со временем становится глубже. Кабинеты, гостиные, обеденные&nbsp;столы.</p>
-          </div>
+          </div></div>
         </article>
         </div>
-        <div class="mt-bar" aria-hidden="true"><span class="mt-bar-handle"></span></div>
       </div>
       <button type="button" class="works-arrow prev" aria-label="Предыдущая порода">&#8592;</button>
       <button type="button" class="works-arrow next" aria-label="Следующая порода">&#8594;</button>
     </div>
     <div class="mat-cta">
+      <p>Не знаете, какая порода подойдёт для&nbsp;вашего проекта?</p>
       <a href="#contact" class="svc-consult lk-run calc-cta consult-cta">
         получить консультацию <span class="lk-arrow" aria-hidden="true">→</span>
       </a>
@@ -3790,25 +3784,27 @@ void main() {
   })();
 </script>
 <script>
-  // «Материалы»: draggable row of wood photos with inertia, lean/bounce, inner parallax and lagging captions
+  // «Материалы»: draggable row of wood photos — inertia, lean/bounce, inner parallax, lagging captions; plus cursor tilt,
+  // page-scroll link and a gentle autoplay when nobody touches it
   (function () {
     const root = document.getElementById('woods');
     if (!root) return;
     const scene = root.querySelector('.mt-scene'), track = root.querySelector('.mt-track');
     const slides = [...root.querySelectorAll('.mt-slide')];
-    const groups = slides.map(s => s.querySelector('.mt-g')), imgs = slides.map(s => s.querySelector('.mt-ph img'));
+    const groups = slides.map(s => s.querySelector('.mt-g')), phs = slides.map(s => s.querySelector('.mt-ph')), imgs = slides.map(s => s.querySelector('.mt-ph img'));
     const caps = slides.map(s => [s.querySelector('.mt-idx'), s.querySelector('.mt-desc')]);
-    const bar = root.querySelector('.mt-bar-handle');
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const N = slides.length, clamp = (v, a, b) => Math.min(b, Math.max(a, v));
     const zoom = () => parseFloat(document.documentElement.style.zoom) || 1;
     root.classList.add('js');
 
-    let cur = 0, last = 0, max = 0, slideW = 1, sceneW = 1, running = false, visible = false;
+    let cur = 0, last = 0, max = 0, sceneW = 1, running = false, visible = false, hovering = false;
+    let tx = 0, ty = 0, ttx = 0, tty = 0, lastInput = performance.now(), dir = 1;     // cursor offset (-1..1, eased) / autoplay
     const st = { down: false, lock: null, id: 0, sx: 0, sy: 0, start: 0, lx: 0, lt: 0, vx: 0, moved: false };
+    const touched = () => { lastInput = performance.now(); };
 
     const measure = () => {
-      slideW = slides[0].offsetWidth || 1; sceneW = scene.clientWidth || 1;
+      sceneW = scene.clientWidth || 1;
       max = Math.max(0, track.scrollWidth - sceneW);
       cur = clamp(cur, 0, max); last = clamp(last, 0, max);
       paint(0);
@@ -3819,18 +3815,24 @@ void main() {
       const skew = reduce ? 0 : clamp(velo * 7.5, -5, 5);
       track.style.transform = 'translate3d(' + (-last).toFixed(2) + 'px,0,0)';
       const lag = clamp(-diff * 0.16, -70, 70), slide = clamp(-diff * 0.07, -36, 36);
+      const ry = reduce ? 0 : tx * 4, rx = reduce ? 0 : -ty * 3, ix = slide + (reduce ? 0 : tx * -16), iy = reduce ? 0 : ty * -10;
+      const tilt = 'perspective(1100px) rotateY(' + ry.toFixed(3) + 'deg) rotateX(' + rx.toFixed(3) + 'deg)';
+      const lean = 'skewX(' + skew.toFixed(3) + 'deg) scaleY(' + bounce.toFixed(4) + ')';
+      const img = 'translate3d(' + ix.toFixed(2) + 'px,' + iy.toFixed(2) + 'px,0)', cap = 'translate3d(' + lag.toFixed(2) + 'px,0,0)';
       for (let i = 0; i < N; i++) {
-        groups[i].style.transform = 'skewX(' + skew.toFixed(3) + 'deg) scaleY(' + bounce.toFixed(4) + ')';
-        imgs[i].style.transform = 'translate3d(' + slide.toFixed(2) + 'px,0,0)';
-        caps[i][0].style.transform = caps[i][1].style.transform = 'translate3d(' + lag.toFixed(2) + 'px,0,0)';
+        groups[i].style.transform = lean;
+        phs[i].style.transform = tilt;
+        imgs[i].style.transform = img;
+        caps[i][0].style.transform = caps[i][1].style.transform = cap;
       }
-      bar.style.transform = 'scaleX(' + (max ? clamp(last / max, 0, 1) : 0).toFixed(4) + ')';
     };
     const frame = () => {
       const diff = cur - last;
       last = Math.abs(diff) < 0.04 ? cur : last + diff * (reduce ? 1 : 0.085);
+      tx += (ttx - tx) * 0.08; ty += (tty - ty) * 0.08;
       paint(cur - last);
-      if (last === cur && !st.down) { running = false; paint(0); return; }
+      const settled = last === cur && Math.abs(ttx - tx) < 0.002 && Math.abs(tty - ty) < 0.002;
+      if (settled && !st.down && !hovering) { running = false; tx = ttx; ty = tty; paint(0); return; }
       requestAnimationFrame(frame);
     };
     const kick = () => { if (!running) { running = true; requestAnimationFrame(frame); } };
@@ -3840,9 +3842,13 @@ void main() {
     // drag (mouse, pen and touch); a vertical swipe still scrolls the page
     scene.addEventListener('pointerdown', e => {
       if (e.pointerType === 'mouse' && e.button !== 0) return;
-      st.down = true; st.lock = null; st.id = e.pointerId; st.sx = e.clientX; st.sy = e.clientY; st.start = cur; st.lx = e.clientX; st.lt = performance.now(); st.vx = 0; st.moved = false;
+      touched(); st.down = true; st.lock = null; st.id = e.pointerId; st.sx = e.clientX; st.sy = e.clientY; st.start = cur; st.lx = e.clientX; st.lt = performance.now(); st.vx = 0; st.moved = false;
     });
     scene.addEventListener('pointermove', e => {
+      if (e.pointerType === 'mouse') {                                        // the photos lean toward the cursor
+        touched();
+        if (!reduce) { const r = scene.getBoundingClientRect(); ttx = clamp(((e.clientX - r.left) / r.width - 0.5) * 2, -1, 1); tty = clamp(((e.clientY - r.top) / r.height - 0.5) * 2, -1, 1); hovering = true; kick(); }
+      }
       if (!st.down || e.pointerId !== st.id) return;
       const dx = (e.clientX - st.sx) / zoom(), dy = (e.clientY - st.sy) / zoom();
       if (st.lock === null && (Math.abs(dx) > 6 || Math.abs(dy) > 6)) {
@@ -3856,13 +3862,14 @@ void main() {
       st.moved = true;
       cur = clamp(st.start - dx, 0, max); kick();
     });
-    const end = e => {
+    const end = () => {
       if (!st.down && st.lock !== 'x') return;
-      const was = st.lock === 'x'; st.down = false; scene.classList.remove('is-drag');
+      const was = st.lock === 'x'; st.down = false; scene.classList.remove('is-drag'); touched();
       if (was) { cur = clamp(cur - st.vx * 260, 0, max); kick(); }
       st.lock = null;
     };
     scene.addEventListener('pointerup', end); scene.addEventListener('pointercancel', end);   // (not lostpointercapture: touch fires it right after setPointerCapture)
+    scene.addEventListener('pointerleave', e => { if (e.pointerType === 'mouse') { ttx = tty = 0; hovering = false; kick(); } });
     scene.addEventListener('click', e => { if (st.moved) { e.preventDefault(); e.stopPropagation(); st.moved = false; } }, true);
     scene.addEventListener('dragstart', e => e.preventDefault());
     // horizontal wheel / trackpad swipe / Shift+wheel move the row; the plain vertical wheel keeps scrolling the page
@@ -3871,23 +3878,40 @@ void main() {
       if (!horiz) return;
       const d = (Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY) * (e.deltaMode === 1 ? 16 : 1) / zoom();
       if ((d < 0 && cur <= 0) || (d > 0 && cur >= max)) return;
-      e.preventDefault(); cur = clamp(cur + d, 0, max); kick();
+      e.preventDefault(); touched(); cur = clamp(cur + d, 0, max); kick();
     }, { passive: false });
     scene.addEventListener('keydown', e => {
-      if (e.key === 'ArrowRight') { e.preventDefault(); go(index() + 1); }
-      else if (e.key === 'ArrowLeft') { e.preventDefault(); go(index() - 1); }
+      if (e.key === 'ArrowRight') { e.preventDefault(); touched(); go(index() + 1); }
+      else if (e.key === 'ArrowLeft') { e.preventDefault(); touched(); go(index() - 1); }
     });
 
     // the same arrows + «NN — NN» counter as under «Примеры работ» and «Отзывы»
     const prev = root.querySelector('.works-arrow.prev'), next = root.querySelector('.works-arrow.next');
-    prev.addEventListener('click', () => go(index() - 1)); next.addEventListener('click', () => go(index() + 1));
+    prev.addEventListener('click', () => { touched(); go(index() - 1); }); next.addEventListener('click', () => { touched(); go(index() + 1); });
     if (window.Ctl) Ctl.make({ prev, next, after: scene, tone: 'light', total: () => N, current: () => index() + 1, watch: cb => { setInterval(cb, 160); } });
 
-    // opening animation when the block first comes into view
+    // the page scroll drives the row too (the way the original pen is driven), so scrolling past the block already moves the photos
+    let lastY = window.scrollY;
+    window.addEventListener('scroll', () => {
+      const y = window.scrollY, d = y - lastY; lastY = y;
+      if (!visible || st.down || reduce || !max || Math.abs(d) > 160) return;      // smooth scrolling only, not a jump to an anchor
+      cur = clamp(cur + d * 0.5, 0, max); kick();
+    }, { passive: true });
+    // when nobody touches it the row moves on by itself, back and forth
+    setInterval(() => {
+      if (!visible || reduce || document.hidden || st.down || !max) return;
+      if (performance.now() - lastInput < 5000) return;
+      let n = index() + dir;
+      if (n > N - 1 || n < 0) { dir = -dir; n = index() + dir; }
+      go(n);
+    }, 3600);
+
+    // opening animation when the block first comes into view; "visible" gates the scroll link and the autoplay
     const open = () => root.classList.add('is-in');
-    if ('IntersectionObserver' in window && !reduce) {
-      new IntersectionObserver((es, o) => { if (es[0].isIntersecting) { open(); o.disconnect(); } }, { threshold: 0.2 }).observe(scene);
-    } else open();
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(es => { visible = es[0].isIntersecting; if (visible && !reduce) open(); }, { threshold: 0.15 }).observe(scene);
+      if (reduce) open();
+    } else { visible = true; open(); }
 
     window.addEventListener('resize', measure);
     window.addEventListener('load', measure);

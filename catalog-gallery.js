@@ -95,11 +95,15 @@
   if (gal) {
     var cards = function () { return track.querySelectorAll('.model-card:not(.cta-card)'); };
     var step = function () { var a = cards(); return a.length > 1 ? a[1].offsetLeft - a[0].offsetLeft : 1; };
+    var tp = gal.querySelector('.model-arrow.prev'), tn = gal.querySelector('.model-arrow.next');
     Ctl.make({
-      prev: gal.querySelector('.model-arrow.prev'), next: gal.querySelector('.model-arrow.next'), after: gal, tone: 'light', cls: 'ctl--tiles',
+      prev: tp, next: tn, after: gal, tone: 'light', cls: 'ctl--tiles',
       total: function () { return cards().length; },
       current: function () { return track.scrollLeft >= track.scrollWidth - track.clientWidth - 2 ? cards().length : Math.round(track.scrollLeft / step()) + 1; },
-      watch: function (cb) { track.addEventListener('scroll', cb, { passive: true }); window.addEventListener('resize', cb); }
+      watch: function (cb) {   // the arrow that has nowhere to go is faded, like on the home page
+        var sync = function () { cb(); tp.disabled = track.scrollLeft <= 2; tn.disabled = track.scrollLeft >= track.scrollWidth - track.clientWidth - 2; };
+        track.addEventListener('scroll', sync, { passive: true }); window.addEventListener('resize', sync); sync();
+      }
     });
   }
 })();

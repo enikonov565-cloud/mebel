@@ -3736,7 +3736,7 @@ void main() {
     // the same arrows + «NN — NN» counter as under «Примеры работ» and «Отзывы»
     const prev = root.querySelector('.works-arrow.prev'), next = root.querySelector('.works-arrow.next');
     prev.addEventListener('click', () => go(index() - 1)); next.addEventListener('click', () => go(index() + 1));
-    const made = window.Ctl ? Ctl.make({ prev, next, after: scene, tone: 'light', total: () => N, current: () => index() + 1, watch: cb => { setInterval(cb, 160); } }) : null;
+    const made = window.Ctl ? Ctl.make({ prev, next, after: scene, tone: 'light', total: () => N, current: () => index() + 1, watch: cb => { const sync = () => { cb(); prev.disabled = index() <= 0; next.disabled = index() >= N - 1; }; sync(); setInterval(sync, 160); } }) : null;
     const cta = document.querySelector('#materials .mat-cta');
     if (made && cta) cta.appendChild(made.row);                                  // arrows + counter sit in the same line as the question and the link
 
@@ -3838,6 +3838,7 @@ void main() {
     const paint = () => {
       tabs.forEach((t, i) => { t.classList.toggle('is-current', i === current); t.setAttribute('aria-selected', String(i === current)); });
       more.setAttribute('href', slides[current].href);
+      prev.disabled = current === 0; nextBtn.disabled = current === N - 1;
       const tb = tabs[current].parentNode;   // on a phone the row of tabs scrolls: keep the chosen one in view
       if (tb.scrollWidth > tb.clientWidth) tb.scrollTo({ left: tabs[current].offsetLeft - 20, behavior: 'smooth' });
       if (onChange) onChange();
@@ -3856,12 +3857,12 @@ void main() {
         return uncover(to);
       }).then(() => { busy = false; });
     };
-    prev.addEventListener('click', () => go((current + N - 1) % N, 'prev'));
-    nextBtn.addEventListener('click', () => go((current + 1) % N, 'next'));
+    prev.addEventListener('click', () => go(current - 1, 'prev'));
+    nextBtn.addEventListener('click', () => go(current + 1, 'next'));
     tabs.forEach((t, i) => t.addEventListener('click', () => go(i)));
     bookEl.addEventListener('keydown', e => {
-      if (e.key === 'ArrowRight') { e.preventDefault(); go((current + 1) % N, 'next'); }
-      else if (e.key === 'ArrowLeft') { e.preventDefault(); go((current + N - 1) % N, 'prev'); }
+      if (e.key === 'ArrowRight') { e.preventDefault(); go(current + 1, 'next'); }
+      else if (e.key === 'ArrowLeft') { e.preventDefault(); go(current - 1, 'prev'); }
     });
     // a swipe switches the category too (a vertical swipe still scrolls the page)
     let sx = null, sy = 0;
@@ -3869,7 +3870,7 @@ void main() {
     bookEl.addEventListener('pointerup', e => {
       if (sx === null) return;
       const dx = e.clientX - sx, dy = e.clientY - sy; sx = null;
-      if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.4) go((current + (dx < 0 ? 1 : N - 1)) % N, dx < 0 ? 'next' : 'prev');
+      if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.4) go(current + (dx < 0 ? 1 : -1), dx < 0 ? 'next' : 'prev');
     });
     bookEl.addEventListener('pointercancel', () => { sx = null; });
 

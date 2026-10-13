@@ -995,35 +995,86 @@
     color:#CDCBC7;max-width:480px;text-align:right;
   }
 
-  .works-gallery{position:relative}
-  .works-track{
-    display:flex;gap:20px;overflow-x:auto;scroll-snap-type:x mandatory;
-    scrollbar-width:none;-ms-overflow-style:none;
+  /* Примеры наших работ — a book of category spreads with a flat page flip (idea and layout: Codrops «Page Flip Layout»).
+     Every category is one spread (two pages) of photos on a 20 x 20 grid; the next spread arrives behind a stack of turning pages. */
+  .pf{position:relative;--pf-paper:#E8DDCA;--pf-ink:#2F1F02}
+  .pf-book{position:relative;overflow:hidden;border-radius:15px;background:var(--pf-paper);outline:none;
+    height:clamp(520px,min(calc(var(--vw100,100vw)*.47),calc(var(--vh100,100vh) - 150px)),900px);
+    box-shadow:0 30px 70px rgba(47,31,2,.14),0 0 0 1px rgba(47,31,2,.06);touch-action:pan-y;-webkit-tap-highlight-color:transparent}
+  .pf-book:focus-visible{box-shadow:0 30px 70px rgba(47,31,2,.14),0 0 0 2px rgba(47,31,2,.4)}
+  .pf-slide{position:absolute;inset:0;display:grid;grid-template-columns:repeat(20,minmax(0,1fr));grid-template-rows:repeat(20,minmax(0,1fr));gap:14px;padding:26px 22px;
+    pointer-events:none;background:var(--pf-paper)}
+  .pf-slide.is-current{pointer-events:auto;z-index:100}
+  .pf-fig{display:flex;flex-direction:column;min-width:0;min-height:0;margin:0;perspective:1000px;will-change:transform}
+  .pf-fig-inner{position:relative;flex:1;min-height:0;overflow:hidden;border-radius:15px;transform:rotate3d(0,1,0,.1deg);will-change:transform;background:#CDBDA3}
+  .pf-fig-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;will-change:transform;-webkit-user-drag:none;user-select:none}
+  .pf-reveal{position:absolute;top:-1px;left:-1px;width:calc(100% + 2px);height:calc(100% + 2px);background:var(--pf-paper);z-index:2;will-change:transform}
+  .pf-fig figcaption{flex:none;padding-top:9px;min-height:46px}
+  .pf-fig-title{margin:0;font-family:'Inter',sans-serif;font-weight:500;font-size:clamp(12px,calc(.9*var(--vw100,100vw)/100),17px);line-height:1.2;letter-spacing:-.01em;color:var(--pf-ink)}
+  .pf-fig-desc{margin:2px 0 0;font-family:'Inter',sans-serif;font-weight:300;font-size:clamp(11px,calc(.73*var(--vw100,100vw)/100),14px);line-height:1.25;color:rgba(47,31,2,.7)}
+  .pf-js .pf-fig{opacity:0}                                           /* the script reveals them; without it everything just shows */
+  .pf-num{position:absolute;bottom:9px;font-family:'Inter',sans-serif;font-weight:400;font-size:12px;letter-spacing:.04em;color:rgba(47,31,2,.45)}
+  .pf-num--l{left:24px}.pf-num--r{right:24px}
+  /* the spreads: grid-area = row-start / column-start / row-end / column-end; the left page is columns 1-10, the right one 11-20 */
+  .pf-l-a .pf-fig:nth-child(1){grid-area:2/2/15/6}.pf-l-a .pf-fig:nth-child(2){grid-area:8/7/21/11}.pf-l-a .pf-fig:nth-child(3){grid-area:3/12/16/16}.pf-l-a .pf-fig:nth-child(4){grid-area:9/17/21/20}
+  .pf-l-b .pf-fig:nth-child(1){grid-area:5/2/18/6}.pf-l-b .pf-fig:nth-child(2){grid-area:2/7/14/11}.pf-l-b .pf-fig:nth-child(3){grid-area:8/12/21/16}.pf-l-b .pf-fig:nth-child(4){grid-area:3/17/16/20}
+  .pf-l-c .pf-fig:nth-child(1){grid-area:2/2/19/8}.pf-l-c .pf-fig:nth-child(2){grid-area:4/12/17/16}.pf-l-c .pf-fig:nth-child(3){grid-area:9/17/21/20}
+  .pf-l-d .pf-fig:nth-child(1){grid-area:2/2/15/6}.pf-l-d .pf-fig:nth-child(2){grid-area:8/7/21/11}.pf-l-d .pf-fig:nth-child(3){grid-area:5/12/18/20}
+  .pf-l-e .pf-fig:nth-child(1){grid-area:3/2/17/6}.pf-l-e .pf-fig:nth-child(2){grid-area:9/7/21/11}.pf-l-e .pf-fig:nth-child(3){grid-area:2/12/12/20}.pf-l-e .pf-fig:nth-child(4){grid-area:13/15/21/19}
+  /* the page-turn stack */
+  .pf-rev{position:absolute;inset:0;display:flex;z-index:200;pointer-events:none}
+  .pf-rev-half{position:relative;width:50%;height:100%;overflow:hidden}
+  .pf-rev-half--l{border-right:1px solid rgba(47,31,2,.07)}
+  .pf-rev-page{position:absolute;top:0;left:0;width:100%;height:100%;transform:translate3d(100%,0,0);will-change:transform}
+  /* the edges of the book: its thickness shows where we are */
+  .pf-side{position:absolute;top:0;bottom:0;left:0;width:7px;background:var(--pf-ink);z-index:300;transform-origin:0 50%;pointer-events:none}
+  .pf-side--r{left:auto;right:0;transform-origin:100% 50%;transform:scaleX(0)}
+  /* contents + chapter, arrows */
+  .pf-nav{position:absolute;top:14px;left:24px;z-index:400;display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 16px;font-family:'Inter',sans-serif;color:var(--pf-ink);max-width:calc(100% - 48px)}
+  .pf-nav-btn{border:0;margin:0;padding:0 14px 0 0;background:none;font:400 13px/1 'Inter',sans-serif;color:var(--pf-ink);cursor:pointer;position:relative}
+  .pf-nav-btn::before,.pf-nav-btn::after{content:'';position:absolute;right:0;top:50%;width:7px;height:1px;background:currentColor;transition:transform .2s,opacity .2s}
+  .pf-nav-btn::before{transform:rotate(90deg)}
+  .pf-nav.is-open .pf-nav-btn::before{transform:rotate(0)}
+  .pf-nav.is-open .pf-nav-btn::after{opacity:0;transform:rotate(90deg)}
+  .pf-nav-btn:hover{opacity:.7}
+  .pf-chapter{font-weight:500;font-size:16px;line-height:1;transition:opacity .25s ease}
+  .pf-nav.is-open .pf-chapter,.pf-nav.is-open .pf-more{opacity:0}
+  .pf-more{font-weight:500;font-size:14px;line-height:1;color:var(--pf-ink);text-decoration:none;border-bottom:1px solid rgba(47,31,2,.4);transition:opacity .25s ease,border-color .2s}
+  .pf-more:hover{border-color:var(--pf-ink)}
+  .pf-toc{position:absolute;top:100%;left:0;margin-top:8px;display:none;flex-direction:column;gap:2px;min-width:260px;padding:12px 18px 10px;border-radius:12px;background:rgba(232,221,202,.97);box-shadow:0 18px 40px rgba(47,31,2,.18)}
+  .pf-nav.is-open .pf-toc{display:flex}
+  .pf-toc-item{display:flex;gap:12px;padding:6px 0;font-size:15px;line-height:1.2;color:rgba(47,31,2,.62);text-decoration:none;opacity:0}
+  .pf-toc-page{width:1.7em;color:rgba(47,31,2,.4)}
+  .pf-toc-item:hover,.pf-toc-item.is-current{color:var(--pf-ink)}
+  .pf-controls{position:absolute;inset:0;pointer-events:none;z-index:350}
+  .pf-count{display:none}
+  .pf-arrow{position:absolute;top:50%;width:50px;height:24px;margin-top:-12px;padding:0;border:0;background:none;color:var(--pf-ink);cursor:pointer;pointer-events:auto;transition:transform .25s cubic-bezier(.22,1,.36,1),opacity .2s}
+  .pf-arrow svg{display:block;width:100%;height:100%;fill:none;stroke:currentColor;stroke-width:1.1}
+  .pf-arrow--prev{left:18px;visibility:hidden}
+  .pf-arrow--next{right:18px}
+  .pf-arrow--prev:hover{transform:translateX(-4px)}.pf-arrow--next:hover{transform:translateX(4px)}
+  .pf-arrow:focus-visible{outline:2px solid rgba(47,31,2,.4);outline-offset:4px}
+  @media (max-width:960px){
+    /* phones and tablets: the contents bar above the book, the arrows with a counter below it; spreads become a 2-column mosaic */
+    .pf-book{height:clamp(430px,calc(var(--vw100,100vw)*1.42),640px)}
+    .pf-slide{grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(2,minmax(0,1fr));gap:10px;padding:12px}
+    .pf-slide .pf-fig:nth-child(n){grid-area:auto}
+    .pf-slide[data-n="3"] .pf-fig:nth-child(1){grid-row:1/3}
+    .pf-slide[data-n="3"] .pf-fig:nth-child(2),.pf-slide[data-n="3"] .pf-fig:nth-child(3){grid-column:2}
+    .pf-fig figcaption{padding-top:6px;min-height:34px}
+    .pf-fig-title{font-size:13px}   /* (the clamp above is for the wide book) */
+    .pf-fig-desc{display:none}
+    .pf-num{display:none}
+    .pf-side{width:5px}
+    .pf-nav{position:relative;top:auto;left:auto;max-width:none;margin-bottom:14px}
+    .pf-controls{position:static;inset:auto;display:flex;align-items:center;justify-content:space-between;gap:18px;margin-top:18px;pointer-events:auto}
+    .pf-count{display:block;font-family:'Inter',sans-serif;font-weight:500;font-size:18px;letter-spacing:.02em;color:var(--pf-ink);white-space:nowrap}
+    .pf-arrow{position:static;margin:0}
+    .pf-arrow--prev,.pf-arrow--next{left:auto;right:auto}
+    .pf-arrow--prev{visibility:hidden}
   }
-  .works-track::-webkit-scrollbar{display:none}
-  .works-item{
-    flex:none;width:587px;max-width:calc(85*var(--vw100)/100);aspect-ratio:587/780;height:auto;
-    scroll-snap-align:start;overflow:hidden;
-    background:linear-gradient(150deg,#8a7358,#4a3116);
-  }
-  .works-item img{width:100%;height:100%;object-fit:cover;display:block}
-  /* Deck Carousel */
-  .works-gallery.deck-on .works-track{display:none}
-  .works-gallery.deck-on{margin-top:-200px}   /* heading -> row of photos = 90px (frame keeps 230px of room above the row for the dealing hop) */
-  .works-gallery.deck-on + .works-cta{margin-top:10px}   /* button sits right under the row of photos (the frame keeps 80px of room below the cards) */
-  .works-head{position:relative;z-index:2}
-  /* heading letters turn dark while a photo passes behind them, so the text stays readable */
-  .hc-w{display:inline-block;white-space:nowrap}
-  .hc-c{transition:color .25s ease}
-  .hc-c.on-photo{color:#180F01}
-  .works-gallery.deck-on .works-arrow{top:var(--row-y,50%)}
-  .deck{position:relative;width:100%;overflow:hidden;touch-action:pan-y}
-  .deck-strip{position:absolute;left:50%;top:50%;width:0;height:0;transform-origin:center;will-change:transform}
-  .deck-card{
-    position:absolute;left:0;top:0;margin-left:-234.5px;margin-top:-291.5px;width:469px;height:583px;border-radius:13px;
-    overflow:hidden;transform-origin:center center;transform-style:preserve-3d;backface-visibility:visible;will-change:transform;
-  }
-  .deck-card img{width:100%;height:100%;object-fit:cover;display:block;user-select:none;-webkit-user-drag:none;backface-visibility:hidden}
+  @media (prefers-reduced-motion:reduce){.pf-toc-item{opacity:1}}
+
   /* gallery / reviews arrows: thin long arrows (as in the slider of «Почему выбирают нас» and the catalogue), no plates;
      dark brown and inactive when the row cannot go further that way */
   .works-arrow{
@@ -1043,7 +1094,7 @@
   .works-arrow.next:hover{transform:translate(5px,-50%)}
   .works-arrow:disabled,.works-arrow:disabled:hover{background:none;color:#2F1F02;cursor:default;transform:translateY(-50%);filter:none}
 
-  .works-cta{display:flex;justify-content:flex-end;margin-top:60px}
+  .works-cta{display:flex;justify-content:center;margin-top:44px}
   .works-cta a{
     display:flex;align-items:center;justify-content:center;
     width:430px;max-width:100%;height:68px;
@@ -1447,7 +1498,6 @@
        inline-block spans the heading script wraps text in. Give both items the full row, and let
        those word spans be plain inline (they only need nowrap) so the text wraps like normal text. */
     .works-head h2,.works-head p{flex:1 1 100%;min-width:0}
-    .hc-w{display:inline}
     .works-cta{justify-content:flex-start}
     .mat-head{justify-content:flex-start;flex-wrap:wrap}
     .mat-head p{text-align:left}
@@ -1489,8 +1539,6 @@
        heading wraps onto 2 lines and the intro paragraph wraps too, so the same fixed offset drags
        the photo row up over that taller text block instead of just under it. Let it sit in normal
        flow here instead of chasing a second magic-number offset per breakpoint. */
-    .works-gallery.deck-on{margin-top:0}
-    .works-gallery.deck-on + .works-cta{margin-top:36px}
     /* desktop's 7.5rem word had no tablet step at all — rendered at full 120px (471px wide) on a
        768px screen, same oversized-logo complaint as mobile just not yet fixed here. */
     .footer-logo2 .word{font-size:4rem}
@@ -1677,15 +1725,6 @@
 </style>
 <style>
   @media (min-width:961px){
-    .works-cta.works-cta{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;justify-content:stretch;margin-top:0}
-    .works-cta > a{grid-column:2;grid-row:1;justify-self:center}
-    .works-cta > .ctl{grid-column:3;grid-row:1;margin:0;justify-self:end}
-  }
-  /* phones: arrows + counter sit right under the photos (they belong to the carousel), the button comes last */
-  @media (max-width:960px){.works-cta.works-cta{flex-direction:column;align-items:center;gap:20px}.works-cta > .ctl{margin:0;order:-1}}
-</style>
-<style>
-  @media (min-width:961px){
     .reviews-cta.reviews-cta{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;margin-top:28px}
     .reviews-cta > .ctl{grid-column:1;grid-row:1;margin:0 0 0 -.6rem;justify-self:start;justify-content:flex-start}
     .reviews-cta .leave-review-btn{grid-column:2;grid-row:1}
@@ -1695,7 +1734,7 @@
 </style>
 <link rel="stylesheet" href="logo.css?v=4">
 <link rel="stylesheet" href="menu.css?v=2">
-<link rel="stylesheet" href="light.css?v=7">
+<link rel="stylesheet" href="light.css?v=9">
 <link rel="stylesheet" href="headings.css?v=15">
 </head>
 <body>
@@ -2224,21 +2263,169 @@
       <h2>Примеры наших работ</h2>
       <p>Интерьер не&nbsp;должен быть шаблонным, и&nbsp;мебель&nbsp;— его основа.</p>
     </div>
-    <div class="works-gallery">
-      <button type="button" class="works-arrow prev" aria-label="Предыдущее фото">&#8592;</button>
-      <div class="works-track" id="worksTrack">
-        <figure class="works-item"><img src="work1.jpg" alt="Тумба и светильник, спальня"></figure>
-        <figure class="works-item"><img src="work2.jpg" alt="Винный шкаф из массива"></figure>
-        <figure class="works-item"><img src="work3.jpg" alt="Переговорный стол в офисе"></figure>
-        <figure class="works-item"><img src="work4.jpg" alt="Кухня из массива дуба"></figure>
-        <figure class="works-item"><img src="work5.jpg" alt="Винная комната"></figure>
-        <figure class="works-item"><img src="work6.jpg" alt="Мебель для ресторана"></figure>
-        <figure class="works-item"><img src="work7.jpg" alt="Шкаф-купе, спальня"></figure>
-        <figure class="works-item"><img src="work8.jpg" alt="Зеркальные двери с геометрическим узором"></figure>
-        <figure class="works-item"><img src="work9.jpg" alt="Обеденный стол из массива дуба с мягкими стульями"></figure>
-        <figure class="works-item"><img src="work10.jpg" alt="Мебель для ванной комнаты: тумба с чёрной столешницей"></figure>
+    <div class="pf" id="pf">
+      <nav class="pf-nav" aria-label="Категории работ">
+        <button type="button" class="pf-nav-btn" aria-expanded="false" aria-controls="pfToc"><span>содержание</span></button>
+        <span class="pf-chapter">Корпусная мебель</span>
+        <a class="pf-more" href="catalog-korpusnaya.html">в каталог <span aria-hidden="true">→</span></a>
+        <div class="pf-toc" id="pfToc">
+          <a class="pf-toc-item" href="catalog-korpusnaya.html"><span class="pf-toc-page">01</span><span class="pf-toc-title">Корпусная мебель</span></a>
+          <a class="pf-toc-item" href="catalog-eksklyuzivnaya.html"><span class="pf-toc-page">03</span><span class="pf-toc-title">Эксклюзивная мебель</span></a>
+          <a class="pf-toc-item" href="catalog-dveri.html"><span class="pf-toc-page">05</span><span class="pf-toc-title">Двери и порталы</span></a>
+          <a class="pf-toc-item" href="catalog-ofisnaya.html"><span class="pf-toc-page">07</span><span class="pf-toc-title">Офисная мебель</span></a>
+          <a class="pf-toc-item" href="catalog-kommercheskaya.html"><span class="pf-toc-page">09</span><span class="pf-toc-title">Коммерческая мебель</span></a>
+        </div>
+      </nav>
+      <div class="pf-book" tabindex="0" role="region" aria-label="Примеры наших работ по категориям — листайте стрелками или свайпом">
+        <div class="pf-slide pf-l-a is-current" data-title="Корпусная мебель" data-href="catalog-korpusnaya.html" data-n="4" role="group" aria-label="Корпусная мебель">
+          <figure class="pf-fig">
+            <div class="pf-fig-inner">
+              <img class="pf-fig-img" src="pf-k1.jpg" alt="Угловая кухня в классическом стиле. Кухня цвета слоновой кости" loading="lazy" decoding="async" draggable="false">
+              <span class="pf-reveal"></span>
+            </div>
+            <figcaption><h3 class="pf-fig-title">Угловая кухня в&nbsp;классическом стиле</h3><p class="pf-fig-desc">Кухня цвета слоновой кости</p></figcaption>
+          </figure>
+          <figure class="pf-fig">
+            <div class="pf-fig-inner">
+              <img class="pf-fig-img" src="pf-k2.jpg" alt="Встроенный шкаф-купе. От пола до потолка" loading="lazy" decoding="async" draggable="false">
+              <span class="pf-reveal"></span>
+            </div>
+            <figcaption><h3 class="pf-fig-title">Встроенный шкаф-купе</h3><p class="pf-fig-desc">От пола до&nbsp;потолка</p></figcaption>
+          </figure>
+          <figure class="pf-fig">
+            <div class="pf-fig-inner">
+              <img class="pf-fig-img" src="pf-k3.jpg" alt="Комплект в ванную комнату. Тумба под раковину с зеркалом" loading="lazy" decoding="async" draggable="false">
+              <span class="pf-reveal"></span>
+            </div>
+            <figcaption><h3 class="pf-fig-title">Комплект в&nbsp;ванную комнату</h3><p class="pf-fig-desc">Тумба под раковину с&nbsp;зеркалом</p></figcaption>
+          </figure>
+          <figure class="pf-fig">
+            <div class="pf-fig-inner">
+              <img class="pf-fig-img" src="pf-k4.jpg" alt="Двухъярусная кровать со шкафом. Встроенный шкаф в детской" loading="lazy" decoding="async" draggable="false">
+              <span class="pf-reveal"></span>
+            </div>
+            <figcaption><h3 class="pf-fig-title">Двухъярусная кровать со&nbsp;шкафом</h3><p class="pf-fig-desc">Встроенный шкаф в&nbsp;детской</p></figcaption>
+          </figure>
+          <span class="pf-num pf-num--l">01</span><span class="pf-num pf-num--r">02</span>
+        </div>
+        <div class="pf-slide pf-l-b" data-title="Эксклюзивная мебель" data-href="catalog-eksklyuzivnaya.html" data-n="4" role="group" aria-label="Эксклюзивная мебель">
+          <figure class="pf-fig">
+            <div class="pf-fig-inner">
+              <img class="pf-fig-img" src="pf-e1.jpg" alt="Буфет с ручной росписью. Художественная роспись" loading="lazy" decoding="async" draggable="false">
+              <span class="pf-reveal"></span>
+            </div>
+            <figcaption><h3 class="pf-fig-title">Буфет с&nbsp;ручной росписью</h3><p class="pf-fig-desc">Художественная роспись</p></figcaption>
+          </figure>
+          <figure class="pf-fig">
+            <div class="pf-fig-inner">
+              <img class="pf-fig-img" src="pf-e2.jpg" alt="Зеркальное панно. В латунной раме" loading="lazy" decoding="async" draggable="false">
+              <span class="pf-reveal"></span>
+            </div>
+            <figcaption><h3 class="pf-fig-title">Зеркальное панно</h3><p class="pf-fig-desc">В латунной раме</p></figcaption>
+          </figure>
+          <figure class="pf-fig">
+            <div class="pf-fig-inner">
+              <img class="pf-fig-img" src="pf-e3.jpg" alt="Барный шкаф. С винным холодильником" loading="lazy" decoding="async" draggable="false">
+              <span class="pf-reveal"></span>
+            </div>
+            <figcaption><h3 class="pf-fig-title">Барный шкаф</h3><p class="pf-fig-desc">С винным холодильником</p></figcaption>
+          </figure>
+          <figure class="pf-fig">
+            <div class="pf-fig-inner">
+              <img class="pf-fig-img" src="pf-e4.jpg" alt="Тумба с серебрением. Прикроватная, на заказ" loading="lazy" decoding="async" draggable="false">
+              <span class="pf-reveal"></span>
+            </div>
+            <figcaption><h3 class="pf-fig-title">Тумба с&nbsp;серебрением</h3><p class="pf-fig-desc">Прикроватная, на&nbsp;заказ</p></figcaption>
+          </figure>
+          <span class="pf-num pf-num--l">03</span><span class="pf-num pf-num--r">04</span>
+        </div>
+        <div class="pf-slide pf-l-c" data-title="Двери и порталы" data-href="catalog-dveri.html" data-n="3" role="group" aria-label="Двери и порталы">
+          <figure class="pf-fig">
+            <div class="pf-fig-inner">
+              <img class="pf-fig-img" src="pf-d1.jpg" alt="Портал с зеркальными дверями. Гранёные зеркала" loading="lazy" decoding="async" draggable="false">
+              <span class="pf-reveal"></span>
+            </div>
+            <figcaption><h3 class="pf-fig-title">Портал с&nbsp;зеркальными дверями</h3><p class="pf-fig-desc">Гранёные зеркала</p></figcaption>
+          </figure>
+          <figure class="pf-fig">
+            <div class="pf-fig-inner">
+              <img class="pf-fig-img" src="pf-d2.jpg" alt="Винный стеллаж-портал. Модульная конструкция" loading="lazy" decoding="async" draggable="false">
+              <span class="pf-reveal"></span>
+            </div>
+            <figcaption><h3 class="pf-fig-title">Винный стеллаж-портал</h3><p class="pf-fig-desc">Модульная конструкция</p></figcaption>
+          </figure>
+          <figure class="pf-fig">
+            <div class="pf-fig-inner">
+              <img class="pf-fig-img" src="pf-d3.jpg" alt="Межкомнатная дверь. С диагональным рисунком" loading="lazy" decoding="async" draggable="false">
+              <span class="pf-reveal"></span>
+            </div>
+            <figcaption><h3 class="pf-fig-title">Межкомнатная дверь</h3><p class="pf-fig-desc">С диагональным рисунком</p></figcaption>
+          </figure>
+          <span class="pf-num pf-num--l">05</span><span class="pf-num pf-num--r">06</span>
+        </div>
+        <div class="pf-slide pf-l-d" data-title="Офисная мебель" data-href="catalog-ofisnaya.html" data-n="3" role="group" aria-label="Офисная мебель">
+          <figure class="pf-fig">
+            <div class="pf-fig-inner">
+              <img class="pf-fig-img" src="pf-o1.jpg" alt="Стойка-остров. С рифлёным фасадом" loading="lazy" decoding="async" draggable="false">
+              <span class="pf-reveal"></span>
+            </div>
+            <figcaption><h3 class="pf-fig-title">Стойка-остров</h3><p class="pf-fig-desc">С рифлёным фасадом</p></figcaption>
+          </figure>
+          <figure class="pf-fig">
+            <div class="pf-fig-inner">
+              <img class="pf-fig-img" src="pf-o2.jpg" alt="Переговорный стол. Радиальный наборный рисунок" loading="lazy" decoding="async" draggable="false">
+              <span class="pf-reveal"></span>
+            </div>
+            <figcaption><h3 class="pf-fig-title">Переговорный стол</h3><p class="pf-fig-desc">Радиальный наборный рисунок</p></figcaption>
+          </figure>
+          <figure class="pf-fig">
+            <div class="pf-fig-inner">
+              <img class="pf-fig-img" src="pf-o3.jpg" alt="Стол для совещаний. Стулья с синей обивкой" loading="lazy" decoding="async" draggable="false">
+              <span class="pf-reveal"></span>
+            </div>
+            <figcaption><h3 class="pf-fig-title">Стол для&nbsp;совещаний</h3><p class="pf-fig-desc">Стулья с&nbsp;синей обивкой</p></figcaption>
+          </figure>
+          <span class="pf-num pf-num--l">07</span><span class="pf-num pf-num--r">08</span>
+        </div>
+        <div class="pf-slide pf-l-e" data-title="Коммерческая мебель" data-href="catalog-kommercheskaya.html" data-n="4" role="group" aria-label="Коммерческая мебель">
+          <figure class="pf-fig">
+            <div class="pf-fig-inner">
+              <img class="pf-fig-img" src="pf-c2.jpg" alt="Стеллаж для винотеки. Для торгового зала" loading="lazy" decoding="async" draggable="false">
+              <span class="pf-reveal"></span>
+            </div>
+            <figcaption><h3 class="pf-fig-title">Стеллаж для&nbsp;винотеки</h3><p class="pf-fig-desc">Для торгового зала</p></figcaption>
+          </figure>
+          <figure class="pf-fig">
+            <div class="pf-fig-inner">
+              <img class="pf-fig-img" src="pf-c4.jpg" alt="Торговый зал винотеки. Стеллажи по периметру" loading="lazy" decoding="async" draggable="false">
+              <span class="pf-reveal"></span>
+            </div>
+            <figcaption><h3 class="pf-fig-title">Торговый зал винотеки</h3><p class="pf-fig-desc">Стеллажи по&nbsp;периметру</p></figcaption>
+          </figure>
+          <figure class="pf-fig">
+            <div class="pf-fig-inner">
+              <img class="pf-fig-img" src="pf-c1.jpg" alt="Торговая стойка с кассой. Прикассовая зона" loading="lazy" decoding="async" draggable="false">
+              <span class="pf-reveal"></span>
+            </div>
+            <figcaption><h3 class="pf-fig-title">Торговая стойка с&nbsp;кассой</h3><p class="pf-fig-desc">Прикассовая зона</p></figcaption>
+          </figure>
+          <figure class="pf-fig">
+            <div class="pf-fig-inner">
+              <img class="pf-fig-img" src="pf-c3.jpg" alt="Стол-стойка с табуретами. Для фудкорта" loading="lazy" decoding="async" draggable="false">
+              <span class="pf-reveal"></span>
+            </div>
+            <figcaption><h3 class="pf-fig-title">Стол-стойка с&nbsp;табуретами</h3><p class="pf-fig-desc">Для фудкорта</p></figcaption>
+          </figure>
+          <span class="pf-num pf-num--l">09</span><span class="pf-num pf-num--r">10</span>
+        </div>
+        <div class="pf-rev" aria-hidden="true"><div class="pf-rev-half pf-rev-half--l"></div><div class="pf-rev-half pf-rev-half--r"></div></div>
+        <span class="pf-side pf-side--l" aria-hidden="true"></span><span class="pf-side pf-side--r" aria-hidden="true"></span>
       </div>
-      <button type="button" class="works-arrow next" aria-label="Следующее фото">&#8594;</button>
+      <div class="pf-controls">
+        <button type="button" class="pf-arrow pf-arrow--prev" aria-label="Предыдущая категория"><svg viewBox="0 0 55 24" aria-hidden="true"><path d="M54 12H2M13 1.5 2 12l11 10.5"/></svg></button>
+        <span class="pf-count" aria-live="polite"><span class="pf-count-cur">01</span> — <span>05</span></span>
+        <button type="button" class="pf-arrow pf-arrow--next" aria-label="Следующая категория"><svg viewBox="0 0 55 24" aria-hidden="true"><path d="M1 12h52M42 1.5 53 12 42 22.5"/></svg></button>
+      </div>
     </div>
     <div class="works-cta">
       <a href="#contact" class="dot-btn calc-cta">
@@ -2630,300 +2817,7 @@
     check();
   })();
 
-  // Deck Carousel (Originkit, ported to plain JS): cards are dealt out of a stack, then travel in an endless loop
-  // on wheel / horizontal swipe / arrows; cards near the pointer flip. Uses the photos already on the page.
-  (function () {
-    const track = document.getElementById('worksTrack');
-    const gallery = track && track.closest('.works-gallery');
-    if (!track || !gallery) return;
-    const slides = [...track.querySelectorAll('img')].map(i => ({ src: i.getAttribute('src'), alt: i.getAttribute('alt') || '' }));
-    if (!slides.length) return;
-
-    const CARD_W = 469, CARD_H = 583, SPACING = 27, REACH = 2.2, SMOOTHING = 5.3, SENSITIVITY = 5;
-    const DEAL_MS = 6800;                 // preset: tween 6.8 s, ease [0.44, 0, 0.56, 1]
-    const CARD_FILL = 0.9, PERSPECTIVE = 1000, HOVER_LERP = 0.15, STACK_SPREAD = 0.15, STACK_TILT = 9;
-    const TOP_ROOM = 230, BOTTOM_ROOM = 80;   // px (card scale 1): space above / below the row inside the frame
-    const STACK_HOLD = 550, DEAL_STAGGER = 4.8 * 24, DEAL_LIFT = 0.30, TOUCH_GAIN = 2.2, WHEEL_CLAMP = 400;
-    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
-    const wrap = (v, s) => ((v % s) + s) % s;
-    const wrapCentred = (v, s) => wrap(v + s / 2, s) - s / 2;
-    const noise = (i, seed) => { const v = Math.sin(i * 12.9898 + seed * 78.233) * 43758.5453; return v - Math.floor(v); };
-    const bezier = (x1, y1, x2, y2) => t => {          // cubic-bezier easing
-      if (t <= 0) return 0;
-      if (t >= 1) return 1;
-      const cx = 3 * x1, bx = 3 * (x2 - x1) - cx, ax = 1 - cx - bx;
-      const cy = 3 * y1, by = 3 * (y2 - y1) - cy, ay = 1 - cy - by;
-      let s = t;
-      for (let i = 0; i < 8; i++) {
-        const x = ((ax * s + bx) * s + cx) * s - t;
-        const d = (3 * ax * s + 2 * bx) * s + cx;
-        if (Math.abs(x) < 1e-5 || Math.abs(d) < 1e-6) break;
-        s -= x / d;
-      }
-      return ((ay * s + by) * s + cy) * s;
-    };
-    const ease = bezier(0.44, 0, 0.56, 1);
-
-    const deck = document.createElement('div');
-    deck.className = 'deck';
-    deck.setAttribute('role', 'region');
-    deck.setAttribute('aria-label', 'Примеры наших работ — прокрутите колесом мыши или используйте стрелки');
-    const strip = document.createElement('div');
-    strip.className = 'deck-strip';
-    deck.appendChild(strip);
-    gallery.insertBefore(deck, track);
-    gallery.classList.add('deck-on');
-
-    const count = slides.length, step = CARD_W + SPACING;
-    let total = 0, period = 0, lapPx = 0, baseScale = 1, hoverRadius = 0, falloff = 1;
-    const scrollLerp = clamp(0.16 - clamp(SMOOTHING, 0, 10) * 0.012, 0.03, 0.16);
-    const scrollPerLap = (400 - clamp(SENSITIVITY, 0, 10) * 32) * count;
-    const stackSpread = STACK_SPREAD * Math.min(CARD_W, CARD_H), dealLift = DEAL_LIFT * CARD_H;
-    let cards = [], nodes = [];
-    const state = { target: 0, current: 0, dealt: false, ready: false, dirty: true, startAt: 0, finished: false, nextAt: 0, inView: false, gather: 0 };
-    const GATHER_MS = 5500, GATHER_STAGGER = 200;         // slow, smooth gathering of the cards into the stack before every repeat
-    const REPEAT_MIN = 12000, REPEAT_MAX = 15000;        // pause between deals, ms
-    const onScreen = () => { const r = deck.getBoundingClientRect(); return r.top < window.innerHeight * 0.85 && r.bottom > 0; };
-    // PINNED: after every deal the middle card is card 0 — the photo that lay on top of the closed stack. Wheel / swipe / arrows
-    // stay locked (ready = false) from the moment the cards gather until the last card has landed, and the offset is zeroed.
-    const restart = now => { state.gather = now; state.finished = false; state.ready = false; };   // gather into a stack first, then deal again
-
-    const build = () => {
-      const w = deck.clientWidth || 1;
-      baseScale = Math.max(0.01, Math.min(1, CARD_FILL * w / CARD_W));
-      deck.style.height = Math.ceil((TOP_ROOM + CARD_H + BOTTOM_ROOM) * baseScale) + 'px';
-      strip.style.top = ((TOP_ROOM + CARD_H / 2) * baseScale) + 'px';
-      gallery.style.setProperty('--row-y', ((TOP_ROOM + CARD_H / 2) * baseScale) + 'px');   // arrows sit on the row
-      // The frame's empty room above/below the row (needed for the dealing hop) is pulled into the
-      // neighbouring blocks, same idea as desktop's -200px — but scaled with the card size, since a
-      // fixed offset leaves a huge gap on narrow screens. Desktop keeps its own CSS margins.
-      const compact = window.innerWidth <= 1279;
-      gallery.style.marginTop = compact ? '-' + Math.max(0, TOP_ROOM * baseScale - 20) + 'px' : '';
-      gallery.style.marginBottom = compact ? '-' + (BOTTOM_ROOM * baseScale) + 'px' : '';
-      const repeats = Math.max(1, Math.ceil((w / baseScale + CARD_W) / (count * step)) || 1);
-      const newTotal = count * repeats;
-      period = newTotal * step;
-      lapPx = count * step;
-      hoverRadius = (100 + clamp(REACH, 0, 10) * 80) * baseScale;
-      falloff = Math.max(1, hoverRadius / 2);
-      strip.style.transform = 'scale(' + baseScale + ')';
-      if (newTotal !== total) {
-        total = newTotal;
-        strip.textContent = '';
-        nodes = [];
-        const old = cards;
-        cards = [];
-        for (let i = 0; i < total; i++) {
-          const sl = slides[i % count];
-          const el = document.createElement('div');
-          el.className = 'deck-card';
-          el.style.zIndex = String(total - i);
-          const im = document.createElement('img');
-          im.src = sl.src;
-          im.alt = sl.alt;
-          im.draggable = false;
-          el.appendChild(im);
-          strip.appendChild(el);
-          nodes.push(el);
-          cards.push(old[i] || { deal: state.dealt ? 1 : 0, layoutX: 0, rot: 0, aim: 0,
-            jx: noise(i, 1) * 2 - 1, jy: noise(i, 2) * 2 - 1, jr: noise(i, 3) * 2 - 1 });
-        }
-      }
-      state.dirty = true;
-    };
-
-    const paint = () => {
-      const travel = state.current * lapPx, origin = 0;   // origin 0: card 0 — the top one of the stack — lands in the middle
-      for (let i = 0; i < cards.length; i++) {
-        const c = cards[i];
-        const slot = wrapCentred(i * step - origin - travel, period);
-        c.layoutX = slot;
-        const settle = clamp(c.deal, 0, 1);
-        const scatter = (1 - settle) * stackSpread;
-        const hop = dealLift * Math.sin(Math.PI * settle);
-        const x = slot * c.deal + c.jx * scatter;
-        const y = c.jy * scatter - hop;
-        const spin = c.jr * STACK_TILT * (1 - settle);
-        c.px = x; c.py = y; c.spin = spin;
-        nodes[i].style.transform = 'perspective(' + PERSPECTIVE + 'px) translate3d(' + x + 'px,' + y + 'px,0) rotate(' + spin + 'deg) rotateY(' + c.rot + 'deg)';
-      }
-    };
-
-    // Heading legibility: letters of «Примеры наших работ» and its subtitle turn dark while a card passes behind them
-    const headChars = [];
-    document.querySelectorAll('.works-head h2, .works-head p').forEach(el => {
-      el.setAttribute('aria-label', el.textContent.replace(/\s+/g, ' ').trim());
-      [...el.childNodes].forEach(n => {
-        if (n.nodeType !== 3) return;
-        const frag = document.createDocumentFragment();
-        n.textContent.split(/( +)/).forEach(part => {
-          if (!part) return;
-          if (/^ +$/.test(part)) { frag.appendChild(document.createTextNode(' ')); return; }
-          const w = document.createElement('span');
-          w.className = 'hc-w';
-          w.setAttribute('aria-hidden', 'true');
-          for (const ch of part) { const c = document.createElement('span'); c.className = 'hc-c'; c.textContent = ch; w.appendChild(c); headChars.push(c); }
-          frag.appendChild(w);
-        });
-        n.replaceWith(frag);
-      });
-    });
-    let anyDark = false;
-    const PROBE = [[0.5, 0.5], [0.2, 0.25], [0.8, 0.25], [0.2, 0.75], [0.8, 0.75]];   // points inside a letter box
-    // The letters' boxes are measured once (relative to the deck's top-left corner, so they stay valid while the page scrolls)
-    // and re-measured on resize / font load. Whether a letter lies on a photo is then pure arithmetic on the cards' own
-    // geometry (centre, tilt, flip) — no hit-testing through 3D layers, which is what made the dealing animation stutter.
-    let letterGeo = null, contrastDue = false, lastContrast = 0;
-    const measureLetters = () => {
-      const D = deck.getBoundingClientRect(), z = zoom();
-      letterGeo = headChars.map(c => {
-        const q = c.getBoundingClientRect();
-        return { el: c, l: (q.left - D.left) / z, t: (q.top - D.top) / z, w: q.width / z, h: q.height / z, on: c.classList.contains('on-photo') };
-      });
-    };
-    const contrast = () => {
-      if (!headChars.length) return;
-      if (!letterGeo) measureLetters();
-      const W = deck.offsetWidth, H = deck.offsetHeight;
-      const s0 = (TOP_ROOM + CARD_H / 2) * baseScale, hw = CARD_W * baseScale / 2, hh = CARD_H * baseScale / 2;
-      const quads = [];
-      for (let i = 0; i < cards.length; i++) {
-        const c = cards[i];
-        const x = W / 2 + (c.px || 0) * baseScale, y = s0 + (c.py || 0) * baseScale;
-        if (x + hw * 1.25 < 0 || x - hw * 1.25 > W) continue;   // outside the deck frame
-        const ang = (c.spin || 0) * Math.PI / 180, sx = Math.max(0.05, Math.abs(Math.cos(c.rot * Math.PI / 180)));
-        quads.push({ x, y, cos: Math.cos(ang), sin: Math.sin(ang), hw: hw * sx, hh });
-      }
-      let dark = false;
-      for (const g of letterGeo) {
-        let n = 0;
-        if (quads.length) for (const [fx, fy] of PROBE) {
-          const px = g.l + g.w * fx, py = g.t + g.h * fy;
-          if (px < 0 || px > W || py < 0 || py > H) continue;   // the frame clips the cards
-          for (const q of quads) {
-            const dx = px - q.x, dy = py - q.y;
-            if (Math.abs(dx * q.cos + dy * q.sin) <= q.hw && Math.abs(-dx * q.sin + dy * q.cos) <= q.hh) { n++; break; }
-          }
-        }
-        const hit = n >= 3;   // majority of the probe points
-        if (hit !== g.on) { g.on = hit; g.el.classList.toggle('on-photo', hit); }
-        if (hit) dark = true;
-      }
-      anyDark = dark;
-    };
-
-    let last = 0;
-    const tick = now => {
-      requestAnimationFrame(tick);
-      const dt = last ? Math.min(0.064, (now - last) / 1000) : 1 / 60;
-      last = now;
-      let moving = false;
-      if (state.gather) {
-        const g = now - state.gather;
-        let done = true;
-        cards.forEach((c, i) => {
-          const p = clamp((g - i * GATHER_STAGGER) / GATHER_MS, 0, 1);
-          c.deal = 1 - ease(p);
-          if (p < 1) done = false;
-        });
-        if (done) { state.gather = 0; state.startAt = now; state.current = 0; state.target = 0; }
-      } else if (state.dealt) {
-        const el = now - state.startAt;
-        cards.forEach((c, i) => { c.deal = reduce ? 1 : ease((el - STACK_HOLD - i * DEAL_STAGGER) / DEAL_MS); });
-        if (!state.ready && cards.every(c => c.deal >= 1)) state.ready = true;     // input unlocks only once every card has landed
-        if (!reduce) {
-          if (!state.finished && cards.every(c => c.deal >= 1)) { state.finished = true; state.nextAt = now + REPEAT_MIN + Math.random() * (REPEAT_MAX - REPEAT_MIN); }
-          else if (state.finished && now >= state.nextAt && onScreen()) restart(now);     // deal again every 12-15 s while on screen
-        }
-      }
-      const sk = 1 - Math.pow(1 - scrollLerp, dt * 60);
-      state.current += (state.target - state.current) * sk;
-      if (Math.abs(state.target - state.current) * lapPx > 0.02) moving = true;
-      else state.current = state.target;
-      if (state.current >= 1) { state.current -= 1; state.target -= 1; }
-      else if (state.current < 0) { state.current += 1; state.target += 1; }
-      const k = 1 - Math.pow(1 - HOVER_LERP, dt * 60);
-      cards.forEach(c => {
-        const aim = c.aim * clamp(c.deal, 0, 1);
-        if (Math.abs(aim - c.rot) > 0.01) { c.rot += (aim - c.rot) * k; moving = true; }
-        else c.rot = aim;
-        if (c.deal !== 1) moving = true;
-      });
-      if (moving || state.dirty) { state.dirty = false; paint(); contrastDue = true; }
-      if (contrastDue && now - lastContrast >= 50) { contrastDue = false; lastContrast = now; contrast(); }
-    };
-
-    const zoom = () => parseFloat(document.documentElement.style.zoom) || 1;
-    deck.addEventListener('wheel', e => {
-      if (!state.ready || e.ctrlKey) return;
-      let d = e.deltaY;
-      if (e.deltaMode === 1) d *= 16;
-      else if (e.deltaMode === 2) d *= deck.clientHeight || 800;
-      e.preventDefault();
-      state.target += clamp(d, -WHEEL_CLAMP, WHEEL_CLAMP) / scrollPerLap;
-    }, { passive: false });
-    let tx = null, ty = null;
-    deck.addEventListener('touchstart', e => {
-      const t = e.touches[0];
-      tx = state.ready && t ? t.clientX : null;
-      ty = t ? t.clientY : null;
-    }, { passive: true });
-    deck.addEventListener('touchmove', e => {
-      const t = e.touches[0];
-      if (!t || tx == null || !state.ready) return;
-      const dx = tx - t.clientX, dy = ty - t.clientY;
-      if (Math.abs(dx) <= Math.abs(dy)) return;          // vertical swipe scrolls the page as usual
-      tx = t.clientX;
-      ty = t.clientY;
-      if (e.cancelable) e.preventDefault();
-      state.target += clamp(dx * TOUCH_GAIN, -WHEEL_CLAMP, WHEEL_CLAMP) / scrollPerLap;
-    }, { passive: false });
-    deck.addEventListener('touchend', () => { tx = null; }, { passive: true });
-    // Not gated to mouse pointers: on touch screens the cards near the finger flip while swiping,
-    // the same way they flip near the cursor on desktop (pointermove fires for touch drags too,
-    // since the deck is touch-action:pan-y).
-    deck.addEventListener('pointermove', e => {
-      const r = deck.getBoundingClientRect(), z = zoom();
-      const px = (e.clientX - r.left) / z, py = (e.clientY - r.top) / z;
-      const cy = (TOP_ROOM + CARD_H / 2) * baseScale, cx = r.width / z / 2;
-      cards.forEach(c => {
-        const d = Math.hypot(px - (cx + baseScale * c.layoutX), py - cy);
-        c.aim = d < hoverRadius ? 180 * Math.max(0, 1 - d / falloff) : 0;
-      });
-    });
-    const unflip = () => cards.forEach(c => { c.aim = 0; });
-    deck.addEventListener('pointerleave', unflip);
-    deck.addEventListener('pointercancel', unflip);
-    deck.addEventListener('pointerup', e => { if (e.pointerType !== 'mouse') unflip(); });
-
-    gallery.querySelectorAll('.works-arrow').forEach(btn => btn.addEventListener('click', () => {
-      if (!state.ready) return;
-      state.target += (btn.classList.contains('prev') ? -1 : 1) / count;
-    }));
-
-    // First deal when the block comes into view; deal again every time it re-enters the screen
-    const check = () => {
-      const v = onScreen();
-      if (v && !state.inView) {
-        state.inView = true;
-        if (!state.dealt) { state.dealt = true; state.startAt = performance.now(); }
-        else if (state.finished && !reduce) restart(performance.now());
-      } else if (!v && state.inView) state.inView = false;
-    };
-    window.addEventListener('scroll', check, { passive: true });
-    window.addEventListener('resize', () => { build(); letterGeo = null; contrastDue = true; check(); });
-    window.addEventListener('load', () => { build(); letterGeo = null; contrastDue = true; check(); });
-    if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { letterGeo = null; contrastDue = true; });
-    build();
-    check();
-    requestAnimationFrame(tick);
-    window.__deck = { state };
-  })();
-
-  // Arrow buttons dim once the row is scrolled all the way to that side — every finite
-  // horizontal-scroll gallery gets this (reviews; works only if the infinite Deck Carousel
-  // above didn't take over, since a loop never truly "ends").
+  // Arrow buttons dim once the row is scrolled all the way to that side (the reviews row).
   (function () {
     const EPS = 2;
     const wire = (track, prev, next) => {
@@ -2937,10 +2831,9 @@
       window.addEventListener('load', update);
       update();
     };
-    document.querySelectorAll('.works-gallery, .reviews-gallery').forEach(gallery => {
-      if (gallery.classList.contains('deck-on')) return;
+    document.querySelectorAll('.reviews-gallery').forEach(gallery => {
       wire(
-        gallery.querySelector('.works-track, .reviews-track'),
+        gallery.querySelector('.reviews-track'),
         gallery.querySelector('.works-arrow.prev'),
         gallery.querySelector('.works-arrow.next')
       );
@@ -3084,7 +2977,7 @@
     // smooth wheel scrolling only with a mouse; touch keeps the native scroll
     let lenis = null;
     if (window.Lenis && !reduce && window.matchMedia('(min-width:961px) and (hover:hover) and (pointer:fine)').matches) {
-      document.querySelectorAll('.deck,.modal-backdrop,.nav-links').forEach(e => e.setAttribute('data-lenis-prevent', ''));
+      document.querySelectorAll('.modal-backdrop,.nav-links').forEach(e => e.setAttribute('data-lenis-prevent', ''));
       lenis = new Lenis({ duration: 1.2, easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)), smoothWheel: true });
       window.__lenis = lenis;
       lenis.on('scroll', ScrollTrigger.update);
@@ -3341,17 +3234,6 @@
 
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { closeManagerModal(); closeReviewModal(); closeSuccessModal(); closeDirectionsModal(); } });
 
-  const worksTrack = document.getElementById('worksTrack');
-  if (worksTrack && !document.querySelector('.works-gallery.deck-on')) {
-    document.querySelectorAll('.works-gallery .works-arrow').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const dir = btn.classList.contains('prev') ? -1 : 1;
-        const item = worksTrack.querySelector('.works-item');
-        const step = item ? item.getBoundingClientRect().width + 20 : 607;
-        worksTrack.scrollBy({ left: dir * step, behavior: 'smooth' });
-      });
-    });
-  }
 
 </script>
 
@@ -3737,25 +3619,9 @@ void main() {
 </script>
 <script src="ctl.js?v=1"></script>
 <script>
-  // the same arrows + «NN — NN» counter under «Примеры наших работ» and «Отзывы»
+  // the same arrows + «NN — NN» counter under «Отзывы» and «Материалы»
   (function () {
     if (!window.Ctl) return;
-    const works = document.querySelector('.works-gallery');
-    if (works) {
-      const track = works.querySelector('.works-track');
-      const n = () => track.querySelectorAll('img').length;
-      const deck = works.classList.contains('deck-on');
-      const step = () => { const f = track.querySelectorAll('.works-item'); return f.length > 1 ? f[1].offsetLeft - f[0].offsetLeft : 1; };
-      const made = Ctl.make({
-        prev: works.querySelector('.works-arrow.prev'), next: works.querySelector('.works-arrow.next'), after: works, tone: 'dark',
-        total: n,
-        current: () => deck && window.__deck ? ((Math.round(window.__deck.state.target * n()) % n()) + n()) % n() + 1 : Math.round(track.scrollLeft / step()) + 1,
-        watch: cb => { setInterval(cb, 200); track.addEventListener('scroll', cb, { passive: true }); }
-      });
-      // one row with the «рассчитать стоимость проекта» button: the button in the middle, the arrows + counter on the right
-      const wcta = works.parentNode.querySelector('.works-cta');
-      if (made && wcta) wcta.appendChild(made.row);
-    }
     const rev = document.querySelector('.reviews-gallery');
     if (rev) {
       const track = document.getElementById('reviewsTrack');
@@ -3896,6 +3762,146 @@ void main() {
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(measure);
     root.querySelectorAll('img').forEach(im => im.addEventListener('load', measure));
     measure();
+  })();
+</script>
+<script>
+  // «Примеры наших работ»: a book of category spreads with a flat page flip (idea and layout: Codrops «Page Flip Layout»;
+  // here written with the Web Animations API, so it needs no library). One category = one spread; the arrows, a swipe, the arrow keys
+  // and the table of contents turn the pages: a stack of paper sheets sweeps across both halves, and in the middle of the sweep the
+  // next spread takes the place of the current one and its photos open out of their masks.
+  (function () {
+    const root = document.getElementById('pf');
+    if (!root) return;
+    const bookEl = root.querySelector('.pf-book');
+    const slideEls = [...root.querySelectorAll('.pf-slide')];
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const N = slideEls.length, clamp = (v, a, b) => Math.min(b, Math.max(a, v));
+    const EASE = { quint: 'cubic-bezier(.86,0,.07,1)', expo: 'cubic-bezier(.16,1,.3,1)', quart: 'cubic-bezier(.25,1,.5,1)' };
+    const SPEED = reduce ? 0.001 : 1;
+    root.classList.add('pf-js');
+
+    // one animated move: runs from -> to, then keeps the end values as plain inline styles
+    const tween = (el, from, to, o) => {
+      const a = el.animate([from, to], { duration: Math.max(1, o.d * 1000 * SPEED), delay: (o.delay || 0) * 1000 * SPEED, easing: o.ease || 'linear', fill: 'both' });
+      return a.finished.then(() => { try { a.commitStyles(); } catch (_) {} a.cancel(); }).catch(() => {});
+    };
+    const tr = (x, unit) => 'translate3d(' + x + (unit || 'px') + ',0,0)';
+
+    // the stack of turning pages (lighter to darker), one half per side
+    const COLORS = ['#EFE6D6', '#E8DDCA', '#E0D3BD', '#D8CAB2', '#D0C0A6'];
+    const halves = { l: root.querySelector('.pf-rev-half--l'), r: root.querySelector('.pf-rev-half--r') };
+    let pages = '';
+    for (let i = 0; i <= N; i++) pages += '<div class="pf-rev-page" style="background:' + (COLORS[i] || COLORS[0]) + '"></div>';
+    halves.l.innerHTML = halves.r.innerHTML = pages;
+    const sheets = { l: [...halves.l.children], r: [...halves.r.children] };
+    const DUR = 1.6, GAP = 0.15;
+    const turn = (dir, count, middle) => {
+      const jobs = [];
+      for (const side of ['l', 'r']) {
+        for (let i = 0; i < count; i++) {
+          jobs.push(tween(sheets[side][i], { transform: tr(dir === 'next' ? 100 : -100, '%') }, { transform: tr(dir === 'next' ? -100 : 100, '%') }, { d: DUR, delay: i * GAP, ease: EASE.quint }));
+        }
+      }
+      setTimeout(middle, ((DUR + (count - 1) * GAP) / 2) * 1000 * SPEED);
+      return Promise.all(jobs);
+    };
+
+    // a spread and its photos
+    const slides = slideEls.map(el => ({
+      el, title: el.dataset.title, href: el.dataset.href,
+      items: [...el.querySelectorAll('.pf-fig')].map(f => ({
+        el: f, inner: f.querySelector('.pf-fig-inner'), img: f.querySelector('.pf-fig-img'), reveal: f.querySelector('.pf-reveal'),
+        title: f.querySelector('.pf-fig-title'), desc: f.querySelector('.pf-fig-desc')
+      }))
+    }));
+    const sideOf = (slide, it) => (it.el.offsetLeft + it.el.offsetWidth / 2) >= slide.el.clientWidth / 2 ? 'right' : 'left';
+    const showItems = (slide, dir) => {
+      const next = dir === 'next', jobs = [];
+      for (const it of slide.items) {
+        jobs.push(tween(it.el, { opacity: 1, transform: tr(next ? 60 : -60) }, { opacity: 1, transform: tr(0) }, { d: 1, ease: EASE.expo }));
+        if ((next && sideOf(slide, it) === 'left') || (!next && sideOf(slide, it) === 'right')) {   // the photos on the turning side swing in
+          it.inner.style.transformOrigin = next ? '100% 50%' : '0% 50%';
+          jobs.push(tween(it.inner, { transform: 'rotateY(' + (next ? 30 : -30) + 'deg)' }, { transform: 'rotateY(0.1deg)' }, { d: 1, ease: EASE.expo }));
+        }
+        jobs.push(tween(it.reveal, { transform: tr(0) }, { transform: tr(next ? -100 : 100, '%') }, { d: 1, ease: EASE.expo }));
+        jobs.push(tween(it.img, { transform: 'scale(1.5)' }, { transform: 'scale(1)' }, { d: 1, ease: EASE.expo }));
+        jobs.push(tween(it.title, { opacity: 0, transform: tr(next ? 15 : -15) }, { opacity: 1, transform: tr(0) }, { d: 0.8, delay: 0.25, ease: EASE.quart }));
+        jobs.push(tween(it.desc, { opacity: 0, transform: tr(next ? 20 : -20) }, { opacity: 1, transform: tr(0) }, { d: 0.8, delay: 0.3, ease: EASE.quart }));
+      }
+      return Promise.all(jobs);
+    };
+    const hideItems = slide => slide.items.forEach(it => { it.el.style.opacity = 0; it.title.style.opacity = 0; it.desc.style.opacity = 0; });
+    slides.forEach(hideItems);
+
+    // chrome: arrows, counter, chapter, edges
+    const prev = root.querySelector('.pf-arrow--prev'), nextBtn = root.querySelector('.pf-arrow--next');
+    const chapter = root.querySelector('.pf-chapter'), more = root.querySelector('.pf-more'), count = root.querySelector('.pf-count-cur');
+    const nav = root.querySelector('.pf-nav'), navBtn = root.querySelector('.pf-nav-btn'), tocItems = [...root.querySelectorAll('.pf-toc-item')];
+    const sideL = root.querySelector('.pf-side--l'), sideR = root.querySelector('.pf-side--r');
+    sideR.style.transform = 'scaleX(0)';
+    let current = 0, busy = false, tocOpen = false, eL = 1, eR = 0;   // eL / eR: the edge indicators' current scale
+    const paintChrome = () => {
+      prev.style.visibility = current === 0 ? 'hidden' : 'visible';
+      nextBtn.style.visibility = current === N - 1 ? 'hidden' : 'visible';
+      chapter.textContent = slides[current].title; more.setAttribute('href', slides[current].href);
+      count.textContent = String(current + 1).padStart(2, '0');
+      tocItems.forEach((t, i) => t.classList.toggle('is-current', i === current));
+      const p = N > 1 ? current / (N - 1) : 0;
+      tween(sideL, { transform: 'scaleX(' + eL + ')' }, { transform: 'scaleX(' + (1 - p) + ')' }, { d: 0.5, ease: EASE.expo });
+      tween(sideR, { transform: 'scaleX(' + eR + ')' }, { transform: 'scaleX(' + p + ')' }, { d: 0.5, ease: EASE.expo });
+      eL = 1 - p; eR = p;
+    };
+    const toggleToc = force => {
+      tocOpen = force === undefined ? !tocOpen : force;
+      nav.classList.toggle('is-open', tocOpen);
+      navBtn.setAttribute('aria-expanded', String(tocOpen));
+      if (tocOpen) tocItems.forEach((t, i) => tween(t, { opacity: 0, transform: 'translate3d(0,10px,0)' }, { opacity: 1, transform: 'translate3d(0,0,0)' }, { d: 0.9, delay: i * 0.03, ease: EASE.expo }));
+      else tocItems.forEach(t => { t.style.opacity = 0; });
+    };
+
+    // turning
+    const switchPage = (pos, dir) => {
+      const from = slides[current], to = slides[pos];
+      from.el.classList.remove('is-current'); hideItems(from);
+      to.el.style.zIndex = 100;
+      showItems(to, dir).then(() => { to.el.classList.add('is-current'); to.el.style.zIndex = ''; busy = false; });
+      current = pos; paintChrome();
+    };
+    const go = pos => {
+      if (busy || pos === current || pos < 0 || pos >= N) return;
+      busy = true; toggleToc(false);
+      const dir = pos > current ? 'next' : 'prev';
+      turn(dir, Math.abs(pos - current), () => switchPage(pos, dir));
+    };
+    prev.addEventListener('click', () => go(current - 1));
+    nextBtn.addEventListener('click', () => go(current + 1));
+    navBtn.addEventListener('click', () => toggleToc());
+    tocItems.forEach((t, i) => t.addEventListener('click', e => { e.preventDefault(); go(i); }));
+    document.addEventListener('click', e => { if (tocOpen && !nav.contains(e.target)) toggleToc(false); });
+    bookEl.addEventListener('keydown', e => {
+      if (e.key === 'ArrowRight') { e.preventDefault(); go(current + 1); }
+      else if (e.key === 'ArrowLeft') { e.preventDefault(); go(current - 1); }
+    });
+    // a swipe turns the page too (a vertical swipe still scrolls the page)
+    let sx = null, sy = 0;
+    bookEl.addEventListener('pointerdown', e => { if (e.pointerType !== 'mouse') { sx = e.clientX; sy = e.clientY; } });
+    bookEl.addEventListener('pointerup', e => {
+      if (sx === null) return;
+      const dx = e.clientX - sx, dy = e.clientY - sy; sx = null;
+      if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.4) go(current + (dx < 0 ? 1 : -1));
+    });
+    bookEl.addEventListener('pointercancel', () => { sx = null; });
+
+    // the first spread opens when the block comes into view (and its pictures are in)
+    paintChrome();
+    const open = () => {
+      const imgs = slides[0].items.map(it => it.img);
+      const ready = Promise.race([Promise.all(imgs.map(im => im.decode ? im.decode().catch(() => {}) : Promise.resolve())), new Promise(r => setTimeout(r, 2500))]);
+      ready.then(() => { busy = true; showItems(slides[0], 'next').then(() => { busy = false; }); });
+    };
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver((es, o) => { if (es[0].isIntersecting) { open(); o.disconnect(); } }, { threshold: 0.2 }).observe(bookEl);
+    } else open();
   })();
 </script>
 </body>

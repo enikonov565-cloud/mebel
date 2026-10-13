@@ -12,8 +12,7 @@ html body section#materials{padding-top:56px}
 
 /* headings and texts */
 html body .why-head h2,html body .why-head p,html body .mat-head h2,html body .mat-head p,html body .benefits-head h2,html body .benefits-head p,
-html body .works-head h2,html body .works-head p,html body .faq-head h2,html body .faq-head p,html body .contact-head h2,html body .contact-head p,
-html body .hc-c.on-photo{color:#180F01}
+html body .works-head h2,html body .works-head p,html body .faq-head h2,html body .faq-head p,html body .contact-head h2,html body .contact-head p{color:#180F01}
 
 /* «Что вы получаете»: the list used on small screens */
 html body .benefits-list li{border-bottom-color:rgba(47,31,2,.25)}
@@ -66,7 +65,6 @@ html body footer{border-top:0}
 
 /* buttons and arrows follow the light ground (colours only — every animation stays as it was) */
 html body .works-cta a{background:#2F1F02;border-color:#2F1F02;color:#EADFCB;--reveal-bg:#EADFCB;--reveal-text:#2F1F02;--dot-shadow:#2F1F02}
-html body .works-cta .ctl,html body .works-cta .ctl--dark{--ctl:#2F1F02;--ctl-off:rgba(47,31,2,.22)}
 html body .reviews-cta .ctl,html body .ctl--light{--ctl:#2F1F02;--ctl-off:rgba(47,31,2,.22)}
 
 /* one rhythm between all screens: the dark slideshow meets the dark «Что мы изготавливаем» directly (no light strip, no fade) and

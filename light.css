@@ -64,7 +64,7 @@ html body footer{border-top:0}
 }
 
 /* buttons and arrows follow the light ground (colours only — every animation stays as it was) */
-html body .works-cta a{background:#2F1F02;border-color:#2F1F02;color:#EADFCB;--reveal-bg:#EADFCB;--reveal-text:#2F1F02;--dot-shadow:#2F1F02}
+html body .works-cta a:not(.lk-run){background:#2F1F02;border-color:#2F1F02;color:#EADFCB;--reveal-bg:#EADFCB;--reveal-text:#2F1F02;--dot-shadow:#2F1F02}
 html body .reviews-cta .ctl,html body .ctl--light{--ctl:#2F1F02;--ctl-off:rgba(47,31,2,.22)}
 
 /* one rhythm between all screens: the dark slideshow meets the dark «Что мы изготавливаем» directly (no light strip, no fade) and
@@ -108,5 +108,5 @@ html body footer{border-top:0}
 /* phones: the «рассчитать стоимость проекта» button under «Примеры наших работ» looks exactly like the same button on the first screen
    and in «Что мы изготавливаем» (light plate, dark dashed rim, dark text); only the hover plate is dark, since the page here is light */
 @media (max-width:960px){
-  html body .works-cta a{background:#CDCBC7;border-color:#2F1F02;color:#2F1F02;--reveal-bg:#2F1F02;--reveal-text:#CDCBC7;--dot-shadow:#2F1F02}
+  html body .works-cta a:not(.lk-run){background:#CDCBC7;border-color:#2F1F02;color:#2F1F02;--reveal-bg:#2F1F02;--reveal-text:#CDCBC7;--dot-shadow:#2F1F02}
 }

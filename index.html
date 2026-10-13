@@ -1006,7 +1006,6 @@
   .pf-tab:hover,.pf-tab.is-current{color:var(--pf-ink)}
   .pf-tab.is-current::after{transform:scaleX(1)}
   .pf-tab:focus-visible{outline:2px solid rgba(47,31,2,.45);outline-offset:4px;border-radius:4px}
-  .pf-nav > .ctl{margin:0 0 0 auto}
   .works-cta a.lk-run.lk-run{--lk:#2F1F02;--lk-line:rgba(47,31,2,.3)}
   /* the stage: every category has its own arrangement of shapes (overlapping panels, circles, slanted strips, mosaics); the title sits bottom left */
   .pf-book{position:relative;outline:none;touch-action:pan-y;-webkit-tap-highlight-color:transparent;
@@ -1742,8 +1741,9 @@
     .works-cta.works-cta{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;margin-top:28px}
         .works-cta > a.pf-more{grid-column:1;grid-row:1;justify-self:start}
     .works-cta > a.calc-cta{grid-column:2;grid-row:1}
+    .works-cta > .ctl{grid-column:3;grid-row:1;margin:0;justify-self:end}
   }
-  @media (min-width:961px) and (max-width:1279px){.works-cta.works-cta{grid-template-columns:auto 1fr}.works-cta > a.calc-cta{grid-column:2;justify-self:end}}
+  @media (min-width:961px) and (max-width:1279px){.works-cta > a.calc-cta{width:400px}.works-cta .ctl-count{display:none}}
   @media (max-width:960px){.works-cta{flex-direction:column;align-items:flex-start;gap:26px;margin-top:22px}.works-cta > .ctl{order:-1;margin:0;align-self:center;justify-content:center}.works-cta > a.calc-cta{align-self:stretch;width:auto}}
 </style>
 <link rel="stylesheet" href="logo.css?v=4">
@@ -3808,11 +3808,7 @@ void main() {
     let current = 0, busy = false, onChange = null;
     const made = window.Ctl ? Ctl.make({ prev, next: nextBtn, after: bookEl, tone: 'light', total: () => N, current: () => current + 1, watch: cb => { onChange = cb; } }) : null;
     const cta = document.querySelector('#portfolio .works-cta');
-    const nav = root.querySelector('.pf-nav'), narrow = window.matchMedia('(max-width: 960px)');
-    // arrows + counter: on a wide screen at the right of the tabs, on a phone under the photos
-    const place = () => { if (!made) return; if (narrow.matches && cta) cta.insertBefore(made.row, cta.firstChild); else nav.appendChild(made.row); };
-    place();
-    if (narrow.addEventListener) narrow.addEventListener('change', place);
+    if (made && cta) cta.appendChild(made.row);   // arrows + counter: bottom right (on a phone they come first, above the links)
     const paint = () => {
       tabs.forEach((t, i) => { t.classList.toggle('is-current', i === current); t.setAttribute('aria-selected', String(i === current)); });
       more.setAttribute('href', slides[current].href);

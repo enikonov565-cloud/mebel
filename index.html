@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script src="fit.js"></script>
+<script>/* coming back from a catalogue card: the page stays hidden until the pixel transition lifts */try{if(sessionStorage.getItem("pxArrive")==="1"){document.documentElement.classList.add("px-arrive");setTimeout(function(){document.documentElement.classList.remove("px-arrive")},6000)}}catch(e){}</script>
+<style>html.px-arrive{background:#D9CBB6}html.px-arrive body{visibility:hidden}</style>
 <title>Комфорт интерьер — мебель на&nbsp;заказ</title>
 <meta name="description" content="Изготовление мебели и изделий из массива дерева по индивидуальным заказам. Проектирование, производство, монтаж.">
 <style>
@@ -3607,6 +3609,7 @@ void main() {
   })();
 </script>
 <script src="ctl.js?v=1"></script>
+<script src="pixel.js?v=1"></script>
 <script>
   // the same arrows + «NN — NN» counter under «Отзывы» and «Материалы»
   (function () {
@@ -3874,6 +3877,35 @@ void main() {
     });
     bookEl.addEventListener('pointercancel', () => { sx = null; });
 
+    // a click on a photo: the tiles grow out of the click point and cover the screen, then the catalogue card opens (pixel.js)
+    [...root.querySelectorAll('a.pf-fig-inner')].forEach(a => a.addEventListener('click', e => {
+      if (!window.PixelT || reduce || e.button || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      e.preventDefault();
+      if (PixelT.busy()) return;
+      try { sessionStorage.setItem('pfTab', String(current)); } catch (_) {}
+      const r = a.getBoundingClientRect();
+      PixelT.cover({ x: e.clientX || r.left + r.width / 2, y: e.clientY || r.top + r.height / 2 }).then(() => { location.href = a.href; });
+    }));
+
+    // coming back from a catalogue card (the catalogue leaves a note): the same category is open and the page is lifted by the tiles
+    let arrived = false;
+    try { arrived = sessionStorage.getItem('pxArrive') === '1'; } catch (_) {}
+    const arrive = () => {
+      let k = 0;
+      try { k = parseInt(sessionStorage.getItem('pfTab'), 10) || 0; sessionStorage.removeItem('pxArrive'); } catch (_) {}
+      k = clampv(k, 0, N - 1);
+      if (k !== current) { slides[current].el.classList.remove('is-current'); slides[k].el.classList.add('is-current'); current = k; paint(); }
+      const sl = slides[current];
+      sl.cap.style.opacity = 1;
+      sl.items.forEach(it => { it.fig.style.clipPath = OPEN; it.fig.style.translate = '0px 0px'; });
+      if (window.ScrollTrigger && ScrollTrigger.refresh) ScrollTrigger.refresh();
+      const head = document.querySelector('#portfolio .works-head');
+      if (head) window.scrollTo(0, Math.max(0, head.getBoundingClientRect().top + window.pageYOffset - 90));
+      if (window.PixelT) PixelT.coverNow();
+      document.documentElement.classList.remove('px-arrive');
+      if (window.PixelT) PixelT.reveal({ x: window.innerWidth / 2, y: window.innerHeight / 2 });
+    };
+
     // the first category opens when the block comes into view (and its pictures are in)
     paint();
     const open = () => {
@@ -3881,7 +3913,9 @@ void main() {
       const ready = Promise.race([Promise.all(imgs.map(im => im.decode ? im.decode().catch(() => {}) : Promise.resolve())), new Promise(r => setTimeout(r, 2500))]);
       ready.then(() => { busy = true; uncover(slides[0]).then(() => { busy = false; }); });
     };
-    if ('IntersectionObserver' in window) {
+    if (arrived) {
+      if (document.readyState === 'complete') setTimeout(arrive, 300); else window.addEventListener('load', () => setTimeout(arrive, 300));
+    } else if ('IntersectionObserver' in window) {
       new IntersectionObserver((es, o) => { if (es[0].isIntersecting) { open(); o.disconnect(); } }, { threshold: 0.2 }).observe(bookEl);
     } else open();
   })();

@@ -109,29 +109,76 @@
 })();
 
 
-/* «Примеры наших работ» on the home page link here as catalog-….html#model-<name>: open that model's window (description and the
-   whole photo) and bring its tile into view behind it. */
+/* The model window and the pixel transition (see pixel.js): opening and closing a card goes through the chessboard of tiles.
+   «Примеры наших работ» on the home page link here as catalog-….html#model-<name>: the page stays hidden, the tiles melt away from the
+   middle of the screen and show that model's window (description and the whole photo); closing it takes the visitor back to the examples. */
 (function () {
   'use strict';
+  var P = window.PixelT, html = document.documentElement;
+  var modal = document.getElementById('modelModal');
   var m = /^#model-([\w-]+)$/.exec(location.hash);
-  if (!m) return;
-  var btn = document.querySelector('.model-details-btn[data-model="' + m[1] + '"]');
-  if (!btn) { document.documentElement.classList.remove('is-deeplink'); return; }
+  var btn = m && document.querySelector('.model-details-btn[data-model="' + m[1] + '"]');
+  if (m && !btn) html.classList.remove('is-deeplink');
+  var fromHome = !!btn, pass = false, skip = false;
+
+  if (P && modal) {
+    // run an action (the page change) while the tiles cover the screen
+    var through = function (fn, origin) {
+      if (P.busy()) return;
+      P.cover(origin).then(function () { pass = true; try { fn(); } finally { pass = false; } return P.reveal(origin); });
+    };
+    var pt = function (e, el) {
+      if (e && typeof e.clientX === 'number' && (e.clientX || e.clientY)) return { x: e.clientX, y: e.clientY };
+      var r = el.getBoundingClientRect(); return { x: r.left + r.width / 2, y: r.top + r.height / 2 };
+    };
+    // back to the examples on the home page (only when the window was opened from there)
+    var leave = function (origin) {
+      if (P.busy()) return;
+      try { sessionStorage.setItem('pxArrive', '1'); } catch (_) {}
+      P.cover(origin).then(function () { location.href = 'index.html#portfolio'; });
+    };
+    var isOpen = function () { return modal.classList.contains('open'); };
+
+    // opening
+    [].forEach.call(document.querySelectorAll('.model-details-btn'), function (b) {
+      b.addEventListener('click', function (e) {
+        if (pass || skip || isOpen()) return;
+        e.preventDefault(); e.stopImmediatePropagation();
+        through(function () { b.click(); }, pt(e, b));
+      }, true);
+    });
+    // closing: the cross, a click beside the window, Escape
+    var guard = function (target, type, test, replay) {
+      target.addEventListener(type, function (e) {
+        if (pass || !isOpen() || (test && !test(e))) return;
+        e.preventDefault(); e.stopImmediatePropagation();
+        var o = pt(e, modal.querySelector('.model-modal-info') || modal);
+        if (fromHome) leave(o); else through(replay, o);
+      }, true);
+    };
+    var cross = document.getElementById('modelModalClose');
+    if (cross) guard(cross, 'click', null, function () { cross.click(); });
+    guard(modal, 'click', function (e) { return e.target === modal; }, function () { modal.dispatchEvent(new MouseEvent('click', { bubbles: true })); });
+    guard(document, 'keydown', function (e) {
+      var mgr = document.getElementById('managerModal');
+      return e.key === 'Escape' && !(mgr && mgr.classList.contains('open'));
+    }, function () { document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true })); });
+  }
+
+  if (!btn) return;
   var go = function () {
     var card = btn.closest('.model-card'), track = document.getElementById('modelTrack');
     if (card && track) track.scrollLeft = Math.max(0, card.offsetLeft - (track.clientWidth - card.offsetWidth) / 2);
-    btn.click();
-    requestAnimationFrame(function () { document.documentElement.classList.remove('is-deeplink'); });
-    // closing the window leaves the visitor at the tiles, not at the top of the page
-    var win = document.getElementById('modelModal'), gal = document.querySelector('.model-gallery');
-    if (win && gal && window.MutationObserver) {
-      var mo = new MutationObserver(function () {
-        if (win.classList.contains('open')) return;
-        mo.disconnect();
-        window.scrollTo(0, Math.max(0, gal.getBoundingClientRect().top + window.pageYOffset - 140));
-      });
-      mo.observe(win, { attributes: true, attributeFilter: ['class'] });
-    }
+    skip = true; btn.click(); skip = false;
+    var imgs = modal ? [].slice.call(modal.querySelectorAll('img')) : [];
+    var loaded = Promise.all(imgs.map(function (im) {
+      return im.complete ? Promise.resolve() : new Promise(function (r) { im.addEventListener('load', r); im.addEventListener('error', r); });
+    }));
+    Promise.race([loaded, new Promise(function (r) { setTimeout(r, 1800); })]).then(function () {
+      if (P) P.coverNow();
+      html.classList.remove('is-deeplink');
+      if (P) P.reveal({ x: window.innerWidth / 2, y: window.innerHeight / 2 });
+    });
   };
   if (document.readyState === 'complete') setTimeout(go, 200); else window.addEventListener('load', function () { setTimeout(go, 200); });
 })();

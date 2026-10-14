@@ -585,7 +585,34 @@
     padding:22px 22px 20px;background:#2F1F02;color:#F0ECE6;border-radius:15px;pointer-events:none;transform:translate3d(0,100%,0);
   }
   .svc-card-caption-text{display:block;font-family:'Inter',sans-serif;font-weight:300;font-size:18px;line-height:1.3;letter-spacing:.02em}
-  @media (hover:hover) and (pointer:fine){.svc-card-caption{display:flex}}
+  .svc-card-caption-link{
+    display:inline-flex;align-self:flex-start;gap:12px;padding-bottom:7px;border-bottom:1px solid rgba(240,236,230,.4);
+    font-family:'Inter',sans-serif;font-weight:500;font-size:18px;letter-spacing:.02em;color:#F0ECE6
+  }
+  .svc-card-num{display:none}
+  @media (hover:hover) and (pointer:fine){.svc-card-caption{display:flex;justify-content:space-between;gap:16px}}
+
+  /* Что мы изготавливаем на компьютере с мышью: все пять разделов в один ряд, как на странице Codrops «Image hover effect with SVG filters»:
+     фото чуть выше и ниже друг друга, под каждым — номер, название и линия; при наведении фото растёт, поверх выезжает панель с описанием,
+     а номер и название расходятся в стороны и возвращаются (скрипт ниже). Остальные устройства остаются с сеткой карточек. */
+  @media (min-width:961px) and (hover:hover) and (pointer:fine){
+    .svc-grid{grid-template-columns:repeat(5,minmax(0,1fr));gap:0 25px;align-items:start}
+    .svc-card{flex-direction:column;align-items:stretch;gap:0;height:auto}
+    .svc-card:nth-child(odd){margin-top:77px}
+    .svc-card-photo-wrap{width:100%;height:auto;aspect-ratio:250/330}
+    a.svc-card:hover .svc-card-photo-wrap{transform:none}
+    a.svc-card .svc-card-light,a.svc-card .svc-card-arrow{display:none}
+    .svc-card-num{display:block;margin-top:22px;font-family:'Inter',sans-serif;font-weight:300;font-size:15px;letter-spacing:.04em;color:rgba(205,203,199,.7)}
+    .svc-card h3{
+      font-size:clamp(24px,calc(2.1*var(--vw100,100vw)/100),32px);line-height:1.05;letter-spacing:0;white-space:normal;
+      margin:12px 0 0;padding-bottom:22px;border-bottom:1px solid rgba(205,203,199,.35);will-change:transform,opacity
+    }
+    .svc-card-num{will-change:transform,opacity}
+    /* the closing call-to-action under the row: text and both buttons across one line */
+    .svc-grid .svc-cta{grid-column:1/-1;height:auto;flex-direction:row;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:24px 40px;padding:80px 0 0}
+    .svc-grid .svc-cta p{flex:0 1 430px;width:auto;color:#F0ECE6}
+    .svc-grid .svc-cta .svc-btn{flex:0 1 430px}
+  }
   /* Pressed state (Dotted Offset Button, ported): a thin light backing plate shows behind the whole card while held down */
   .svc-card-plate{
     position:absolute;inset:0;z-index:-1;border-radius:15px;
@@ -1864,40 +1891,45 @@
       <a class="svc-card" href="catalog-korpusnaya.html"><span class="svc-card-plate" aria-hidden="true"></span>
         <span class="svc-card-photo-wrap">
           <img class="svc-card-photo" src="cat-korpus.jpg" alt="Корпусная мебель">
-          <span class="svc-card-caption" aria-hidden="true"><span class="svc-card-caption-text">Точная подгонка по&nbsp;размерам помещения. Проектируем и&nbsp;изготавливаем корпусную мебель под&nbsp;ваш интерьер.</span></span>
+          <span class="svc-card-caption" aria-hidden="true"><span class="svc-card-caption-text">Точная подгонка по&nbsp;размерам помещения. Проектируем и&nbsp;изготавливаем корпусную мебель под&nbsp;ваш интерьер.</span><span class="svc-card-caption-link">в каталог <span>→</span></span></span>
         </span>
+        <span class="svc-card-num" aria-hidden="true">01</span>
         <h3>Корпусная<br>мебель</h3>
         <span class="svc-card-arrow" aria-hidden="true"><span class="svc-card-arrow-label">в каталог</span>→</span>
       </a>
       <a class="svc-card" href="catalog-eksklyuzivnaya.html"><span class="svc-card-plate" aria-hidden="true"></span>
         <span class="svc-card-photo-wrap">
           <img class="svc-card-photo" src="cat-exclusive.jpg" alt="Эксклюзивная мебель">
-          <span class="svc-card-caption" aria-hidden="true"><span class="svc-card-caption-text">Изделия по&nbsp;индивидуальным чертежам и&nbsp;размерам. Каждая вещь создаётся в&nbsp;единственном экземпляре.</span></span>
+          <span class="svc-card-caption" aria-hidden="true"><span class="svc-card-caption-text">Изделия по&nbsp;индивидуальным чертежам и&nbsp;размерам. Каждая вещь создаётся в&nbsp;единственном экземпляре.</span><span class="svc-card-caption-link">в каталог <span>→</span></span></span>
         </span>
+        <span class="svc-card-num" aria-hidden="true">02</span>
         <h3>Эксклюзивная<br>мебель</h3>
         <span class="svc-card-arrow" aria-hidden="true"><span class="svc-card-arrow-label">в каталог</span>→</span>
       </a>
       <a class="svc-card" href="catalog-dveri.html"><span class="svc-card-plate" aria-hidden="true"></span>
         <span class="svc-card-photo-wrap">
           <img class="svc-card-photo" src="cat-doors.jpg" alt="Двери и порталы">
-          <span class="svc-card-caption" aria-hidden="true"><span class="svc-card-caption-text">Точная подгонка по&nbsp;проёму, единый стиль с&nbsp;мебелью.</span></span>
+          <span class="svc-card-caption" aria-hidden="true"><span class="svc-card-caption-text">Точная подгонка по&nbsp;проёму, единый стиль с&nbsp;мебелью.</span><span class="svc-card-caption-link">в каталог <span>→</span></span></span>
         </span>
+        <span class="svc-card-num" aria-hidden="true">03</span>
         <h3>Двери<br>и&nbsp;порталы</h3>
         <span class="svc-card-arrow" aria-hidden="true"><span class="svc-card-arrow-label">в каталог</span>→</span>
       </a>
       <a class="svc-card" href="catalog-ofisnaya.html"><span class="svc-card-plate" aria-hidden="true"></span>
         <span class="svc-card-photo-wrap">
           <img class="svc-card-photo" src="cat-office.jpg" alt="Офисная мебель">
-          <span class="svc-card-caption" aria-hidden="true"><span class="svc-card-caption-text">Соблюдение единого стиля в&nbsp;офисном пространстве.</span></span>
+          <span class="svc-card-caption" aria-hidden="true"><span class="svc-card-caption-text">Соблюдение единого стиля в&nbsp;офисном пространстве.</span><span class="svc-card-caption-link">в каталог <span>→</span></span></span>
         </span>
+        <span class="svc-card-num" aria-hidden="true">04</span>
         <h3>Офисная<br>мебель</h3>
         <span class="svc-card-arrow" aria-hidden="true"><span class="svc-card-arrow-label">в каталог</span>→</span>
       </a>
       <a class="svc-card" href="catalog-kommercheskaya.html"><span class="svc-card-plate" aria-hidden="true"></span>
         <span class="svc-card-photo-wrap">
           <img class="svc-card-photo" src="cat-commerce.jpg" alt="Коммерческая мебель">
-          <span class="svc-card-caption" aria-hidden="true"><span class="svc-card-caption-text">Мебель из&nbsp;износостойких материалов.</span></span>
+          <span class="svc-card-caption" aria-hidden="true"><span class="svc-card-caption-text">Мебель из&nbsp;износостойких материалов.</span><span class="svc-card-caption-link">в каталог <span>→</span></span></span>
         </span>
+        <span class="svc-card-num" aria-hidden="true">05</span>
         <h3>Коммерческая<br>мебель</h3>
         <span class="svc-card-arrow" aria-hidden="true"><span class="svc-card-arrow-label">в каталог</span>→</span>
       </a>
@@ -2844,13 +2876,13 @@
     if (window.matchMedia('(hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference)').matches) {
       gsap.utils.toArray('a.svc-card', document).forEach(card => {
         const img = card.querySelector('.svc-card-photo'), cap = card.querySelector('.svc-card-caption');
-        const texts = cap.querySelectorAll('.svc-card-caption-text'), title = card.querySelectorAll('h3');
+        const texts = cap.querySelectorAll('.svc-card-caption-text, .svc-card-caption-link'), title = card.querySelectorAll('.svc-card-num, h3');
         const tl = gsap.timeline({ paused: true, defaults: { duration: 0.7, ease: 'power2' } });
         tl.to(img, { scale: 1.2 }, 0)
           .to(cap, { y: '0%' }, 0)
           .to(texts, { y: 0, startAt: { y: 100, opacity: 0 }, opacity: 1, stagger: 0.1 }, 0)
-          .to(title, { duration: 0.1, x: '-5%', opacity: 0 }, 0)
-          .to(title, { duration: 0.5, ease: 'power3', startAt: { x: '15%' }, x: '0%', opacity: 1 }, 0.1);
+          .to(title, { duration: 0.1, x: i => (i % 2 ? '5%' : '-5%'), opacity: 0, stagger: 0.05 }, 0)
+          .to(title, { duration: 0.5, ease: 'power3', startAt: { x: i => (i % 2 ? '-15%' : '15%') }, x: '0%', opacity: 1, stagger: 0.08 }, 0.1);
         card.addEventListener('mouseenter', () => tl.restart());
         card.addEventListener('mouseleave', () => tl.reverse());
       });

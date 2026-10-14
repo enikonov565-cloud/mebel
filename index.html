@@ -577,7 +577,7 @@
   a.svc-card{color:#CDCBC7;cursor:pointer;position:relative;isolation:isolate}
   /* Wraps just the photo (not the whole card, which also includes the title's blank space to the
      right on desktop) so the corner arrow badge anchors to the picture itself, not the card box. */
-  .svc-card-photo-wrap{position:relative;flex:none;width:284px;height:440px;transition:transform .5s cubic-bezier(.22,1,.36,1)}
+  .svc-card-photo-wrap{position:relative;flex:none;width:284px;height:440px;overflow:hidden;border-radius:15px;transition:transform .5s cubic-bezier(.22,1,.36,1)}
   /* Hover effects live inside (hover:hover): on iPhone a :hover that changes what is shown (photo lift,
      the arrow growing into «в каталог») makes the FIRST tap only "hover" the card and swallow the click,
      so the card/arrow looked dead until tapped twice. Touch screens skip them and navigate on one tap. */
@@ -2994,7 +2994,9 @@
 
     const mm = gsap.matchMedia();
     mm.add('(min-width:961px)', () => {
-      gsap.set(imgs, { clipPath: 'inset(0)', objectPosition: '0px 0%' });
+      const frames = imgs.map(im => im.parentNode);   // the wipe clips the frame, so the picture is free to scale on hover
+      gsap.set(frames, { clipPath: 'inset(0)' });
+      gsap.set(imgs, { objectPosition: '0px 0%' });
       const spacers = gsap.utils.toArray('.svc-sheet-spacer', root);
       gsap.set(section, { backgroundColor: browns[0] });
       const main = gsap.timeline({ scrollTrigger: { trigger: root, start: 'top top', end: 'bottom bottom', scrub: true } });
@@ -3013,7 +3015,7 @@
               // edge of the incoming sheet (layout px from the top of the pinned window), measured to the picture frame
               const vh = sheets[0].offsetHeight, fr = cur.parentNode, H = fr.offsetHeight, top = (vh - H) / 2;
               const edge = (vh + 145) + (top - 2 - (vh + 145)) * wipe.p;   // follows the half-transparent line of the colour layer, and is guaranteed to clear the picture completely at the end
-              cur.style.clipPath = 'inset(0px 0px ' + Math.max(0, Math.min(H, H - (edge - top))) + 'px)';
+              fr.style.clipPath = 'inset(0px 0px ' + Math.max(0, Math.min(H, H - (edge - top))) + 'px)';
             } }, HOLD);
         main.add(step);
       });
@@ -3031,7 +3033,54 @@
         });
       });
 
-      return () => { gsap.set(section, { clearProps: 'backgroundColor' }); gsap.set(imgs, { clearProps: 'clipPath,objectPosition' }); gsap.set(root.querySelectorAll('.svc-sheet-in,.svc-hint'), { clearProps: 'opacity,transform' }); };
+      return () => { gsap.set(section, { clearProps: 'backgroundColor' }); gsap.set(imgs.map(im => im.parentNode), { clearProps: 'clipPath' }); gsap.set(imgs, { clearProps: 'objectPosition' }); gsap.set(root.querySelectorAll('.svc-sheet-in,.svc-hint'), { clearProps: 'opacity,transform' }); };
+    });
+
+    // Hover on a photo (idea and timing: Codrops «Image hover effect with SVG filters»): the picture warps through an SVG feTurbulence +
+    // feDisplacementMap filter whose noise frequency settles to zero (so it ripples and then calms), it grows a little, and the text of
+    // that sheet slips out to the sides and comes back in turn. Leaving the photo plays it backwards. Mouse devices only.
+    const NS = 'http://www.w3.org/2000/svg';
+    const svgEl = (name, attrs) => { const e = document.createElementNS(NS, name); Object.keys(attrs).forEach(k => e.setAttribute(k, attrs[k])); return e; };
+    const filterHost = svgEl('svg', { width: '0', height: '0', 'aria-hidden': 'true', focusable: 'false' });
+    filterHost.style.cssText = 'position:absolute;width:0;height:0;overflow:hidden;pointer-events:none';
+    section.appendChild(filterHost);
+    let filterNo = 0;
+    // one hover for one photo: el is the picture, hoverEl what the pointer enters, parts the texts that slip aside, grow how much it grows
+    const thumbHover = (el, hoverEl, parts, o) => {
+      const id = 'svcWarp' + (++filterNo);
+      const turb = svgEl('feTurbulence', { type: 'fractalNoise', baseFrequency: '0', numOctaves: '1', result: 'warp' });
+      const disp = svgEl('feDisplacementMap', { xChannelSelector: 'R', yChannelSelector: 'G', scale: String(o.scale), in: 'SourceGraphic' });
+      const filter = svgEl('filter', { id });
+      filter.appendChild(turb); filter.appendChild(disp); filterHost.appendChild(filter);
+      const v = { f: 0 };
+      const on = () => { el.style.filter = 'url(#' + id + ')'; };
+      const off = () => { el.style.filter = ''; turb.setAttribute('baseFrequency', '0'); };
+      const tl = gsap.timeline({
+        paused: true, defaults: { duration: 0.7, ease: 'power2' },
+        onUpdate: () => turb.setAttribute('baseFrequency', v.f),
+        onComplete: off, onReverseComplete: off
+      });
+      tl.to(v, { startAt: { f: o.freq }, f: 0 }, 0).to(el, { scale: o.grow }, 0);
+      if (parts.length) {
+        tl.to(parts, { duration: 0.1, x: i => (i % 2 ? '5%' : '-5%'), opacity: 0, stagger: 0.05 }, 0)
+          .to(parts, { duration: 0.5, ease: 'power3', startAt: { x: i => (i % 2 ? '-15%' : '15%') }, x: '0%', opacity: 1, stagger: 0.08 }, 0.1);
+      }
+      hoverEl.addEventListener('mouseenter', () => { on(); tl.restart(); });
+      hoverEl.addEventListener('mouseleave', () => { on(); tl.reverse(); });
+      return () => { tl.kill(); off(); gsap.set(el, { clearProps: 'scale' }); gsap.set(parts, { clearProps: 'transform,opacity' }); filter.remove(); };
+    };
+    const hoverQuery = '(hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference)';
+    const hv = gsap.matchMedia();
+    hv.add('(min-width:961px) and ' + hoverQuery, () => {
+      const undo = imgs.map((im, i) => thumbHover(im, im.parentNode, sheets[i].querySelectorAll('.svc-sheet-num, h3, p'), { scale: 70, freq: 0.06, grow: 1.2 }));
+      return () => undo.forEach(fn => fn());
+    });
+    hv.add('(max-width:960px) and ' + hoverQuery, () => {   // the cards of the narrow layout
+      const undo = gsap.utils.toArray('a.svc-card', document).map(card => {
+        const ph = card.querySelector('.svc-card-photo');
+        return thumbHover(ph, card, card.querySelectorAll('h3'), { scale: 40, freq: 0.06, grow: 1.12 });
+      });
+      return () => undo.forEach(fn => fn());
     });
     window.addEventListener('load', () => ScrollTrigger.refresh());
   })();

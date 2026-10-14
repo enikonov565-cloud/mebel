@@ -586,9 +586,20 @@
   }
   .svc-card-caption-text{display:block;font-family:'Inter',sans-serif;font-weight:300;font-size:18px;line-height:1.3;letter-spacing:.02em}
   .svc-card-caption-link{
-    display:inline-flex;align-self:flex-start;gap:12px;padding-bottom:7px;border-bottom:1px solid rgba(240,236,230,.4);
-    font-family:'Inter',sans-serif;font-weight:500;font-size:18px;letter-spacing:.02em;color:#F0ECE6
+    --lk:#F0ECE6;--lk-line:rgba(240,236,230,.35);pointer-events:auto;
+    position:relative;display:inline-flex;align-self:flex-start;align-items:center;gap:14px;padding-bottom:9px;
+    font-family:'Inter',sans-serif;font-weight:500;font-size:20px;letter-spacing:.02em;line-height:1.2;color:var(--lk);white-space:nowrap
   }
+  .svc-card-caption-link::after{
+    content:'';position:absolute;left:0;right:0;bottom:0;height:1px;
+    background:linear-gradient(90deg,transparent,var(--lk) 50%,transparent) no-repeat,var(--lk-line);
+    background-size:38% 100%,100% 100%;background-position:-60% 0,0 0;
+    animation:lkRun 2.6s linear infinite;transition:opacity .45s ease
+  }
+  .svc-card-caption-link:hover::after{opacity:0}
+  .svc-card-caption-link > span{display:inline-block;transition:transform .4s cubic-bezier(.22,1,.36,1)}
+  .svc-card-caption-link:hover > span{transform:translateX(8px)}
+  @media (prefers-reduced-motion:reduce){.svc-card-caption-link::after{animation:none;background:var(--lk-line)}}
   .svc-card-num{display:none}
   @media (hover:hover) and (pointer:fine){.svc-card-caption{display:flex;justify-content:space-between;gap:16px}}
 
@@ -2877,14 +2888,14 @@
       gsap.utils.toArray('a.svc-card', document).forEach(card => {
         const img = card.querySelector('.svc-card-photo'), cap = card.querySelector('.svc-card-caption');
         const texts = cap.querySelectorAll('.svc-card-caption-text, .svc-card-caption-link'), title = card.querySelectorAll('.svc-card-num, h3');
-        const tl = gsap.timeline({ paused: true, defaults: { duration: 0.7, ease: 'power2' } });
+        const tl = gsap.timeline({ paused: true, defaults: { duration: 1.4, ease: 'power2.inOut' } });
         tl.to(img, { scale: 1.2 }, 0)
           .to(cap, { y: '0%' }, 0)
-          .to(texts, { y: 0, startAt: { y: 100, opacity: 0 }, opacity: 1, stagger: 0.1 }, 0)
-          .to(title, { duration: 0.1, x: i => (i % 2 ? '5%' : '-5%'), opacity: 0, stagger: 0.05 }, 0)
-          .to(title, { duration: 0.5, ease: 'power3', startAt: { x: i => (i % 2 ? '-15%' : '15%') }, x: '0%', opacity: 1, stagger: 0.08 }, 0.1);
-        card.addEventListener('mouseenter', () => tl.restart());
-        card.addEventListener('mouseleave', () => tl.reverse());
+          .to(texts, { y: 0, startAt: { y: 100, opacity: 0 }, opacity: 1, stagger: 0.16, ease: 'power3.out', duration: 1.2 }, 0.1)
+          .to(title, { duration: 0.3, ease: 'power1.in', x: i => (i % 2 ? '5%' : '-5%'), opacity: 0, stagger: 0.08 }, 0)
+          .to(title, { duration: 1.0, ease: 'power3.out', startAt: { x: i => (i % 2 ? '-15%' : '15%') }, x: '0%', opacity: 1, stagger: 0.12 }, 0.3);
+        card.addEventListener('mouseenter', () => tl.timeScale(1).play());   // play from where it is: no jump when the pointer comes back mid-way
+        card.addEventListener('mouseleave', () => tl.timeScale(1.25).reverse());
       });
     }
     window.addEventListener('load', () => ScrollTrigger.refresh());

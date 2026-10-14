@@ -452,10 +452,6 @@
   @keyframes consultDip{0%{transform:translateY(0)}35%{transform:translateY(4px)}100%{transform:translateY(0)}}
   /* «в каталог» on the sheets: brown words. Light caramel-brown on the dark sheets (1-3), deep brown on the lighter ones (4-5),
      so the words stay brown everywhere and stay readable */
-  a.svc-golink.lk-run.lk-run{--lk:#B08A66;--lk-line:rgba(176,138,102,.45);--lk-hi:#D4AE88;margin-top:4px}
-  .svc-sheet:nth-of-type(n+4) a.svc-golink.lk-run.lk-run{--lk:#F0ECE6;--lk-line:rgba(240,236,230,.45);--lk-hi:#fff}
-  a.svc-golink.lk-run.lk-run:hover,a.svc-golink.lk-run.lk-run.is-pressed{--lk:var(--lk-hi)}
-  .svc-golink.lk-run::after{background:linear-gradient(90deg,transparent,var(--lk-hi) 50%,transparent) no-repeat,var(--lk-line);background-size:46% 100%,100% 100%}
   .ws-link.lk-run{--lk:#fff;--lk-line:rgba(255,255,255,.38);text-shadow:0 1px 14px rgba(17,11,0,.6)}
   @media (max-width:960px){a.lk-run.lk-run{font-size:16px!important;white-space:normal!important}}
 
@@ -582,7 +578,14 @@
      the arrow growing into «в каталог») makes the FIRST tap only "hover" the card and swallow the click,
      so the card/arrow looked dead until tapped twice. Touch screens skip them and navigate on one tap. */
   @media (hover:hover){a.svc-card:hover .svc-card-photo-wrap{transform:translateY(-6px)}}
-  .svc-card-photo{display:block;width:100%;height:100%;object-fit:cover;border-radius:15px}
+  .svc-card-photo{display:block;width:100%;height:100%;object-fit:cover;border-radius:15px;will-change:transform}
+  /* the description slides up over the photo on hover (mouse devices; the script moves it) */
+  .svc-card-caption{
+    position:absolute;left:0;top:0;width:100%;height:100%;display:none;flex-direction:column;justify-content:flex-start;
+    padding:22px 22px 20px;background:#2F1F02;color:#F0ECE6;border-radius:15px;pointer-events:none;transform:translate3d(0,100%,0);
+  }
+  .svc-card-caption-text{display:block;font-family:'Inter',sans-serif;font-weight:300;font-size:18px;line-height:1.3;letter-spacing:.02em}
+  @media (hover:hover) and (pointer:fine){.svc-card-caption{display:flex}}
   /* Pressed state (Dotted Offset Button, ported): a thin light backing plate shows behind the whole card while held down */
   .svc-card-plate{
     position:absolute;inset:0;z-index:-1;border-radius:15px;
@@ -647,95 +650,6 @@
   /* burgundy consultation button (same palette as the other «получить консультацию» buttons) */
   .svc-btn.consult{background:#450A03;border:2px solid #CDCBC7;color:#CDCBC7;--reveal-bg:#CDCBC7;--reveal-text:#450A03;--dot-shadow:#450A03}
   .svc-btn.consult:hover{background:#CDCBC7;color:#450A03}
-
-  /* Что мы изготавливаем — одна категория на лист (>=961px): слева листы с текстом по 100% высоты окна, справа
-     закреплённая стопка фото; пока листаются тексты, верхнее фото «стирается» маской и открывает следующее
-     (приём из GSAP pinned image mask reveal: sticky + ScrollTrigger scrub). Ниже 961px остаётся сетка карточек. */
-  .svc-sheets{display:none}
-  @media (min-width:961px){
-    .svc-grid > a.svc-card{display:none}
-    .svc-grid{display:block}
-    /* the closing call-to-action: text and both buttons spread across one row (wraps only when the window is too narrow) */
-    .svc-grid .svc-cta{
-      height:auto;padding:0 0 20px;flex-direction:row;
-      /* pull the row up under the last photo: the sheet is a full window tall, the photo is at most 760px, so the rest is empty — leave 40px */
-      margin-top:calc(40px - max(70px, (var(--vh100,100vh) - 760px) / 2));
-      position:relative;z-index:10;   /* above the (opaque, pinned) last sheet it is pulled up under */flex-wrap:wrap;align-items:center;justify-content:space-between;gap:24px 40px;
-    }
-    .svc-grid .svc-cta p{flex:0 1 430px;width:auto;color:#F0ECE6}
-    .svc-grid .svc-cta .svc-btn{flex:0 1 430px}
-    .svc-sheets{
-      display:grid;grid-template-columns:minmax(0,1fr) minmax(320px,46%);gap:96px;align-items:start;
-      margin-top:calc(-93px + 24px);
-    }
-    .svc-sheets-left{display:flex;flex-direction:column}
-    /* the same mechanics as «Как мы работаем»: a sheet pins, stays put while the page scrolls the spacer, and the next one
-       slides up over it (opaque, in the colour the section has at that moment) — no jumps, nothing moves by itself */
-    .svc-sheet{height:var(--vh100,100vh);display:flex;align-items:center;position:sticky;top:0;clip-path:inset(0 -100vmax)}
-    /* the colour is a full-bleed layer whose upper 260px fade out to transparent (eased), so the incoming sheet melts into the
-       previous one instead of meeting it in a line; the text and buttons stay above the layer */
-    .svc-sheet::before{
-      content:"";position:absolute;z-index:-1;left:-100vmax;right:-100vmax;top:0;bottom:0;pointer-events:none;background:var(--sc);
-      -webkit-mask-image:linear-gradient(180deg,rgba(0,0,0,0) 0,rgba(0,0,0,.05) 47px,rgba(0,0,0,.2) 99px,rgba(0,0,0,.5) 151px,rgba(0,0,0,.82) 208px,#000 260px,#000 100%);mask-image:linear-gradient(180deg,rgba(0,0,0,0) 0,rgba(0,0,0,.05) 47px,rgba(0,0,0,.2) 99px,rgba(0,0,0,.5) 151px,rgba(0,0,0,.82) 208px,#000 260px,#000 100%);
-    }
-    .svc-sheet::after{
-      content:"";position:absolute;z-index:-1;left:-100vmax;right:-100vmax;top:0;height:300px;pointer-events:none;background:var(--grain);
-      -webkit-mask-image:linear-gradient(180deg,transparent 0,#000 36px,#000 170px,transparent 320px);mask-image:linear-gradient(180deg,transparent 0,#000 36px,#000 170px,transparent 320px);
-    }
-    .svc-sheet:nth-of-type(1){z-index:1;--sc:#1F1B19}
-    .svc-sheet:nth-of-type(2){z-index:2;--sc:#302A26}
-    .svc-sheet:nth-of-type(3){z-index:3;--sc:#433B35}
-    .svc-sheet:nth-of-type(4){z-index:4;--sc:#594F47}
-    .svc-sheet:nth-of-type(5){z-index:5;--sc:#6F645A}
-    #services{background:#1F1B19;position:relative}
-    /* soft seams: the section fades in from the dark page colour at the top and out to it at the bottom (no hard edges) */
-    :root{--grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .07 -.028'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
-    #services::before,#services::after{content:"";position:absolute;left:0;right:0;pointer-events:none;z-index:0}
-    /* the grain lives on its own layers (they fade out at both ends, so its start is invisible) */
-    #services > .container::before,#services > .container::after{
-      content:"";position:absolute;left:calc(50% - var(--vw100,100vw)/2);width:var(--vw100,100vw);pointer-events:none;z-index:-1;background:var(--grain);
-    }
-    #services > .container::before{top:-120px;height:700px;-webkit-mask-image:linear-gradient(180deg,transparent 0,#000 200px,#000 450px,transparent 100%);mask-image:linear-gradient(180deg,transparent 0,#000 200px,#000 450px,transparent 100%)}
-    #services > .container::after{bottom:-170px;height:170px;-webkit-mask-image:linear-gradient(0deg,transparent 0,#000 60px,#000 110px,transparent 100%);mask-image:linear-gradient(0deg,transparent 0,#000 60px,#000 110px,transparent 100%)}
-    #services::before{top:0;height:700px;background:linear-gradient(180deg,rgb(17,11,0) 0px,rgb(17,11,0) 50px,rgb(17,11,1) 100px,rgb(18,12,2) 150px,rgb(19,13,4) 200px,rgb(20,15,6) 250px,rgb(22,17,9) 300px,rgb(24,19,13) 350px,rgb(26,21,16) 400px,rgb(28,23,19) 450px,rgb(29,25,21) 500px,rgb(30,26,23) 550px,rgb(31,27,24) 600px,rgb(31,27,25) 650px,rgb(31,27,25) 700px)}   /* eased (smootherstep): no visible start or end */
-    #services{padding-bottom:170px}
-    #services::after{bottom:0;height:170px;background:linear-gradient(0deg,rgb(17,11,0) 0px,rgb(17,11,0) 12px,rgb(19,13,2) 24px,rgb(24,17,6) 36px,rgb(31,24,13) 49px,rgb(40,33,22) 61px,rgb(52,44,33) 73px,rgb(64,56,45) 85px,rgb(76,67,57) 97px,rgb(88,78,68) 109px,rgb(97,87,77) 121px,rgb(104,94,84) 134px,rgb(109,98,88) 146px,rgb(111,100,90) 158px,rgb(111,100,90) 170px)}
-    #services > .container{position:relative;z-index:1}
-    .svc-sheet:nth-of-type(n+4) h3,.svc-sheet:nth-of-type(n+4) p{color:#F0ECE6}
-    .svc-sheet:nth-of-type(n+4) .svc-sheet-num,.svc-sheet:nth-of-type(n+4) .svc-hint{color:rgba(240,236,230,.7)}
-    .svc-sheet-spacer{flex:none;height:calc(55*var(--vh100,100vh)/100)}
-    .svc-sheet-in{max-width:560px}
-    .svc-sheet-num{display:block;font-family:'Inter',sans-serif;font-weight:300;font-size:20px;letter-spacing:.02em;color:rgba(205,203,199,.6);margin-bottom:24px}
-    .svc-sheet h3{
-      font-family:'Inter',sans-serif;font-weight:500;font-size:clamp(2.4rem,calc(4.2*var(--vw100)/100),64px);line-height:.9;
-      letter-spacing:0;color:#CDCBC7;margin-bottom:28px;
-    }
-    .svc-sheet p{font-family:'Inter',sans-serif;font-weight:300;font-size:20px;line-height:1.3;letter-spacing:.02em;color:#CDCBC7;max-width:460px;margin-bottom:40px}
-    /* same button as everywhere on the site: .dot-btn (dashed border, offset plate on hover) */
-    .svc-sheet-link{
-      display:inline-flex;align-items:center;gap:12px;padding:10pt 20pt;background:#E4D9C7;border:2px solid #2F1F02;border-radius:15px;
-      font-family:'Inter',sans-serif;font-weight:700;font-size:22px;color:#2F1F02;
-      --reveal-bg:#2F1F02;--reveal-text:#E4D9C7;--dot-shadow:#E4D9C7;
-    }
-    /* "keep scrolling" cue at the foot of every sheet but the last: label + a line with a dot that runs down it */
-    .svc-hint{
-      position:absolute;left:0;bottom:44px;display:flex;align-items:center;gap:16px;
-      font-family:'Inter',sans-serif;font-weight:300;font-size:16px;letter-spacing:.02em;color:rgba(205,203,199,.7);
-    }
-    .svc-hint-line{position:relative;display:block;width:1px;height:56px;background:rgba(205,203,199,.3);overflow:hidden}
-    .svc-hint-line::after{
-      content:'';position:absolute;left:-1px;top:0;width:3px;height:14px;border-radius:2px;background:#CDCBC7;
-      animation:svcHint 1.8s cubic-bezier(.65,0,.35,1) infinite;
-    }
-    @keyframes svcHint{0%{transform:translateY(-16px)}100%{transform:translateY(58px)}}
-    @media (prefers-reduced-motion:reduce){.svc-hint-line::after{animation:none;top:20px}}
-    .svc-sheets-right{position:sticky;top:0;height:var(--vh100,100vh);z-index:10}
-    .svc-sheet-img{
-      position:absolute;left:0;top:50%;transform:translateY(-50%);width:100%;
-      height:min(760px,calc(var(--vh100,100vh) - 140px));border-radius:15px;overflow:hidden;
-    }
-    .svc-sheet-img img{width:100%;height:100%;object-fit:cover;object-position:center;display:block}
-  }
 
   /* Lenis (smooth scroll) base rules */
   html.lenis,html.lenis body{height:auto}
@@ -1733,7 +1647,6 @@
 <link rel="stylesheet" href="ctl.css?v=3">
 <style>
   /* the section numbers use the same figures as the carousel counters: «NN — NN», Inter Medium 22px */
-  .svc-sheet .svc-sheet-num.ctl-count{--ctl:#F0ECE6;color:#F0ECE6!important;margin:0 0 24px}
   .process-step .process-num.ctl-count{--ctl:#2F1F02;color:#2F1F02!important;margin:0 0 20px}
   @media (max-width:640px){.process-num.ctl-count{font-size:18px}}
 </style>
@@ -1759,7 +1672,7 @@
 <link rel="stylesheet" href="logo.css?v=4">
 <link rel="stylesheet" href="menu.css?v=2">
 <link rel="stylesheet" href="light.css?v=10">
-<link rel="stylesheet" href="headings.css?v=15">
+<link rel="stylesheet" href="headings.css?v=16">
 </head>
 <body>
 
@@ -1947,71 +1860,11 @@
       <p>Каждое изделие разрабатывается под&nbsp;ваше помещение. <br>Работаем с&nbsp;дубом, ясенем, буком, орехом и&nbsp;другими породами.</p>
     </div>
 
-    <div class="svc-sheets" id="svcSheets">
-      <div class="svc-sheets-left">
-        <article class="svc-sheet">
-          <div class="svc-sheet-in">
-            <span class="svc-sheet-num ctl-count"><span>01</span><span>—</span><span>05</span></span>
-            <h3>Корпусная мебель</h3>
-            <p>Точная подгонка по&nbsp;размерам помещения. Проектируем и&nbsp;изготавливаем корпусную мебель под&nbsp;ваш интерьер.</p>
-            <a class="svc-sheet-link svc-golink lk-run" href="catalog-korpusnaya.html">в каталог <span class="lk-arrow" aria-hidden="true">→</span></a>
-          </div>
-          <div class="svc-hint" aria-hidden="true"><span class="svc-hint-line"></span><span>листайте вниз</span></div>
-        </article>
-        <div class="svc-sheet-spacer"></div>
-        <article class="svc-sheet">
-          <div class="svc-sheet-in">
-            <span class="svc-sheet-num ctl-count"><span>02</span><span>—</span><span>05</span></span>
-            <h3>Эксклюзивная мебель</h3>
-            <p>Изделия по&nbsp;индивидуальным чертежам и&nbsp;размерам. Каждая вещь создаётся в&nbsp;единственном экземпляре.</p>
-            <a class="svc-sheet-link svc-golink lk-run" href="catalog-eksklyuzivnaya.html">в каталог <span class="lk-arrow" aria-hidden="true">→</span></a>
-          </div>
-          <div class="svc-hint" aria-hidden="true"><span class="svc-hint-line"></span><span>листайте вниз</span></div>
-        </article>
-        <div class="svc-sheet-spacer"></div>
-        <article class="svc-sheet">
-          <div class="svc-sheet-in">
-            <span class="svc-sheet-num ctl-count"><span>03</span><span>—</span><span>05</span></span>
-            <h3>Двери и&nbsp;порталы</h3>
-            <p>Точная подгонка по&nbsp;проёму, единый стиль с&nbsp;мебелью.</p>
-            <a class="svc-sheet-link svc-golink lk-run" href="catalog-dveri.html">в каталог <span class="lk-arrow" aria-hidden="true">→</span></a>
-          </div>
-          <div class="svc-hint" aria-hidden="true"><span class="svc-hint-line"></span><span>листайте вниз</span></div>
-        </article>
-        <div class="svc-sheet-spacer"></div>
-        <article class="svc-sheet">
-          <div class="svc-sheet-in">
-            <span class="svc-sheet-num ctl-count"><span>04</span><span>—</span><span>05</span></span>
-            <h3>Офисная мебель</h3>
-            <p>Соблюдение единого стиля в&nbsp;офисном пространстве.</p>
-            <a class="svc-sheet-link svc-golink lk-run" href="catalog-ofisnaya.html">в каталог <span class="lk-arrow" aria-hidden="true">→</span></a>
-          </div>
-          <div class="svc-hint" aria-hidden="true"><span class="svc-hint-line"></span><span>листайте вниз</span></div>
-        </article>
-        <div class="svc-sheet-spacer"></div>
-        <article class="svc-sheet">
-          <div class="svc-sheet-in">
-            <span class="svc-sheet-num ctl-count"><span>05</span><span>—</span><span>05</span></span>
-            <h3>Коммерческая мебель</h3>
-            <p>Мебель из&nbsp;износостойких материалов.</p>
-            <a class="svc-sheet-link svc-golink lk-run" href="catalog-kommercheskaya.html">в каталог <span class="lk-arrow" aria-hidden="true">→</span></a>
-          </div>
-        </article>
-      </div>
-      <div class="svc-sheets-right">
-        <div class="svc-sheet-img" style="z-index:5"><img src="cat-korpus.jpg" alt="Корпусная мебель"></div>
-        <div class="svc-sheet-img" style="z-index:4"><img src="cat-exclusive.jpg" alt="Эксклюзивная мебель"></div>
-        <div class="svc-sheet-img" style="z-index:3"><img src="cat-doors.jpg" alt="Двери и порталы"></div>
-        <div class="svc-sheet-img" style="z-index:2"><img src="cat-office.jpg" alt="Офисная мебель"></div>
-        <div class="svc-sheet-img" style="z-index:1"><img src="cat-commerce.jpg" alt="Коммерческая мебель"></div>
-      </div>
-    </div>
-
     <div class="svc-grid">
       <a class="svc-card" href="catalog-korpusnaya.html"><span class="svc-card-plate" aria-hidden="true"></span>
         <span class="svc-card-photo-wrap">
           <img class="svc-card-photo" src="cat-korpus.jpg" alt="Корпусная мебель">
-          
+          <span class="svc-card-caption" aria-hidden="true"><span class="svc-card-caption-text">Точная подгонка по&nbsp;размерам помещения. Проектируем и&nbsp;изготавливаем корпусную мебель под&nbsp;ваш интерьер.</span></span>
         </span>
         <h3>Корпусная<br>мебель</h3>
         <span class="svc-card-arrow" aria-hidden="true"><span class="svc-card-arrow-label">в каталог</span>→</span>
@@ -2019,7 +1872,7 @@
       <a class="svc-card" href="catalog-eksklyuzivnaya.html"><span class="svc-card-plate" aria-hidden="true"></span>
         <span class="svc-card-photo-wrap">
           <img class="svc-card-photo" src="cat-exclusive.jpg" alt="Эксклюзивная мебель">
-          
+          <span class="svc-card-caption" aria-hidden="true"><span class="svc-card-caption-text">Изделия по&nbsp;индивидуальным чертежам и&nbsp;размерам. Каждая вещь создаётся в&nbsp;единственном экземпляре.</span></span>
         </span>
         <h3>Эксклюзивная<br>мебель</h3>
         <span class="svc-card-arrow" aria-hidden="true"><span class="svc-card-arrow-label">в каталог</span>→</span>
@@ -2027,7 +1880,7 @@
       <a class="svc-card" href="catalog-dveri.html"><span class="svc-card-plate" aria-hidden="true"></span>
         <span class="svc-card-photo-wrap">
           <img class="svc-card-photo" src="cat-doors.jpg" alt="Двери и порталы">
-          
+          <span class="svc-card-caption" aria-hidden="true"><span class="svc-card-caption-text">Точная подгонка по&nbsp;проёму, единый стиль с&nbsp;мебелью.</span></span>
         </span>
         <h3>Двери<br>и&nbsp;порталы</h3>
         <span class="svc-card-arrow" aria-hidden="true"><span class="svc-card-arrow-label">в каталог</span>→</span>
@@ -2035,7 +1888,7 @@
       <a class="svc-card" href="catalog-ofisnaya.html"><span class="svc-card-plate" aria-hidden="true"></span>
         <span class="svc-card-photo-wrap">
           <img class="svc-card-photo" src="cat-office.jpg" alt="Офисная мебель">
-          
+          <span class="svc-card-caption" aria-hidden="true"><span class="svc-card-caption-text">Соблюдение единого стиля в&nbsp;офисном пространстве.</span></span>
         </span>
         <h3>Офисная<br>мебель</h3>
         <span class="svc-card-arrow" aria-hidden="true"><span class="svc-card-arrow-label">в каталог</span>→</span>
@@ -2043,7 +1896,7 @@
       <a class="svc-card" href="catalog-kommercheskaya.html"><span class="svc-card-plate" aria-hidden="true"></span>
         <span class="svc-card-photo-wrap">
           <img class="svc-card-photo" src="cat-commerce.jpg" alt="Коммерческая мебель">
-          
+          <span class="svc-card-caption" aria-hidden="true"><span class="svc-card-caption-text">Мебель из&nbsp;износостойких материалов.</span></span>
         </span>
         <h3>Коммерческая<br>мебель</h3>
         <span class="svc-card-arrow" aria-hidden="true"><span class="svc-card-arrow-label">в каталог</span>→</span>
@@ -2959,8 +2812,7 @@
   // листаются тексты слева, верхнее фото стирается маской (clip-path) и открывает следующее, фон секции меняет
   // оттенок. Сам скролл ведёт ScrollTrigger (scrub); Lenis сглаживает колесо на устройствах с мышью.
   (function () {
-    const root = document.getElementById('svcSheets');
-    if (!root || !window.gsap || !window.ScrollTrigger) return;
+    if (!window.gsap || !window.ScrollTrigger) return;
     gsap.registerPlugin(ScrollTrigger);
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const zoom = () => parseFloat(document.documentElement.style.zoom) || 1;
@@ -2987,101 +2839,22 @@
       });
     }
 
-    const sheets = gsap.utils.toArray('.svc-sheet', root);
-    const imgs = gsap.utils.toArray('.svc-sheet-img img', root);
-    const section = document.getElementById('services');
-    const browns = ["#1F1B19","#302A26","#433B35","#594F47","#6F645A"];   // one brown per category; the section background follows the sheet that is on top
-
-    const mm = gsap.matchMedia();
-    mm.add('(min-width:961px)', () => {
-      const frames = imgs.map(im => im.parentNode);   // the wipe clips the frame, so the picture is free to scale on hover
-      gsap.set(frames, { clipPath: 'inset(0)' });
-      gsap.set(imgs, { objectPosition: '0px 0%' });
-      const spacers = gsap.utils.toArray('.svc-sheet-spacer', root);
-      gsap.set(section, { backgroundColor: browns[0] });
-      const main = gsap.timeline({ scrollTrigger: { trigger: root, start: 'top top', end: 'bottom bottom', scrub: true } });
-      // one step = the pinned pause (spacer, 0.55 window) + the slide-over (1 window); the picture is wiped during the slide-over
-      const HOLD = 0.55, SLIDE = 1;
-      imgs.forEach((cur, i) => {
-        const next = imgs[i + 1];
-        if (!next) return;
-        const wipe = { p: 0 };
-        const step = gsap.timeline();
-        step.to({}, { duration: HOLD + SLIDE }, 0)
-            .to(section, { backgroundColor: browns[i + 1], duration: SLIDE, ease: 'power2.inOut' }, HOLD)
-            .to(cur, { objectPosition: '0px 60%', duration: SLIDE, ease: 'none' }, HOLD)
-            .to(next, { objectPosition: '0px 40%', duration: SLIDE, ease: 'none' }, HOLD)
-            .fromTo(wipe, { p: 0 }, { p: 1, duration: SLIDE, ease: 'none', immediateRender: false, onUpdate: () => {
-              // edge of the incoming sheet (layout px from the top of the pinned window), measured to the picture frame
-              const vh = sheets[0].offsetHeight, fr = cur.parentNode, H = fr.offsetHeight, top = (vh - H) / 2;
-              const edge = (vh + 145) + (top - 2 - (vh + 145)) * wipe.p;   // follows the half-transparent line of the colour layer, and is guaranteed to clear the picture completely at the end
-              fr.style.clipPath = 'inset(0px 0px ' + Math.max(0, Math.min(H, H - (edge - top))) + 'px)';
-            } }, HOLD);
-        main.add(step);
+    // Hover on a card (idea and timing: Codrops «Image hover effect with SVG filters», without the filter): the picture grows, a panel with
+    // the description slides up over it and its texts rise one after another, the title slips aside and comes back. Leaving plays it backwards.
+    if (window.matchMedia('(hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference)').matches) {
+      gsap.utils.toArray('a.svc-card', document).forEach(card => {
+        const img = card.querySelector('.svc-card-photo'), cap = card.querySelector('.svc-card-caption');
+        const texts = cap.querySelectorAll('.svc-card-caption-text'), title = card.querySelectorAll('h3');
+        const tl = gsap.timeline({ paused: true, defaults: { duration: 0.7, ease: 'power2' } });
+        tl.to(img, { scale: 1.2 }, 0)
+          .to(cap, { y: '0%' }, 0)
+          .to(texts, { y: 0, startAt: { y: 100, opacity: 0 }, opacity: 1, stagger: 0.1 }, 0)
+          .to(title, { duration: 0.1, x: '-5%', opacity: 0 }, 0)
+          .to(title, { duration: 0.5, ease: 'power3', startAt: { x: '15%' }, x: '0%', opacity: 1 }, 0.1);
+        card.addEventListener('mouseenter', () => tl.restart());
+        card.addEventListener('mouseleave', () => tl.reverse());
       });
-      // The text of a sheet is ON while that sheet is the one on the screen and OFF otherwise. The switch happens at a scroll
-      // position (the incoming sheet's edge crossing 58% / 52% of the window) but the fade itself runs on TIME (0.3 s), so
-      // wherever the scroll stops the text is either fully there or fully gone — never stuck half-transparent, in either direction.
-      sheets.forEach((sh, i) => {
-        const parts = sh.querySelectorAll('.svc-sheet-in,.svc-hint');
-        const first = i === 0, last = i === sheets.length - 1;
-        ScrollTrigger.create({
-          trigger: first ? root : spacers[i - 1], start: first ? 'top 92%' : 'bottom 52%',
-          endTrigger: last ? root : spacers[i], end: last ? 'bottom top' : 'bottom 58%',
-          onToggle: self => gsap.to(parts, { opacity: self.isActive ? 1 : 0, duration: 0.3, ease: 'power1.out', overwrite: true }),
-          onRefresh: self => gsap.set(parts, { opacity: self.isActive ? 1 : 0 })
-        });
-      });
-
-      return () => { gsap.set(section, { clearProps: 'backgroundColor' }); gsap.set(imgs.map(im => im.parentNode), { clearProps: 'clipPath' }); gsap.set(imgs, { clearProps: 'objectPosition' }); gsap.set(root.querySelectorAll('.svc-sheet-in,.svc-hint'), { clearProps: 'opacity,transform' }); };
-    });
-
-    // Hover on a photo (idea and timing: Codrops «Image hover effect with SVG filters»): the picture warps through an SVG feTurbulence +
-    // feDisplacementMap filter whose noise frequency settles to zero (so it ripples and then calms), it grows a little, and the text of
-    // that sheet slips out to the sides and comes back in turn. Leaving the photo plays it backwards. Mouse devices only.
-    const NS = 'http://www.w3.org/2000/svg';
-    const svgEl = (name, attrs) => { const e = document.createElementNS(NS, name); Object.keys(attrs).forEach(k => e.setAttribute(k, attrs[k])); return e; };
-    const filterHost = svgEl('svg', { width: '0', height: '0', 'aria-hidden': 'true', focusable: 'false' });
-    filterHost.style.cssText = 'position:absolute;width:0;height:0;overflow:hidden;pointer-events:none';
-    section.appendChild(filterHost);
-    let filterNo = 0;
-    // one hover for one photo: el is the picture, hoverEl what the pointer enters, parts the texts that slip aside, grow how much it grows
-    const thumbHover = (el, hoverEl, parts, o) => {
-      const id = 'svcWarp' + (++filterNo);
-      const turb = svgEl('feTurbulence', { type: 'fractalNoise', baseFrequency: '0', numOctaves: '1', result: 'warp' });
-      const disp = svgEl('feDisplacementMap', { xChannelSelector: 'R', yChannelSelector: 'G', scale: String(o.scale), in: 'SourceGraphic' });
-      const filter = svgEl('filter', { id });
-      filter.appendChild(turb); filter.appendChild(disp); filterHost.appendChild(filter);
-      const v = { f: 0 };
-      const on = () => { el.style.filter = 'url(#' + id + ')'; };
-      const off = () => { el.style.filter = ''; turb.setAttribute('baseFrequency', '0'); };
-      const tl = gsap.timeline({
-        paused: true, defaults: { duration: 0.7, ease: 'power2' },
-        onUpdate: () => turb.setAttribute('baseFrequency', v.f),
-        onComplete: off, onReverseComplete: off
-      });
-      tl.to(v, { startAt: { f: o.freq }, f: 0 }, 0).to(el, { scale: o.grow }, 0);
-      if (parts.length) {
-        tl.to(parts, { duration: 0.1, x: i => (i % 2 ? '5%' : '-5%'), opacity: 0, stagger: 0.05 }, 0)
-          .to(parts, { duration: 0.5, ease: 'power3', startAt: { x: i => (i % 2 ? '-15%' : '15%') }, x: '0%', opacity: 1, stagger: 0.08 }, 0.1);
-      }
-      hoverEl.addEventListener('mouseenter', () => { on(); tl.restart(); });
-      hoverEl.addEventListener('mouseleave', () => { on(); tl.reverse(); });
-      return () => { tl.kill(); off(); gsap.set(el, { clearProps: 'scale' }); gsap.set(parts, { clearProps: 'transform,opacity' }); filter.remove(); };
-    };
-    const hoverQuery = '(hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference)';
-    const hv = gsap.matchMedia();
-    hv.add('(min-width:961px) and ' + hoverQuery, () => {
-      const undo = imgs.map((im, i) => thumbHover(im, im.parentNode, sheets[i].querySelectorAll('.svc-sheet-num, h3, p'), { scale: 70, freq: 0.06, grow: 1.2 }));
-      return () => undo.forEach(fn => fn());
-    });
-    hv.add('(max-width:960px) and ' + hoverQuery, () => {   // the cards of the narrow layout
-      const undo = gsap.utils.toArray('a.svc-card', document).map(card => {
-        const ph = card.querySelector('.svc-card-photo');
-        return thumbHover(ph, card, card.querySelectorAll('h3'), { scale: 40, freq: 0.06, grow: 1.12 });
-      });
-      return () => undo.forEach(fn => fn());
-    });
+    }
     window.addEventListener('load', () => ScrollTrigger.refresh());
   })();
 
@@ -3552,7 +3325,7 @@ void main() {
         e.preventDefault(); e.stopImmediatePropagation();
         a.classList.remove('is-pressed'); void a.offsetWidth; a.classList.add('is-pressed');
         setTimeout(() => {
-          if (a.classList.contains('svc-golink')) { window.location.href = a.href; return; }
+          
           go = true; a.click(); go = false;
         }, 620);
         setTimeout(() => a.classList.remove('is-pressed'), 1100);

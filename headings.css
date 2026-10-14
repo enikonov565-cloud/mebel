@@ -16,7 +16,7 @@
 /* 1 — page and section titles */
 html body .about-headline h2,html body .why-head h2,html body .svc-head h2,html body .mat-head h2,html body .process-head h2,
 html body .benefits-head h2,html body .works-head h2,html body .reviews-head h2,html body .faq-head h2,html body .contact-head h2,
-html body .cat-head h1,html body .svc-sheet h3,html body .mt-title{
+html body .cat-head h1,html body .mt-title{
   font-family:'Inter',sans-serif;font-weight:500;font-size:var(--hs1);line-height:.9;letter-spacing:-.015em;
 }
 /* the headline of the first screen is the model for all the others: the very same weight and tracking; from tablet width up also the same size and leading.

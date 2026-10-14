@@ -630,6 +630,7 @@
     background:rgba(205,203,199,.22);opacity:0;pointer-events:none;transition:opacity .3s ease;
   }
   a.svc-card:active .svc-card-plate,a.svc-card.is-pressed .svc-card-plate{opacity:1;transition:opacity .04s ease}
+  a.svc-card .svc-card-plate{display:none}   /* no colour change while a card is pressed */
   /* Touch: the press feedback fades in more slowly (and the tap holds navigation longer, see script) so it is actually seen */
   @media (hover:none){a.svc-card:active .svc-card-plate,a.svc-card.is-pressed .svc-card-plate{transition:opacity .22s ease}}
   /* Light Glass glow (Originkit, ported): a soft light follows the pointer across the whole card */

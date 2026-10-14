@@ -5,7 +5,7 @@
 (function () {
   'use strict';
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var TONES = ['#D9CBB6', '#D3C4AD'];            // the beige of the pages and one hair darker: a quiet chessboard
+  var TONES = ['#FFF9EE', '#F6F0E4'];            // the beige of the pages and one hair darker: a quiet chessboard
   var EASE = 'cubic-bezier(.45,0,.2,1)';          // smooth in and out
   var IN = { dur: 0.85, spread: 0.65 };           // covering: seconds for one tile, seconds the wave takes to cross the screen
   var OUT = { dur: 0.95, spread: 0.75 };          // melting away
